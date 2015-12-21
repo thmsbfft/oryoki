@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/atom/electron-quick-start#readme",
   "devDependencies": {
-    "electron-connect": "^0.3.3",
     "electron-localshortcut": "^0.6.0",
     "electron-packager": "^5.2.0",
     "electron-prebuilt": "^0.36.0",

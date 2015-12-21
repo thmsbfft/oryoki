@@ -10,7 +10,6 @@ gulp.task('start', function() {
 
 gulp.task('restart', function() {
 	console.log('[♻️  Restarting...]');
-	return run('killall Electron && gulp').exec();
 });
 
 // LIVERELOAD
@@ -21,8 +20,6 @@ gulp.task('watch', function(){
 	gulp.watch('src/js/main.js', ['restart']);
 });
 
-
-// TASKS
 gulp.task('sass', function(){
 	gulp.src('src/sass/bundle.scss')
 		.pipe(sass().on('error', sass.logError))
@@ -34,8 +31,4 @@ gulp.task('js', function() {
 	livereload.reload();
 });
 
-gulp.task('clear', function() {
-	return run('clear').exec();
-})
-
-gulp.task('default', ['clear', 'sass', 'js', 'watch', 'start']);
+gulp.task('default', ['sass', 'js', 'watch', 'start']);
