@@ -7,12 +7,14 @@ function Oryoki() {
 	  }
 	});
 
-	test = new Window();
-
 	this.windows = [];
 	this.createWindow();
 }
 
 Oryoki.prototype.createWindow = function() {
-	c.log(this.windows);
+	this.windows.push(
+		new Window({
+			'id' : this.windows.length
+		})
+	);
 }

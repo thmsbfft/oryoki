@@ -12,7 +12,8 @@ var main = [
 ];
 
 var renderer = [
-	'src/js/renderer/dummy.js'
+	'src/js/renderer/renderer.js',
+	'src/js/renderer/Omnibox.js'
 ];
 
 // ELECTRON
