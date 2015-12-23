@@ -1,0 +1,38 @@
+#handle {
+	-webkit-app-region: drag;
+
+	height: 22px;
+	border-bottom: 1px solid rgba(25, 25, 25, 1);
+	
+	.title {
+		width: 100%;
+		padding-top: 6px;
+		text-align: center;
+		font-family: 'Roboto Light', sans-serif;
+		font-size: 12px;
+	}
+	.button {
+		position: absolute;
+		top: 5px;
+		border-radius: 100%;
+		height: 12px;
+		width: 12px;
+
+		&:hover {
+			&::after {
+				content: '';
+				display: block;
+				margin-left: 3px;
+				margin-top: 3px;
+				height: 6px;
+				width: 6px;
+				border-radius: 100%;
+				background: rgba(0,0,0,0.3);
+			}
+		}
+	}
+	.close {
+		left: 8px;
+		background: #FF554E;
+	}
+}

@@ -42,8 +42,10 @@ function Window(parameters) {
 	this.id = parameters.id;
 	
 	this.browser = new BrowserWindow({
-	  width: 900,
-	  height: 700,
+	  width: 800,
+	  height: 500,
+	  frame: false,
+	  backgroundColor: '#000',
 	  x: 870,
 	  y: 660
 	});

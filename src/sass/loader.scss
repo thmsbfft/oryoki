@@ -1,0 +1,20 @@
+#loader {
+	display: block;
+	border: 3px solid #00EC91;
+	border-radius: 100%;
+	width: 22px;
+	height: 22px;
+	position: fixed;
+	bottom: 50px;
+	right:50px;
+	transition: border-color 0.2s;
+
+	&.loading {
+		animation: blink 0.3s infinite ease-out;
+	}
+
+	@keyframes blink {
+	  0% { border-color: rgba(0, 236, 145, 1); }
+	  50% { border-color: rgba(0, 236, 145, 0.6); }
+	}
+}

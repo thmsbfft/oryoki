@@ -2,14 +2,21 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Oryoki</title>
+    <title>Ōryōki</title>
     <link rel="stylesheet" type="text/css" href="../css/bundle.css">
     <script src="../js/renderer/_renderer.js"></script>
     <script src="http://localhost:35729/livereload.js"></script> 
   </head>
   <body>
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chrome <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <div id="handle">
+      <div class="button close"></div>
+      <div class="title">Ōryōki</div>
+    </div>
+    <div class="homepage">
+      <p>Ōryōki v. 1.0.0</p>
+      <p>Chrome <script>document.write(process.versions.chrome)</script></p>
+    </div>
+    <div id="omnibox"></div> 
+    <div id="loader"></div
   </body> 
 </html>

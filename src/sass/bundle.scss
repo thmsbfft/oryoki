@@ -1,5 +1,9 @@
-body {
-	background-color: black;
-	font-family: sans-serif;
-	color: white;
-}
+@import "reset.scss";
+
+@import "fonts.scss";
+@import "global.scss";
+@import "handle.scss";
+@import "omnibox.scss";
+@import "loader.scss";
+
+@import "homepage.scss";

@@ -66,7 +66,7 @@ gulp.task('renderer', function() {
 });
 
 gulp.task('clear', function() {
-	return run('clear').exec();
+	// return run('clear').exec();
 })
 
 gulp.task('default', ['clear', 'sass', 'main', 'renderer', 'watch', 'start', 'console']);
