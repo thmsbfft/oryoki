@@ -15,9 +15,12 @@ c.log('--------');
 c.log(time);
 c.log('--------');
 c.log('');
-function Command(accelerator, callback) {
-	this.accelerator = accelerator;
-	this.callback = callback;
+function Command(options) {
+
+	this.id = options.id;
+	this.accelerator = options.accelerator;
+	this.callback = options.callback;
+
 }
 
 Command.prototype.doWork = function() {
@@ -28,9 +31,20 @@ function CommandManager() {
 	c.log('CommandManager!');
 }
 
-CommandManager.prototype.registerCommand = function(windowId, id, accelerator, callback) {
-	this.register[id] = new Command(accelerator, callback);
-	electronLocalshortcut.register(windowId, this.register[id].accelerator, this.register[id].callback);
+CommandManager.prototype.registerCommand = function(scope, windowId, command) {
+
+	if(scope == 'global') {
+		if(!this.register[command.id]) {
+			this.register[command.id] = command;
+			electronLocalshortcut.register(this.register[command.id].accelerator, this.register[command.id].callback);
+			c.log('registering global command');
+		}
+	}
+	else if (scope == 'local') {
+		this.register[command.id] = command;
+		electronLocalshortcut.register(windowId, this.register[command.id].accelerator, this.register[command.id].callback);
+	}
+
 }
 function Oryoki() {
 	c.log('Oryokiki!');
@@ -42,15 +56,47 @@ function Oryoki() {
 	});
 
 	this.windows = [];
+	this.registerCommands();
 	this.createWindow();
 }
 
-Oryoki.prototype.createWindow = function() {
-	this.windows.push(
-		new Window({
-			'id' : this.windows.length
+Oryoki.prototype.registerCommands = function() {
+	CommandManager.registerCommand(
+		'global',
+		null,
+		new Command({
+			'id' : 'New window',
+			'accelerator' : 'command+n',
+			'callback' : this.createWindow.bind(this)
 		})
 	);
+	electronLocalshortcut.register('command+b', () => {
+	    c.log('You pressed cmd & b');
+	});
+}
+
+Oryoki.prototype.createWindow = function() {
+	c.log(this.windows.length);
+	if(this.windows.length == 0) {
+		// Launch
+		this.windows.push(
+			new Window({
+				'id' : this.windows.length,
+			})
+		);
+	}
+	else {
+		// Additional windows
+		this.windows.push(
+			new Window({
+				'id' : this.windows.length,
+				'x' : this.windows[this.windows.length-1].browser.getPosition()[0]+50,
+				'y' : this.windows[this.windows.length-1].browser.getPosition()[1]+50
+			})
+		);
+	}
+	// c.log(this.windows[this.windows.length-1]);
+	this.windows[this.windows.length-1].browser.focus();
 }
 function Window(parameters) {
 
@@ -64,8 +110,8 @@ function Window(parameters) {
 	  height: 500,
 	  frame: false,
 	  backgroundColor: '#000',
-	  x: 870,
-	  y: 530
+	  x: parameters.x ? parameters.x : 870,
+	  y: parameters.y ? parameters.y : 530
 	});
 
 	this.attachEvents();
@@ -84,7 +130,15 @@ Window.prototype.onReady = function() {
 }
 
 Window.prototype.registerCommands = function() {
-	CommandManager.registerCommand(this.browser, 'Toggle handle', 'command+/', this.toggleHandle.bind(this));
+	CommandManager.registerCommand(
+		'local',
+		this.browser,
+		new Command({
+			'id' : 'Toggle handle',
+			'accelerator' : 'command+/',
+			'callback' : this.toggleHandle.bind(this)
+		})
+	);
 }
 
 Window.prototype.toggleHandle = function() {

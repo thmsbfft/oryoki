@@ -3,7 +3,18 @@ function CommandManager() {
 	c.log('CommandManager!');
 }
 
-CommandManager.prototype.registerCommand = function(windowId, id, accelerator, callback) {
-	this.register[id] = new Command(accelerator, callback);
-	electronLocalshortcut.register(windowId, this.register[id].accelerator, this.register[id].callback);
+CommandManager.prototype.registerCommand = function(scope, windowId, command) {
+
+	if(scope == 'global') {
+		if(!this.register[command.id]) {
+			this.register[command.id] = command;
+			electronLocalshortcut.register(this.register[command.id].accelerator, this.register[command.id].callback);
+			c.log('registering global command');
+		}
+	}
+	else if (scope == 'local') {
+		this.register[command.id] = command;
+		electronLocalshortcut.register(windowId, this.register[command.id].accelerator, this.register[command.id].callback);
+	}
+
 }

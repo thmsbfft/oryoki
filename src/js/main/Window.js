@@ -10,8 +10,8 @@ function Window(parameters) {
 	  height: 500,
 	  frame: false,
 	  backgroundColor: '#000',
-	  x: 870,
-	  y: 530
+	  x: parameters.x ? parameters.x : 870,
+	  y: parameters.y ? parameters.y : 530
 	});
 
 	this.attachEvents();
@@ -30,7 +30,15 @@ Window.prototype.onReady = function() {
 }
 
 Window.prototype.registerCommands = function() {
-	CommandManager.registerCommand(this.browser, 'Toggle handle', 'command+/', this.toggleHandle.bind(this));
+	CommandManager.registerCommand(
+		'local',
+		this.browser,
+		new Command({
+			'id' : 'Toggle handle',
+			'accelerator' : 'command+/',
+			'callback' : this.toggleHandle.bind(this)
+		})
+	);
 }
 
 Window.prototype.toggleHandle = function() {
