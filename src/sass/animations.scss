@@ -1,0 +1,14 @@
+@keyframes blink {
+  0% { border-color: rgba(0, 236, 145, 1); }
+  50% { border-color: rgba(0, 236, 145, 0.6); }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fade-out {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}

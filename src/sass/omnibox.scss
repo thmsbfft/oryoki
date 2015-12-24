@@ -1,7 +1,6 @@
 #omnibox {
 	width: 100%;
 	position: fixed;
-	top: calc(50px + 22px);
 	.box {
 		max-width: 485px;
 		position: relative;
@@ -36,5 +35,11 @@
 			padding-top: 15px;
 			padding-left: 5px;
 		}
+	}
+	&.handle {
+		top: calc(50px + 22px);
+	}
+	&.nohandle {
+		top: calc(50px);
 	}
 }

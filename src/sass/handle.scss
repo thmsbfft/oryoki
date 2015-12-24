@@ -3,7 +3,7 @@
 
 	height: 22px;
 	border-bottom: 1px solid rgba(25, 25, 25, 1);
-	
+
 	.title {
 		width: 100%;
 		padding-top: 6px;
@@ -18,15 +18,20 @@
 		height: 12px;
 		width: 12px;
 
+		&::after {
+			content: '';
+			display: block;
+			margin-left: 3px;
+			margin-top: 3px;
+			height: 6px;
+			width: 6px;
+			border-radius: 100%;
+			background: rgba(0,0,0,0);
+			transition: background-color 0.3s;
+		}
+
 		&:hover {
 			&::after {
-				content: '';
-				display: block;
-				margin-left: 3px;
-				margin-top: 3px;
-				height: 6px;
-				width: 6px;
-				border-radius: 100%;
 				background: rgba(0,0,0,0.3);
 			}
 		}
@@ -34,5 +39,14 @@
 	.close {
 		left: 8px;
 		background: #FF554E;
+	}
+
+	&.hide {
+		display: none;
+	}
+
+	&.show {
+		display: block;
+		animation: fade-in 0.7s 1 ease-out;
 	}
 }

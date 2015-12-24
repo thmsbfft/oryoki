@@ -6,6 +6,8 @@ var gulp        = require('gulp'),
 
 var main = [
 	'src/js/main/console.js',
+	'src/js/main/Command.js',
+	'src/js/main/CommandManager.js',
 	'src/js/main/Oryoki.js',
 	'src/js/main/Window.js',
 	'src/js/main/main.js'
@@ -13,6 +15,9 @@ var main = [
 
 var renderer = [
 	'src/js/renderer/renderer.js',
+	'src/js/renderer/Browser.js',
+	'src/js/renderer/View.js',
+	'src/js/renderer/Handle.js',
 	'src/js/renderer/Omnibox.js'
 ];
 

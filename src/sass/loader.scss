@@ -12,9 +12,4 @@
 	&.loading {
 		animation: blink 0.3s infinite ease-out;
 	}
-
-	@keyframes blink {
-	  0% { border-color: rgba(0, 236, 145, 1); }
-	  50% { border-color: rgba(0, 236, 145, 0.6); }
-	}
 }
