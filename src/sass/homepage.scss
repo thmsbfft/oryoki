@@ -1,7 +1,15 @@
 .homepage {
-	padding: 50px;
+	-webkit-app-region: drag;
+	height: 100%;
+	width: 100%;
 	position: fixed;
-	bottom: 0;
+
+	.infos {
+		position: fixed;
+		bottom: 45px;
+		left: 50px;
+	}
+
 	p {
 		margin-bottom: 0;
 		margin-top: 0;

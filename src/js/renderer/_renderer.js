@@ -1,3 +1,16 @@
+function addClass (el, className) {
+	if (el.classList)
+	  el.classList.add(className);
+	else
+	  el.className += ' ' + className;
+}
+
+function removeClass (el, className) {
+	if (el.classList)
+	  el.classList.remove(className);
+	else
+	  el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+}
 'use strict';
 var ipcRenderer = require('electron').ipcRenderer;
 var fs = require('fs');
@@ -31,6 +44,8 @@ Browser.prototype.attachEvents = function() {
 	console.log('Attaching events');
 	ipcRenderer.on('hideHandle', this.hideHandle.bind(this));
 	ipcRenderer.on('showHandle', this.showHandle.bind(this));
+	ipcRenderer.on('showOmnibox', this.showOmnibox.bind(this));
+	ipcRenderer.on('hideOmnibox', this.hideOmnibox.bind(this));
 }
 
 Browser.prototype.hideHandle = function() {
@@ -41,6 +56,14 @@ Browser.prototype.hideHandle = function() {
 Browser.prototype.showHandle = function() {
 	this.handle.show();
 	this.omnibox.setLow();
+}
+
+Browser.prototype.showOmnibox = function() {
+	this.omnibox.show();
+}
+
+Browser.prototype.hideOmnibox = function() {
+	this.omnibox.hide();
 }
 function View(parameters) {
 
@@ -97,20 +120,29 @@ function Omnibox(parameters) {
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'omnibox-' + this.mode + '.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
 	this.setLow();
+	this.show();
 }
 
 Omnibox.prototype.show = function() {
-
+	removeClass(this.el, 'hide');
+	addClass(this.el, 'show');
+	this.focus();
 }
 
 Omnibox.prototype.hide = function() {
+	removeClass(this.el, 'show');
+	addClass(this.el, 'hide');
+}
 
+Omnibox.prototype.focus = function() {
+	this.el.querySelectorAll('input')[0].focus();
 }
 
 Omnibox.prototype.setHigh = function() {
-	this.el.className = 'nohandle';
+	removeClass(this.el, 'handle');
+	addClass(this.el, 'nohandle');
 }
 
 Omnibox.prototype.setLow = function() {
-	this.el.className = 'handle';
-}
+	removeClass(this.el, 'nohandle');
+	addClass(this.el, 'handle');}

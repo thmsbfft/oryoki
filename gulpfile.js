@@ -14,6 +14,7 @@ var main = [
 ];
 
 var renderer = [
+	'src/js/renderer/utils.js',
 	'src/js/renderer/renderer.js',
 	'src/js/renderer/Browser.js',
 	'src/js/renderer/View.js',

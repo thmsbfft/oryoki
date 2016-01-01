@@ -104,6 +104,7 @@ function Window(parameters) {
 
 	this.id = parameters.id;
 	this.handle = true;
+	this.omnibox = true;
 	
 	this.browser = new BrowserWindow({
 	  width: 800,
@@ -139,6 +140,15 @@ Window.prototype.registerCommands = function() {
 			'callback' : this.toggleHandle.bind(this)
 		})
 	);
+	CommandManager.registerCommand(
+		'local',
+		this.browser,
+		new Command({
+			'id' : 'Toggle omnibox',
+			'accelerator' : 'command+l',
+			'callback' : this.toggleOmnibox.bind(this)
+		})
+	);
 }
 
 Window.prototype.toggleHandle = function() {
@@ -159,6 +169,18 @@ Window.prototype.toggleHandle = function() {
 			this.browser.getSize()[0],
 			this.browser.getSize()[1] + 22
 		);
+	}
+}
+
+Window.prototype.toggleOmnibox = function() {
+	c.log('Toggling Omnibox');
+	if(this.omnibox) {
+		this.omnibox = false;
+		this.browser.webContents.send('hideOmnibox');
+	}
+	else {
+		this.omnibox = true;
+		this.browser.webContents.send('showOmnibox');
 	}
 }
 

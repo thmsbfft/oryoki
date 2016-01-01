@@ -42,4 +42,11 @@
 	&.nohandle {
 		top: calc(50px);
 	}
+	&.show {
+		animation: fade-in 0.1s 1 ease-out;
+		display: block;
+	}
+	&.hide {
+		display: none;
+	}
 }

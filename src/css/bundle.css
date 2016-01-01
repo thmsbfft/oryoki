@@ -141,6 +141,11 @@ body {
     top: calc(50px + 22px); }
   #omnibox.nohandle {
     top: calc(50px); }
+  #omnibox.show {
+    animation: fade-in 0.1s 1 ease-out;
+    display: block; }
+  #omnibox.hide {
+    display: none; }
 
 #loader {
   display: block;
@@ -156,9 +161,14 @@ body {
     animation: blink 0.3s infinite ease-out; }
 
 .homepage {
-  padding: 50px;
-  position: fixed;
-  bottom: 0; }
+  -webkit-app-region: drag;
+  height: 100%;
+  width: 100%;
+  position: fixed; }
+  .homepage .infos {
+    position: fixed;
+    bottom: 45px;
+    left: 50px; }
   .homepage p {
     margin-bottom: 0;
     margin-top: 0;
