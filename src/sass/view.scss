@@ -1,8 +1,17 @@
 #view {
+	width: 100%;
 	&.handle {
 		height: calc(100% - 23px);
 	}
 	&.noHandle {
 		height: 100%;
+	}
+	.pages {
+		&.active {
+			display: block;
+		}
+		&.inactive {
+			display: none;
+		}
 	}
 }

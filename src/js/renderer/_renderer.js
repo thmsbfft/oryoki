@@ -23,83 +23,100 @@ ipcRenderer.on('ready', function() {
 	browser = new Browser();
 
 })
-function Browser(parameters) {
-	
-	this.omnibox = new Omnibox({
-		'mode' : 'url',
-	});
+function Loader(parameters) {
 
-	this.handle = new Handle({
+	this.el = document.querySelectorAll('#loader')[0];
 
-	});
+	console.log('Loader');
 
-	this.view = new View({
-		'page' : 'homepage'
-	});
-
-	this.attachEvents();
+	this.show();
 }
 
-Browser.prototype.attachEvents = function() {
-	console.log('Attaching events');
-	ipcRenderer.on('hideHandle', this.hideHandle.bind(this));
-	ipcRenderer.on('showHandle', this.showHandle.bind(this));
-	ipcRenderer.on('showOmnibox', this.showOmnibox.bind(this));
-	ipcRenderer.on('hideOmnibox', this.hideOmnibox.bind(this));
+Loader.prototype.loading = function() {
+	addClass(this.el, 'loading');
 }
 
-Browser.prototype.hideHandle = function() {
-	this.handle.hide();
-	this.omnibox.setHigh();
-	this.view.setHeightNoHandle();
+Loader.prototype.reset = function() {
+	this.el.className = 'show';
 }
 
-Browser.prototype.showHandle = function() {
-	this.handle.show();
-	this.omnibox.setLow();
-	this.view.setHeightHandle();
+Loader.prototype.hide = function() {
+	this.el.className = 'hide';
 }
 
-Browser.prototype.showOmnibox = function() {
-	this.omnibox.show();
-}
-
-Browser.prototype.hideOmnibox = function() {
-	this.omnibox.hide();
-	// if(this.view.page == 'homepage') this.omnibox.show();
-	// else this.omnibox.hide();
+Loader.prototype.show = function() {
+	this.el.className = 'show';
 }
 function View(parameters) {
 
 	this.el = document.querySelectorAll('#view')[0];
+	this.pages = document.querySelectorAll('#view .pages')[0];
+
+	this.onDidFinishLoadCallback = parameters.onDidFinishLoad;
+
 	this.htmlData = undefined;
+	this.webview = undefined;
 	this.page = parameters.page;
+
+	this.isHandleDisplayed = true;
 
 	console.log('View!');
 
 	this.build();
-	this.setHeightHandle();
 }
 
 View.prototype.build = function() {
+
+	// Load Homepage
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', this.page + '.html'), 'utf8');
-	this.el.innerHTML = this.htmlData;
-	// this.el.className = this.page;
-	// console.log(this.htmlData);
+	this.pages.innerHTML = this.htmlData;
+	addClass(this.pages, 'active');
+
+	// Create Webview
+	this.webview = this.el.appendChild(document.createElement('webview'));
+	this.webview.className = 'webview';
+	addClass(this.webview, 'inactive');
+
+	this.resize();
+	this.attachEvents();
 }
 
-View.prototype.setHeightHandle = function() {
-	removeClass(this.el, 'noHandle');
-	addClass(this.el, 'handle');
+View.prototype.attachEvents = function() {
+	window.addEventListener('resize', this.resize.bind(this));
+	this.webview.addEventListener('did-finish-load', this.onDidFinishLoad.bind(this));
 }
 
-View.prototype.setHeightNoHandle = function() {
-	removeClass(this.el, 'handle');
-	addClass(this.el, 'noHandle');
+View.prototype.resize = function() {
+	if(this.isHandleDisplayed) {
+		this.el.style.width = window.innerWidth+"px";
+		this.el.style.height = (window.innerHeight - document.querySelectorAll('#handle')[0].offsetHeight) + 'px';
+	}
+	else {
+		this.el.style.width = window.innerWidth+"px";
+		this.el.style.height = window.innerHeight+"px";
+	}
 }
 
-View.prototype.load = function() {
+View.prototype.load = function(input) {
+	console.log('Loading: ' + input);
 
+	addClass(this.pages, 'inactive');
+	removeClass(this.pages, 'active');
+
+	removeClass(this.webview, 'inactive');
+	addClass(this.webview, 'active');
+	addClass(this.webview, 'loading');
+
+	this.webview.setAttribute('src', input);
+}
+
+View.prototype.onDidFinishLoad = function() {
+	console.log('onDidFinishLoad');
+
+	removeClass(this.webview, 'loading');
+	addClass(this.webview, 'loaded');
+
+	this.onDidFinishLoadCallback();
 }
 function Handle(parameters) {
 
@@ -129,8 +146,11 @@ function Omnibox(parameters) {
 	this.el = document.querySelectorAll('#omnibox')[0];
 	this.htmlData = undefined;
 	this.mode = parameters.mode;
+	this.submitCallback = parameters.onsubmit;
 
 	console.log('Omnibox!');
+
+	this.isTabDown = false;
 
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'omnibox-' + this.mode + '.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
@@ -141,20 +161,27 @@ function Omnibox(parameters) {
 
 Omnibox.prototype.attachEvents = function() {
 	this.el.querySelectorAll('input')[0].addEventListener('keydown', this.onKeyDown.bind(this));
+	this.el.querySelectorAll('input')[0].addEventListener('keyup', this.onKeyUp.bind(this));
 }
 
 Omnibox.prototype.onKeyDown = function(e) {
 	if(!e) var e = window.event;
-	console.log(e.keyCode);
+	// console.log(e.keyCode);
 	if(e.keyCode == 9) {
-		this.switchMode();
+		if(!this.isTabDown) this.switchMode();
+		this.isTabDown = true;
 		e.preventDefault();
 	}
 	if(e.keyCode == 13) this.submit();
 }
 
+Omnibox.prototype.onKeyUp = function(e) {
+	if(e.keyCode == 9) this.isTabDown = false;
+}
+
 Omnibox.prototype.submit = function() {
-	console.log('Submit!');
+	var raw = this.el.querySelectorAll('input')[0].value;
+	this.submitCallback(raw);
 }
 
 Omnibox.prototype.switchMode = function() {
@@ -165,11 +192,13 @@ Omnibox.prototype.show = function() {
 	removeClass(this.el, 'hide');
 	addClass(this.el, 'show');
 	this.focus();
+	ipcRenderer.send('setOmniboxShow');
 }
 
 Omnibox.prototype.hide = function() {
 	removeClass(this.el, 'show');
 	addClass(this.el, 'hide');
+	ipcRenderer.send('setOmniboxHide');
 }
 
 Omnibox.prototype.focus = function() {
@@ -184,3 +213,71 @@ Omnibox.prototype.setHigh = function() {
 Omnibox.prototype.setLow = function() {
 	removeClass(this.el, 'nohandle');
 	addClass(this.el, 'handle');}
+
+function Browser(parameters) {
+	
+	this.omnibox = new Omnibox({
+		'mode' : 'url',
+		'onsubmit' : this.onSubmit.bind(this)
+	});
+
+	this.handle = new Handle({
+
+	});
+
+	this.loader = new Loader({
+
+	});
+
+	this.view = new View({
+		'page' : 'homepage',
+		'onDidFinishLoad' : this.onDidFinishLoad.bind(this)
+	});
+
+	this.attachEvents();
+}
+
+Browser.prototype.attachEvents = function() {
+	console.log('Attaching events');
+	ipcRenderer.on('hideHandle', this.hideHandle.bind(this));
+	ipcRenderer.on('showHandle', this.showHandle.bind(this));
+	ipcRenderer.on('showOmnibox', this.showOmnibox.bind(this));
+	ipcRenderer.on('hideOmnibox', this.hideOmnibox.bind(this));
+}
+
+Browser.prototype.onSubmit = function(input) {
+	console.log('Browser submit!');
+	this.view.load(input);
+	// console.log(input);
+}
+
+Browser.prototype.onDidFinishLoad = function(input) {
+	this.omnibox.hide();
+	this.loader.hide();
+}
+
+Browser.prototype.hideHandle = function() {
+	this.handle.hide();
+	this.omnibox.setHigh();
+
+	this.view.isHandleDisplayed = false;
+	this.view.resize();
+}
+
+Browser.prototype.showHandle = function() {
+	this.handle.show();
+	this.omnibox.setLow();
+	
+	this.view.isHandleDisplayed = true;
+	this.view.resize();
+}
+
+Browser.prototype.showOmnibox = function() {
+	this.omnibox.show();
+}
+
+Browser.prototype.hideOmnibox = function() {
+	this.omnibox.hide();
+	// if(this.view.page == 'homepage') this.omnibox.show();
+	// else this.omnibox.hide();
+}

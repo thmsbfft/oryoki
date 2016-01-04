@@ -1,0 +1,17 @@
+.webview {
+	height: 100%;
+	width: 100%;
+
+	&.inactive {
+		display: none;
+	}
+	&.active {
+		display: block;
+	}
+	&.loading {
+		opacity: 0;
+	}
+	&.loaded {
+		opacity: 1;
+	}
+}

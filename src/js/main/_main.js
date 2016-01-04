@@ -119,6 +119,9 @@ function Window(parameters) {
 Window.prototype.attachEvents = function() {
 	this.browser.webContents.on('did-finish-load', this.onReady.bind(this));
 	this.browser.on('closed', this.dispose.bind(this));
+
+	ipcMain.on('setOmniboxShow', this.setOmniboxShow.bind(this));
+	ipcMain.on('setOmniboxHide', this.setOmniboxHide.bind(this));
 }
 
 Window.prototype.onReady = function() {
@@ -147,6 +150,26 @@ Window.prototype.registerCommands = function() {
 	);
 }
 
+Window.prototype.setOmniboxShow = function() {
+	this.omnibox = true;
+}
+
+Window.prototype.setOmniboxHide = function() {
+	this.omnibox = false;
+}
+
+Window.prototype.showOmnibox = function() {
+	c.log('Showing Omnibox');
+	this.omnibox = true;
+	this.browser.webContents.send('showOmnibox');
+}
+
+Window.prototype.hideOmnibox = function() {
+	c.log('Hiding Omnibox');
+	this.omnibox = false;
+	this.browser.webContents.send('hideOmnibox');
+}
+
 Window.prototype.toggleHandle = function() {
 	if(this.handle) {
 		c.log('Hiding handle!');
@@ -171,12 +194,10 @@ Window.prototype.toggleHandle = function() {
 Window.prototype.toggleOmnibox = function() {
 	c.log('Toggling Omnibox');
 	if(this.omnibox) {
-		this.omnibox = false;
-		this.browser.webContents.send('hideOmnibox');
+		this.hideOmnibox();
 	}
 	else {
-		this.omnibox = true;
-		this.browser.webContents.send('showOmnibox');
+		this.showOmnibox();
 	}
 }
 

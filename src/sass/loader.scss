@@ -12,4 +12,10 @@
 	&.loading {
 		animation: blink 0.3s infinite ease-out;
 	}
+	&.hide {
+		display: none;
+	}
+	&.show {
+		display: block;
+	}
 }

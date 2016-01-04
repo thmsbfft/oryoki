@@ -16,10 +16,11 @@ var main = [
 var renderer = [
 	'src/js/renderer/utils.js',
 	'src/js/renderer/renderer.js',
-	'src/js/renderer/Browser.js',
+	'src/js/renderer/Loader.js',
 	'src/js/renderer/View.js',
 	'src/js/renderer/Handle.js',
-	'src/js/renderer/Omnibox.js'
+	'src/js/renderer/Omnibox.js',
+	'src/js/renderer/Browser.js'
 ];
 
 // ELECTRON

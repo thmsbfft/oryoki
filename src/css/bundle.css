@@ -103,11 +103,16 @@ body {
     display: block;
     animation: fade-in 0.7s 1 ease-out; }
 
-#view.handle {
-  height: calc(100% - 23px); }
-
-#view.noHandle {
-  height: 100%; }
+#view {
+  width: 100%; }
+  #view.handle {
+    height: calc(100% - 23px); }
+  #view.noHandle {
+    height: 100%; }
+  #view .pages.active {
+    display: block; }
+  #view .pages.inactive {
+    display: none; }
 
 #omnibox {
   width: 100%;
@@ -165,6 +170,22 @@ body {
   transition: border-color 0.2s; }
   #loader.loading {
     animation: blink 0.3s infinite ease-out; }
+  #loader.hide {
+    display: none; }
+  #loader.show {
+    display: block; }
+
+.webview {
+  height: 100%;
+  width: 100%; }
+  .webview.inactive {
+    display: none; }
+  .webview.active {
+    display: block; }
+  .webview.loading {
+    opacity: 0; }
+  .webview.loaded {
+    opacity: 1; }
 
 .homepage {
   -webkit-app-region: drag;
