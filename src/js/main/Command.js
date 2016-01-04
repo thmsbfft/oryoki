@@ -5,7 +5,3 @@ function Command(options) {
 	this.callback = options.callback;
 
 }
-
-Command.prototype.doWork = function() {
-	
-}
