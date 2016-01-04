@@ -103,6 +103,12 @@ body {
     display: block;
     animation: fade-in 0.7s 1 ease-out; }
 
+#view.handle {
+  height: calc(100% - 23px); }
+
+#view.noHandle {
+  height: 100%; }
+
 #omnibox {
   width: 100%;
   position: fixed; }

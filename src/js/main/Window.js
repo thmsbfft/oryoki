@@ -11,13 +11,13 @@ function Window(parameters) {
 	  height: 500,
 	  frame: false,
 	  backgroundColor: '#000',
-	  x: parameters.x ? parameters.x : 870,
-	  y: parameters.y ? parameters.y : 530
+	  x: parameters.x ? parameters.x : 890,
+	  y: parameters.y ? parameters.y : 660
 	});
 
 	this.attachEvents();
 	this.browser.loadURL('file://'+path.join(__dirname, '..', '..', 'html', 'index.html'));
-	// this.browser.webContents.openDevTools();
+	this.browser.webContents.openDevTools();
 }
 
 Window.prototype.attachEvents = function() {

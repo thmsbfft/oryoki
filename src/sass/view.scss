@@ -1,0 +1,8 @@
+#view {
+	&.handle {
+		height: calc(100% - 23px);
+	}
+	&.noHandle {
+		height: 100%;
+	}
+}

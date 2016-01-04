@@ -26,11 +26,13 @@ Browser.prototype.attachEvents = function() {
 Browser.prototype.hideHandle = function() {
 	this.handle.hide();
 	this.omnibox.setHigh();
+	this.view.setHeightNoHandle();
 }
 
 Browser.prototype.showHandle = function() {
 	this.handle.show();
 	this.omnibox.setLow();
+	this.view.setHeightHandle();
 }
 
 Browser.prototype.showOmnibox = function() {

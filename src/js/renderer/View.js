@@ -7,6 +7,7 @@ function View(parameters) {
 	console.log('View!');
 
 	this.build();
+	this.setHeightHandle();
 }
 
 View.prototype.build = function() {
@@ -14,6 +15,16 @@ View.prototype.build = function() {
 	this.el.innerHTML = this.htmlData;
 	this.el.className = this.page;
 	// console.log(this.htmlData);
+}
+
+View.prototype.setHeightHandle = function() {
+	removeClass(this.el, 'noHandle');
+	addClass(this.el, 'handle');
+}
+
+View.prototype.setHeightNoHandle = function() {
+	removeClass(this.el, 'handle');
+	addClass(this.el, 'noHandle');
 }
 
 View.prototype.load = function() {
