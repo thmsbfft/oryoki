@@ -13,7 +13,7 @@ function View(parameters) {
 View.prototype.build = function() {
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', this.page + '.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
-	this.el.className = this.page;
+	// this.el.className = this.page;
 	// console.log(this.htmlData);
 }
 

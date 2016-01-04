@@ -41,4 +41,6 @@ Browser.prototype.showOmnibox = function() {
 
 Browser.prototype.hideOmnibox = function() {
 	this.omnibox.hide();
+	// if(this.view.page == 'homepage') this.omnibox.show();
+	// else this.omnibox.hide();
 }

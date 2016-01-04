@@ -66,6 +66,8 @@ Browser.prototype.showOmnibox = function() {
 
 Browser.prototype.hideOmnibox = function() {
 	this.omnibox.hide();
+	// if(this.view.page == 'homepage') this.omnibox.show();
+	// else this.omnibox.hide();
 }
 function View(parameters) {
 
@@ -82,7 +84,7 @@ function View(parameters) {
 View.prototype.build = function() {
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', this.page + '.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
-	this.el.className = this.page;
+	// this.el.className = this.page;
 	// console.log(this.htmlData);
 }
 
@@ -132,8 +134,31 @@ function Omnibox(parameters) {
 
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'omnibox-' + this.mode + '.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
+	this.attachEvents();
 	this.setLow();
 	this.show();
+}
+
+Omnibox.prototype.attachEvents = function() {
+	this.el.querySelectorAll('input')[0].addEventListener('keydown', this.onKeyDown.bind(this));
+}
+
+Omnibox.prototype.onKeyDown = function(e) {
+	if(!e) var e = window.event;
+	console.log(e.keyCode);
+	if(e.keyCode == 9) {
+		this.switchMode();
+		e.preventDefault();
+	}
+	if(e.keyCode == 13) this.submit();
+}
+
+Omnibox.prototype.submit = function() {
+	console.log('Submit!');
+}
+
+Omnibox.prototype.switchMode = function() {
+	console.log('Switching mode');
 }
 
 Omnibox.prototype.show = function() {
