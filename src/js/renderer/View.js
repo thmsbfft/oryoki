@@ -39,7 +39,14 @@ View.prototype.build = function() {
 View.prototype.attachEvents = function() {
 	window.addEventListener('resize', this.resize.bind(this));
 	this.webview.addEventListener('did-finish-load', this.onDidFinishLoad.bind(this));
+	this.webview.addEventListener('did-start-loading', this.attachWebviewEvents.bind(this));
 	this.webview.addEventListener('dom-ready', this.onDOMReady.bind(this));
+}
+
+View.prototype.attachWebviewEvents = function() {
+	console.log('Attaching Webview Events');
+	this.webview.addEventListener('will-navigate', this.onWillNavigate.bind(this));
+	this.webview.addEventListener('did-navigate-in-page', this.onWillNavigate.bind(this));
 }
 
 View.prototype.resize = function() {
@@ -77,6 +84,10 @@ View.prototype.onDidFinishLoad = function() {
 
 View.prototype.onDOMReady = function() {
 	this.onDOMReadyCallback();
+}
+
+View.prototype.onWillNavigate = function(e) {
+	console.log('Will navigate to:', e.url);
 }
 
 View.prototype.getTitle = function() {

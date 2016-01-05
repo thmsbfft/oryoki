@@ -34,6 +34,11 @@
 			color: rgba(255, 255, 255, 0.2);
 			padding-top: 15px;
 			padding-left: 5px;
+			transition: border-color 0.05s, color 0.05s;
+			&.active {
+				color: rgba(255, 255, 255, 0.6);
+				// border: 1px solid rgba(255, 255, 255, 0.6);
+			}
 		}
 	}
 	&.handle {

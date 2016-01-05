@@ -1,16 +1,30 @@
 function Omnibox(parameters) {
 
+	this.modes = {
+		'url' : 'Search',
+		'lucky' : 'Lucky',
+		'wikipedia' : 'Wikipedia',
+		'stackoverflow' : 'Stackoverflow'
+	};
+	this.modeIndex = 0;
+	this.mode = Object.keys(this.modes)[this.modeIndex];
+
 	this.el = document.querySelectorAll('#omnibox')[0];
 	this.htmlData = undefined;
-	this.mode = parameters.mode;
+	console.log(this.mode);
 	this.submitCallback = parameters.onsubmit;
 
 	console.log('Omnibox!');
 
 	this.isTabDown = false;
 
-	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'omnibox-' + this.mode + '.html'), 'utf8');
+	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'omnibox.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
+	this.input = document.querySelectorAll('#omnibox .input')[0];
+	this.tab = document.querySelectorAll('#omnibox .tab')[0];
+
+	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
+
 	this.attachEvents();
 	this.setLow();
 	this.show();
@@ -26,6 +40,7 @@ Omnibox.prototype.onKeyDown = function(e) {
 	// console.log(e.keyCode);
 	if(e.keyCode == 9) {
 		if(!this.isTabDown) this.switchMode();
+		addClass(this.tab, 'active');
 		this.isTabDown = true;
 		e.preventDefault();
 	}
@@ -33,16 +48,58 @@ Omnibox.prototype.onKeyDown = function(e) {
 }
 
 Omnibox.prototype.onKeyUp = function(e) {
-	if(e.keyCode == 9) this.isTabDown = false;
+	if(e.keyCode == 9) {
+		this.isTabDown = false;
+		removeClass(this.tab, 'active');
+	}
 }
 
 Omnibox.prototype.submit = function() {
 	var raw = this.el.querySelectorAll('input')[0].value;
-	this.submitCallback(raw);
+	var output = null;
+
+	var domain = new RegExp(/[a-z]+(\.[a-z]+)+/ig);
+
+	if(this.mode == 'url') {
+		if(domain.test(raw)) {
+			// console.log('This is a domain!');
+			if (!raw.match(/^[a-zA-Z]+:\/\//))
+			{
+			    output = 'http://' + raw;
+			}
+			else {
+				output = raw;
+			}
+		}
+		else {
+			// console.log('This is not a domain!');
+			output = 'https://www.google.com/ncr?gws_rd=ssl#q=' + raw;
+		}
+	}
+	else if(this.mode == 'lucky') {
+		output = 'http://www.google.com/search?q=' + raw + '&btnI';
+	}
+	else if(this.mode == 'stackoverflow') {
+		output = 'http://stackoverflow.com/search?q=' + raw;
+	}
+	else if(this.mode == 'wikipedia') {
+		output = 'https://en.wikipedia.org/w/index.php?search=' + raw;
+	}
+
+	this.submitCallback(output);
 }
 
 Omnibox.prototype.switchMode = function() {
 	console.log('Switching mode');
+	this.input.value = '';
+	this.modeIndex++;
+	if(this.modeIndex >= Object.keys(this.modes).length) {
+		this.modeIndex = 0;
+	}
+	this.mode = Object.keys(this.modes)[this.modeIndex];
+
+	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
+
 }
 
 Omnibox.prototype.show = function() {
