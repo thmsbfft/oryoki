@@ -2,11 +2,11 @@
 	height: 100%;
 	width: 100%;
 
-	&.inactive {
-		display: none;
-	}
-	&.active {
+	&.show {
 		display: block;
+	}
+	&.hide {
+		display: none;
 	}
 	&.loading {
 		opacity: 0;

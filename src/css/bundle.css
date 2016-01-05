@@ -69,15 +69,18 @@ body {
 #handle {
   -webkit-app-region: drag;
   height: 22px;
-  border-bottom: 1px solid #191919; }
+  border-bottom: 1px solid #191919;
+  text-align: center; }
   #handle .title {
-    width: 100%;
     padding-top: 6px;
     text-align: center;
     font-family: 'Roboto Light', sans-serif;
-    font-size: 12px; }
+    font-size: 12px;
+    display: inline-block;
+    -webkit-app-region: no-drag; }
   #handle .button {
     position: absolute;
+    -webkit-app-region: no-drag;
     top: 5px;
     border-radius: 100%;
     height: 12px;
@@ -109,10 +112,14 @@ body {
     height: calc(100% - 23px); }
   #view.noHandle {
     height: 100%; }
-  #view .pages.active {
+  #view .pages.show {
     display: block; }
-  #view .pages.inactive {
+  #view .pages.hide {
     display: none; }
+  #view.show {
+    opacity: 1; }
+  #view.hide {
+    opacity: 0; }
 
 #omnibox {
   width: 100%;
@@ -175,13 +182,26 @@ body {
   #loader.show {
     display: block; }
 
+#dragOverlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  -webkit-app-region: drag;
+  z-index: 99;
+  display: none;
+  background: transparent; }
+  #dragOverlay.active {
+    display: block; }
+
 .webview {
   height: 100%;
   width: 100%; }
-  .webview.inactive {
-    display: none; }
-  .webview.active {
+  .webview.show {
     display: block; }
+  .webview.hide {
+    display: none; }
   .webview.loading {
     opacity: 0; }
   .webview.loaded {

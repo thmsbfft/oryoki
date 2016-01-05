@@ -17,7 +17,7 @@ function Window(parameters) {
 
 	this.attachEvents();
 	this.browser.loadURL('file://'+path.join(__dirname, '..', '..', 'html', 'index.html'));
-	this.browser.webContents.openDevTools();
+	// this.browser.webContents.openDevTools();
 }
 
 Window.prototype.attachEvents = function() {

@@ -3,11 +3,12 @@ function View(parameters) {
 	this.el = document.querySelectorAll('#view')[0];
 	this.pages = document.querySelectorAll('#view .pages')[0];
 
+	this.page = parameters.page;
 	this.onDidFinishLoadCallback = parameters.onDidFinishLoad;
+	this.onDOMReadyCallback = parameters.onDOMReady;
 
 	this.htmlData = undefined;
 	this.webview = undefined;
-	this.page = parameters.page;
 
 	this.isHandleDisplayed = true;
 
@@ -21,12 +22,15 @@ View.prototype.build = function() {
 	// Load Homepage
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', this.page + '.html'), 'utf8');
 	this.pages.innerHTML = this.htmlData;
-	addClass(this.pages, 'active');
+	if(this.page == 'homepage') {
+		document.querySelectorAll('#view .pages .homepage .chromeVersion')[0].innerHTML = conf.chromeVersion;
+	}
+	addClass(this.pages, 'show');
 
 	// Create Webview
 	this.webview = this.el.appendChild(document.createElement('webview'));
 	this.webview.className = 'webview';
-	addClass(this.webview, 'inactive');
+	addClass(this.webview, 'hide');
 
 	this.resize();
 	this.attachEvents();
@@ -35,6 +39,7 @@ View.prototype.build = function() {
 View.prototype.attachEvents = function() {
 	window.addEventListener('resize', this.resize.bind(this));
 	this.webview.addEventListener('did-finish-load', this.onDidFinishLoad.bind(this));
+	this.webview.addEventListener('dom-ready', this.onDOMReady.bind(this));
 }
 
 View.prototype.resize = function() {
@@ -51,11 +56,11 @@ View.prototype.resize = function() {
 View.prototype.load = function(input) {
 	console.log('Loading: ' + input);
 
-	addClass(this.pages, 'inactive');
-	removeClass(this.pages, 'active');
+	addClass(this.pages, 'hide');
+	removeClass(this.pages, 'show');
 
-	removeClass(this.webview, 'inactive');
-	addClass(this.webview, 'active');
+	removeClass(this.webview, 'hide');
+	addClass(this.webview, 'show');
 	addClass(this.webview, 'loading');
 
 	this.webview.setAttribute('src', input);
@@ -68,4 +73,20 @@ View.prototype.onDidFinishLoad = function() {
 	addClass(this.webview, 'loaded');
 
 	this.onDidFinishLoadCallback();
+}
+
+View.prototype.onDOMReady = function() {
+	this.onDOMReadyCallback();
+}
+
+View.prototype.getTitle = function() {
+	return this.webview.getTitle();
+}
+
+View.prototype.show = function() {
+	this.el.className = 'show';
+}
+
+View.prototype.hide = function() {
+	this.el.className = 'hide';
 }

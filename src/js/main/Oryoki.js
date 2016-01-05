@@ -1,11 +1,15 @@
 function Oryoki() {
-	c.log('Oryokiki!');
 
 	app.on('window-all-closed', function() {
 	  if (process.platform != 'darwin') {
 	    app.quit();
 	  }
 	});
+
+	this.versions = {
+		'chromeVersion' : process.versions.chrome,
+		'electronVersion' : process.versions.electron
+	}
 
 	this.windows = [];
 	this.registerCommands();
@@ -22,9 +26,10 @@ Oryoki.prototype.registerCommands = function() {
 			'callback' : this.createWindow.bind(this)
 		})
 	);
-	electronLocalshortcut.register('command+b', () => {
-	    c.log('You pressed cmd & b');
-	});
+
+	// electronLocalshortcut.register('command+b', () => {
+	//     c.log('You pressed cmd & b');
+	// });
 }
 
 Oryoki.prototype.createWindow = function() {
@@ -49,4 +54,8 @@ Oryoki.prototype.createWindow = function() {
 	}
 	// c.log(this.windows[this.windows.length-1]);
 	this.windows[this.windows.length-1].browser.focus();
+}
+
+Oryoki.prototype.getChromeVersion = function() {
+	return this.chromeVersion;
 }

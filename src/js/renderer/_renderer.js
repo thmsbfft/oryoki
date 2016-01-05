@@ -15,12 +15,15 @@ function removeClass (el, className) {
 var ipcRenderer = require('electron').ipcRenderer;
 var fs = require('fs');
 var path = require('path');
-var browser = undefined;
+var conf = {
+	'chromeVersion' : process.versions.chrome,
+	'electronVersion' : process.versions.electron
+};
 
 ipcRenderer.on('ready', function() {
 	
 	console.log('Ready!');
-	browser = new Browser();
+	Browser = new Browser();
 
 })
 function Loader(parameters) {
@@ -52,11 +55,12 @@ function View(parameters) {
 	this.el = document.querySelectorAll('#view')[0];
 	this.pages = document.querySelectorAll('#view .pages')[0];
 
+	this.page = parameters.page;
 	this.onDidFinishLoadCallback = parameters.onDidFinishLoad;
+	this.onDOMReadyCallback = parameters.onDOMReady;
 
 	this.htmlData = undefined;
 	this.webview = undefined;
-	this.page = parameters.page;
 
 	this.isHandleDisplayed = true;
 
@@ -70,12 +74,15 @@ View.prototype.build = function() {
 	// Load Homepage
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', this.page + '.html'), 'utf8');
 	this.pages.innerHTML = this.htmlData;
-	addClass(this.pages, 'active');
+	if(this.page == 'homepage') {
+		document.querySelectorAll('#view .pages .homepage .chromeVersion')[0].innerHTML = conf.chromeVersion;
+	}
+	addClass(this.pages, 'show');
 
 	// Create Webview
 	this.webview = this.el.appendChild(document.createElement('webview'));
 	this.webview.className = 'webview';
-	addClass(this.webview, 'inactive');
+	addClass(this.webview, 'hide');
 
 	this.resize();
 	this.attachEvents();
@@ -84,6 +91,7 @@ View.prototype.build = function() {
 View.prototype.attachEvents = function() {
 	window.addEventListener('resize', this.resize.bind(this));
 	this.webview.addEventListener('did-finish-load', this.onDidFinishLoad.bind(this));
+	this.webview.addEventListener('dom-ready', this.onDOMReady.bind(this));
 }
 
 View.prototype.resize = function() {
@@ -100,11 +108,11 @@ View.prototype.resize = function() {
 View.prototype.load = function(input) {
 	console.log('Loading: ' + input);
 
-	addClass(this.pages, 'inactive');
-	removeClass(this.pages, 'active');
+	addClass(this.pages, 'hide');
+	removeClass(this.pages, 'show');
 
-	removeClass(this.webview, 'inactive');
-	addClass(this.webview, 'active');
+	removeClass(this.webview, 'hide');
+	addClass(this.webview, 'show');
 	addClass(this.webview, 'loading');
 
 	this.webview.setAttribute('src', input);
@@ -118,9 +126,26 @@ View.prototype.onDidFinishLoad = function() {
 
 	this.onDidFinishLoadCallback();
 }
+
+View.prototype.onDOMReady = function() {
+	this.onDOMReadyCallback();
+}
+
+View.prototype.getTitle = function() {
+	return this.webview.getTitle();
+}
+
+View.prototype.show = function() {
+	this.el.className = 'show';
+}
+
+View.prototype.hide = function() {
+	this.el.className = 'hide';
+}
 function Handle(parameters) {
 
 	this.el = document.querySelectorAll('#handle')[0];
+	this.title = undefined;
 	this.htmlData = undefined;
 
 	console.log('Handle');
@@ -132,6 +157,7 @@ function Handle(parameters) {
 Handle.prototype.build = function() {
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'handle.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
+	this.title = document.querySelectorAll('#handle .title')[0];
 }
 
 Handle.prototype.hide = function() {
@@ -140,6 +166,10 @@ Handle.prototype.hide = function() {
 
 Handle.prototype.show = function() {
 	this.el.className = 'show';
+}
+
+Handle.prototype.changeTitle = function(newTitle) {
+	this.title.innerHTML = newTitle;
 }
 function Omnibox(parameters) {
 
@@ -215,7 +245,7 @@ Omnibox.prototype.setLow = function() {
 	addClass(this.el, 'handle');}
 
 function Browser(parameters) {
-	
+
 	this.omnibox = new Omnibox({
 		'mode' : 'url',
 		'onsubmit' : this.onSubmit.bind(this)
@@ -231,9 +261,12 @@ function Browser(parameters) {
 
 	this.view = new View({
 		'page' : 'homepage',
-		'onDidFinishLoad' : this.onDidFinishLoad.bind(this)
+		'onDidFinishLoad' : this.onDidFinishLoad.bind(this),
+		'onDOMReady' : this.onDOMReady.bind(this)
 	});
 
+	this.dragOverlay = document.querySelectorAll('#dragOverlay')[0];
+	this.draggingOverlay = false;
 	this.attachEvents();
 }
 
@@ -243,17 +276,41 @@ Browser.prototype.attachEvents = function() {
 	ipcRenderer.on('showHandle', this.showHandle.bind(this));
 	ipcRenderer.on('showOmnibox', this.showOmnibox.bind(this));
 	ipcRenderer.on('hideOmnibox', this.hideOmnibox.bind(this));
+
+	window.addEventListener('keydown', this.onKeyDown.bind(this));
+	window.addEventListener('keyup', this.onKeyUp.bind(this));
+}
+
+Browser.prototype.onKeyDown = function(e) {
+	if(!e) var e = window.event;
+	if(e.keyCode == 18) {
+		this.dragOverlay.className = 'active';
+	}
+}
+
+Browser.prototype.onKeyUp = function(e) {
+	if(!e) var e = window.event;
+	if(e.keyCode == 18) {
+		this.dragOverlay.className = '';
+	}
 }
 
 Browser.prototype.onSubmit = function(input) {
 	console.log('Browser submit!');
+	this.loader.loading();
 	this.view.load(input);
 	// console.log(input);
+}
+
+Browser.prototype.onDOMReady = function() {
+	console.log('DOM Ready!');
+	this.handle.changeTitle(this.view.getTitle());
 }
 
 Browser.prototype.onDidFinishLoad = function(input) {
 	this.omnibox.hide();
 	this.loader.hide();
+	this.view.show();
 }
 
 Browser.prototype.hideHandle = function() {
@@ -274,10 +331,14 @@ Browser.prototype.showHandle = function() {
 
 Browser.prototype.showOmnibox = function() {
 	this.omnibox.show();
+	this.loader.show();
+	this.view.hide();
 }
 
 Browser.prototype.hideOmnibox = function() {
 	this.omnibox.hide();
+	this.loader.hide();
+	this.view.show();
 	// if(this.view.page == 'homepage') this.omnibox.show();
 	// else this.omnibox.hide();
 }

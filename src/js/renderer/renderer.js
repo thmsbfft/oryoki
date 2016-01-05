@@ -2,11 +2,14 @@
 var ipcRenderer = require('electron').ipcRenderer;
 var fs = require('fs');
 var path = require('path');
-var browser = undefined;
+var conf = {
+	'chromeVersion' : process.versions.chrome,
+	'electronVersion' : process.versions.electron
+};
 
 ipcRenderer.on('ready', function() {
 	
 	console.log('Ready!');
-	browser = new Browser();
+	Browser = new Browser();
 
 })
