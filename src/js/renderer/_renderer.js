@@ -90,15 +90,25 @@ View.prototype.build = function() {
 
 View.prototype.attachEvents = function() {
 	window.addEventListener('resize', this.resize.bind(this));
-	this.webview.addEventListener('did-finish-load', this.onDidFinishLoad.bind(this));
-	this.webview.addEventListener('did-start-loading', this.attachWebviewEvents.bind(this));
-	this.webview.addEventListener('dom-ready', this.onDOMReady.bind(this));
-}
-
-View.prototype.attachWebviewEvents = function() {
 	console.log('Attaching Webview Events');
-	this.webview.addEventListener('will-navigate', this.onWillNavigate.bind(this));
-	this.webview.addEventListener('did-navigate-in-page', this.onWillNavigate.bind(this));
+
+	// Loading Events
+	this.webview.addEventListener('load-commit', this.onLoadCommit.bind(this));
+	this.webview.addEventListener('did-finish-load', this.onDidFinishLoad.bind(this));
+	this.webview.addEventListener('did-fail-load', this.onDidFailLoad.bind(this));
+	this.webview.addEventListener('did-get-response-details', this.onDidGetResponseDetails.bind(this));
+	this.webview.addEventListener('dom-ready', this.onDOMReady.bind(this));
+	
+	// Crash Events
+	this.webview.addEventListener('crashed', this.onCrashed.bind(this));
+	this.webview.addEventListener('gpu-crashed', this.onCrashed.bind(this));
+	this.webview.addEventListener('plugin-crashed', this.onCrashed.bind(this));
+	
+	// Utils
+	this.webview.addEventListener('page-title-updated', this.onPageTitleUpdated.bind(this));
+	this.webview.addEventListener('new-window', this.onNewWindow.bind(this));
+	this.webview.addEventListener('console-message', this.onConsoleMessage.bind(this));
+
 }
 
 View.prototype.resize = function() {
@@ -125,6 +135,14 @@ View.prototype.load = function(input) {
 	this.webview.setAttribute('src', input);
 }
 
+View.prototype.onLoadCommit = function(e) {
+	console.log('load-commit: ', e.url);
+}
+
+View.prototype.onPageTitleUpdated = function(e) {
+	console.log('page-title-updated: ', e.title);
+}
+
 View.prototype.onDidFinishLoad = function() {
 	console.log('onDidFinishLoad');
 
@@ -132,6 +150,26 @@ View.prototype.onDidFinishLoad = function() {
 	addClass(this.webview, 'loaded');
 
 	this.onDidFinishLoadCallback();
+}
+
+View.prototype.onDidFailLoad = function(e) {
+	console.log('webview crashed');
+}
+
+View.prototype.onCrashed = function(e) {
+	console.log('did-fail-load: ', e.errorCode);
+}
+
+View.prototype.onDidGetResponseDetails = function(e) {
+	// console.log('did-get-response-details', e.httpResponseCode, ' ', e.newURL);
+}
+
+View.prototype.onNewWindow = function(e) {
+	console.log('Requesting new window for: ', e.url);
+}
+
+View.prototype.onConsoleMessage = function(e) {
+	console.log('console-message: ', e.message);
 }
 
 View.prototype.onDOMReady = function() {
