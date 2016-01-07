@@ -4,8 +4,10 @@ function View(parameters) {
 	this.pages = document.querySelectorAll('#view .pages')[0];
 
 	this.page = parameters.page;
+
 	this.onDidFinishLoadCallback = parameters.onDidFinishLoad;
 	this.onDOMReadyCallback = parameters.onDOMReady;
+	this.onPageTitleUpdatedCallback = parameters.onPageTitleUpdated;
 
 	this.htmlData = undefined;
 	this.webview = undefined;
@@ -88,7 +90,7 @@ View.prototype.onLoadCommit = function(e) {
 }
 
 View.prototype.onPageTitleUpdated = function(e) {
-	console.log('page-title-updated: ', e.title);
+	this.onPageTitleUpdatedCallback(e.title);
 }
 
 View.prototype.onDidFinishLoad = function() {
@@ -122,10 +124,6 @@ View.prototype.onConsoleMessage = function(e) {
 
 View.prototype.onDOMReady = function() {
 	this.onDOMReadyCallback();
-}
-
-View.prototype.onWillNavigate = function(e) {
-	console.log('Will navigate to:', e.url);
 }
 
 View.prototype.getTitle = function() {

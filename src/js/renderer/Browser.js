@@ -16,7 +16,8 @@ function Browser(parameters) {
 	this.view = new View({
 		'page' : 'homepage',
 		'onDidFinishLoad' : this.onDidFinishLoad.bind(this),
-		'onDOMReady' : this.onDOMReady.bind(this)
+		'onDOMReady' : this.onDOMReady.bind(this),
+		'onPageTitleUpdated' : this.onPageTitleUpdated.bind(this)
 	});
 
 	this.dragOverlay = document.querySelectorAll('#dragOverlay')[0];
@@ -65,6 +66,10 @@ Browser.prototype.onDidFinishLoad = function(input) {
 	this.omnibox.hide();
 	this.loader.hide();
 	this.view.show();
+}
+
+Browser.prototype.onPageTitleUpdated = function(newTitle) {
+	this.handle.changeTitle(newTitle);
 }
 
 Browser.prototype.hideHandle = function() {
