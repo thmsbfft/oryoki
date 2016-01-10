@@ -5,6 +5,7 @@ function Window(parameters) {
 	this.id = parameters.id;
 	this.handle = true;
 	this.omnibox = true;
+	this.console = false;
 	
 	this.browser = new BrowserWindow({
 	  width: 800,
@@ -21,7 +22,7 @@ function Window(parameters) {
 }
 
 Window.prototype.attachEvents = function() {
-	this.browser.webContents.on('did-finish-load', this.onReady.bind(this));
+	this.browser.webContents.on('dom-ready', this.onReady.bind(this));
 	this.browser.on('closed', this.dispose.bind(this));
 
 	ipcMain.on('setOmniboxShow', this.setOmniboxShow.bind(this));
@@ -50,6 +51,15 @@ Window.prototype.registerCommands = function() {
 			'id' : 'Toggle omnibox',
 			'accelerator' : 'command+l',
 			'callback' : this.toggleOmnibox.bind(this)
+		})
+	);
+	CommandManager.registerCommand(
+		'local',
+		this.browser,
+		new Command({
+			'id' : 'Toggle console',
+			'accelerator' : 'command+alt+c',
+			'callback' : this.toggleConsole.bind(this)
 		})
 	);
 }
@@ -92,6 +102,20 @@ Window.prototype.toggleHandle = function() {
 			this.browser.getSize()[0],
 			this.browser.getSize()[1] + 22
 		);
+	}
+}
+
+Window.prototype.toggleConsole = function() {
+	c.log(this.console);
+	if(this.console) {
+		c.log('hiding console');
+		this.console = false;
+		this.browser.webContents.send('hideConsole');
+	}
+	else {
+		c.log('showing console');
+		this.console = true;
+		this.browser.webContents.send('showConsole');
 	}
 }
 

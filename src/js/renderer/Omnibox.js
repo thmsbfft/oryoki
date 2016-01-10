@@ -59,9 +59,10 @@ Omnibox.prototype.submit = function() {
 	var output = null;
 
 	var domain = new RegExp(/[a-z]+(\.[a-z]+)+/ig);
+	var port = new RegExp(/(:[0-9])\w{3}/g);
 
 	if(this.mode == 'url') {
-		if(domain.test(raw)) {
+		if(domain.test(raw) || port.test(raw)) {
 			// console.log('This is a domain!');
 			if (!raw.match(/^[a-zA-Z]+:\/\//))
 			{

@@ -50,6 +50,26 @@ Loader.prototype.hide = function() {
 Loader.prototype.show = function() {
 	this.el.className = 'show';
 }
+function Console(parameters) {
+
+	this.el = document.querySelectorAll('#console')[0];
+
+	console.log('Console');
+
+	this.hide();
+}
+
+Console.prototype.updateMessage = function(e) {
+	this.el.innerHTML = e.message;
+}
+
+Console.prototype.hide = function() {
+	this.el.className = 'hide';
+}
+
+Console.prototype.show = function() {
+	this.el.className = 'show';
+}
 function View(parameters) {
 
 	this.el = document.querySelectorAll('#view')[0];
@@ -60,6 +80,7 @@ function View(parameters) {
 	this.onDidFinishLoadCallback = parameters.onDidFinishLoad;
 	this.onDOMReadyCallback = parameters.onDOMReady;
 	this.onPageTitleUpdatedCallback = parameters.onPageTitleUpdated;
+	this.onConsoleMessageCallback = parameters.onConsoleMessage;
 
 	this.htmlData = undefined;
 	this.webview = undefined;
@@ -171,7 +192,8 @@ View.prototype.onNewWindow = function(e) {
 }
 
 View.prototype.onConsoleMessage = function(e) {
-	console.log('console-message: ', e.message);
+	this.onConsoleMessageCallback(e);
+	// console.log('console-message: ', e.message);
 }
 
 View.prototype.onDOMReady = function() {
@@ -279,9 +301,10 @@ Omnibox.prototype.submit = function() {
 	var output = null;
 
 	var domain = new RegExp(/[a-z]+(\.[a-z]+)+/ig);
+	var port = new RegExp(/(:[0-9])\w{3}/g);
 
 	if(this.mode == 'url') {
-		if(domain.test(raw)) {
+		if(domain.test(raw) || port.test(raw)) {
 			// console.log('This is a domain!');
 			if (!raw.match(/^[a-zA-Z]+:\/\//))
 			{
@@ -363,11 +386,16 @@ function Browser(parameters) {
 
 	});
 
+	this.console = new Console({
+
+	});
+
 	this.view = new View({
 		'page' : 'homepage',
 		'onDidFinishLoad' : this.onDidFinishLoad.bind(this),
 		'onDOMReady' : this.onDOMReady.bind(this),
-		'onPageTitleUpdated' : this.onPageTitleUpdated.bind(this)
+		'onPageTitleUpdated' : this.onPageTitleUpdated.bind(this),
+		'onConsoleMessage' : this.onConsoleMessage.bind(this)
 	});
 
 	this.dragOverlay = document.querySelectorAll('#dragOverlay')[0];
@@ -379,8 +407,12 @@ Browser.prototype.attachEvents = function() {
 	console.log('Attaching events');
 	ipcRenderer.on('hideHandle', this.hideHandle.bind(this));
 	ipcRenderer.on('showHandle', this.showHandle.bind(this));
+
 	ipcRenderer.on('showOmnibox', this.showOmnibox.bind(this));
 	ipcRenderer.on('hideOmnibox', this.hideOmnibox.bind(this));
+
+	ipcRenderer.on('showConsole', this.showConsole.bind(this));
+	ipcRenderer.on('hideConsole', this.hideConsole.bind(this));
 
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
@@ -422,6 +454,10 @@ Browser.prototype.onPageTitleUpdated = function(newTitle) {
 	this.handle.changeTitle(newTitle);
 }
 
+Browser.prototype.onConsoleMessage = function(e) {
+	this.console.updateMessage(e);
+}
+
 Browser.prototype.hideHandle = function() {
 	this.handle.hide();
 	this.omnibox.setHigh();
@@ -450,4 +486,12 @@ Browser.prototype.hideOmnibox = function() {
 	this.view.show();
 	// if(this.view.page == 'homepage') this.omnibox.show();
 	// else this.omnibox.hide();
+}
+
+Browser.prototype.showConsole = function() {
+	this.console.show();
+}
+
+Browser.prototype.hideConsole = function() {
+	this.console.hide();
 }

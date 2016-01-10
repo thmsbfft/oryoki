@@ -8,6 +8,7 @@ function View(parameters) {
 	this.onDidFinishLoadCallback = parameters.onDidFinishLoad;
 	this.onDOMReadyCallback = parameters.onDOMReady;
 	this.onPageTitleUpdatedCallback = parameters.onPageTitleUpdated;
+	this.onConsoleMessageCallback = parameters.onConsoleMessage;
 
 	this.htmlData = undefined;
 	this.webview = undefined;
@@ -119,7 +120,8 @@ View.prototype.onNewWindow = function(e) {
 }
 
 View.prototype.onConsoleMessage = function(e) {
-	console.log('console-message: ', e.message);
+	this.onConsoleMessageCallback(e);
+	// console.log('console-message: ', e.message);
 }
 
 View.prototype.onDOMReady = function() {

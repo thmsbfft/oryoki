@@ -13,11 +13,16 @@ function Browser(parameters) {
 
 	});
 
+	this.console = new Console({
+
+	});
+
 	this.view = new View({
 		'page' : 'homepage',
 		'onDidFinishLoad' : this.onDidFinishLoad.bind(this),
 		'onDOMReady' : this.onDOMReady.bind(this),
-		'onPageTitleUpdated' : this.onPageTitleUpdated.bind(this)
+		'onPageTitleUpdated' : this.onPageTitleUpdated.bind(this),
+		'onConsoleMessage' : this.onConsoleMessage.bind(this)
 	});
 
 	this.dragOverlay = document.querySelectorAll('#dragOverlay')[0];
@@ -29,8 +34,12 @@ Browser.prototype.attachEvents = function() {
 	console.log('Attaching events');
 	ipcRenderer.on('hideHandle', this.hideHandle.bind(this));
 	ipcRenderer.on('showHandle', this.showHandle.bind(this));
+
 	ipcRenderer.on('showOmnibox', this.showOmnibox.bind(this));
 	ipcRenderer.on('hideOmnibox', this.hideOmnibox.bind(this));
+
+	ipcRenderer.on('showConsole', this.showConsole.bind(this));
+	ipcRenderer.on('hideConsole', this.hideConsole.bind(this));
 
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
@@ -72,6 +81,10 @@ Browser.prototype.onPageTitleUpdated = function(newTitle) {
 	this.handle.changeTitle(newTitle);
 }
 
+Browser.prototype.onConsoleMessage = function(e) {
+	this.console.updateMessage(e);
+}
+
 Browser.prototype.hideHandle = function() {
 	this.handle.hide();
 	this.omnibox.setHigh();
@@ -100,4 +113,12 @@ Browser.prototype.hideOmnibox = function() {
 	this.view.show();
 	// if(this.view.page == 'homepage') this.omnibox.show();
 	// else this.omnibox.hide();
+}
+
+Browser.prototype.showConsole = function() {
+	this.console.show();
+}
+
+Browser.prototype.hideConsole = function() {
+	this.console.hide();
 }

@@ -1,0 +1,21 @@
+#console {
+
+	position: fixed;
+	bottom: 0;
+	background: #252525;
+
+	width: calc(100% - 10px);
+	padding-left: 10px;
+	padding-top: 4px;
+	height: 19px;
+	font-family: 'Roboto Mono Regular', sans-serif;
+	font-size: 12px;
+	color: rgba(255, 255, 255, 0.6);
+
+	&.show {
+		display: block;
+	}
+	&.hide {
+		display: none;
+	}
+}
