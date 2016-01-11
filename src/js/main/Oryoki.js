@@ -43,11 +43,12 @@ Oryoki.prototype.createWindow = function() {
 	c.log('Creating new window');
 	c.log(this.windows.length);
 	if(this.windows.length == 0) {
-		// Launch
+		// No windows open
 		this.windows.push(
 			new Window({
 				'id' : this.windows.length,
-				'onFocus' : this.onFocusChange
+				'onFocus' : this.onFocusChange.bind(this),
+				'onClose' : this.onWindowClose.bind(this)
 			})
 		);
 	}
@@ -56,18 +57,36 @@ Oryoki.prototype.createWindow = function() {
 		this.windows.push(
 			new Window({
 				'id' : this.windows.length,
-				'onFocus' : this.onFocusChange,
-				'x' : this.windows[this.windows.length-1].browser.getPosition()[0]+50,
-				'y' : this.windows[this.windows.length-1].browser.getPosition()[1]+50
+				'onFocus' : this.onFocusChange.bind(this),
+				'onClose' : this.onWindowClose.bind(this),
+				'x' : this.focusedWindow.browser.getPosition()[0]+50,
+				'y' : this.focusedWindow.browser.getPosition()[1]+50
 			})
 		);
 	}
-	this.windows[this.windows.length-1].browser.focus();
 }
 
-Oryoki.prototype.onFocusChange = function(windowId) {
-	this.focusedWindow = windowId;
-	c.log('New focus: ', this.focusedWindow);
+Oryoki.prototype.onFocusChange = function(w) {
+	this.focusedWindow = w;
+	c.log('New focus: ', this.focusedWindow.id);
+}
+
+Oryoki.prototype.onWindowClose = function(w) {
+	c.log('Closing window #'+ w.id);
+	// this.windows[windowId] = null;
+
+	var index = this.windows.indexOf(w);
+	c.log('Index', index);
+	if (index > -1) {
+		this.windows.splice(index, 1);
+	}
+
+	// this.windows.pop(windowId);	
+
+	// for (i in this.windows) {
+	// 	c.log('W:', this.windows[i].id);	
+	// }
+
 }
 
 Oryoki.prototype.getChromeVersion = function() {

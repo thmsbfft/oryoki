@@ -4,6 +4,7 @@ function Window(parameters) {
 
 	this.id = parameters.id;
 	this.onFocusCallback = parameters.onFocus;
+	this.onCloseCallback = parameters.onClose;
 
 	this.handle = true;
 	this.omnibox = true;
@@ -26,7 +27,7 @@ function Window(parameters) {
 
 Window.prototype.attachEvents = function() {
 	this.browser.webContents.on('dom-ready', this.onReady.bind(this));
-	this.browser.on('closed', this.dispose.bind(this));
+	this.browser.on('closed', this.onClose.bind(this));
 	this.browser.on('focus', this.onFocus.bind(this));
 
 	ipcMain.on('setOmniboxShow', this.setOmniboxShow.bind(this));
@@ -70,7 +71,12 @@ Window.prototype.registerCommands = function() {
 }
 
 Window.prototype.onFocus = function() {
-	this.onFocusCallback(this.id);
+	this.onFocusCallback(this);
+}
+
+Window.prototype.onClose = function() {
+	this.browser = null;
+	this.onCloseCallback(this);
 }
 
 Window.prototype.setOmniboxShow = function() {
@@ -136,8 +142,4 @@ Window.prototype.toggleOmnibox = function() {
 	else {
 		this.showOmnibox();
 	}
-}
-
-Window.prototype.dispose = function() {
-	this.browser = null;
 }
