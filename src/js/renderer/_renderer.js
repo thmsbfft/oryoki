@@ -238,6 +238,10 @@ Handle.prototype.show = function() {
 }
 
 Handle.prototype.changeTitle = function(newTitle) {
+	this.el.setAttribute('title', newTitle);
+	if(newTitle.length > 60) {
+		newTitle = newTitle.substring(0, 60) + '...';
+	}
 	this.title.innerHTML = newTitle;
 }
 function Omnibox(parameters) {
