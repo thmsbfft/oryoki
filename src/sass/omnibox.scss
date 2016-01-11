@@ -20,6 +20,10 @@
 			padding: 12px;
 			padding-right: 79px;
 			border-radius: 2px;
+			transition: background-color 0.1s ease-out;
+			&.highlight {
+				background-color: #1F1F1F;
+			}
 		}
 		.tab {
 			border: 1px solid rgba(50, 50, 50, 1);

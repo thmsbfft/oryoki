@@ -145,7 +145,10 @@ body {
       border: none;
       padding: 12px;
       padding-right: 79px;
-      border-radius: 2px; }
+      border-radius: 2px;
+      transition: background-color 0.1s ease-out; }
+      #omnibox .box .input.highlight {
+        background-color: #1F1F1F; }
     #omnibox .box .tab {
       border: 1px solid #323232;
       border-radius: 4px;

@@ -290,7 +290,9 @@ Omnibox.prototype.onKeyDown = function(e) {
 		this.isTabDown = true;
 		e.preventDefault();
 	}
-	if(e.keyCode == 13) this.submit();
+	if(e.keyCode == 13) {
+		addClass(this.input, 'highlight');
+	}
 }
 
 Omnibox.prototype.onKeyUp = function(e) {
@@ -298,9 +300,15 @@ Omnibox.prototype.onKeyUp = function(e) {
 		this.isTabDown = false;
 		removeClass(this.tab, 'active');
 	}
+	if(e.keyCode == 13) {
+		removeClass(this.input, 'highlight');
+		this.submit();
+	}
 }
 
 Omnibox.prototype.submit = function() {
+
+
 	var raw = this.el.querySelectorAll('input')[0].value;
 	var output = null;
 
