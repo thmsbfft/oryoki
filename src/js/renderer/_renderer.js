@@ -189,6 +189,7 @@ View.prototype.onDidGetResponseDetails = function(e) {
 
 View.prototype.onNewWindow = function(e) {
 	console.log('Requesting new window for: ', e.url);
+	ipcRenderer.send('newWindow'); // TODO ADD PARAMETER FOR URL
 }
 
 View.prototype.onConsoleMessage = function(e) {
@@ -426,6 +427,8 @@ Browser.prototype.attachEvents = function() {
 	ipcRenderer.on('showConsole', this.showConsole.bind(this));
 	ipcRenderer.on('hideConsole', this.hideConsole.bind(this));
 
+	ipcRenderer.on('load', this.load.bind(this));
+
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
 }
@@ -506,4 +509,9 @@ Browser.prototype.showConsole = function() {
 
 Browser.prototype.hideConsole = function() {
 	this.console.hide();
+}
+
+Browser.prototype.load = function(url) {
+	console.log('Loading new window url: ', url);
+	this.view.load(url);
 }

@@ -3,6 +3,8 @@ function Window(parameters) {
 	c.log('Window!');
 
 	this.id = parameters.id;
+	this.onFocusCallback = parameters.onFocus;
+
 	this.handle = true;
 	this.omnibox = true;
 	this.console = false;
@@ -12,18 +14,20 @@ function Window(parameters) {
 	  height: 500,
 	  frame: false,
 	  backgroundColor: '#000',
+	  show: false,
 	  x: parameters.x ? parameters.x : 890,
 	  y: parameters.y ? parameters.y : 660
 	});
 
 	this.attachEvents();
 	this.browser.loadURL('file://'+path.join(__dirname, '..', '..', 'html', 'index.html'));
-	this.browser.webContents.openDevTools();
+	// this.browser.webContents.openDevTools();
 }
 
 Window.prototype.attachEvents = function() {
 	this.browser.webContents.on('dom-ready', this.onReady.bind(this));
 	this.browser.on('closed', this.dispose.bind(this));
+	this.browser.on('focus', this.onFocus.bind(this));
 
 	ipcMain.on('setOmniboxShow', this.setOmniboxShow.bind(this));
 	ipcMain.on('setOmniboxHide', this.setOmniboxHide.bind(this));
@@ -31,6 +35,7 @@ Window.prototype.attachEvents = function() {
 
 Window.prototype.onReady = function() {
 	this.browser.webContents.send('ready');
+	this.browser.show();
 	this.registerCommands();
 }
 
@@ -62,6 +67,10 @@ Window.prototype.registerCommands = function() {
 			'callback' : this.toggleConsole.bind(this)
 		})
 	);
+}
+
+Window.prototype.onFocus = function() {
+	this.onFocusCallback(this.id);
 }
 
 Window.prototype.setOmniboxShow = function() {

@@ -12,8 +12,15 @@ function Oryoki() {
 	}
 
 	this.windows = [];
+	this.focusedWindow = null;
+	this.attachEvents();
 	this.registerCommands();
 	this.createWindow();
+}
+
+Oryoki.prototype.attachEvents = function() {
+	c.log('Creating new window!!');
+	ipcMain.on('newWindow', this.createWindow.bind(this));
 }
 
 Oryoki.prototype.registerCommands = function() {
@@ -33,12 +40,14 @@ Oryoki.prototype.registerCommands = function() {
 }
 
 Oryoki.prototype.createWindow = function() {
+	c.log('Creating new window');
 	c.log(this.windows.length);
 	if(this.windows.length == 0) {
 		// Launch
 		this.windows.push(
 			new Window({
 				'id' : this.windows.length,
+				'onFocus' : this.onFocusChange
 			})
 		);
 	}
@@ -47,13 +56,18 @@ Oryoki.prototype.createWindow = function() {
 		this.windows.push(
 			new Window({
 				'id' : this.windows.length,
+				'onFocus' : this.onFocusChange,
 				'x' : this.windows[this.windows.length-1].browser.getPosition()[0]+50,
 				'y' : this.windows[this.windows.length-1].browser.getPosition()[1]+50
 			})
 		);
 	}
-	// c.log(this.windows[this.windows.length-1]);
 	this.windows[this.windows.length-1].browser.focus();
+}
+
+Oryoki.prototype.onFocusChange = function(windowId) {
+	this.focusedWindow = windowId;
+	c.log('New focus: ', this.focusedWindow);
 }
 
 Oryoki.prototype.getChromeVersion = function() {
