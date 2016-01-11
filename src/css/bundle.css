@@ -135,7 +135,7 @@ body {
     #omnibox .box ::-webkit-input-placeholder {
       color: rgba(255, 255, 255, 0.2); }
     #omnibox .box .input {
-      width: calc(100% - 24px);
+      width: calc(100% - 36px - 55px);
       font-family: 'Roboto Light', sans-serif;
       font-size: 18px;
       color: rgba(255, 255, 255, 0.6);
@@ -144,6 +144,7 @@ body {
       outline: none;
       border: none;
       padding: 12px;
+      padding-right: 79px;
       border-radius: 2px; }
     #omnibox .box .tab {
       border: 1px solid #323232;
