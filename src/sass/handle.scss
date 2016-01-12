@@ -12,6 +12,8 @@
 		font-size: 12px;
 		display: inline-block;
 		-webkit-app-region: no-drag;
+		-webkit-user-select: none;
+		user-select: none;
 	}
 	.button {
 		position: absolute;
