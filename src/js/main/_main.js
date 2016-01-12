@@ -27,7 +27,7 @@ function CommandManager() {
 	c.log('CommandManager!');
 }
 
-CommandManager.prototype.registerCommand = function(scope, windowId, command) {
+CommandManager.prototype.registerCommand = function(scope, browserWindow, command) {
 
 	if(scope == 'global') {
 		if(!this.register[command.id]) {
@@ -38,10 +38,15 @@ CommandManager.prototype.registerCommand = function(scope, windowId, command) {
 	}
 	else if (scope == 'local') {
 		this.register[command.id] = command;
-		electronLocalshortcut.register(windowId, this.register[command.id].accelerator, this.register[command.id].callback);
+		electronLocalshortcut.register(browserWindow, this.register[command.id].accelerator, this.register[command.id].callback);
 	}
 
 }
+
+CommandManager.prototype.unregisterAll = function(browserWindow) {
+	electronLocalshortcut.unregisterAll(browserWindow);
+	c.log('Unregistering all for', browserWindow);
+};
 function Oryoki() {
 
 	app.on('window-all-closed', function() {
@@ -213,6 +218,7 @@ Window.prototype.onFocus = function() {
 }
 
 Window.prototype.onClose = function() {
+	CommandManager.unregisterAll(this.browser);
 	this.browser = null;
 	this.onCloseCallback(this);
 }

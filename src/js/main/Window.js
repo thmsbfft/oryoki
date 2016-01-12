@@ -75,6 +75,7 @@ Window.prototype.onFocus = function() {
 }
 
 Window.prototype.onClose = function() {
+	CommandManager.unregisterAll(this.browser);
 	this.browser = null;
 	this.onCloseCallback(this);
 }
