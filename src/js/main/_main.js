@@ -45,7 +45,6 @@ CommandManager.prototype.registerCommand = function(scope, browserWindow, comman
 
 CommandManager.prototype.unregisterAll = function(browserWindow) {
 	electronLocalshortcut.unregisterAll(browserWindow);
-	c.log('Unregistering all for', browserWindow);
 };
 function Oryoki() {
 

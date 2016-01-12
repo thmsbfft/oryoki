@@ -2,9 +2,7 @@ function Omnibox(parameters) {
 
 	this.modes = {
 		'url' : 'Search',
-		'lucky' : 'Lucky',
-		'wikipedia' : 'Wikipedia',
-		'stackoverflow' : 'Stackoverflow'
+		'lucky' : 'Lucky'
 	};
 	this.modeIndex = 0;
 	this.mode = Object.keys(this.modes)[this.modeIndex];
@@ -87,12 +85,6 @@ Omnibox.prototype.submit = function() {
 	}
 	else if(this.mode == 'lucky') {
 		output = 'http://www.google.com/search?q=' + raw + '&btnI';
-	}
-	else if(this.mode == 'stackoverflow') {
-		output = 'http://stackoverflow.com/search?q=' + raw;
-	}
-	else if(this.mode == 'wikipedia') {
-		output = 'https://en.wikipedia.org/w/index.php?search=' + raw;
 	}
 
 	this.submitCallback(output);
