@@ -83,7 +83,8 @@ body {
     display: inline-block;
     -webkit-app-region: no-drag;
     -webkit-user-select: none;
-    user-select: none; }
+    user-select: none;
+    cursor: default; }
   #handle .button {
     position: absolute;
     -webkit-app-region: no-drag;
@@ -165,8 +166,14 @@ body {
       color: rgba(255, 255, 255, 0.2);
       padding-top: 15px;
       padding-left: 5px;
-      transition: border-color 0.05s, color 0.05s; }
+      transition: border-color 0.1s, color 0.1s;
+      -webkit-app-region: no-drag;
+      -webkit-user-select: none;
+      user-select: none;
+      cursor: default; }
       #omnibox .box .tab.active {
+        color: rgba(255, 255, 255, 0.6); }
+      #omnibox .box .tab:hover {
         color: rgba(255, 255, 255, 0.6); }
   #omnibox.handle {
     top: calc(50px + 22px); }

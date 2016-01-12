@@ -31,6 +31,7 @@ function Omnibox(parameters) {
 Omnibox.prototype.attachEvents = function() {
 	this.el.querySelectorAll('input')[0].addEventListener('keydown', this.onKeyDown.bind(this));
 	this.el.querySelectorAll('input')[0].addEventListener('keyup', this.onKeyUp.bind(this));
+	this.tab.addEventListener('click', this.switchMode.bind(this));
 }
 
 Omnibox.prototype.onKeyDown = function(e) {
