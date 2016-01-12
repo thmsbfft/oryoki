@@ -86,6 +86,10 @@ View.prototype.load = function(input) {
 	this.webview.setAttribute('src', input);
 }
 
+View.prototype.reload = function() {
+	this.webview.setAttribute('src', this.webview.getAttribute('src'))
+}
+
 View.prototype.onLoadCommit = function(e) {
 	console.log('load-commit: ', e.url);
 }

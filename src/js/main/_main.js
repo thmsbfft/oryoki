@@ -210,6 +210,15 @@ Window.prototype.registerCommands = function() {
 			'callback' : this.toggleConsole.bind(this)
 		})
 	);
+	CommandManager.registerCommand(
+		'local',
+		this.browser,
+		new Command({
+			'id' : 'Reload',
+			'accelerator' : 'command+r',
+			'callback' : this.reload.bind(this)
+		})
+	);
 }
 
 Window.prototype.onFocus = function() {
@@ -285,6 +294,10 @@ Window.prototype.toggleOmnibox = function() {
 	else {
 		this.showOmnibox();
 	}
+}
+
+Window.prototype.reload = function() {
+	this.browser.webContents.send('reload');
 }
 'use strict';
 var electron = require('electron');

@@ -158,6 +158,10 @@ View.prototype.load = function(input) {
 	this.webview.setAttribute('src', input);
 }
 
+View.prototype.reload = function() {
+	this.webview.setAttribute('src', this.webview.getAttribute('src'))
+}
+
 View.prototype.onLoadCommit = function(e) {
 	console.log('load-commit: ', e.url);
 }
@@ -421,6 +425,7 @@ Browser.prototype.attachEvents = function() {
 	ipcRenderer.on('hideConsole', this.hideConsole.bind(this));
 
 	ipcRenderer.on('load', this.load.bind(this));
+	ipcRenderer.on('reload', this.reload.bind(this));
 
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
@@ -508,3 +513,11 @@ Browser.prototype.load = function(url) {
 	console.log('Loading new window url: ', url);
 	this.view.load(url);
 }
+
+Browser.prototype.reload = function() {
+	this.view.hide();
+	// this.omnibox.show();
+	// this.loader.show();
+	// this.loader.loading();
+	this.view.reload();
+};
