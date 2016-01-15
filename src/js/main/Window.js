@@ -27,7 +27,6 @@ function Window(parameters) {
 
 Window.prototype.attachEvents = function() {
 	this.browser.webContents.on('dom-ready', this.onReady.bind(this));
-	this.browser.on('closed', this.onClose.bind(this));
 	this.browser.on('focus', this.onFocus.bind(this));
 
 	ipcMain.on('setOmniboxShow', this.setOmniboxShow.bind(this));
@@ -83,10 +82,10 @@ Window.prototype.onFocus = function() {
 	this.onFocusCallback(this);
 }
 
-Window.prototype.onClose = function() {
+Window.prototype.close = function() {
 	CommandManager.unregisterAll(this.browser);
+	this.browser.close();
 	this.browser = null;
-	this.onCloseCallback(this);
 }
 
 Window.prototype.setOmniboxShow = function() {

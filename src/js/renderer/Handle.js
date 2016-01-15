@@ -14,6 +14,14 @@ Handle.prototype.build = function() {
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'handle.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
 	this.title = document.querySelectorAll('#handle .title')[0];
+	this.closeBtn = document.querySelectorAll('#handle .button.close')[0];
+	this.attachEvents();
+}
+
+Handle.prototype.attachEvents = function() {
+	this.closeBtn.addEventListener('click', function() {
+		ipcRenderer.send('closeWindow');
+	});
 }
 
 Handle.prototype.hide = function() {
