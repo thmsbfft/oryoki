@@ -121,7 +121,7 @@ View.prototype.onDidGetResponseDetails = function(e) {
 
 View.prototype.onNewWindow = function(e) {
 	console.log('Requesting new window for: ', e.url);
-	ipcRenderer.send('newWindow'); // TODO ADD PARAMETER FOR URL
+	ipcRenderer.send('newWindow', [e.url]); // TODO ADD PARAMETER FOR URL
 }
 
 View.prototype.onConsoleMessage = function(e) {

@@ -3,6 +3,11 @@ function Window(parameters) {
 	c.log('Window!');
 
 	this.id = parameters.id;
+	if(parameters.url != null) {
+		c.log(parameters.url);
+		this.url = parameters.url;
+	}
+
 	this.onFocusCallback = parameters.onFocus;
 	this.onCloseCallback = parameters.onClose;
 
@@ -35,6 +40,7 @@ Window.prototype.attachEvents = function() {
 
 Window.prototype.onReady = function() {
 	this.browser.webContents.send('ready');
+	if(this.url) this.browser.webContents.send('load', this.url);
 	this.browser.show();
 	this.registerCommands();
 }
@@ -155,4 +161,8 @@ Window.prototype.toggleOmnibox = function() {
 
 Window.prototype.reload = function() {
 	this.browser.webContents.send('reload');
+}
+
+Window.prototype.load = function(url) {
+	this.browser.webContents.send('load', url);
 }

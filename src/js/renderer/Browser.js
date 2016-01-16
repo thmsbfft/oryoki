@@ -126,8 +126,10 @@ Browser.prototype.hideConsole = function() {
 	this.console.hide();
 }
 
-Browser.prototype.load = function(url) {
+Browser.prototype.load = function(e, url) {
 	console.log('Loading new window url: ', url);
+	this.omnibox.hide();
+	this.loader.loading();
 	this.view.load(url);
 }
 

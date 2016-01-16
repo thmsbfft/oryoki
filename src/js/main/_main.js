@@ -69,7 +69,11 @@ function Oryoki() {
 }
 
 Oryoki.prototype.attachEvents = function() {
-	c.log('Creating new window!!');
+	// ipcMain.on('newWindow', this.createWindow.bind(this));
+	// ipcMain.on('newWindow', function(e, url) {
+	// 	c.log(url);
+	// 	this.createWindow(url).bind(this);
+	// }.bind(this));
 	ipcMain.on('newWindow', this.createWindow.bind(this));
 	ipcMain.on('closeWindow', this.closeWindow.bind(this));
 }
@@ -95,7 +99,12 @@ Oryoki.prototype.registerCommands = function() {
 	);
 }
 
-Oryoki.prototype.createWindow = function() {
+Oryoki.prototype.createWindow = function(e, url) {
+	if(url) {
+		// c.log('VICTOIRE ENCULÉ', url);
+		var url = url[0];
+	}
+
 	c.log('Creating new window');
 	c.log(this.windows.length);
 
@@ -105,6 +114,7 @@ Oryoki.prototype.createWindow = function() {
 	if(this.windowCount == 1) {
 		this.windows[this.windowsIndex] = new Window({
 			'id' : this.windowsIndex,
+			'url' : url ? url : null,
 			'onFocus' : this.onFocusChange.bind(this)
 		});
 		this.windows[this.windowsIndex].browser.center();
@@ -112,6 +122,7 @@ Oryoki.prototype.createWindow = function() {
 	else {
 		this.windows[this.windowsIndex] = new Window({
 			'id' : this.windowsIndex,
+			'url' : url ? url : null,
 			'onFocus' : this.onFocusChange.bind(this),
 			'x' : this.focusedWindow.browser.getPosition()[0]+50,
 			'y' : this.focusedWindow.browser.getPosition()[1]+50
@@ -149,6 +160,11 @@ function Window(parameters) {
 	c.log('Window!');
 
 	this.id = parameters.id;
+	if(parameters.url != null) {
+		c.log(parameters.url);
+		this.url = parameters.url;
+	}
+
 	this.onFocusCallback = parameters.onFocus;
 	this.onCloseCallback = parameters.onClose;
 
@@ -181,6 +197,7 @@ Window.prototype.attachEvents = function() {
 
 Window.prototype.onReady = function() {
 	this.browser.webContents.send('ready');
+	if(this.url) this.browser.webContents.send('load', this.url);
 	this.browser.show();
 	this.registerCommands();
 }
@@ -301,6 +318,10 @@ Window.prototype.toggleOmnibox = function() {
 
 Window.prototype.reload = function() {
 	this.browser.webContents.send('reload');
+}
+
+Window.prototype.load = function(url) {
+	this.browser.webContents.send('load', url);
 }
 'use strict';
 var electron = require('electron');
