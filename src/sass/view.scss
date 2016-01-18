@@ -16,8 +16,10 @@
 	}
 	&.show {
 		opacity: 1;
+		pointer-events: auto;
 	}
 	&.hide {
 		opacity: 0;
+		pointer-events: none;
 	}
 }

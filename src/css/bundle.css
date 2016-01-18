@@ -124,9 +124,11 @@ body {
   #view .pages.hide {
     display: none; }
   #view.show {
-    opacity: 1; }
+    opacity: 1;
+    pointer-events: auto; }
   #view.hide {
-    opacity: 0; }
+    opacity: 0;
+    pointer-events: none; }
 
 #omnibox {
   width: 100%;

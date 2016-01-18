@@ -97,9 +97,6 @@ View.prototype.build = function() {
 	// Load Homepage
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', this.page + '.html'), 'utf8');
 	this.pages.innerHTML = this.htmlData;
-	if(this.page == 'homepage') {
-		document.querySelectorAll('#view .pages .homepage .chromeVersion')[0].innerHTML = conf.chromeVersion;
-	}
 	addClass(this.pages, 'show');
 
 	// Create Webview
@@ -451,13 +448,15 @@ Browser.prototype.onKeyUp = function(e) {
 	if(e.keyCode == 18) {
 		this.dragOverlay.className = '';
 	}
+	else if(e.keyCode == 27) {
+		this.hideOmnibox();
+	}
 }
 
 Browser.prototype.onSubmit = function(input) {
 	console.log('Browser submit!');
 	this.loader.loading();
 	this.view.load(input);
-	// console.log(input);
 }
 
 Browser.prototype.onDOMReady = function() {

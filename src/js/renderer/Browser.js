@@ -60,13 +60,15 @@ Browser.prototype.onKeyUp = function(e) {
 	if(e.keyCode == 18) {
 		this.dragOverlay.className = '';
 	}
+	else if(e.keyCode == 27) {
+		this.hideOmnibox();
+	}
 }
 
 Browser.prototype.onSubmit = function(input) {
 	console.log('Browser submit!');
 	this.loader.loading();
 	this.view.load(input);
-	// console.log(input);
 }
 
 Browser.prototype.onDOMReady = function() {

@@ -136,17 +136,16 @@ Oryoki.prototype.onFocusChange = function(w) {
 }
 
 Oryoki.prototype.closeWindow = function() {
-	c.log('Closing window #'+ this.focusedWindow.id);
-	this.focusedWindow.close();
-
-	this.windowCount--;
-
-	var index = this.windows.indexOf(this.focusedWindow);
-	c.log('Closing window index', index);
-	if (index > -1) {
-		this.windows.splice(index, 1);
+	if(this.windowCount > 0) {
+		c.log('Closing window #'+ this.focusedWindow.id);
+		this.focusedWindow.close();
+		this.windowCount--;
+		var index = this.windows.indexOf(this.focusedWindow);
+		c.log('Closing window index', index);
+		if (index > -1) {
+			this.windows.splice(index, 1);
+		}
 	}
-
 	if(this.windowCount == 0) {
 		this.focusedWindow = null;
 	}
