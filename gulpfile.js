@@ -1,5 +1,7 @@
 var gulp        = require('gulp'),
 	concat      = require('gulp-concat'),
+	rename		= require('gulp-rename'),
+	preprocess	= require('gulp-preprocess'),
 	run			= require('gulp-run'),
 	sass        = require('gulp-sass'),
 	livereload	= require('gulp-livereload');
@@ -47,6 +49,15 @@ gulp.task('watch', function(){
 	gulp.watch('src/js/renderer/**/*.js', ['renderer']);
 });
 
+// ENV
+gulp.task('set-dev', function() {
+    return process.env.NODE_ENV = 'development';
+});
+
+gulp.task('set-prod', function() {
+    return process.env.NODE_ENV = 'production';
+});
+
 // TASKS
 gulp.task('html', function() {
 	livereload.reload();
@@ -62,7 +73,12 @@ gulp.task('sass', function(){
 gulp.task('main', function() {
 	gulp.src(main)
 		.pipe(concat('_main.js'))
+		.pipe(preprocess())
 		.pipe(gulp.dest('src/js/main'));
+
+	gulp.src('src/js/main/_main.js')
+		.pipe(rename('main.js'))
+		.pipe(gulp.dest('.'));
 });
 
 gulp.task('renderer', function() {
@@ -77,7 +93,7 @@ gulp.task('clear', function() {
 	// return run('clear').exec();
 })
 
-gulp.task('default', ['clear', 'sass', 'main', 'renderer', 'watch', 'start', 'console']);
+gulp.task('default', ['set-prod', 'clear', 'sass', 'main', 'renderer', 'watch', 'start', 'console']);
 
 // No need to open a new console when restarting the app
 gulp.task('reboot', ['clear', 'sass', 'main', 'renderer', 'watch', 'start']);

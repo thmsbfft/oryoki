@@ -53,12 +53,13 @@ Oryoki.prototype.registerCommands = function() {
 
 Oryoki.prototype.createWindow = function(e, url) {
 	if(url) {
-		// c.log('VICTOIRE ENCULÉ', url);
 		var url = url[0];
 	}
 
-	c.log('Creating new window');
+	// @if NODE_ENV='development'
+	c.log('Creating new window...');
 	c.log(this.windows.length);
+	// @endif
 
 	this.windowsIndex++;
 	this.windowCount++;
@@ -84,16 +85,19 @@ Oryoki.prototype.createWindow = function(e, url) {
 
 Oryoki.prototype.onFocusChange = function(w) {
 	this.focusedWindow = w;
+	// @if NODE_ENV='development'
 	c.log('New focus: ', this.focusedWindow.id);
+	// @endif
 }
 
 Oryoki.prototype.closeWindow = function() {
 	if(this.windowCount > 0) {
+		// @if NODE_ENV='development'
 		c.log('Closing window #'+ this.focusedWindow.id);
+		// @endif
 		this.focusedWindow.close();
 		this.windowCount--;
 		var index = this.windows.indexOf(this.focusedWindow);
-		c.log('Closing window index', index);
 		if (index > -1) {
 			this.windows.splice(index, 1);
 		}

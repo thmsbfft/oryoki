@@ -1,6 +1,8 @@
 function CommandManager() {
 	this.register = {};
-	c.log('CommandManager!');
+	// @if NODE_ENV='development'
+	c.log('INIT COMMANDMANAGER');
+	// @endif
 }
 
 CommandManager.prototype.registerCommand = function(scope, browserWindow, command) {
@@ -9,7 +11,6 @@ CommandManager.prototype.registerCommand = function(scope, browserWindow, comman
 		if(!this.register[command.id]) {
 			this.register[command.id] = command;
 			electronLocalshortcut.register(this.register[command.id].accelerator, this.register[command.id].callback);
-			c.log('registering global command');
 		}
 	}
 	else if (scope == 'local') {

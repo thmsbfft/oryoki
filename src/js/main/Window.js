@@ -1,6 +1,8 @@
 function Window(parameters) {
 
-	c.log('Window!');
+	// @if NODE_ENV='development'
+	c.log('INIT WINDOW');
+	// @endif
 
 	this.id = parameters.id;
 	if(parameters.url != null) {
@@ -103,20 +105,26 @@ Window.prototype.setOmniboxHide = function() {
 }
 
 Window.prototype.showOmnibox = function() {
+	// @if NODE_ENV='development'
 	c.log('Showing Omnibox');
+	// @endif
 	this.omnibox = true;
 	this.browser.webContents.send('showOmnibox');
 }
 
 Window.prototype.hideOmnibox = function() {
+	// @if NODE_ENV='development'
 	c.log('Hiding Omnibox');
+	// @endif
 	this.omnibox = false;
 	this.browser.webContents.send('hideOmnibox');
 }
 
 Window.prototype.toggleHandle = function() {
 	if(this.handle) {
+		// @if NODE_ENV='development'
 		c.log('Hiding handle!');
+		// @endif
 		this.handle = false;
 		this.browser.webContents.send('hideHandle');
 		this.browser.setSize(
@@ -125,7 +133,9 @@ Window.prototype.toggleHandle = function() {
 		);
 	}
 	else {
-		c.log('Showing handle!');
+		// @if NODE_ENV='development'
+		c.log('Showing handle');
+		// @endif
 		this.handle = true;
 		this.browser.webContents.send('showHandle');
 		this.browser.setSize(
@@ -138,19 +148,25 @@ Window.prototype.toggleHandle = function() {
 Window.prototype.toggleConsole = function() {
 	c.log(this.console);
 	if(this.console) {
-		c.log('hiding console');
+		// @if NODE_ENV='development'
+		c.log('Hiding console');
+		// @endif
 		this.console = false;
 		this.browser.webContents.send('hideConsole');
 	}
 	else {
-		c.log('showing console');
+		// @if NODE_ENV='development'
+		c.log('Showing console');
+		// @endif
 		this.console = true;
 		this.browser.webContents.send('showConsole');
 	}
 }
 
 Window.prototype.toggleOmnibox = function() {
+	// @if NODE_ENV='development'
 	c.log('Toggling Omnibox');
+	// @endif
 	if(this.omnibox) {
 		this.hideOmnibox();
 	}

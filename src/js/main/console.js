@@ -1,3 +1,4 @@
+// @if NODE_ENV='development'
 function pad(n) { return ("0" + n).slice(-2); }
 
 var Console = require('console').Console;
@@ -15,3 +16,4 @@ c.log('--------');
 c.log(time);
 c.log('--------');
 c.log('');
+// @endif
