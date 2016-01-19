@@ -32,7 +32,7 @@ gulp.task('console', function() {
 });
 
 gulp.task('start', function() {
-	return run('electron src/js/main/_main.js').exec();
+	return run('electron main.js').exec();
 });
 
 gulp.task('restart', function() {
@@ -72,8 +72,8 @@ gulp.task('sass', function(){
 
 gulp.task('main', function() {
 	gulp.src(main)
-		.pipe(concat('_main.js'))
 		.pipe(preprocess())
+		.pipe(concat('_main.js'))
 		.pipe(gulp.dest('src/js/main'));
 
 	gulp.src('src/js/main/_main.js')
@@ -93,7 +93,9 @@ gulp.task('clear', function() {
 	// return run('clear').exec();
 })
 
-gulp.task('default', ['set-prod', 'clear', 'sass', 'main', 'renderer', 'watch', 'start', 'console']);
+gulp.task('default', ['set-dev', 'clear', 'sass', 'main', 'renderer', 'watch', 'start', 'console']);
+
+gulp.task('build', ['set-prod', 'sass', 'main', 'renderer']);
 
 // No need to open a new console when restarting the app
 gulp.task('reboot', ['clear', 'sass', 'main', 'renderer', 'watch', 'start']);

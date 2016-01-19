@@ -1,3 +1,4 @@
+
 function Command(options) {
 
 	this.id = options.id;
@@ -134,7 +135,6 @@ function Window(parameters) {
 
 	this.id = parameters.id;
 	if(parameters.url != null) {
-		c.log(parameters.url);
 		this.url = parameters.url;
 	}
 
@@ -155,9 +155,9 @@ function Window(parameters) {
 	  y: parameters.y ? parameters.y : 660
 	});
 
+
 	this.attachEvents();
-	this.browser.loadURL('file://'+path.join(__dirname, '..', '..', 'html', 'index.html'));
-	// this.browser.webContents.openDevTools();
+	this.browser.loadURL('file://' + __dirname + '/src/html/index.html');
 }
 
 Window.prototype.attachEvents = function() {
@@ -262,7 +262,6 @@ Window.prototype.toggleHandle = function() {
 }
 
 Window.prototype.toggleConsole = function() {
-	c.log(this.console);
 	if(this.console) {
 		this.console = false;
 		this.browser.webContents.send('hideConsole');

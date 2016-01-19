@@ -6,7 +6,9 @@ function Window(parameters) {
 
 	this.id = parameters.id;
 	if(parameters.url != null) {
+		// @if NODE_ENV='development'
 		c.log(parameters.url);
+		// @endif
 		this.url = parameters.url;
 	}
 
@@ -27,9 +29,15 @@ function Window(parameters) {
 	  y: parameters.y ? parameters.y : 660
 	});
 
+	// @if NODE_ENV='development'
+	c.log('file://' + __dirname + '/src/html/index.html');
+	// @endif
+
 	this.attachEvents();
-	this.browser.loadURL('file://'+path.join(__dirname, '..', '..', 'html', 'index.html'));
-	// this.browser.webContents.openDevTools();
+	this.browser.loadURL('file://' + __dirname + '/src/html/index.html');
+	// @if NODE_ENV='development'
+	this.browser.webContents.openDevTools();
+	// @endif
 }
 
 Window.prototype.attachEvents = function() {
@@ -146,7 +154,9 @@ Window.prototype.toggleHandle = function() {
 }
 
 Window.prototype.toggleConsole = function() {
+	// @if NODE_ENV='development'
 	c.log(this.console);
+	// @endif
 	if(this.console) {
 		// @if NODE_ENV='development'
 		c.log('Hiding console');
