@@ -44,6 +44,8 @@ Browser.prototype.attachEvents = function() {
 	ipcRenderer.on('load', this.load.bind(this));
 	ipcRenderer.on('reload', this.reload.bind(this));
 
+	ipcRenderer.on('toggleDevTools', this.toggleDevTools.bind(this));
+
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
 }
@@ -141,4 +143,9 @@ Browser.prototype.reload = function() {
 	// this.loader.show();
 	// this.loader.loading();
 	this.view.reload();
-};
+}
+
+Browser.prototype.toggleDevTools = function() {
+	console.log('tututututu');
+	this.view.toggleDevTools();
+}

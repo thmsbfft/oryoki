@@ -13,6 +13,8 @@ function View(parameters) {
 	this.htmlData = undefined;
 	this.webview = undefined;
 
+	this.canOpenDevTools = false;
+
 	this.isHandleDisplayed = true;
 
 	console.log('View!');
@@ -57,6 +59,10 @@ View.prototype.attachEvents = function() {
 	this.webview.addEventListener('new-window', this.onNewWindow.bind(this));
 	this.webview.addEventListener('console-message', this.onConsoleMessage.bind(this));
 
+	// Devtools
+	// this.webview.addEventListener('devtools-opened', this.onDevToolsOpened.bind(this));
+	// this.webview.addEventListener('devtools-focused', this.onDevToolsFocused.bind(this));
+	// this.webview.addEventListener('devtools-closed', this.onDevToolsClosed.bind(this));
 }
 
 View.prototype.resize = function() {
@@ -85,6 +91,15 @@ View.prototype.load = function(input) {
 
 View.prototype.reload = function() {
 	this.webview.setAttribute('src', this.webview.getAttribute('src'))
+}
+
+View.prototype.toggleDevTools = function() {
+	if(this.canOpenDevTools && !this.webview.isDevToolsOpened()) {
+		this.webview.openDevTools();
+	}
+	else if(this.canOpenDevTools && this.webview.isDevToolsOpened()) {
+		this.webview.closeDevTools();
+	}
 }
 
 View.prototype.onLoadCommit = function(e) {
@@ -127,6 +142,7 @@ View.prototype.onConsoleMessage = function(e) {
 }
 
 View.prototype.onDOMReady = function() {
+	this.canOpenDevTools = true;
 	this.onDOMReadyCallback();
 }
 
@@ -141,3 +157,15 @@ View.prototype.show = function() {
 View.prototype.hide = function() {
 	this.el.className = 'hide';
 }
+
+// View.prototype.onDevToolsOpened = function() {
+// 	console.log('onDevToolsOpened');
+// }
+
+// View.prototype.onDevToolsFocused = function() {
+// 	console.log('onDevToolsFocused');
+// }
+
+// View.prototype.onDevToolsClosed = function() {
+// 	console.log('onDevToolsClosed');
+// }

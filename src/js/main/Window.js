@@ -94,6 +94,15 @@ Window.prototype.registerCommands = function() {
 			'callback' : this.reload.bind(this)
 		})
 	);
+	CommandManager.registerCommand(
+		'local',
+		this.browser,
+		new Command({
+			'id' : 'Toggle devtools',
+			'accelerator' : 'command+alt+i',
+			'callback' : this.toggleDevTools.bind(this)
+		})
+	);
 }
 
 Window.prototype.onFocus = function() {
@@ -104,6 +113,10 @@ Window.prototype.close = function() {
 	CommandManager.unregisterAll(this.browser);
 	this.browser.close();
 	this.browser = null;
+}
+
+Window.prototype.toggleDevTools = function() {
+	this.browser.webContents.send('toggleDevTools');
 }
 
 Window.prototype.setOmniboxShow = function() {
