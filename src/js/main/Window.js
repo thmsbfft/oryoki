@@ -26,7 +26,9 @@ function Window(parameters) {
 	  backgroundColor: '#000',
 	  show: false,
 	  x: parameters.x ? parameters.x : 890,
-	  y: parameters.y ? parameters.y : 660
+	  y: parameters.y ? parameters.y : 660,
+	  minWidth: 600,
+	  minHeight: 350
 	});
 
 	// @if NODE_ENV='development'
