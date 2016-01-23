@@ -21,34 +21,13 @@ function Oryoki() {
 }
 
 Oryoki.prototype.attachEvents = function() {
-	// ipcMain.on('newWindow', this.createWindow.bind(this));
-	// ipcMain.on('newWindow', function(e, url) {
-	// 	c.log(url);
-	// 	this.createWindow(url).bind(this);
-	// }.bind(this));
+
 	ipcMain.on('newWindow', this.createWindow.bind(this));
 	ipcMain.on('closeWindow', this.closeWindow.bind(this));
 }
 
 Oryoki.prototype.registerCommands = function() {
-	CommandManager.registerCommand(
-		'global',
-		null,
-		new Command({
-			'id' : 'New window',
-			'accelerator' : 'command+n',
-			'callback' : this.createWindow.bind(this)
-		})
-	);
-	CommandManager.registerCommand(
-		'global',
-		null,
-		new Command({
-			'id' : 'Close window',
-			'accelerator' : 'command+w',
-			'callback' : this.closeWindow.bind(this)
-		})
-	);
+
 }
 
 Oryoki.prototype.createWindow = function(e, url) {

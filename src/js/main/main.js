@@ -1,6 +1,8 @@
 'use strict';
 var electron = require('electron');
 var ipcMain = require('electron').ipcMain;
+var Menu = require('electron').Menu;
+var MenuItem = require('electron').MenuItem;
 var app = electron.app;
 var clipboard = require('clipboard');
 var electronLocalshortcut = require('electron-localshortcut');

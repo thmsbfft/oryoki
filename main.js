@@ -1,20 +1,3 @@
-function pad(n) { return ("0" + n).slice(-2); }
-
-var Console = require('console').Console;
-var fs = require('fs');
-var output = fs.createWriteStream('./stdout.log');
-var c = new Console(output);
-
-var hrs = pad(new Date().getHours());
-var min = pad(new Date().getMinutes());
-var sec = pad(new Date().getSeconds());
-var time = hrs + ':' + min + ':' + sec;
-
-c.log('');
-c.log('--------');
-c.log(time);
-c.log('--------');
-c.log('');
 
 function Command(options) {
 
@@ -25,7 +8,8 @@ function Command(options) {
 }
 function CommandManager() {
 	this.register = {};
-	c.log('INIT COMMANDMANAGER');
+	this.template = undefined;
+	this.createMenus();
 }
 
 CommandManager.prototype.registerCommand = function(scope, browserWindow, command) {
@@ -45,7 +29,116 @@ CommandManager.prototype.registerCommand = function(scope, browserWindow, comman
 
 CommandManager.prototype.unregisterAll = function(browserWindow) {
 	electronLocalshortcut.unregisterAll(browserWindow);
-};
+}
+
+CommandManager.prototype.createMenus = function() {
+	var name = app.getName();
+	this.template = [
+		{
+			label: name,
+			submenu: [
+				{
+					label: 'About ' + name,
+					role: 'about'
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Hide ' + name,
+					accelerator: 'Command+H',
+					role: 'hide'
+				},
+				{
+					label: 'Hide Others',
+					accelerator: 'Command+Alt+H',
+					role: 'hideothers'
+				},
+				{
+					label: 'Show All',
+					role: 'unhide'
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Quit',
+					accelerator: 'Command+Q',
+					click: function() { app.quit() }
+				}
+			]
+		},
+		{
+			label: 'Edit',
+			submenu: [
+				{
+					label: 'Undo',
+					accelerator: 'CmdOrCtrl+Z',
+					role: 'undo'
+				},
+				{
+					label: 'Redo',
+					accelerator: 'Shift+CmdOrCtrl+Z',
+					role: 'redo'
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Copy',
+					accelerator: 'CmdOrCtrl+C',
+					role: 'copy'
+				},
+				{
+					label: 'Cut',
+					accelerator: 'CmdOrCtrl+X',
+					role: 'cut'
+				},
+				{
+					label: 'Paste',
+					accelerator: 'CmdOrCtrl+V',
+					role: 'paste'
+				},
+				{
+					label: 'Select All',
+					accelerator: 'CmdOrCtrl+A',
+					role: 'selectall'
+				}
+			]
+		},
+		{
+			label: 'File',
+			submenu: [
+				{
+					label: 'New Window',
+					accelerator: 'Cmd+N',
+					click: function() {
+						if(Oryoki) Oryoki.createWindow()
+					}
+				},
+				{
+					label: 'Close Window',
+					accelerator: 'Cmd+W',
+					click: function() {
+						if(Oryoki) Oryoki.closeWindow()
+					}
+				}
+			]
+		},
+		{
+			label: 'View',
+			submenu: [
+				{
+					label: 'Reload',
+					accelerator: 'CmdOrCtrl+R',
+					click: function() {}
+				}
+			]
+		}
+	];
+	var menu = Menu.buildFromTemplate(this.template);
+	Menu.setApplicationMenu(menu);
+}
 function Oryoki() {
 
 	app.on('window-all-closed', function() {
@@ -69,34 +162,13 @@ function Oryoki() {
 }
 
 Oryoki.prototype.attachEvents = function() {
-	// ipcMain.on('newWindow', this.createWindow.bind(this));
-	// ipcMain.on('newWindow', function(e, url) {
-	// 	c.log(url);
-	// 	this.createWindow(url).bind(this);
-	// }.bind(this));
+
 	ipcMain.on('newWindow', this.createWindow.bind(this));
 	ipcMain.on('closeWindow', this.closeWindow.bind(this));
 }
 
 Oryoki.prototype.registerCommands = function() {
-	CommandManager.registerCommand(
-		'global',
-		null,
-		new Command({
-			'id' : 'New window',
-			'accelerator' : 'command+n',
-			'callback' : this.createWindow.bind(this)
-		})
-	);
-	CommandManager.registerCommand(
-		'global',
-		null,
-		new Command({
-			'id' : 'Close window',
-			'accelerator' : 'command+w',
-			'callback' : this.closeWindow.bind(this)
-		})
-	);
+
 }
 
 Oryoki.prototype.createWindow = function(e, url) {
@@ -104,8 +176,6 @@ Oryoki.prototype.createWindow = function(e, url) {
 		var url = url[0];
 	}
 
-	c.log('Creating new window...');
-	c.log(this.windows.length);
 
 	this.windowsIndex++;
 	this.windowCount++;
@@ -131,12 +201,10 @@ Oryoki.prototype.createWindow = function(e, url) {
 
 Oryoki.prototype.onFocusChange = function(w) {
 	this.focusedWindow = w;
-	c.log('New focus: ', this.focusedWindow.id);
 }
 
 Oryoki.prototype.closeWindow = function() {
 	if(this.windowCount > 0) {
-		c.log('Closing window #'+ this.focusedWindow.id);
 		this.focusedWindow.close();
 		this.windowCount--;
 		var index = this.windows.indexOf(this.focusedWindow);
@@ -154,11 +222,9 @@ Oryoki.prototype.getChromeVersion = function() {
 }
 function Window(parameters) {
 
-	c.log('INIT WINDOW');
 
 	this.id = parameters.id;
 	if(parameters.url != null) {
-		c.log(parameters.url);
 		this.url = parameters.url;
 	}
 
@@ -181,11 +247,9 @@ function Window(parameters) {
 	  minHeight: 350
 	});
 
-	c.log('file://' + __dirname + '/src/html/index.html');
 
 	this.attachEvents();
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html');
-	this.browser.webContents.openDevTools();
 }
 
 Window.prototype.attachEvents = function() {
@@ -274,20 +338,17 @@ Window.prototype.setOmniboxHide = function() {
 }
 
 Window.prototype.showOmnibox = function() {
-	c.log('Showing Omnibox');
 	this.omnibox = true;
 	this.browser.webContents.send('showOmnibox');
 }
 
 Window.prototype.hideOmnibox = function() {
-	c.log('Hiding Omnibox');
 	this.omnibox = false;
 	this.browser.webContents.send('hideOmnibox');
 }
 
 Window.prototype.toggleHandle = function() {
 	if(this.handle) {
-		c.log('Hiding handle!');
 		this.handle = false;
 		this.browser.webContents.send('hideHandle');
 		this.browser.setSize(
@@ -296,7 +357,6 @@ Window.prototype.toggleHandle = function() {
 		);
 	}
 	else {
-		c.log('Showing handle');
 		this.handle = true;
 		this.browser.webContents.send('showHandle');
 		this.browser.setSize(
@@ -307,21 +367,17 @@ Window.prototype.toggleHandle = function() {
 }
 
 Window.prototype.toggleConsole = function() {
-	c.log(this.console);
 	if(this.console) {
-		c.log('Hiding console');
 		this.console = false;
 		this.browser.webContents.send('hideConsole');
 	}
 	else {
-		c.log('Showing console');
 		this.console = true;
 		this.browser.webContents.send('showConsole');
 	}
 }
 
 Window.prototype.toggleOmnibox = function() {
-	c.log('Toggling Omnibox');
 	if(this.omnibox) {
 		this.hideOmnibox();
 	}
@@ -340,6 +396,8 @@ Window.prototype.load = function(url) {
 'use strict';
 var electron = require('electron');
 var ipcMain = require('electron').ipcMain;
+var Menu = require('electron').Menu;
+var MenuItem = require('electron').MenuItem;
 var app = electron.app;
 var clipboard = require('clipboard');
 var electronLocalshortcut = require('electron-localshortcut');
