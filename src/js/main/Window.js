@@ -85,24 +85,15 @@ Window.prototype.registerCommands = function() {
 			'callback' : this.toggleConsole.bind(this)
 		})
 	);
-	CommandManager.registerCommand(
-		'local',
-		this.browser,
-		new Command({
-			'id' : 'Reload',
-			'accelerator' : 'command+r',
-			'callback' : this.reload.bind(this)
-		})
-	);
-	CommandManager.registerCommand(
-		'local',
-		this.browser,
-		new Command({
-			'id' : 'Toggle devtools',
-			'accelerator' : 'command+alt+i',
-			'callback' : this.toggleDevTools.bind(this)
-		})
-	);
+	// CommandManager.registerCommand(
+	// 	'local',
+	// 	this.browser,
+	// 	new Command({
+	// 		'id' : 'Toggle devtools',
+	// 		'accelerator' : 'command+alt+i',
+	// 		'callback' : this.toggleDevTools.bind(this)
+	// 	})
+	// );
 }
 
 Window.prototype.onFocus = function() {

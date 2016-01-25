@@ -126,7 +126,27 @@ CommandManager.prototype.createMenus = function() {
 				{
 					label: 'Reload',
 					accelerator: 'CmdOrCtrl+R',
-					click: function() {}
+					click: function() {
+						if(Oryoki) {
+							if(Oryoki.focusedWindow) {
+								Oryoki.focusedWindow.reload()
+							}
+						}
+					}
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Toggle Devtools',
+					accelerator: 'Cmd+Alt+I',
+					click: function() {
+						if(Oryoki) {
+							if(Oryoki.focusedWindow) {
+								Oryoki.focusedWindow.toggleDevTools()
+							}
+						}
+					}
 				}
 			]
 		}
