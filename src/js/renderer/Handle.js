@@ -15,12 +15,20 @@ Handle.prototype.build = function() {
 	this.el.innerHTML = this.htmlData;
 	this.title = document.querySelectorAll('#handle .title')[0];
 	this.closeBtn = document.querySelectorAll('#handle .button.close')[0];
+	this.minimizeBtn = document.querySelectorAll('#handle .button.minimize')[0];
+	this.fullscreenBtn = document.querySelectorAll('#handle .button.fullscreen')[0];
 	this.attachEvents();
 }
 
 Handle.prototype.attachEvents = function() {
 	this.closeBtn.addEventListener('click', function() {
 		ipcRenderer.send('closeWindow');
+	});
+	this.minimizeBtn.addEventListener('click', function() {
+		ipcRenderer.send('minimizeWindow');
+	});
+	this.fullscreenBtn.addEventListener('click', function() {
+		ipcRenderer.send('fullscreenWindow');
 	});
 }
 

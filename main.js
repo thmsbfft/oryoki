@@ -200,9 +200,9 @@ function Oryoki() {
 }
 
 Oryoki.prototype.attachEvents = function() {
-
 	ipcMain.on('newWindow', this.createWindow.bind(this));
 	ipcMain.on('closeWindow', this.closeWindow.bind(this));
+	ipcMain.on('minimizeWindow', this.minimizeWindow.bind(this));
 }
 
 Oryoki.prototype.registerCommands = function() {
@@ -257,6 +257,12 @@ Oryoki.prototype.closeWindow = function() {
 	if(this.windowCount == 0) {
 		this.focusedWindow = null;
 	}
+}
+
+Oryoki.prototype.minimizeWindow = function() {
+	if(this.windowCount > 0) {
+		this.focusedWindow.browser.minimize();
+	} 
 }
 
 Oryoki.prototype.getChromeVersion = function() {

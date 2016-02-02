@@ -91,7 +91,8 @@ body {
     top: 5px;
     border-radius: 100%;
     height: 12px;
-    width: 12px; }
+    width: 12px;
+    transition: background-color 0.1s; }
     #handle .button::after {
       content: '';
       display: block;
@@ -101,17 +102,27 @@ body {
       width: 6px;
       border-radius: 100%;
       background: transparent;
-      transition: background-color 0.3s; }
+      transition: background-color 0.1s; }
     #handle .button:hover::after {
       background: rgba(0, 0, 0, 0.3); }
   #handle .close {
     left: 8px;
     background: #FF554E; }
+  #handle .minimize {
+    left: 28px;
+    background: rgba(255, 255, 255, 0.2); }
+  #handle .fullscreen {
+    left: 48px;
+    background: rgba(255, 255, 255, 0.2); }
   #handle.hide {
     display: none; }
   #handle.show {
     display: block;
     animation: fade-in 0.7s 1 ease-out; }
+  #handle:hover .minimize {
+    background: #ffbb3c; }
+  #handle:hover .fullscreen {
+    background: #35c849; }
 
 #view {
   width: 100%; }
