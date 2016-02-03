@@ -172,6 +172,12 @@ CommandManager.prototype.createMenus = function() {
 					}
 				}
 			]
+		},
+		{
+			label: 'Window',
+			submenu: [
+			
+			]
 		}
 	];
 	var menu = Menu.buildFromTemplate(this.template);
