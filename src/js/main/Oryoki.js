@@ -22,7 +22,6 @@ function Oryoki() {
 
 Oryoki.prototype.attachEvents = function() {
 	ipcMain.on('newWindow', this.createWindow.bind(this));
-	ipcMain.on('closeWindow', this.closeWindow.bind(this));
 	ipcMain.on('minimizeWindow', this.minimizeWindow.bind(this));
 }
 
@@ -47,7 +46,8 @@ Oryoki.prototype.createWindow = function(e, url) {
 		this.windows[this.windowsIndex] = new Window({
 			'id' : this.windowsIndex,
 			'url' : url ? url : null,
-			'onFocus' : this.onFocusChange.bind(this)
+			'onFocus' : this.onFocusChange.bind(this),
+			'onClose' : this.onCloseWindow.bind(this)
 		});
 		this.windows[this.windowsIndex].browser.center();
 	}
@@ -56,6 +56,7 @@ Oryoki.prototype.createWindow = function(e, url) {
 			'id' : this.windowsIndex,
 			'url' : url ? url : null,
 			'onFocus' : this.onFocusChange.bind(this),
+			'onClose' : this.onCloseWindow.bind(this),
 			'x' : this.focusedWindow.browser.getPosition()[0]+50,
 			'y' : this.focusedWindow.browser.getPosition()[1]+50
 		});
@@ -69,12 +70,12 @@ Oryoki.prototype.onFocusChange = function(w) {
 	// @endif
 }
 
-Oryoki.prototype.closeWindow = function() {
+Oryoki.prototype.onCloseWindow = function() {
 	if(this.windowCount > 0) {
 		// @if NODE_ENV='development'
 		c.log('Closing window #'+ this.focusedWindow.id);
 		// @endif
-		this.focusedWindow.close();
+		// this.focusedWindow.close();
 		this.windowCount--;
 		var index = this.windows.indexOf(this.focusedWindow);
 		if (index > -1) {

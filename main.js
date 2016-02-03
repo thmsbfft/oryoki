@@ -137,9 +137,10 @@ CommandManager.prototype.createMenus = function() {
 				{
 					label: 'Close Window',
 					accelerator: 'Cmd+W',
-					click: function() {
-						if(Oryoki) Oryoki.closeWindow()
-					}
+					role: 'close'
+					// click: function() {
+					// 	if(Oryoki) Oryoki.closeWindow()
+					// }
 				}
 			]
 		},
@@ -176,7 +177,16 @@ CommandManager.prototype.createMenus = function() {
 		{
 			label: 'Window',
 			submenu: [
-			
+				{
+					label: 'Minimize',
+					accelerator: 'Cmd+M',
+					role: 'minimize'
+					// click: function() {
+					// 	if(Oryoki && Oryoki.focusedWindow) {
+					// 		Oryoki.minimizeWindow()
+					// 	}
+					// }
+				}
 			]
 		}
 	];
@@ -207,7 +217,6 @@ function Oryoki() {
 
 Oryoki.prototype.attachEvents = function() {
 	ipcMain.on('newWindow', this.createWindow.bind(this));
-	ipcMain.on('closeWindow', this.closeWindow.bind(this));
 	ipcMain.on('minimizeWindow', this.minimizeWindow.bind(this));
 }
 
@@ -230,7 +239,8 @@ Oryoki.prototype.createWindow = function(e, url) {
 		this.windows[this.windowsIndex] = new Window({
 			'id' : this.windowsIndex,
 			'url' : url ? url : null,
-			'onFocus' : this.onFocusChange.bind(this)
+			'onFocus' : this.onFocusChange.bind(this),
+			'onClose' : this.onCloseWindow.bind(this)
 		});
 		this.windows[this.windowsIndex].browser.center();
 	}
@@ -239,6 +249,7 @@ Oryoki.prototype.createWindow = function(e, url) {
 			'id' : this.windowsIndex,
 			'url' : url ? url : null,
 			'onFocus' : this.onFocusChange.bind(this),
+			'onClose' : this.onCloseWindow.bind(this),
 			'x' : this.focusedWindow.browser.getPosition()[0]+50,
 			'y' : this.focusedWindow.browser.getPosition()[1]+50
 		});
@@ -250,10 +261,10 @@ Oryoki.prototype.onFocusChange = function(w) {
 	c.log('New focus: ', this.focusedWindow.id);
 }
 
-Oryoki.prototype.closeWindow = function() {
+Oryoki.prototype.onCloseWindow = function() {
 	if(this.windowCount > 0) {
 		c.log('Closing window #'+ this.focusedWindow.id);
-		this.focusedWindow.close();
+		// this.focusedWindow.close();
 		this.windowCount--;
 		var index = this.windows.indexOf(this.focusedWindow);
 		if (index > -1) {
@@ -313,6 +324,7 @@ function Window(parameters) {
 Window.prototype.attachEvents = function() {
 	this.browser.webContents.on('dom-ready', this.onReady.bind(this));
 	this.browser.on('focus', this.onFocus.bind(this));
+	this.browser.on('closed', this.close.bind(this));
 
 	ipcMain.on('setOmniboxShow', this.setOmniboxShow.bind(this));
 	ipcMain.on('setOmniboxHide', this.setOmniboxHide.bind(this));
@@ -353,15 +365,6 @@ Window.prototype.registerCommands = function() {
 			'callback' : this.toggleConsole.bind(this)
 		})
 	);
-	// CommandManager.registerCommand(
-	// 	'local',
-	// 	this.browser,
-	// 	new Command({
-	// 		'id' : 'Toggle devtools',
-	// 		'accelerator' : 'command+alt+i',
-	// 		'callback' : this.toggleDevTools.bind(this)
-	// 	})
-	// );
 }
 
 Window.prototype.onFocus = function() {
@@ -370,8 +373,8 @@ Window.prototype.onFocus = function() {
 
 Window.prototype.close = function() {
 	CommandManager.unregisterAll(this.browser);
-	this.browser.close();
 	this.browser = null;
+	this.onCloseCallback();
 }
 
 Window.prototype.toggleDevTools = function() {

@@ -45,6 +45,7 @@ function Window(parameters) {
 Window.prototype.attachEvents = function() {
 	this.browser.webContents.on('dom-ready', this.onReady.bind(this));
 	this.browser.on('focus', this.onFocus.bind(this));
+	this.browser.on('closed', this.close.bind(this));
 
 	ipcMain.on('setOmniboxShow', this.setOmniboxShow.bind(this));
 	ipcMain.on('setOmniboxHide', this.setOmniboxHide.bind(this));
@@ -85,15 +86,6 @@ Window.prototype.registerCommands = function() {
 			'callback' : this.toggleConsole.bind(this)
 		})
 	);
-	// CommandManager.registerCommand(
-	// 	'local',
-	// 	this.browser,
-	// 	new Command({
-	// 		'id' : 'Toggle devtools',
-	// 		'accelerator' : 'command+alt+i',
-	// 		'callback' : this.toggleDevTools.bind(this)
-	// 	})
-	// );
 }
 
 Window.prototype.onFocus = function() {
@@ -102,8 +94,8 @@ Window.prototype.onFocus = function() {
 
 Window.prototype.close = function() {
 	CommandManager.unregisterAll(this.browser);
-	this.browser.close();
 	this.browser = null;
+	this.onCloseCallback();
 }
 
 Window.prototype.toggleDevTools = function() {

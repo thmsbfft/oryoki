@@ -114,9 +114,10 @@ CommandManager.prototype.createMenus = function() {
 				{
 					label: 'Close Window',
 					accelerator: 'Cmd+W',
-					click: function() {
-						if(Oryoki) Oryoki.closeWindow()
-					}
+					role: 'close'
+					// click: function() {
+					// 	if(Oryoki) Oryoki.closeWindow()
+					// }
 				}
 			]
 		},
@@ -153,7 +154,16 @@ CommandManager.prototype.createMenus = function() {
 		{
 			label: 'Window',
 			submenu: [
-			
+				{
+					label: 'Minimize',
+					accelerator: 'Cmd+M',
+					role: 'minimize'
+					// click: function() {
+					// 	if(Oryoki && Oryoki.focusedWindow) {
+					// 		Oryoki.minimizeWindow()
+					// 	}
+					// }
+				}
 			]
 		}
 	];
