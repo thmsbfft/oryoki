@@ -11,7 +11,7 @@
 		font-family: 'Roboto Light', sans-serif;
 		font-size: 12px;
 		display: inline-block;
-		-webkit-app-region: no-drag;
+		-webkit-app-region: drag;
 		-webkit-user-select: none;
 		user-select: none;
 		cursor: default;
@@ -19,6 +19,7 @@
 	.button {
 		position: absolute;
 		-webkit-app-region: no-drag;
+		user-select: none;
 		top: 5px;
 		border-radius: 100%;
 		height: 12px;
@@ -46,6 +47,9 @@
 	.close {
 		left: 8px;
 		background: #FF554E;
+		&:active {
+			background: #CC443F;
+		}
 	}
 	.minimize {
 		left: 28px;
@@ -65,9 +69,15 @@
 	&:hover {
 		.minimize {
 			background: #ffbb3c;
+			&:active {
+				background: #CC9631;
+			}
 		}
 		.fullscreen {
 			background: #35c849;
+			&:active {
+				background: #269435;
+			}
 		}
 	}
 }

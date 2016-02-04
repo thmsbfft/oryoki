@@ -81,13 +81,14 @@ body {
     font-family: 'Roboto Light', sans-serif;
     font-size: 12px;
     display: inline-block;
-    -webkit-app-region: no-drag;
+    -webkit-app-region: drag;
     -webkit-user-select: none;
     user-select: none;
     cursor: default; }
   #handle .button {
     position: absolute;
     -webkit-app-region: no-drag;
+    user-select: none;
     top: 5px;
     border-radius: 100%;
     height: 12px;
@@ -108,6 +109,8 @@ body {
   #handle .close {
     left: 8px;
     background: #FF554E; }
+    #handle .close:active {
+      background: #CC443F; }
   #handle .minimize {
     left: 28px;
     background: rgba(255, 255, 255, 0.2); }
@@ -121,8 +124,12 @@ body {
     animation: fade-in 0.7s 1 ease-out; }
   #handle:hover .minimize {
     background: #ffbb3c; }
+    #handle:hover .minimize:active {
+      background: #CC9631; }
   #handle:hover .fullscreen {
     background: #35c849; }
+    #handle:hover .fullscreen:active {
+      background: #269435; }
 
 #view {
   width: 100%; }

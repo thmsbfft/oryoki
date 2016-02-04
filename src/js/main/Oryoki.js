@@ -23,6 +23,7 @@ function Oryoki() {
 Oryoki.prototype.attachEvents = function() {
 	ipcMain.on('newWindow', this.createWindow.bind(this));
 	ipcMain.on('minimizeWindow', this.minimizeWindow.bind(this));
+	ipcMain.on('closeWindow', this.closeWindow.bind(this));
 	ipcMain.on('fullscreenWindow', this.toggleFullScreen.bind(this));
 }
 
@@ -69,6 +70,14 @@ Oryoki.prototype.onFocusChange = function(w) {
 	// @if NODE_ENV='development'
 	c.log('New focus: ', this.focusedWindow.id);
 	// @endif
+}
+
+Oryoki.prototype.closeWindow = function() {
+	if(this.windowCount > 0) {
+		c.log('WTF');
+		this.focusedWindow.close();
+		this.onCloseWindow();
+	}
 }
 
 Oryoki.prototype.onCloseWindow = function() {

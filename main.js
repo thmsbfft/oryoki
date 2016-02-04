@@ -218,6 +218,7 @@ function Oryoki() {
 Oryoki.prototype.attachEvents = function() {
 	ipcMain.on('newWindow', this.createWindow.bind(this));
 	ipcMain.on('minimizeWindow', this.minimizeWindow.bind(this));
+	ipcMain.on('closeWindow', this.closeWindow.bind(this));
 	ipcMain.on('fullscreenWindow', this.toggleFullScreen.bind(this));
 }
 
@@ -260,6 +261,14 @@ Oryoki.prototype.createWindow = function(e, url) {
 Oryoki.prototype.onFocusChange = function(w) {
 	this.focusedWindow = w;
 	c.log('New focus: ', this.focusedWindow.id);
+}
+
+Oryoki.prototype.closeWindow = function() {
+	if(this.windowCount > 0) {
+		c.log('WTF');
+		this.focusedWindow.close();
+		this.onCloseWindow();
+	}
 }
 
 Oryoki.prototype.onCloseWindow = function() {
@@ -337,7 +346,7 @@ function Window(parameters) {
 Window.prototype.attachEvents = function() {
 	this.browser.webContents.on('dom-ready', this.onReady.bind(this));
 	this.browser.on('focus', this.onFocus.bind(this));
-	this.browser.on('closed', this.close.bind(this));
+	this.browser.on('closed', this.onClosed.bind(this));
 
 	ipcMain.on('setOmniboxShow', this.setOmniboxShow.bind(this));
 	ipcMain.on('setOmniboxHide', this.setOmniboxHide.bind(this));
@@ -385,6 +394,10 @@ Window.prototype.onFocus = function() {
 }
 
 Window.prototype.close = function() {
+	this.browser.close();
+}
+
+Window.prototype.onClosed = function() {
 	CommandManager.unregisterAll(this.browser);
 	this.browser = null;
 	this.onCloseCallback();
