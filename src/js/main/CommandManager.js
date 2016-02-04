@@ -136,6 +136,11 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
+					label: 'Toggle Fullscreen',
+					accelerator: 'Cmd+Ctrl+F',
+					click: function() { if(Oryoki) Oryoki.toggleFullScreen() }
+				},
+				{
 					type: 'separator'
 				},
 				{
@@ -158,11 +163,6 @@ CommandManager.prototype.createMenus = function() {
 					label: 'Minimize',
 					accelerator: 'Cmd+M',
 					role: 'minimize'
-					// click: function() {
-					// 	if(Oryoki && Oryoki.focusedWindow) {
-					// 		Oryoki.minimizeWindow()
-					// 	}
-					// }
 				}
 			]
 		}

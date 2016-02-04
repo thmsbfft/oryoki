@@ -23,6 +23,7 @@ function Oryoki() {
 Oryoki.prototype.attachEvents = function() {
 	ipcMain.on('newWindow', this.createWindow.bind(this));
 	ipcMain.on('minimizeWindow', this.minimizeWindow.bind(this));
+	ipcMain.on('fullscreenWindow', this.toggleFullScreen.bind(this));
 }
 
 Oryoki.prototype.registerCommands = function() {
@@ -90,7 +91,19 @@ Oryoki.prototype.onCloseWindow = function() {
 Oryoki.prototype.minimizeWindow = function() {
 	if(this.windowCount > 0) {
 		this.focusedWindow.browser.minimize();
-	} 
+	}
+}
+
+Oryoki.prototype.toggleFullScreen = function() {
+	if(this.windowCount > 0) {
+		if(this.focusedWindow.browser.isFullScreen()) {
+			this.focusedWindow.browser.setFullScreen(false);
+		}
+		else {
+			this.focusedWindow.browser.setFullScreen(true);
+			if(this.focusedWindow.handle) this.focusedWindow.toggleHandle();
+		}
+	}
 }
 
 Oryoki.prototype.getChromeVersion = function() {
