@@ -110,7 +110,7 @@ Browser.prototype.showHandle = function() {
 
 Browser.prototype.showOmnibox = function() {
 	this.omnibox.show();
-	this.loader.show();
+	// this.loader.show();
 	this.view.hide();
 }
 

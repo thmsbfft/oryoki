@@ -214,13 +214,14 @@ body {
   position: fixed;
   bottom: 50px;
   right: 50px;
-  transition: border-color 0.2s; }
+  transition: border-color 0.2s, opacity 0.3s;
+  opacity: 0; }
   #loader.loading {
-    animation: blink 0.3s infinite ease-out; }
+    animation: blink 0.2s infinite ease-out; }
   #loader.hide {
-    display: none; }
+    opacity: 0; }
   #loader.show {
-    display: block; }
+    opacity: 1; }
 
 #console {
   position: fixed;

@@ -32,10 +32,11 @@ function Loader(parameters) {
 
 	console.log('Loader');
 
-	this.show();
+	this.hide();
 }
 
 Loader.prototype.loading = function() {
+	this.show();
 	addClass(this.el, 'loading');
 }
 
@@ -534,7 +535,7 @@ Browser.prototype.showHandle = function() {
 
 Browser.prototype.showOmnibox = function() {
 	this.omnibox.show();
-	this.loader.show();
+	// this.loader.show();
 	this.view.hide();
 }
 

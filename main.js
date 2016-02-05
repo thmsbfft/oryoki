@@ -1,20 +1,3 @@
-function pad(n) { return ("0" + n).slice(-2); }
-
-var Console = require('console').Console;
-var fs = require('fs');
-var output = fs.createWriteStream('./stdout.log');
-var c = new Console(output);
-
-var hrs = pad(new Date().getHours());
-var min = pad(new Date().getMinutes());
-var sec = pad(new Date().getSeconds());
-var time = hrs + ':' + min + ':' + sec;
-
-c.log('');
-c.log('--------');
-c.log(time);
-c.log('--------');
-c.log('');
 
 function Command(options) {
 
@@ -26,7 +9,6 @@ function Command(options) {
 function CommandManager() {
 	this.register = {};
 	this.template = undefined;
-	c.log('INIT COMMANDMANAGER');
 	this.createMenus();
 }
 
@@ -231,8 +213,6 @@ Oryoki.prototype.createWindow = function(e, url) {
 		var url = url[0];
 	}
 
-	c.log('Creating new window...');
-	c.log(this.windows.length);
 
 	this.windowsIndex++;
 	this.windowCount++;
@@ -260,20 +240,16 @@ Oryoki.prototype.createWindow = function(e, url) {
 
 Oryoki.prototype.onFocusChange = function(w) {
 	this.focusedWindow = w;
-	c.log('New focus: ', this.focusedWindow.id);
 }
 
 Oryoki.prototype.closeWindow = function() {
-	if(this.windowCount > 0) {
-		c.log('WTF');
-		this.focusedWindow.close();
-		this.onCloseWindow();
-	}
+	// This function to be triggered when click on emulated traffic lights.
+	this.focusedWindow.close();
+	this.onCloseWindow();
 }
 
 Oryoki.prototype.onCloseWindow = function() {
 	if(this.windowCount > 0) {
-		c.log('Closing window #'+ this.focusedWindow.id);
 		// this.focusedWindow.close();
 		this.windowCount--;
 		var index = this.windows.indexOf(this.focusedWindow);
@@ -309,11 +285,9 @@ Oryoki.prototype.getChromeVersion = function() {
 }
 function Window(parameters) {
 
-	c.log('INIT WINDOW');
 
 	this.id = parameters.id;
 	if(parameters.url != null) {
-		c.log(parameters.url);
 		this.url = parameters.url;
 	}
 
@@ -336,11 +310,9 @@ function Window(parameters) {
 	  minHeight: 350
 	});
 
-	c.log('file://' + __dirname + '/src/html/index.html');
 
 	this.attachEvents();
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html');
-	this.browser.webContents.openDevTools();
 }
 
 Window.prototype.attachEvents = function() {
@@ -416,20 +388,17 @@ Window.prototype.setOmniboxHide = function() {
 }
 
 Window.prototype.showOmnibox = function() {
-	c.log('Showing Omnibox');
 	this.omnibox = true;
 	this.browser.webContents.send('showOmnibox');
 }
 
 Window.prototype.hideOmnibox = function() {
-	c.log('Hiding Omnibox');
 	this.omnibox = false;
 	this.browser.webContents.send('hideOmnibox');
 }
 
 Window.prototype.toggleHandle = function() {
 	if(this.handle) {
-		c.log('Hiding handle!');
 		this.handle = false;
 		this.browser.webContents.send('hideHandle');
 		this.browser.setSize(
@@ -438,7 +407,6 @@ Window.prototype.toggleHandle = function() {
 		);
 	}
 	else {
-		c.log('Showing handle');
 		this.handle = true;
 		this.browser.webContents.send('showHandle');
 		this.browser.setSize(
@@ -449,21 +417,17 @@ Window.prototype.toggleHandle = function() {
 }
 
 Window.prototype.toggleConsole = function() {
-	c.log(this.console);
 	if(this.console) {
-		c.log('Hiding console');
 		this.console = false;
 		this.browser.webContents.send('hideConsole');
 	}
 	else {
-		c.log('Showing console');
 		this.console = true;
 		this.browser.webContents.send('showConsole');
 	}
 }
 
 Window.prototype.toggleOmnibox = function() {
-	c.log('Toggling Omnibox');
 	if(this.omnibox) {
 		this.hideOmnibox();
 	}

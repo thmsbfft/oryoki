@@ -73,11 +73,9 @@ Oryoki.prototype.onFocusChange = function(w) {
 }
 
 Oryoki.prototype.closeWindow = function() {
-	if(this.windowCount > 0) {
-		c.log('WTF');
-		this.focusedWindow.close();
-		this.onCloseWindow();
-	}
+	// This function to be triggered when click on emulated traffic lights.
+	this.focusedWindow.close();
+	this.onCloseWindow();
 }
 
 Oryoki.prototype.onCloseWindow = function() {
