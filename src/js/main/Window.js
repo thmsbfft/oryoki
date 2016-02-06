@@ -55,37 +55,6 @@ Window.prototype.onReady = function() {
 	this.browser.webContents.send('ready');
 	if(this.url) this.browser.webContents.send('load', this.url);
 	this.browser.show();
-	this.registerCommands();
-}
-
-Window.prototype.registerCommands = function() {
-	CommandManager.registerCommand(
-		'local',
-		this.browser,
-		new Command({
-			'id' : 'Toggle handle',
-			'accelerator' : 'command+/',
-			'callback' : this.toggleHandle.bind(this)
-		})
-	);
-	CommandManager.registerCommand(
-		'local',
-		this.browser,
-		new Command({
-			'id' : 'Toggle omnibox',
-			'accelerator' : 'command+l',
-			'callback' : this.toggleOmnibox.bind(this)
-		})
-	);
-	CommandManager.registerCommand(
-		'local',
-		this.browser,
-		new Command({
-			'id' : 'Toggle console',
-			'accelerator' : 'command+alt+c',
-			'callback' : this.toggleConsole.bind(this)
-		})
-	);
 }
 
 Window.prototype.onFocus = function() {

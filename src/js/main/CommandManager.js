@@ -108,16 +108,16 @@ CommandManager.prototype.createMenus = function() {
 					label: 'New Window',
 					accelerator: 'Cmd+N',
 					click: function() {
-						if(Oryoki) Oryoki.createWindow()
+						if(Oryoki) Oryoki.createWindow();
 					}
+				},
+				{
+					type: 'separator'
 				},
 				{
 					label: 'Close Window',
 					accelerator: 'Cmd+W',
 					role: 'close'
-					// click: function() {
-					// 	if(Oryoki) Oryoki.closeWindow()
-					// }
 				}
 			]
 		},
@@ -125,12 +125,33 @@ CommandManager.prototype.createMenus = function() {
 			label: 'View',
 			submenu: [
 				{
+					label: 'Toggle Title Bar',
+					accelerator: 'Cmd+/',
+					click:function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.toggleHandle();
+						}
+					}
+				},
+				{
+					label: 'Toggle Omnibox',
+					accelerator: 'Cmd+L',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.toggleOmnibox();
+						}
+					}
+				},
+				{
+					type: 'separator'
+				},
+				{
 					label: 'Reload',
 					accelerator: 'CmdOrCtrl+R',
 					click: function() {
 						if(Oryoki) {
 							if(Oryoki.focusedWindow) {
-								Oryoki.focusedWindow.reload()
+								Oryoki.focusedWindow.reload();
 							}
 						}
 					}
@@ -142,6 +163,15 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					type: 'separator'
+				},
+				{
+					label: 'Mini Console',
+					accelerator: 'Cmd+Alt+C',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.toggleConsole();
+						}
+					}
 				},
 				{
 					label: 'Toggle Devtools',
