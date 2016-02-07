@@ -66,14 +66,15 @@ table {
   src: url(../media/RobotoMono-Regular.ttf); }
 
 body {
-  background-color: black;
+  background-color: #141414;
   font-family: 'Roboto Light', sans-serif;
   color: white; }
 
 #handle {
   -webkit-app-region: drag;
+  background: #141414;
   height: 22px;
-  border-bottom: 1px solid #191919;
+  border-bottom: 1px solid rgba(33, 33, 33, 0.5);
   text-align: center; }
   #handle .title {
     padding-top: 6px;
@@ -204,6 +205,10 @@ body {
     display: block; }
   #omnibox.hide {
     display: none; }
+  #omnibox .overlay {
+    -webkit-app-region: drag;
+    width: 100%;
+    height: 100%; }
 
 #loader {
   display: block;
