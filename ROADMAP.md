@@ -12,7 +12,7 @@
 	✔ Basic webview navigation
 	✔ Project website
 
-##### ALPHA RELEASE
+### CURRENT: ALPHA RELEASE 👀
 
 # 0.2
 	
@@ -41,7 +41,7 @@
 		
 	…
 
-##### Unsorted features
+### Unsorted features
 
 	Tabs
 	Split Screen
