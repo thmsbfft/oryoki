@@ -163,3 +163,11 @@ Window.prototype.reload = function() {
 Window.prototype.load = function(url) {
 	this.browser.webContents.send('load', url);
 }
+
+Window.prototype.navigateBack = function() {
+	this.browser.webContents.send('goBack');
+}
+
+Window.prototype.navigateForward = function() {
+	this.browser.webContents.send('goForward');
+}

@@ -47,6 +47,11 @@ View.prototype.attachEvents = function() {
 	this.webview.addEventListener('new-window', this.onNewWindow.bind(this));
 	this.webview.addEventListener('console-message', this.onConsoleMessage.bind(this));
 
+	// IPC
+	ipcRenderer.on('goBack', this.goBack.bind(this));
+	ipcRenderer.on('goForward', this.goForward.bind(this));
+
+
 	// Devtools
 	// this.webview.addEventListener('devtools-opened', this.onDevToolsOpened.bind(this));
 	// this.webview.addEventListener('devtools-focused', this.onDevToolsFocused.bind(this));
@@ -130,6 +135,19 @@ View.prototype.show = function() {
 
 View.prototype.hide = function() {
 	this.el.className = 'hide';
+}
+
+View.prototype.goForward = function() {
+	if(this.webview.canGoForward()) {
+		this.webview.goForward();
+	}
+}
+
+View.prototype.goBack = function() {
+	if(this.webview.canGoBack()) {
+		console.log('Going back!');
+		this.webview.goBack();
+	}
 }
 
 // View.prototype.onDevToolsOpened = function() {

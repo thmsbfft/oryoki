@@ -165,6 +165,29 @@ CommandManager.prototype.createMenus = function() {
 					type: 'separator'
 				},
 				{
+					label: 'Navigate Back',
+					accelerator: 'Cmd+Left',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.navigateBack();
+						}
+					}
+				},
+				{
+					label: 'Navigate Forward',
+					accelerator: 'Cmd+Right',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.navigateForward();
+						}
+					}
+				}
+			]
+		},
+		{
+			label: 'Tools',
+			submenu: [
+				{
 					label: 'Mini Console',
 					accelerator: 'Cmd+Alt+C',
 					click: function() {
