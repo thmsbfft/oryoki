@@ -14,7 +14,7 @@
 	✔ Basic webview navigation
 	✔ Project website
 
-## 🔥 Alpha Release
+## → Alpha Release
 
 #### <sup>🕗 FEBRUARY 2016</sup>
 
