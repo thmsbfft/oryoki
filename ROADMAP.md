@@ -1,3 +1,5 @@
+## <sup>DECEMBER 2015</sup>
+
 # 0.1
 		
 	✔ Gulp for Electron
@@ -12,7 +14,8 @@
 	✔ Basic webview navigation
 	✔ Project website
 
-### CURRENT: ALPHA RELEASE 👀
+## ⭕️ Alpha Release
+## <sup>FEBRUARY 2016</sup>
 
 # 0.2
 	
@@ -41,7 +44,7 @@
 		
 	…
 
-### Unsorted features
+# Unsorted features
 
 	Tabs
 	Split Screen
