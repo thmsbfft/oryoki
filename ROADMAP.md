@@ -1,4 +1,4 @@
-### <sup>🕗 DECEMBER 2015</sup>
+#### <sup>🕗 DECEMBER 2015</sup>
 
 # 0.1
 		
@@ -14,9 +14,9 @@
 	✔ Basic webview navigation
 	✔ Project website
 
-## ⭕️ Alpha Release
+## 🔥 Alpha Release
 
-### <sup>🕗 FEBRUARY 2016</sup>
+#### <sup>🕗 FEBRUARY 2016</sup>
 
 # 0.2
 	
