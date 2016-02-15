@@ -1,5 +1,8 @@
 function Browser(parameters) {
 
+	this.isHandleDisplayed = true;
+	this.frame = document.querySelectorAll('#frame')[0];
+
 	this.omnibox = new Omnibox({
 		'mode' : 'url',
 		'onsubmit' : this.onSubmit.bind(this)
@@ -18,7 +21,6 @@ function Browser(parameters) {
 	});
 
 	this.view = new View({
-		'page' : 'homepage',
 		'onDidFinishLoad' : this.onDidFinishLoad.bind(this),
 		'onDOMReady' : this.onDOMReady.bind(this),
 		'onPageTitleUpdated' : this.onPageTitleUpdated.bind(this),
@@ -27,11 +29,27 @@ function Browser(parameters) {
 
 	this.dragOverlay = document.querySelectorAll('#dragOverlay')[0];
 	this.draggingOverlay = false;
+	
+	this.resize();
 	this.attachEvents();
+}
+
+Browser.prototype.resize = function() {
+	if(this.isHandleDisplayed) {
+		this.frame.style.width = window.innerWidth+"px";
+		this.frame.style.height = (window.innerHeight - document.querySelectorAll('#handle')[0].offsetHeight) + 'px';
+	}
+	else {
+		this.frame.style.width = window.innerWidth+"px";
+		this.frame.style.height = window.innerHeight+"px";
+	}
 }
 
 Browser.prototype.attachEvents = function() {
 	console.log('Attaching events');
+
+	window.addEventListener('resize', this.resize.bind(this));
+
 	ipcRenderer.on('hideHandle', this.hideHandle.bind(this));
 	ipcRenderer.on('showHandle', this.showHandle.bind(this));
 
@@ -94,18 +112,16 @@ Browser.prototype.onConsoleMessage = function(e) {
 
 Browser.prototype.hideHandle = function() {
 	this.handle.hide();
-	this.omnibox.setHigh();
 
-	this.view.isHandleDisplayed = false;
-	this.view.resize();
+	this.isHandleDisplayed = false;
+	this.resize();
 }
 
 Browser.prototype.showHandle = function() {
 	this.handle.show();
-	this.omnibox.setLow();
 	
-	this.view.isHandleDisplayed = true;
-	this.view.resize();
+	this.isHandleDisplayed = true;
+	this.resize();
 }
 
 Browser.prototype.showOmnibox = function() {

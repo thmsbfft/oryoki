@@ -1,5 +1,7 @@
 function Omnibox(parameters) {
 
+	this.isVisible = undefined;
+
 	this.modes = {
 		'url' : 'Search',
 		'lucky' : 'Lucky'
@@ -24,17 +26,36 @@ function Omnibox(parameters) {
 	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
 
 	this.attachEvents();
-	this.setLow();
 	this.show();
 }
 
 Omnibox.prototype.attachEvents = function() {
-	this.el.querySelectorAll('input')[0].addEventListener('keydown', this.onKeyDown.bind(this));
-	this.el.querySelectorAll('input')[0].addEventListener('keyup', this.onKeyUp.bind(this));
+	this.input.addEventListener('keydown', this.onInputKeyDown.bind(this));
+	this.input.addEventListener('keyup', this.onInputKeyUp.bind(this));
 	this.tab.addEventListener('click', this.switchMode.bind(this));
+
+	window.addEventListener('keypress', this.onKeyPress.bind(this));
 }
 
-Omnibox.prototype.onKeyDown = function(e) {
+Omnibox.prototype.onKeyPress = function(e) {
+	if(this.isVisible) {
+		if(!e) var e = window.event;
+		if(!this.isFocus() && e.keyIdentifier !== "Meta") {
+			// If omnibox is not focused and keystroke is not a shortcut,
+			// focus the omnibox and add character to the field.
+			e.preventDefault();
+			if(e.shiftKey == false) {
+				this.input.value += String.fromCharCode(e.keyCode).toLowerCase();
+			}
+			else {
+				this.input.value += String.fromCharCode(e.keyCode).toUpperCase();
+			}
+		}
+		this.focus();
+	}
+}
+
+Omnibox.prototype.onInputKeyDown = function(e) {
 	if(!e) var e = window.event;
 	// console.log(e.keyCode);
 	if(e.keyCode == 9) {
@@ -48,7 +69,7 @@ Omnibox.prototype.onKeyDown = function(e) {
 	}
 }
 
-Omnibox.prototype.onKeyUp = function(e) {
+Omnibox.prototype.onInputKeyUp = function(e) {
 	if(e.keyCode == 9) {
 		this.isTabDown = false;
 		removeClass(this.tab, 'active');
@@ -60,7 +81,6 @@ Omnibox.prototype.onKeyUp = function(e) {
 }
 
 Omnibox.prototype.submit = function() {
-
 
 	var raw = this.el.querySelectorAll('input')[0].value;
 	var output = null;
@@ -101,10 +121,10 @@ Omnibox.prototype.switchMode = function() {
 	this.mode = Object.keys(this.modes)[this.modeIndex];
 
 	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
-
 }
 
 Omnibox.prototype.show = function() {
+	this.isVisible = true;
 	removeClass(this.el, 'hide');
 	addClass(this.el, 'show');
 	this.focus();
@@ -112,20 +132,16 @@ Omnibox.prototype.show = function() {
 }
 
 Omnibox.prototype.hide = function() {
+	this.isVisible = false;
 	removeClass(this.el, 'show');
 	addClass(this.el, 'hide');
 	ipcRenderer.send('setOmniboxHide');
 }
 
+Omnibox.prototype.isFocus = function() {
+	return this.input === document.activeElement;
+}
+
 Omnibox.prototype.focus = function() {
 	this.el.querySelectorAll('input')[0].focus();
 }
-
-Omnibox.prototype.setHigh = function() {
-	removeClass(this.el, 'handle');
-	addClass(this.el, 'nohandle');
-}
-
-Omnibox.prototype.setLow = function() {
-	removeClass(this.el, 'nohandle');
-	addClass(this.el, 'handle');}

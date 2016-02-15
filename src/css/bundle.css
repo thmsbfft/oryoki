@@ -133,15 +133,8 @@ body {
       background: #269435; }
 
 #view {
-  width: 100%; }
-  #view.handle {
-    height: calc(100% - 23px); }
-  #view.noHandle {
-    height: 100%; }
-  #view .pages.show {
-    display: block; }
-  #view .pages.hide {
-    display: none; }
+  width: 100%;
+  height: 100%; }
   #view.show {
     opacity: 1;
     pointer-events: auto; }
@@ -151,9 +144,12 @@ body {
 
 #omnibox {
   width: 100%;
+  height: 100%;
   position: fixed; }
   #omnibox .box {
+    z-index: 99;
     max-width: 485px;
+    top: calc(50px);
     position: relative;
     margin: auto; }
     #omnibox .box ::-webkit-input-placeholder {
@@ -196,10 +192,6 @@ body {
         color: rgba(255, 255, 255, 0.6); }
       #omnibox .box .tab:hover {
         color: rgba(255, 255, 255, 0.6); }
-  #omnibox.handle {
-    top: calc(50px + 22px); }
-  #omnibox.nohandle {
-    top: calc(50px); }
   #omnibox.show {
     animation: fade-in 0.1s 1 ease-out;
     display: block; }
@@ -209,7 +201,11 @@ body {
     -webkit-app-region: drag;
     width: 100%;
     height: 100%;
-    background-color: pink; }
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 88; }
 
 #loader {
   display: block;

@@ -1,9 +1,6 @@
 function View(parameters) {
 
 	this.el = document.querySelectorAll('#view')[0];
-	this.pages = document.querySelectorAll('#view .pages')[0];
-
-	this.page = parameters.page;
 
 	this.onDidFinishLoadCallback = parameters.onDidFinishLoad;
 	this.onDOMReadyCallback = parameters.onDOMReady;
@@ -15,8 +12,6 @@ function View(parameters) {
 
 	this.canOpenDevTools = false;
 
-	this.isHandleDisplayed = true;
-
 	console.log('View!');
 
 	this.build();
@@ -24,22 +19,15 @@ function View(parameters) {
 
 View.prototype.build = function() {
 
-	// Load Homepage
-	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', this.page + '.html'), 'utf8');
-	this.pages.innerHTML = this.htmlData;
-	addClass(this.pages, 'show');
-
 	// Create Webview
 	this.webview = this.el.appendChild(document.createElement('webview'));
 	this.webview.className = 'webview';
 	addClass(this.webview, 'hide');
 
-	this.resize();
 	this.attachEvents();
 }
 
 View.prototype.attachEvents = function() {
-	window.addEventListener('resize', this.resize.bind(this));
 	console.log('Attaching Webview Events');
 
 	// Loading Events
@@ -65,22 +53,8 @@ View.prototype.attachEvents = function() {
 	// this.webview.addEventListener('devtools-closed', this.onDevToolsClosed.bind(this));
 }
 
-View.prototype.resize = function() {
-	if(this.isHandleDisplayed) {
-		this.el.style.width = window.innerWidth+"px";
-		this.el.style.height = (window.innerHeight - document.querySelectorAll('#handle')[0].offsetHeight) + 'px';
-	}
-	else {
-		this.el.style.width = window.innerWidth+"px";
-		this.el.style.height = window.innerHeight+"px";
-	}
-}
-
 View.prototype.load = function(input) {
 	console.log('Loading: ' + input);
-
-	addClass(this.pages, 'hide');
-	removeClass(this.pages, 'show');
 
 	removeClass(this.webview, 'hide');
 	addClass(this.webview, 'show');

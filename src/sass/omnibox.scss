@@ -1,8 +1,11 @@
 #omnibox {
 	width: 100%;
+	height: 100%;
 	position: fixed;
 	.box {
+		z-index: 99;
 		max-width: 485px;
+		top: calc(50px);
 		position: relative;
 		margin: auto;
 		::-webkit-input-placeholder {
@@ -53,12 +56,6 @@
 			}
 		}
 	}
-	&.handle {
-		top: calc(50px + 22px);
-	}
-	&.nohandle {
-		top: calc(50px);
-	}
 	&.show {
 		animation: fade-in 0.1s 1 ease-out;
 		display: block;
@@ -70,6 +67,10 @@
 		-webkit-app-region: drag;
 		width: 100%;
 		height: 100%;
-		background-color: pink;
+		background-color: transparent;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 88;
 	}
 }

@@ -74,9 +74,6 @@ Console.prototype.show = function() {
 function View(parameters) {
 
 	this.el = document.querySelectorAll('#view')[0];
-	this.pages = document.querySelectorAll('#view .pages')[0];
-
-	this.page = parameters.page;
 
 	this.onDidFinishLoadCallback = parameters.onDidFinishLoad;
 	this.onDOMReadyCallback = parameters.onDOMReady;
@@ -88,8 +85,6 @@ function View(parameters) {
 
 	this.canOpenDevTools = false;
 
-	this.isHandleDisplayed = true;
-
 	console.log('View!');
 
 	this.build();
@@ -97,22 +92,15 @@ function View(parameters) {
 
 View.prototype.build = function() {
 
-	// Load Homepage
-	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', this.page + '.html'), 'utf8');
-	this.pages.innerHTML = this.htmlData;
-	addClass(this.pages, 'show');
-
 	// Create Webview
 	this.webview = this.el.appendChild(document.createElement('webview'));
 	this.webview.className = 'webview';
 	addClass(this.webview, 'hide');
 
-	this.resize();
 	this.attachEvents();
 }
 
 View.prototype.attachEvents = function() {
-	window.addEventListener('resize', this.resize.bind(this));
 	console.log('Attaching Webview Events');
 
 	// Loading Events
@@ -138,22 +126,8 @@ View.prototype.attachEvents = function() {
 	// this.webview.addEventListener('devtools-closed', this.onDevToolsClosed.bind(this));
 }
 
-View.prototype.resize = function() {
-	if(this.isHandleDisplayed) {
-		this.el.style.width = window.innerWidth+"px";
-		this.el.style.height = (window.innerHeight - document.querySelectorAll('#handle')[0].offsetHeight) + 'px';
-	}
-	else {
-		this.el.style.width = window.innerWidth+"px";
-		this.el.style.height = window.innerHeight+"px";
-	}
-}
-
 View.prototype.load = function(input) {
 	console.log('Loading: ' + input);
-
-	addClass(this.pages, 'hide');
-	removeClass(this.pages, 'show');
 
 	removeClass(this.webview, 'hide');
 	addClass(this.webview, 'show');
@@ -293,6 +267,8 @@ Handle.prototype.changeTitle = function(newTitle) {
 }
 function Omnibox(parameters) {
 
+	this.isVisible = undefined;
+
 	this.modes = {
 		'url' : 'Search',
 		'lucky' : 'Lucky'
@@ -317,17 +293,36 @@ function Omnibox(parameters) {
 	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
 
 	this.attachEvents();
-	this.setLow();
 	this.show();
 }
 
 Omnibox.prototype.attachEvents = function() {
-	this.el.querySelectorAll('input')[0].addEventListener('keydown', this.onKeyDown.bind(this));
-	this.el.querySelectorAll('input')[0].addEventListener('keyup', this.onKeyUp.bind(this));
+	this.input.addEventListener('keydown', this.onInputKeyDown.bind(this));
+	this.input.addEventListener('keyup', this.onInputKeyUp.bind(this));
 	this.tab.addEventListener('click', this.switchMode.bind(this));
+
+	window.addEventListener('keypress', this.onKeyPress.bind(this));
 }
 
-Omnibox.prototype.onKeyDown = function(e) {
+Omnibox.prototype.onKeyPress = function(e) {
+	if(this.isVisible) {
+		if(!e) var e = window.event;
+		if(!this.isFocus() && e.keyIdentifier !== "Meta") {
+			// If omnibox is not focused and keystroke is not a shortcut,
+			// focus the omnibox and add character to the field.
+			e.preventDefault();
+			if(e.shiftKey == false) {
+				this.input.value += String.fromCharCode(e.keyCode).toLowerCase();
+			}
+			else {
+				this.input.value += String.fromCharCode(e.keyCode).toUpperCase();
+			}
+		}
+		this.focus();
+	}
+}
+
+Omnibox.prototype.onInputKeyDown = function(e) {
 	if(!e) var e = window.event;
 	// console.log(e.keyCode);
 	if(e.keyCode == 9) {
@@ -341,7 +336,7 @@ Omnibox.prototype.onKeyDown = function(e) {
 	}
 }
 
-Omnibox.prototype.onKeyUp = function(e) {
+Omnibox.prototype.onInputKeyUp = function(e) {
 	if(e.keyCode == 9) {
 		this.isTabDown = false;
 		removeClass(this.tab, 'active');
@@ -353,7 +348,6 @@ Omnibox.prototype.onKeyUp = function(e) {
 }
 
 Omnibox.prototype.submit = function() {
-
 
 	var raw = this.el.querySelectorAll('input')[0].value;
 	var output = null;
@@ -394,10 +388,10 @@ Omnibox.prototype.switchMode = function() {
 	this.mode = Object.keys(this.modes)[this.modeIndex];
 
 	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
-
 }
 
 Omnibox.prototype.show = function() {
+	this.isVisible = true;
 	removeClass(this.el, 'hide');
 	addClass(this.el, 'show');
 	this.focus();
@@ -405,25 +399,23 @@ Omnibox.prototype.show = function() {
 }
 
 Omnibox.prototype.hide = function() {
+	this.isVisible = false;
 	removeClass(this.el, 'show');
 	addClass(this.el, 'hide');
 	ipcRenderer.send('setOmniboxHide');
 }
 
+Omnibox.prototype.isFocus = function() {
+	return this.input === document.activeElement;
+}
+
 Omnibox.prototype.focus = function() {
 	this.el.querySelectorAll('input')[0].focus();
 }
-
-Omnibox.prototype.setHigh = function() {
-	removeClass(this.el, 'handle');
-	addClass(this.el, 'nohandle');
-}
-
-Omnibox.prototype.setLow = function() {
-	removeClass(this.el, 'nohandle');
-	addClass(this.el, 'handle');}
-
 function Browser(parameters) {
+
+	this.isHandleDisplayed = true;
+	this.frame = document.querySelectorAll('#frame')[0];
 
 	this.omnibox = new Omnibox({
 		'mode' : 'url',
@@ -443,7 +435,6 @@ function Browser(parameters) {
 	});
 
 	this.view = new View({
-		'page' : 'homepage',
 		'onDidFinishLoad' : this.onDidFinishLoad.bind(this),
 		'onDOMReady' : this.onDOMReady.bind(this),
 		'onPageTitleUpdated' : this.onPageTitleUpdated.bind(this),
@@ -452,11 +443,27 @@ function Browser(parameters) {
 
 	this.dragOverlay = document.querySelectorAll('#dragOverlay')[0];
 	this.draggingOverlay = false;
+	
+	this.resize();
 	this.attachEvents();
+}
+
+Browser.prototype.resize = function() {
+	if(this.isHandleDisplayed) {
+		this.frame.style.width = window.innerWidth+"px";
+		this.frame.style.height = (window.innerHeight - document.querySelectorAll('#handle')[0].offsetHeight) + 'px';
+	}
+	else {
+		this.frame.style.width = window.innerWidth+"px";
+		this.frame.style.height = window.innerHeight+"px";
+	}
 }
 
 Browser.prototype.attachEvents = function() {
 	console.log('Attaching events');
+
+	window.addEventListener('resize', this.resize.bind(this));
+
 	ipcRenderer.on('hideHandle', this.hideHandle.bind(this));
 	ipcRenderer.on('showHandle', this.showHandle.bind(this));
 
@@ -519,18 +526,16 @@ Browser.prototype.onConsoleMessage = function(e) {
 
 Browser.prototype.hideHandle = function() {
 	this.handle.hide();
-	this.omnibox.setHigh();
 
-	this.view.isHandleDisplayed = false;
-	this.view.resize();
+	this.isHandleDisplayed = false;
+	this.resize();
 }
 
 Browser.prototype.showHandle = function() {
 	this.handle.show();
-	this.omnibox.setLow();
 	
-	this.view.isHandleDisplayed = true;
-	this.view.resize();
+	this.isHandleDisplayed = true;
+	this.resize();
 }
 
 Browser.prototype.showOmnibox = function() {

@@ -1,19 +1,6 @@
 #view {
 	width: 100%;
-	&.handle {
-		height: calc(100% - 23px);
-	}
-	&.noHandle {
-		height: 100%;
-	}
-	.pages {
-		&.show {
-			display: block;
-		}
-		&.hide {
-			display: none;
-		}
-	}
+	height: 100%;
 	&.show {
 		opacity: 1;
 		pointer-events: auto;
