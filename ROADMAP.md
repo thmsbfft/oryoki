@@ -23,7 +23,7 @@
 	Refactoring
 	Contextual Menu
 	User preferences
-	Improved web navigation (Htaccess handling, etc.)
+	Improved web navigation (htaccess handling, etc.)
 	Presentation Mode (setKiosk())
 	Loading status
 	Extended mini console (drag to expand, inject js)
@@ -36,14 +36,12 @@
 
 	Bookmarks
 	History
-	Better User Preferences >	Dropbox Sync
+	Better User Preferences
+	Dropbox Sync
 	Window placements
-	Omnibox modes with keywords?
-	Add snapshot shortcut (win.capturePage)
+	Omnibox keywords
+	Snapshot (win.capturePage)
 
-# 0.4
-		
-	…
 
 # Unsorted features
 
@@ -51,7 +49,7 @@
 	Split Screen
 	FPS Meter
 	Contextual Navigation (enhanced dictionary)
-	Monitor Mode
+	Monitor Mode (controller/UI for vars in code)
 	MIDI Devices Support (OSC?)
 	Video Recording
 	Scripting (API) for Crawling
