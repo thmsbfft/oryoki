@@ -9,10 +9,12 @@ var electronLocalshortcut = require('electron-localshortcut');
 var BrowserWindow = electron.BrowserWindow;
 var path = require('path');
 var fs = require('fs');
+var nconf = require('nconf');
 
 app.on('ready', function() {
 
-  CommandManager = new CommandManager();
-  Oryoki = new Oryoki();
+	UserManager = new UserManager();
+	CommandManager = new CommandManager();
+	Oryoki = new Oryoki();
 
 });

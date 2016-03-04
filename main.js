@@ -246,6 +246,24 @@ CommandManager.prototype.createMenus = function() {
 	var menu = Menu.buildFromTemplate(this.template);
 	Menu.setApplicationMenu(menu);
 }
+function User(name) {
+	this.name = name;
+	this.getPreferences();
+}
+
+User.prototype.getPreferences = function() {
+	c.log('USER:', this.name);
+}
+function UserManager() {
+	this.users = [];
+	this.defaultUser = undefined;
+	this.createDefaultUser();
+}
+
+UserManager.prototype.createDefaultUser = function() {
+	this.users.push(new User('Oryoki'));
+	this.defaultUser = this.users[0];
+}
 function Oryoki() {
 
 	app.on('window-all-closed', function() {
@@ -525,10 +543,12 @@ var electronLocalshortcut = require('electron-localshortcut');
 var BrowserWindow = electron.BrowserWindow;
 var path = require('path');
 var fs = require('fs');
+var nconf = require('nconf');
 
 app.on('ready', function() {
 
-  CommandManager = new CommandManager();
-  Oryoki = new Oryoki();
+	UserManager = new UserManager();
+	CommandManager = new CommandManager();
+	Oryoki = new Oryoki();
 
 });
