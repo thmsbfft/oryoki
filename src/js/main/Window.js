@@ -19,6 +19,10 @@ function Window(parameters) {
 	this.omnibox = true;
 	this.console = false;
 	
+	app.commandLine.appendSwitch('enable-webvr');
+	app.commandLine.appendSwitch('enable-nacl');
+	app.commandLine.appendSwitch('enable-web-bluetooth');
+
 	this.browser = new BrowserWindow({
 	  width: 800,
 	  height: 500,
@@ -28,7 +32,11 @@ function Window(parameters) {
 	  x: parameters.x ? parameters.x : 890,
 	  y: parameters.y ? parameters.y : 660,
 	  minWidth: 600,
-	  minHeight: 350
+	  minHeight: 350,
+	  webPreferences: {
+	  	"experimentalFeatures": true,
+	  	"experimentalCanvasFeatures": true
+	  }
 	});
 
 	// @if NODE_ENV='development'

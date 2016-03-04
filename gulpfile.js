@@ -74,11 +74,11 @@ gulp.task('main', function() {
 	gulp.src(main)
 		.pipe(preprocess())
 		.pipe(concat('_main.js'))
-		.pipe(gulp.dest('src/js/main'));
-
-	gulp.src('src/js/main/_main.js')
+		.pipe(gulp.dest('src/js/main'))
 		.pipe(rename('main.js'))
 		.pipe(gulp.dest('.'));
+
+	// gulp.src('src/js/main/_main.js')
 });
 
 gulp.task('renderer', function() {
