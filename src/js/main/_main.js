@@ -376,7 +376,6 @@ function Window(parameters) {
 	this.console = false;
 	
 	app.commandLine.appendSwitch('enable-webvr');
-	app.commandLine.appendSwitch('enable-nacl');
 	app.commandLine.appendSwitch('enable-web-bluetooth');
 
 	this.browser = new BrowserWindow({
