@@ -1,20 +1,3 @@
-function pad(n) { return ("0" + n).slice(-2); }
-
-var Console = require('console').Console;
-var fs = require('fs');
-var output = fs.createWriteStream('./stdout.log');
-var c = new Console(output);
-
-var hrs = pad(new Date().getHours());
-var min = pad(new Date().getMinutes());
-var sec = pad(new Date().getSeconds());
-var time = hrs + ':' + min + ':' + sec;
-
-c.log('');
-c.log('--------');
-c.log(time);
-c.log('--------');
-c.log('');
 
 function Command(options) {
 
@@ -26,7 +9,6 @@ function Command(options) {
 function CommandManager() {
 	this.register = {};
 	this.template = undefined;
-	c.log('INIT COMMANDMANAGER');
 	this.createMenus();
 }
 
@@ -262,23 +244,24 @@ function User(name) {
 }
 
 User.prototype.getPreferences = function() {
-	c.log('USER:', this.name);
+
 	this.preferences = this.getConfFile('preferences.json');
-	c.log(this.preferences['use_alt_drag']);
+
 }
 
 User.prototype.getConfFile = function(fileName) {
 	return JSON.parse(fs.readFileSync(this.confPath + '/Oryoki/' + fileName, 'utf8'));
 }
 function UserManager() {
-	this.users = [];
-	this.defaultUser = undefined;
-	this.createDefaultUser();
+	this.factoryPreferences = JSON.parse(fs.readFileSync(__dirname + '/src/data/factory.json', 'utf8'));
+	this.user = new User('Oryoki');
 }
 
-UserManager.prototype.createDefaultUser = function() {
-	this.users.push(new User('Oryoki'));
-	this.defaultUser = this.users[0];
+UserManager.prototype.getPreferenceByName = function(name) {
+	/* 
+	Checks default user for pref
+	If not defined, falls back to factory setting.
+	*/
 }
 function Oryoki() {
 
@@ -318,8 +301,6 @@ Oryoki.prototype.createWindow = function(e, url) {
 		var url = url[0];
 	}
 
-	c.log('Creating new window...');
-	c.log(this.windows.length);
 
 	this.windowsIndex++;
 	this.windowCount++;
@@ -347,7 +328,6 @@ Oryoki.prototype.createWindow = function(e, url) {
 
 Oryoki.prototype.onFocusChange = function(w) {
 	this.focusedWindow = w;
-	c.log('New focus: ', this.focusedWindow.id);
 }
 
 Oryoki.prototype.closeWindow = function() {
@@ -358,7 +338,6 @@ Oryoki.prototype.closeWindow = function() {
 
 Oryoki.prototype.onCloseWindow = function() {
 	if(this.windowCount > 0) {
-		c.log('Closing window #'+ this.focusedWindow.id);
 		// this.focusedWindow.close();
 		this.windowCount--;
 		var index = this.windows.indexOf(this.focusedWindow);
@@ -394,11 +373,9 @@ Oryoki.prototype.getChromeVersion = function() {
 }
 function Window(parameters) {
 
-	c.log('INIT WINDOW');
 
 	this.id = parameters.id;
 	if(parameters.url != null) {
-		c.log(parameters.url);
 		this.url = parameters.url;
 	}
 
@@ -428,11 +405,9 @@ function Window(parameters) {
 	  }
 	});
 
-	c.log('file://' + __dirname + '/src/html/index.html');
 
 	this.attachEvents();
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html');
-	this.browser.webContents.openDevTools();
 }
 
 Window.prototype.attachEvents = function() {
@@ -477,20 +452,17 @@ Window.prototype.setOmniboxHide = function() {
 }
 
 Window.prototype.showOmnibox = function() {
-	c.log('Showing Omnibox');
 	this.omnibox = true;
 	this.browser.webContents.send('showOmnibox');
 }
 
 Window.prototype.hideOmnibox = function() {
-	c.log('Hiding Omnibox');
 	this.omnibox = false;
 	this.browser.webContents.send('hideOmnibox');
 }
 
 Window.prototype.toggleHandle = function() {
 	if(this.handle) {
-		c.log('Hiding handle!');
 		this.handle = false;
 		this.browser.webContents.send('hideHandle');
 		this.browser.setSize(
@@ -499,7 +471,6 @@ Window.prototype.toggleHandle = function() {
 		);
 	}
 	else {
-		c.log('Showing handle');
 		this.handle = true;
 		this.browser.webContents.send('showHandle');
 		this.browser.setSize(
@@ -510,21 +481,17 @@ Window.prototype.toggleHandle = function() {
 }
 
 Window.prototype.toggleConsole = function() {
-	c.log(this.console);
 	if(this.console) {
-		c.log('Hiding console');
 		this.console = false;
 		this.browser.webContents.send('hideConsole');
 	}
 	else {
-		c.log('Showing console');
 		this.console = true;
 		this.browser.webContents.send('showConsole');
 	}
 }
 
 Window.prototype.toggleOmnibox = function() {
-	c.log('Toggling Omnibox');
 	if(this.omnibox) {
 		this.hideOmnibox();
 	}

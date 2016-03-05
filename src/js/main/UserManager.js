@@ -1,10 +1,11 @@
 function UserManager() {
-	this.users = [];
-	this.defaultUser = undefined;
-	this.createDefaultUser();
+	this.factoryPreferences = JSON.parse(fs.readFileSync(__dirname + '/src/data/factory.json', 'utf8'));
+	this.user = new User('Oryoki');
 }
 
-UserManager.prototype.createDefaultUser = function() {
-	this.users.push(new User('Oryoki'));
-	this.defaultUser = this.users[0];
+UserManager.prototype.getPreferenceByName = function(name) {
+	/* 
+	Checks default user for pref
+	If not defined, falls back to factory setting.
+	*/
 }
