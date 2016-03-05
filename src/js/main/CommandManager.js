@@ -37,6 +37,17 @@ CommandManager.prototype.createMenus = function() {
 					role: 'about'
 				},
 				{
+					label: 'Preferences',
+					submenu: [
+						{
+							label: 'Reset',
+							click: function() {
+								UserManager.resetUserPreferencesToFactory();
+							}
+						}
+					]
+				},
+				{
 					type: 'separator'
 				},
 				{
