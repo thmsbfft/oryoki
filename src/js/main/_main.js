@@ -295,8 +295,6 @@ function UserManager() {
 	
 	// We'll only use one user for now.
 	this.user = new User('Oryoki');
-
-	this.getPreferenceByName('use_homepage');
 }
 
 UserManager.prototype.getPreferenceByName = function(name) {
@@ -304,10 +302,12 @@ UserManager.prototype.getPreferenceByName = function(name) {
 	Checks default user for preference
 	If not defined, falls back to factory setting.
 	*/
-	if(!this.user.preferences[name]) {
+	if(this.user.preferences[name] !== undefined) {
+		return this.user.preferences[name];
+	}
+	else {
 		return this.factoryPreferences[name];
 	}
-	return this.user.preferences[name];
 }
 
 UserManager.prototype.resetUserPreferencesToFactory = function() {
@@ -337,7 +337,6 @@ function Oryoki() {
 	this.windowsIndex = -1; // Index to make sure we assign unique Ids
 	this.windowCount = 0; // Counts the number of windows currently open
 	this.attachEvents();
-	this.registerCommands();
 	this.createWindow();
 }
 
@@ -348,13 +347,14 @@ Oryoki.prototype.attachEvents = function() {
 	ipcMain.on('fullscreenWindow', this.toggleFullScreen.bind(this));
 }
 
-Oryoki.prototype.registerCommands = function() {
-
-}
-
 Oryoki.prototype.createWindow = function(e, url) {
 	if(url) {
+		// _target = blank
 		var url = url[0];
+	}
+	else if(UserManager.getPreferenceByName("use_homepage")) {
+		// homepage
+		var url = UserManager.getPreferenceByName("homepage_url");
 	}
 
 	c.log('Creating new window...');
@@ -471,6 +471,7 @@ function Window(parameters) {
 
 	this.attachEvents();
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html');
+
 	this.browser.webContents.openDevTools();
 }
 
@@ -485,7 +486,7 @@ Window.prototype.attachEvents = function() {
 
 Window.prototype.onReady = function() {
 	this.browser.webContents.send('ready');
-	if(this.url) this.browser.webContents.send('load', this.url);
+	if(this.url) this.load(this.url);
 	this.browser.show();
 }
 

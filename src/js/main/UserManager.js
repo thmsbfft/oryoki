@@ -3,8 +3,6 @@ function UserManager() {
 	
 	// We'll only use one user for now.
 	this.user = new User('Oryoki');
-
-	this.getPreferenceByName('use_homepage');
 }
 
 UserManager.prototype.getPreferenceByName = function(name) {
@@ -12,10 +10,12 @@ UserManager.prototype.getPreferenceByName = function(name) {
 	Checks default user for preference
 	If not defined, falls back to factory setting.
 	*/
-	if(!this.user.preferences[name]) {
+	if(this.user.preferences[name] !== undefined) {
+		return this.user.preferences[name];
+	}
+	else {
 		return this.factoryPreferences[name];
 	}
-	return this.user.preferences[name];
 }
 
 UserManager.prototype.resetUserPreferencesToFactory = function() {

@@ -16,7 +16,6 @@ function Oryoki() {
 	this.windowsIndex = -1; // Index to make sure we assign unique Ids
 	this.windowCount = 0; // Counts the number of windows currently open
 	this.attachEvents();
-	this.registerCommands();
 	this.createWindow();
 }
 
@@ -27,13 +26,14 @@ Oryoki.prototype.attachEvents = function() {
 	ipcMain.on('fullscreenWindow', this.toggleFullScreen.bind(this));
 }
 
-Oryoki.prototype.registerCommands = function() {
-
-}
-
 Oryoki.prototype.createWindow = function(e, url) {
 	if(url) {
+		// _target = blank
 		var url = url[0];
+	}
+	else if(UserManager.getPreferenceByName("use_homepage")) {
+		// homepage
+		var url = UserManager.getPreferenceByName("homepage_url");
 	}
 
 	// @if NODE_ENV='development'

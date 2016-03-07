@@ -44,6 +44,7 @@ function Window(parameters) {
 
 	this.attachEvents();
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html');
+
 	// @if NODE_ENV='development'
 	this.browser.webContents.openDevTools();
 	// @endif
@@ -60,7 +61,7 @@ Window.prototype.attachEvents = function() {
 
 Window.prototype.onReady = function() {
 	this.browser.webContents.send('ready');
-	if(this.url) this.browser.webContents.send('load', this.url);
+	if(this.url) this.load(this.url);
 	this.browser.show();
 }
 
