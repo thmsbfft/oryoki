@@ -63,6 +63,15 @@ CommandManager.prototype.createMenus = function() {
 					label: 'Preferences',
 					submenu: [
 						{
+							label: 'Open',
+							click: function() {
+								UserManager.openPreferencesFile();
+							}
+						},
+						{
+							type: 'separator'
+						},
+						{
 							label: 'Reset',
 							click: function() {
 								UserManager.resetUserPreferencesToFactory();
@@ -276,8 +285,6 @@ User.prototype.getPreferences = function() {
 	c.log('USER:', this.name);
 
 	this.preferences = this.getConfFile('preferences.json');
-
-	c.log(this.preferences['use_alt_drag']);
 }
 
 User.prototype.getConfFile = function(fileName) {
@@ -288,19 +295,29 @@ function UserManager() {
 	
 	// We'll only use one user for now.
 	this.user = new User('Oryoki');
+
+	this.getPreferenceByName('use_homepage');
 }
 
 UserManager.prototype.getPreferenceByName = function(name) {
 	/* 
-	Checks default user for pref
+	Checks default user for preference
 	If not defined, falls back to factory setting.
 	*/
+	if(!this.user.preferences[name]) {
+		return this.factoryPreferences[name];
+	}
+	return this.user.preferences[name];
 }
 
 UserManager.prototype.resetUserPreferencesToFactory = function() {
 	fs.writeFile(this.user.confPath + '/Oryoki/preferences.json', JSON.stringify(this.factoryPreferences, null, 4), function(err) {
 		if(err) c.log(err);
 	});
+}
+
+UserManager.prototype.openPreferencesFile = function() {
+	shell.openItem(this.user.confPath + "/Oryoki/preferences.json");
 }
 function Oryoki() {
 
@@ -581,7 +598,7 @@ var electronLocalshortcut = require('electron-localshortcut');
 var BrowserWindow = electron.BrowserWindow;
 var path = require('path');
 var fs = require('fs');
-var nconf = require('nconf');
+var shell = require('electron').shell;
 
 app.on('ready', function() {
 

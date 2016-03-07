@@ -19,10 +19,6 @@ User.prototype.getPreferences = function() {
 	// @endif
 
 	this.preferences = this.getConfFile('preferences.json');
-
-	// @if NODE_ENV='development'
-	c.log(this.preferences['use_alt_drag']);
-	// @endif
 }
 
 User.prototype.getConfFile = function(fileName) {

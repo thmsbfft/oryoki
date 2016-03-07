@@ -3,13 +3,19 @@ function UserManager() {
 	
 	// We'll only use one user for now.
 	this.user = new User('Oryoki');
+
+	this.getPreferenceByName('use_homepage');
 }
 
 UserManager.prototype.getPreferenceByName = function(name) {
 	/* 
-	Checks default user for pref
+	Checks default user for preference
 	If not defined, falls back to factory setting.
 	*/
+	if(!this.user.preferences[name]) {
+		return this.factoryPreferences[name];
+	}
+	return this.user.preferences[name];
 }
 
 UserManager.prototype.resetUserPreferencesToFactory = function() {
@@ -18,4 +24,8 @@ UserManager.prototype.resetUserPreferencesToFactory = function() {
 		if(err) c.log(err);
 		// @endif
 	});
+}
+
+UserManager.prototype.openPreferencesFile = function() {
+	shell.openItem(this.user.confPath + "/Oryoki/preferences.json");
 }

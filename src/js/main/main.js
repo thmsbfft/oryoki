@@ -9,7 +9,7 @@ var electronLocalshortcut = require('electron-localshortcut');
 var BrowserWindow = electron.BrowserWindow;
 var path = require('path');
 var fs = require('fs');
-var nconf = require('nconf');
+var shell = require('electron').shell;
 
 app.on('ready', function() {
 

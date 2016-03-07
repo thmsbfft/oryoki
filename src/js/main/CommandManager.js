@@ -40,6 +40,15 @@ CommandManager.prototype.createMenus = function() {
 					label: 'Preferences',
 					submenu: [
 						{
+							label: 'Open',
+							click: function() {
+								UserManager.openPreferencesFile();
+							}
+						},
+						{
+							type: 'separator'
+						},
+						{
 							label: 'Reset',
 							click: function() {
 								UserManager.resetUserPreferencesToFactory();
