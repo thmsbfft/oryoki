@@ -64,6 +64,7 @@ CommandManager.prototype.createMenus = function() {
 					submenu: [
 						{
 							label: 'Open',
+							accelerator: 'Command+,',
 							click: function() {
 								UserManager.openPreferencesFile();
 							}
