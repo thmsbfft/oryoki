@@ -71,7 +71,9 @@ Browser.prototype.attachEvents = function() {
 Browser.prototype.onKeyDown = function(e) {
 	if(!e) var e = window.event;
 	if(e.keyCode == 18) {
-		this.dragOverlay.className = 'active';
+		if(ipcRenderer.sendSync('get-preference', 'use_alt_drag')) {
+			this.dragOverlay.className = 'active';
+		}
 	}
 }
 

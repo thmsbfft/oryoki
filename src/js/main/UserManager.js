@@ -3,6 +3,12 @@ function UserManager() {
 	
 	// We'll only use one user for now.
 	this.user = new User('Oryoki');
+
+	// Allow for renderer to use preferences
+	ipcMain.on('get-preference', function(event, name) {
+	  console.log(name);
+	  event.returnValue = this.getPreferenceByName(name);
+	}.bind(this));
 }
 
 UserManager.prototype.getPreferenceByName = function(name) {

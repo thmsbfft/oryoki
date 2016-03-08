@@ -247,12 +247,16 @@ body {
   height: 100%;
   top: 0;
   left: 0;
-  -webkit-app-region: drag;
   z-index: 99;
-  display: none;
-  background: transparent; }
+  background: transparent;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 3px rgba(0, 236, 145, 0);
+  transition: all 0.1s linear; }
   #dragOverlay.active {
-    display: block; }
+    display: block;
+    -webkit-app-region: drag;
+    pointer-events: all;
+    box-shadow: inset 0 0 0 3px rgba(0, 236, 145, 0.5); }
 
 .webview {
   height: 100%;
