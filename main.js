@@ -280,12 +280,17 @@ function User(name) {
 	this.history = undefined;
 
 	this.getPreferences();
+	this.watchFile('preferences.json', this.getPreferences.bind(this));
 }
 
 User.prototype.getPreferences = function() {
 	c.log('USER:', this.name);
 
 	this.preferences = this.getConfFile('preferences.json');
+}
+
+User.prototype.watchFile = function(fileName, callback) {
+	fs.watch(this.confPath + '/Oryoki/' + fileName, callback);
 }
 
 User.prototype.getConfFile = function(fileName) {
