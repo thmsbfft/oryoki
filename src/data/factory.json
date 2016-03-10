@@ -1,4 +1,5 @@
 {
+	"show_title_bar" : true,
 	"use_alt_drag" : true,
 	"use_homepage" : true,
 	"homepage_url" : "http://thmsbfft.fr/demo/wiggle/"

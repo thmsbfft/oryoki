@@ -6,8 +6,13 @@ function Handle(parameters) {
 
 	console.log('Handle');
 
+	if(ipcRenderer.sendSync('get-preference', 'show_title_bar')) {
+		this.show();
+	}
+	else {
+		this.hide();
+	}
 	this.build();
-	this.show();
 }
 
 Handle.prototype.build = function() {

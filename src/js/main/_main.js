@@ -456,7 +456,7 @@ function Window(parameters) {
 	this.onFocusCallback = parameters.onFocus;
 	this.onCloseCallback = parameters.onClose;
 
-	this.handle = true;
+	this.handle = UserManager.getPreferenceByName('show_title_bar');
 	this.omnibox = true;
 	this.console = false;
 	

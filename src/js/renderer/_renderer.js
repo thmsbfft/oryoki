@@ -242,8 +242,13 @@ function Handle(parameters) {
 
 	console.log('Handle');
 
+	if(ipcRenderer.sendSync('get-preference', 'show_title_bar')) {
+		this.show();
+	}
+	else {
+		this.hide();
+	}
 	this.build();
-	this.show();
 }
 
 Handle.prototype.build = function() {
@@ -432,7 +437,7 @@ Omnibox.prototype.focus = function() {
 }
 function Browser(parameters) {
 
-	this.isHandleDisplayed = true;
+	this.isHandleDisplayed = ipcRenderer.sendSync('get-preference', 'show_title_bar');
 	this.frame = document.querySelectorAll('#frame')[0];
 
 	this.omnibox = new Omnibox({
