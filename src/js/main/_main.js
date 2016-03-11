@@ -464,8 +464,8 @@ function Window(parameters) {
 	app.commandLine.appendSwitch('enable-web-bluetooth');
 
 	this.browser = new BrowserWindow({
-	  width: 800,
-	  height: 500,
+	  width: UserManager.getPreferenceByName('default_window_width'),
+	  height: UserManager.getPreferenceByName('default_window_height'),
 	  frame: false,
 	  backgroundColor: '#000',
 	  show: false,

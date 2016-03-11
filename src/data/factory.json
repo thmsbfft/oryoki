@@ -2,5 +2,7 @@
 	"show_title_bar" : true,
 	"use_alt_drag" : true,
 	"use_homepage" : true,
-	"homepage_url" : "http://thmsbfft.fr/demo/wiggle/"
+	"homepage_url" : "http://thmsbfft.fr/demo/wiggle/",
+	"default_window_width" : 800,
+	"default_window_height" : 500
 }
