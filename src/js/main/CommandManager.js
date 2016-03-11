@@ -237,6 +237,14 @@ CommandManager.prototype.createMenus = function() {
 					label: 'Minimize',
 					accelerator: 'Cmd+M',
 					role: 'minimize'
+				},
+				{
+					label: 'Always on Top',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.setAlwaysOnTopToggle();
+						}
+					}
 				}
 			]
 		}

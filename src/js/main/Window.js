@@ -18,6 +18,7 @@ function Window(parameters) {
 	this.handle = UserManager.getPreferenceByName('show_title_bar');
 	this.omnibox = true;
 	this.console = false;
+	this.isAlwaysOnTop = false;
 	
 	app.commandLine.appendSwitch('enable-webvr');
 	app.commandLine.appendSwitch('enable-web-bluetooth');
@@ -178,4 +179,9 @@ Window.prototype.navigateBack = function() {
 
 Window.prototype.navigateForward = function() {
 	this.browser.webContents.send('goForward');
+}
+
+Window.prototype.setAlwaysOnTopToggle = function() {
+	this.isAlwaysOnTop =! this.isAlwaysOnTop;
+	this.browser.setAlwaysOnTop(this.isAlwaysOnTop);
 }
