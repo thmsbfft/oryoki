@@ -49,6 +49,7 @@ function Window(parameters) {
 	// @if NODE_ENV='development'
 	this.browser.webContents.openDevTools();
 	// @endif
+	// this.setAlwaysOnTopToggle();
 }
 
 Window.prototype.attachEvents = function() {
@@ -184,4 +185,5 @@ Window.prototype.navigateForward = function() {
 Window.prototype.setAlwaysOnTopToggle = function() {
 	this.isAlwaysOnTop =! this.isAlwaysOnTop;
 	this.browser.setAlwaysOnTop(this.isAlwaysOnTop);
+	CommandManager.toggleChecked('Window', 'Float on Top');
 }

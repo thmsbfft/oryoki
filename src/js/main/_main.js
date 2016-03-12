@@ -26,6 +26,7 @@ function Command(options) {
 function CommandManager() {
 	this.register = {};
 	this.template = undefined;
+	this.menu = undefined;
 	c.log('INIT COMMANDMANAGER');
 	this.createMenus();
 }
@@ -262,7 +263,8 @@ CommandManager.prototype.createMenus = function() {
 					role: 'minimize'
 				},
 				{
-					label: 'Always on Top',
+					label: 'Float on Top',
+					type: 'checkbox',
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.setAlwaysOnTopToggle();
@@ -272,8 +274,23 @@ CommandManager.prototype.createMenus = function() {
 			]
 		}
 	];
-	var menu = Menu.buildFromTemplate(this.template);
-	Menu.setApplicationMenu(menu);
+	this.menu = Menu.buildFromTemplate(this.template);
+	Menu.setApplicationMenu(this.menu);
+}
+
+CommandManager.prototype.toggleChecked = function(menuLabel, subMenuLabel) {
+	// Only works for two levels of menus for now
+	var menu = this.getMenuByLabel(menuLabel);
+	var submenu = this.getSubMenuByLabel(menu, subMenuLabel);
+	submenu[0].checked == !submenu[0].checked;
+}
+
+CommandManager.prototype.getMenuByLabel = function(menuLabel) {
+	return this.menu.items.filter(item => item.label == menuLabel);
+}
+
+CommandManager.prototype.getSubMenuByLabel = function(menu, subMenuLabel) {
+	return menu[0].submenu.items.filter(item => item.label == subMenuLabel);
 }
 function User(name) {
 
@@ -494,6 +511,7 @@ function Window(parameters) {
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html');
 
 	this.browser.webContents.openDevTools();
+	// this.setAlwaysOnTopToggle();
 }
 
 Window.prototype.attachEvents = function() {
@@ -613,6 +631,7 @@ Window.prototype.navigateForward = function() {
 Window.prototype.setAlwaysOnTopToggle = function() {
 	this.isAlwaysOnTop =! this.isAlwaysOnTop;
 	this.browser.setAlwaysOnTop(this.isAlwaysOnTop);
+	CommandManager.toggleChecked('Window', 'Float on Top');
 }
 'use strict';
 var electron = require('electron');

@@ -1,6 +1,7 @@
 function CommandManager() {
 	this.register = {};
 	this.template = undefined;
+	this.menu = undefined;
 	// @if NODE_ENV='development'
 	c.log('INIT COMMANDMANAGER');
 	// @endif
@@ -239,7 +240,8 @@ CommandManager.prototype.createMenus = function() {
 					role: 'minimize'
 				},
 				{
-					label: 'Always on Top',
+					label: 'Float on Top',
+					type: 'checkbox',
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.setAlwaysOnTopToggle();
@@ -249,6 +251,21 @@ CommandManager.prototype.createMenus = function() {
 			]
 		}
 	];
-	var menu = Menu.buildFromTemplate(this.template);
-	Menu.setApplicationMenu(menu);
+	this.menu = Menu.buildFromTemplate(this.template);
+	Menu.setApplicationMenu(this.menu);
+}
+
+CommandManager.prototype.toggleChecked = function(menuLabel, subMenuLabel) {
+	// Only works for two levels of menus for now
+	var menu = this.getMenuByLabel(menuLabel);
+	var submenu = this.getSubMenuByLabel(menu, subMenuLabel);
+	submenu[0].checked == !submenu[0].checked;
+}
+
+CommandManager.prototype.getMenuByLabel = function(menuLabel) {
+	return this.menu.items.filter(item => item.label == menuLabel);
+}
+
+CommandManager.prototype.getSubMenuByLabel = function(menu, subMenuLabel) {
+	return menu[0].submenu.items.filter(item => item.label == subMenuLabel);
 }
