@@ -45,7 +45,7 @@ gulp.task('restart', function() {
 // LIVERELOAD
 gulp.task('watch', function(){
 	livereload.listen();
-	gulp.watch('src/html/**/*.html', ['html']);
+	// gulp.watch('src/html/**/*.html', ['html']);
 	gulp.watch('src/sass/**/*.scss', ['sass']);
 	gulp.watch('src/js/main/**/*.js', ['main', 'restart']);
 	gulp.watch('src/js/renderer/**/*.js', ['renderer']);
@@ -91,13 +91,9 @@ gulp.task('renderer', function() {
 	livereload.reload();
 });
 
-gulp.task('clear', function() {
-	// return run('clear').exec();
-})
-
-gulp.task('default', ['set-dev', 'clear', 'sass', 'main', 'renderer', 'watch', 'start', 'console']);
+gulp.task('default', ['set-dev', 'sass', 'main', 'renderer', 'start', 'console', 'watch']);
 
 gulp.task('build', ['set-prod', 'sass', 'main', 'renderer']);
 
 // No need to open a new console when restarting the app
-gulp.task('reboot', ['clear', 'sass', 'main', 'renderer', 'watch', 'start']);
+gulp.task('reboot', ['sass', 'main', 'renderer', 'start', 'watch']);
