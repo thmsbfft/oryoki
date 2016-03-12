@@ -7,6 +7,7 @@ function Oryoki() {
 	});
 
 	this.versions = {
+		'oryoki' : '0.0.2',
 		'chromeVersion' : process.versions.chrome,
 		'electronVersion' : process.versions.electron
 	}

@@ -272,6 +272,20 @@ CommandManager.prototype.createMenus = function() {
 					}
 				}
 			]
+		},
+		{
+			label: 'Help',
+			role: 'help',
+			submenu: [
+				{
+					label: 'Feedback',
+					click: function() {
+						var osVersion = require('os').release();
+						var oryokiVersion = Oryoki.versions.oryoki;
+						require("openurl").open("mailto:write@oryoki.io?subject=Ōryōki ⭕️ Feedback&body=\n\nŌryōki: v."+oryokiVersion+"\nOperating System: Darwin v."+osVersion);
+					}
+				}
+			]
 		}
 	];
 	this.menu = Menu.buildFromTemplate(this.template);
@@ -365,6 +379,7 @@ function Oryoki() {
 	});
 
 	this.versions = {
+		'oryoki' : '0.0.2',
 		'chromeVersion' : process.versions.chrome,
 		'electronVersion' : process.versions.electron
 	}
