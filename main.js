@@ -170,8 +170,9 @@ CommandManager.prototype.createMenus = function() {
 			label: 'View',
 			submenu: [
 				{
-					label: 'Toggle Title Bar',
+					label: 'Title Bar',
 					accelerator: 'Cmd+/',
+					type: 'checkbox',
 					click:function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.toggleHandle();
@@ -202,8 +203,9 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
-					label: 'Toggle Fullscreen',
+					label: 'Fullscreen',
 					accelerator: 'Cmd+Ctrl+F',
+					type: 'checkbox',
 					click: function() { if(Oryoki) Oryoki.toggleFullScreen() }
 				},
 				{
@@ -235,6 +237,7 @@ CommandManager.prototype.createMenus = function() {
 				{
 					label: 'Mini Console',
 					accelerator: 'Cmd+Alt+C',
+					type: 'checkbox',
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.toggleConsole();
@@ -297,6 +300,13 @@ CommandManager.prototype.toggleChecked = function(menuLabel, subMenuLabel) {
 	var menu = this.getMenuByLabel(menuLabel);
 	var submenu = this.getSubMenuByLabel(menu, subMenuLabel);
 	submenu[0].checked == !submenu[0].checked;
+}
+
+CommandManager.prototype.setCheckbox = function(menuLabel, subMenuLabel, value) {
+	// Only works for two levels of menus for now
+	var menu = this.getMenuByLabel(menuLabel);
+	var submenu = this.getSubMenuByLabel(menu, subMenuLabel);
+	submenu[0].checked = value;
 }
 
 CommandManager.prototype.getMenuByLabel = function(menuLabel) {
@@ -478,6 +488,7 @@ Oryoki.prototype.toggleFullScreen = function() {
 			if(this.focusedWindow.handle) this.focusedWindow.toggleHandle();
 		}
 	}
+	CommandManager.toggleChecked('View', 'Fullscreen');
 }
 
 Oryoki.prototype.getChromeVersion = function() {
@@ -546,6 +557,7 @@ Window.prototype.onReady = function() {
 
 Window.prototype.onFocus = function() {
 	this.onFocusCallback(this);
+	this.updateMenus();
 }
 
 Window.prototype.close = function() {
@@ -560,6 +572,12 @@ Window.prototype.onClosed = function() {
 
 Window.prototype.toggleDevTools = function() {
 	this.browser.webContents.send('toggleDevTools');
+}
+
+Window.prototype.updateMenus = function() {
+	CommandManager.setCheckbox('Window', 'Float on Top', this.isAlwaysOnTop);
+	CommandManager.setCheckbox('View', 'Title Bar', this.handle);
+	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
 }
 
 Window.prototype.setOmniboxShow = function() {
@@ -601,6 +619,7 @@ Window.prototype.toggleHandle = function() {
 			this.browser.getSize()[1] + 22
 		);
 	}
+	CommandManager.toggleChecked('View', 'Title Bar');
 }
 
 Window.prototype.toggleConsole = function() {
@@ -615,6 +634,7 @@ Window.prototype.toggleConsole = function() {
 		this.console = true;
 		this.browser.webContents.send('showConsole');
 	}
+	CommandManager.toggleChecked('Tools', 'Mini Console');
 }
 
 Window.prototype.toggleOmnibox = function() {

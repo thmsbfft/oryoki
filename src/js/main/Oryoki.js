@@ -112,6 +112,7 @@ Oryoki.prototype.toggleFullScreen = function() {
 			if(this.focusedWindow.handle) this.focusedWindow.toggleHandle();
 		}
 	}
+	CommandManager.toggleChecked('View', 'Fullscreen');
 }
 
 Oryoki.prototype.getChromeVersion = function() {

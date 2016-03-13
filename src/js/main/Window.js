@@ -69,6 +69,7 @@ Window.prototype.onReady = function() {
 
 Window.prototype.onFocus = function() {
 	this.onFocusCallback(this);
+	this.updateMenus();
 }
 
 Window.prototype.close = function() {
@@ -83,6 +84,12 @@ Window.prototype.onClosed = function() {
 
 Window.prototype.toggleDevTools = function() {
 	this.browser.webContents.send('toggleDevTools');
+}
+
+Window.prototype.updateMenus = function() {
+	CommandManager.setCheckbox('Window', 'Float on Top', this.isAlwaysOnTop);
+	CommandManager.setCheckbox('View', 'Title Bar', this.handle);
+	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
 }
 
 Window.prototype.setOmniboxShow = function() {
@@ -132,6 +139,7 @@ Window.prototype.toggleHandle = function() {
 			this.browser.getSize()[1] + 22
 		);
 	}
+	CommandManager.toggleChecked('View', 'Title Bar');
 }
 
 Window.prototype.toggleConsole = function() {
@@ -152,6 +160,7 @@ Window.prototype.toggleConsole = function() {
 		this.console = true;
 		this.browser.webContents.send('showConsole');
 	}
+	CommandManager.toggleChecked('Tools', 'Mini Console');
 }
 
 Window.prototype.toggleOmnibox = function() {

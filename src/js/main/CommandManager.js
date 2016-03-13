@@ -147,8 +147,9 @@ CommandManager.prototype.createMenus = function() {
 			label: 'View',
 			submenu: [
 				{
-					label: 'Toggle Title Bar',
+					label: 'Title Bar',
 					accelerator: 'Cmd+/',
+					type: 'checkbox',
 					click:function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.toggleHandle();
@@ -179,8 +180,9 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
-					label: 'Toggle Fullscreen',
+					label: 'Fullscreen',
 					accelerator: 'Cmd+Ctrl+F',
+					type: 'checkbox',
 					click: function() { if(Oryoki) Oryoki.toggleFullScreen() }
 				},
 				{
@@ -212,6 +214,7 @@ CommandManager.prototype.createMenus = function() {
 				{
 					label: 'Mini Console',
 					accelerator: 'Cmd+Alt+C',
+					type: 'checkbox',
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.toggleConsole();
@@ -274,6 +277,13 @@ CommandManager.prototype.toggleChecked = function(menuLabel, subMenuLabel) {
 	var menu = this.getMenuByLabel(menuLabel);
 	var submenu = this.getSubMenuByLabel(menu, subMenuLabel);
 	submenu[0].checked == !submenu[0].checked;
+}
+
+CommandManager.prototype.setCheckbox = function(menuLabel, subMenuLabel, value) {
+	// Only works for two levels of menus for now
+	var menu = this.getMenuByLabel(menuLabel);
+	var submenu = this.getSubMenuByLabel(menu, subMenuLabel);
+	submenu[0].checked = value;
 }
 
 CommandManager.prototype.getMenuByLabel = function(menuLabel) {
