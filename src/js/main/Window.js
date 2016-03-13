@@ -90,6 +90,7 @@ Window.prototype.updateMenus = function() {
 	CommandManager.setCheckbox('Window', 'Float on Top', this.isAlwaysOnTop);
 	CommandManager.setCheckbox('View', 'Title Bar', this.handle);
 	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
+	CommandManager.setCheckbox('View', 'Fullscreen', this.browser.isFullScreen());
 }
 
 Window.prototype.setOmniboxShow = function() {

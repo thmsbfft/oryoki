@@ -39,11 +39,14 @@ Oryoki.prototype.createWindow = function(e, url) {
 
 	// @if NODE_ENV='development'
 	c.log('Creating new window...');
-	c.log(this.windows.length);
 	// @endif
 
 	this.windowsIndex++;
 	this.windowCount++;
+
+	// @if NODE_ENV='development'
+	c.log('Currently ', this.windowsCount, 'windows open');
+	// @endif
 
 	if(this.windowCount == 1) {
 		this.windows[this.windowsIndex] = new Window({
@@ -104,13 +107,7 @@ Oryoki.prototype.minimizeWindow = function() {
 
 Oryoki.prototype.toggleFullScreen = function() {
 	if(this.windowCount > 0) {
-		if(this.focusedWindow.browser.isFullScreen()) {
-			this.focusedWindow.browser.setFullScreen(false);
-		}
-		else {
-			this.focusedWindow.browser.setFullScreen(true);
-			if(this.focusedWindow.handle) this.focusedWindow.toggleHandle();
-		}
+		this.focusedWindow.browser.setFullScreen(!this.focusedWindow.browser.isFullScreen());
 	}
 	CommandManager.toggleChecked('View', 'Fullscreen');
 }

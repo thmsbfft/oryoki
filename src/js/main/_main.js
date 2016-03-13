@@ -420,10 +420,11 @@ Oryoki.prototype.createWindow = function(e, url) {
 	}
 
 	c.log('Creating new window...');
-	c.log(this.windows.length);
 
 	this.windowsIndex++;
 	this.windowCount++;
+
+	c.log('Currently ', this.windowsCount, 'windows open');
 
 	if(this.windowCount == 1) {
 		this.windows[this.windowsIndex] = new Window({
@@ -480,13 +481,7 @@ Oryoki.prototype.minimizeWindow = function() {
 
 Oryoki.prototype.toggleFullScreen = function() {
 	if(this.windowCount > 0) {
-		if(this.focusedWindow.browser.isFullScreen()) {
-			this.focusedWindow.browser.setFullScreen(false);
-		}
-		else {
-			this.focusedWindow.browser.setFullScreen(true);
-			if(this.focusedWindow.handle) this.focusedWindow.toggleHandle();
-		}
+		this.focusedWindow.browser.setFullScreen(!this.focusedWindow.browser.isFullScreen());
 	}
 	CommandManager.toggleChecked('View', 'Fullscreen');
 }
@@ -578,6 +573,7 @@ Window.prototype.updateMenus = function() {
 	CommandManager.setCheckbox('Window', 'Float on Top', this.isAlwaysOnTop);
 	CommandManager.setCheckbox('View', 'Title Bar', this.handle);
 	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
+	CommandManager.setCheckbox('View', 'Fullscreen', this.browser.isFullScreen());
 }
 
 Window.prototype.setOmniboxShow = function() {
