@@ -320,9 +320,12 @@ function User(name) {
 
 	this.name = name;
 
-	// Storing in ~/ for now
-	// Will be moved to user's choice
+	// Storing in ~/Library/Application Support
 	this.confPath = app.getPath('appData');
+
+	this.preferences = undefined;
+	this.bookmarks = undefined;
+	this.history = undefined;
 
 	// Check if Oryoki has data
 	fs.access(this.confPath + '/Oryoki/', fs.F_OK, (err) => {
@@ -335,35 +338,38 @@ function User(name) {
 		}
 	});
 
-	this.preferences = undefined;
-	this.bookmarks = undefined;
-	this.history = undefined;
 
 	this.getPreferences();
 	this.watchFile('preferences.json', this.getPreferences.bind(this));
+
+}
+
+User.prototype.checkPathforFile = function(fileName, callback) {
+
+	// Check if conf file exists
+	// If it doesn't, then callback to create default file
+
 }
 
 User.prototype.getPreferences = function() {
+
 	c.log('USER:', this.name);
 
 	this.preferences = this.getConfFile('preferences.json');
+
 }
 
 User.prototype.watchFile = function(fileName, callback) {
+
 	fs.watch(this.confPath + '/Oryoki/' + fileName, callback);
+
 }
 
 User.prototype.getConfFile = function(fileName) {
+
+	c.log('Getting file...');
 	return JSON.parse(fs.readFileSync(this.confPath + '/Oryoki/' + fileName, 'utf8'));
-	// fs.access(this.confPath + '/Oryoki/' + fileName, fs.F_OK, (err) => {
-	// 	if(err) {
-	// 		c.log('Error accessing configuration file: ', err);
-	// 		fs.writeFile(this.confPath + '/Oryoki/' + fileName, fs.readFileSync(__dirname + '/src/data/factory.json', 'utf8'), (err) => {
-	// 			if (err) c.log(err);
-	// 		});
-	// 		return JSON.parse(fs.readFileSync(this.confPath + '/Oryoki/' + fileName, 'utf8'));
-	// 	}
-	// });
+
 }
 function UserManager() {
 	this.factoryPreferences = JSON.parse(fs.readFileSync(__dirname + '/src/data/factory.json', 'utf8'));
