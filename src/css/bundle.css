@@ -261,8 +261,6 @@ body {
 .webview {
   height: 100%;
   width: 100%; }
-  .webview.show {
-    display: block; }
   .webview.hide {
     display: none; }
   .webview.loading {
