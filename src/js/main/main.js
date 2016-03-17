@@ -10,6 +10,7 @@ var BrowserWindow = electron.BrowserWindow;
 var path = require('path');
 var fs = require('fs');
 var shell = require('electron').shell;
+var exec = require('child_process').exec;
 
 app.on('ready', function() {
 

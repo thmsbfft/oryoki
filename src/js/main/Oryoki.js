@@ -6,6 +6,9 @@ function Oryoki() {
 	  }
 	});
 
+	c.log(app.getName());
+	c.log(app.getVersion());
+
 	this.versions = {
 		'oryoki' : '0.0.2',
 		'chromeVersion' : process.versions.chrome,
@@ -17,6 +20,7 @@ function Oryoki() {
 	this.windowsIndex = -1; // Index to make sure we assign unique Ids
 	this.windowCount = 0; // Counts the number of windows currently open
 	this.attachEvents();
+	this.clearCaches();
 	this.createWindow();
 }
 
@@ -112,6 +116,20 @@ Oryoki.prototype.toggleFullScreen = function() {
 	CommandManager.toggleChecked('View', 'Fullscreen');
 }
 
-Oryoki.prototype.getChromeVersion = function() {
-	return this.chromeVersion;
+Oryoki.prototype.clearCaches = function() {
+
+	var caches = [
+		'Cache',
+		'GPUCache'
+	];
+
+	caches.forEach(function(element) {
+
+		var folderPath = UserManager.user.confPath + element;
+		folderPath = folderPath.replace(' ', '\\ ');
+		c.log('Will delete: ' + folderPath);
+		exec('cd ' + folderPath + ' && rm *');
+
+	});
+
 }

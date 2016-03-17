@@ -38,6 +38,9 @@ CommandManager.prototype.createMenus = function() {
 					role: 'about'
 				},
 				{
+					type: 'separator'
+				},
+				{
 					label: 'Preferences',
 					submenu: [
 						{
@@ -57,6 +60,15 @@ CommandManager.prototype.createMenus = function() {
 							}
 						}
 					]
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Clear Cache',
+					click: function() {
+						if(Oryoki) Oryoki.clearCaches();
+					}
 				},
 				{
 					type: 'separator'
@@ -178,6 +190,21 @@ CommandManager.prototype.createMenus = function() {
 							}
 						}
 					}
+				},
+				{
+					label: 'Hard Reload',
+					accelerator: 'CmdOrCtrl+Shift+R',
+					click: function() {
+						if(Oryoki) {
+							if(Oryoki.focusedWindow) {
+								Oryoki.clearCaches();
+								Oryoki.focusedWindow.reload();
+							}
+						}
+					}
+				},
+				{
+					type: 'separator'
 				},
 				{
 					label: 'Fullscreen',

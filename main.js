@@ -61,6 +61,9 @@ CommandManager.prototype.createMenus = function() {
 					role: 'about'
 				},
 				{
+					type: 'separator'
+				},
+				{
 					label: 'Preferences',
 					submenu: [
 						{
@@ -80,6 +83,15 @@ CommandManager.prototype.createMenus = function() {
 							}
 						}
 					]
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Clear Cache',
+					click: function() {
+						if(Oryoki) Oryoki.clearCaches();
+					}
 				},
 				{
 					type: 'separator'
@@ -203,6 +215,21 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
+					label: 'Hard Reload',
+					accelerator: 'CmdOrCtrl+Shift+R',
+					click: function() {
+						if(Oryoki) {
+							if(Oryoki.focusedWindow) {
+								Oryoki.clearCaches();
+								Oryoki.focusedWindow.reload();
+							}
+						}
+					}
+				},
+				{
+					type: 'separator'
+				},
+				{
 					label: 'Fullscreen',
 					accelerator: 'Cmd+Ctrl+F',
 					type: 'checkbox',
@@ -321,23 +348,22 @@ function User(name) {
 	this.name = name;
 
 	// Storing in ~/Library/Application Support
-	this.confPath = app.getPath('appData');
+	this.confPath = app.getPath('appData') + '/' + app.getName() + '/';
 
 	this.preferences = undefined;
 	this.bookmarks = undefined;
 	this.history = undefined;
 
 	// Check if Oryoki has data
-	fs.access(this.confPath + '/Oryoki/', fs.F_OK, (err) => {
+	fs.access(this.confPath, fs.F_OK, (err) => {
 		if(err) {
 			c.log('No access!');
-			fs.mkdir(this.confPath + '/Oryoki/', 0777, (err) => {
+			fs.mkdir(this.confPath, 0777, (err) => {
 				if (err.code == 'EEXIST') cb(null);
 				else c.log(err);
 			});
 		}
 	});
-
 
 	this.getPreferences();
 	this.watchFile('preferences.json', this.getPreferences.bind(this));
@@ -361,14 +387,14 @@ User.prototype.getPreferences = function() {
 
 User.prototype.watchFile = function(fileName, callback) {
 
-	fs.watch(this.confPath + '/Oryoki/' + fileName, callback);
+	fs.watch(this.confPath + fileName, callback);
 
 }
 
 User.prototype.getConfFile = function(fileName) {
 
 	c.log('Getting file...');
-	return JSON.parse(fs.readFileSync(this.confPath + '/Oryoki/' + fileName, 'utf8'));
+	return JSON.parse(fs.readFileSync(this.confPath + fileName, 'utf8'));
 
 }
 function UserManager() {
@@ -398,13 +424,13 @@ UserManager.prototype.getPreferenceByName = function(name) {
 }
 
 UserManager.prototype.resetUserPreferencesToFactory = function() {
-	fs.writeFile(this.user.confPath + '/Oryoki/preferences.json', JSON.stringify(this.factoryPreferences, null, 4), function(err) {
+	fs.writeFile(this.user.confPath + 'preferences.json', JSON.stringify(this.factoryPreferences, null, 4), function(err) {
 		if(err) c.log(err);
 	});
 }
 
 UserManager.prototype.openPreferencesFile = function() {
-	shell.openItem(this.user.confPath + "/Oryoki/preferences.json");
+	shell.openItem(this.user.confPath + "preferences.json");
 }
 function Oryoki() {
 
@@ -413,6 +439,9 @@ function Oryoki() {
 	    app.quit();
 	  }
 	});
+
+	c.log(app.getName());
+	c.log(app.getVersion());
 
 	this.versions = {
 		'oryoki' : '0.0.2',
@@ -425,6 +454,7 @@ function Oryoki() {
 	this.windowsIndex = -1; // Index to make sure we assign unique Ids
 	this.windowCount = 0; // Counts the number of windows currently open
 	this.attachEvents();
+	this.clearCaches();
 	this.createWindow();
 }
 
@@ -512,8 +542,22 @@ Oryoki.prototype.toggleFullScreen = function() {
 	CommandManager.toggleChecked('View', 'Fullscreen');
 }
 
-Oryoki.prototype.getChromeVersion = function() {
-	return this.chromeVersion;
+Oryoki.prototype.clearCaches = function() {
+
+	var caches = [
+		'Cache',
+		'GPUCache'
+	];
+
+	caches.forEach(function(element) {
+
+		var folderPath = UserManager.user.confPath + element;
+		folderPath = folderPath.replace(' ', '\\ ');
+		c.log('Will delete: ' + folderPath);
+		exec('cd ' + folderPath + ' && rm *');
+
+	});
+
 }
 function Window(parameters) {
 
@@ -702,6 +746,7 @@ var BrowserWindow = electron.BrowserWindow;
 var path = require('path');
 var fs = require('fs');
 var shell = require('electron').shell;
+var exec = require('child_process').exec;
 
 app.on('ready', function() {
 
