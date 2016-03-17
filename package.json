@@ -2,7 +2,7 @@
   "name": "oryoki",
   "productName" : "Oryoki",
   "version": "0.0.2",
-  "description": "A just-enough web browser.",
+  "description": "",
   "main": "main.js",
   "scripts": {
     "start": "electron main.js",
@@ -21,7 +21,6 @@
     "gulp-rename": "^1.2.2",
     "gulp-run": "^1.6.12",
     "gulp-sass": "^2.1.1",
-    "nconf": "^0.8.4",
     "openurl": "^1.1.1",
     "preprocess": "^3.0.2"
   }
