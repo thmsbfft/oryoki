@@ -1,6 +1,7 @@
 {
-  "name": "Oryoki",
-  "version": "0.0.1",
+  "name": "oryoki",
+  "productName" : "Oryoki",
+  "version": "0.0.2",
   "description": "A just-enough web browser.",
   "main": "main.js",
   "scripts": {
