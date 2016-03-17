@@ -3,23 +3,22 @@ function User(name) {
 	this.name = name;
 
 	// Storing in ~/Library/Application Support
-	this.confPath = app.getPath('appData');
+	this.confPath = app.getPath('appData') + '/' + app.getName() + '/';
 
 	this.preferences = undefined;
 	this.bookmarks = undefined;
 	this.history = undefined;
 
 	// Check if Oryoki has data
-	fs.access(this.confPath + '/Oryoki/', fs.F_OK, (err) => {
+	fs.access(this.confPath, fs.F_OK, (err) => {
 		if(err) {
 			c.log('No access!');
-			fs.mkdir(this.confPath + '/Oryoki/', 0777, (err) => {
+			fs.mkdir(this.confPath, 0777, (err) => {
 				if (err.code == 'EEXIST') cb(null);
 				else c.log(err);
 			});
 		}
 	});
-
 
 	this.getPreferences();
 	this.watchFile('preferences.json', this.getPreferences.bind(this));
@@ -45,13 +44,13 @@ User.prototype.getPreferences = function() {
 
 User.prototype.watchFile = function(fileName, callback) {
 
-	fs.watch(this.confPath + '/Oryoki/' + fileName, callback);
+	fs.watch(this.confPath + fileName, callback);
 
 }
 
 User.prototype.getConfFile = function(fileName) {
 
 	c.log('Getting file...');
-	return JSON.parse(fs.readFileSync(this.confPath + '/Oryoki/' + fileName, 'utf8'));
+	return JSON.parse(fs.readFileSync(this.confPath + fileName, 'utf8'));
 
 }
