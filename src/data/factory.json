@@ -5,5 +5,7 @@
 	"homepage_url" : "http://thmsbfft.fr/demo/wiggle/",
 	"default_window_width" : 800,
 	"default_window_height" : 500,
-	"clear_cache_on_launch" : false
+	"clear_cache_on_launch" : false,
+	"override_download_path" : false,
+	"download_path" : ""
 }

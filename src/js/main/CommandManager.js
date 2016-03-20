@@ -247,6 +247,15 @@ CommandManager.prototype.createMenus = function() {
 							Oryoki.focusedWindow.navigateForward();
 						}
 					}
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Downloads',
+					click: function() {
+						if(Oryoki) { Oryoki.goToDownloads() }
+					}
 				}
 			]
 		},
