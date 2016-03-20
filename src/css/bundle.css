@@ -225,7 +225,7 @@ omnibox {
   #loader.show {
     opacity: 1; }
 
-#console {
+console {
   position: fixed;
   bottom: 0;
   background: #252525;
@@ -236,9 +236,9 @@ omnibox {
   font-family: 'Roboto Mono Regular', sans-serif;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.6); }
-  #console.show {
+  console.show {
     display: block; }
-  #console.hide {
+  console.hide {
     display: none; }
 
 #dragOverlay {

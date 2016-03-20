@@ -1,6 +1,6 @@
 function Console(parameters) {
 
-	this.el = document.querySelectorAll('#console')[0];
+	this.el = document.getElementsByTagName('console')[0];
 
 	console.log('Console');
 
