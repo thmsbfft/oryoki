@@ -133,3 +133,11 @@ Oryoki.prototype.clearCaches = function() {
 	});
 
 }
+
+Oryoki.prototype.clearLocalStorage = function() {
+
+	var folderPath = UserManager.user.confPath.replace(' ', '\\ ') + 'Local\\ Storage';
+	c.log('Will delete: ' + folderPath);
+	exec('cd ' + folderPath + ' && rm *');
+
+}

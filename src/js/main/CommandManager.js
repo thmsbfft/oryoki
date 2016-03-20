@@ -80,6 +80,12 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
+					label: 'Clear Local Storage',
+					click: function() {
+						if(Oryoki) Oryoki.clearLocalStorage();
+					}
+				},
+				{
 					type: 'separator'
 				},
 				{

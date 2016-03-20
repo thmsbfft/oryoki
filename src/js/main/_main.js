@@ -103,6 +103,12 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
+					label: 'Clear Local Storage',
+					click: function() {
+						if(Oryoki) Oryoki.clearLocalStorage();
+					}
+				},
+				{
 					type: 'separator'
 				},
 				{
@@ -566,6 +572,14 @@ Oryoki.prototype.clearCaches = function() {
 		exec('cd ' + folderPath + ' && rm *');
 
 	});
+
+}
+
+Oryoki.prototype.clearLocalStorage = function() {
+
+	var folderPath = UserManager.user.confPath.replace(' ', '\\ ') + 'Local\\ Storage';
+	c.log('Will delete: ' + folderPath);
+	exec('cd ' + folderPath + ' && rm *');
 
 }
 function Window(parameters) {
