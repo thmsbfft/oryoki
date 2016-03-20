@@ -9,7 +9,6 @@ function Omnibox(parameters) {
 	this.modeIndex = 0;
 	this.mode = Object.keys(this.modes)[this.modeIndex];
 
-	// this.el = document.querySelectorAll('#omnibox')[0];
 	this.el = document.getElementsByTagName('omnibox')[0];
 	this.htmlData = undefined;
 	console.log(this.mode);
@@ -28,6 +27,7 @@ function Omnibox(parameters) {
 
 	this.attachEvents();
 	this.show();
+
 }
 
 Omnibox.prototype.attachEvents = function() {

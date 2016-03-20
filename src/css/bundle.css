@@ -70,13 +70,13 @@ body {
   font-family: 'Roboto Light', sans-serif;
   color: white; }
 
-#handle {
+handle {
   -webkit-app-region: drag;
   background: #141414;
   height: 22px;
   border-bottom: 1px solid rgba(33, 33, 33, 0.5);
   text-align: center; }
-  #handle .title {
+  handle .title {
     padding-top: 6px;
     text-align: center;
     font-family: 'Roboto Light', sans-serif;
@@ -86,7 +86,7 @@ body {
     -webkit-user-select: none;
     user-select: none;
     cursor: default; }
-  #handle .button {
+  handle .button {
     position: absolute;
     -webkit-app-region: no-drag;
     user-select: none;
@@ -95,7 +95,7 @@ body {
     height: 12px;
     width: 12px;
     transition: background-color 0.1s; }
-    #handle .button::after {
+    handle .button::after {
       content: '';
       display: block;
       margin-left: 3px;
@@ -105,31 +105,31 @@ body {
       border-radius: 100%;
       background: transparent;
       transition: background-color 0.1s; }
-    #handle .button:hover::after {
+    handle .button:hover::after {
       background: rgba(0, 0, 0, 0.3); }
-  #handle .close {
+  handle .close {
     left: 8px;
     background: #FF554E; }
-    #handle .close:active {
+    handle .close:active {
       background: #CC443F; }
-  #handle .minimize {
+  handle .minimize {
     left: 28px;
     background: rgba(255, 255, 255, 0.2); }
-  #handle .fullscreen {
+  handle .fullscreen {
     left: 48px;
     background: rgba(255, 255, 255, 0.2); }
-  #handle.hide {
+  handle.hide {
     display: none; }
-  #handle.show {
+  handle.show {
     display: block;
     animation: fade-in 0.7s 1 ease-out; }
-  #handle:hover .minimize {
+  handle:hover .minimize {
     background: #ffbb3c; }
-    #handle:hover .minimize:active {
+    handle:hover .minimize:active {
       background: #CC9631; }
-  #handle:hover .fullscreen {
+  handle:hover .fullscreen {
     background: #35c849; }
-    #handle:hover .fullscreen:active {
+    handle:hover .fullscreen:active {
       background: #269435; }
 
 #view {

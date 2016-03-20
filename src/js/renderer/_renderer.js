@@ -236,7 +236,7 @@ View.prototype.goBack = function() {
 // }
 function Handle(parameters) {
 
-	this.el = document.querySelectorAll('#handle')[0];
+	this.el = document.getElementsByTagName('handle')[0];
 	this.title = undefined;
 	this.htmlData = undefined;
 
@@ -254,10 +254,10 @@ function Handle(parameters) {
 Handle.prototype.build = function() {
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'handle.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
-	this.title = document.querySelectorAll('#handle .title')[0];
-	this.closeBtn = document.querySelectorAll('#handle .button.close')[0];
-	this.minimizeBtn = document.querySelectorAll('#handle .button.minimize')[0];
-	this.fullscreenBtn = document.querySelectorAll('#handle .button.fullscreen')[0];
+	this.title = this.el.querySelectorAll('.title')[0];
+	this.closeBtn = this.el.querySelectorAll('.button.close')[0];
+	this.minimizeBtn = this.el.querySelectorAll('.button.minimize')[0];
+	this.fullscreenBtn = this.el.querySelectorAll('.button.fullscreen')[0];
 	this.attachEvents();
 }
 
@@ -299,7 +299,6 @@ function Omnibox(parameters) {
 	this.modeIndex = 0;
 	this.mode = Object.keys(this.modes)[this.modeIndex];
 
-	// this.el = document.querySelectorAll('#omnibox')[0];
 	this.el = document.getElementsByTagName('omnibox')[0];
 	this.htmlData = undefined;
 	console.log(this.mode);
@@ -318,6 +317,7 @@ function Omnibox(parameters) {
 
 	this.attachEvents();
 	this.show();
+
 }
 
 Omnibox.prototype.attachEvents = function() {
@@ -475,7 +475,7 @@ function Browser(parameters) {
 Browser.prototype.resize = function() {
 	if(this.isHandleDisplayed) {
 		this.frame.style.width = window.innerWidth+"px";
-		this.frame.style.height = (window.innerHeight - document.querySelectorAll('#handle')[0].offsetHeight) + 'px';
+		this.frame.style.height = (window.innerHeight - this.handle.el.offsetHeight) + 'px';
 	}
 	else {
 		this.frame.style.width = window.innerWidth+"px";

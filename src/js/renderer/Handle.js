@@ -1,6 +1,6 @@
 function Handle(parameters) {
 
-	this.el = document.querySelectorAll('#handle')[0];
+	this.el = document.getElementsByTagName('handle')[0];
 	this.title = undefined;
 	this.htmlData = undefined;
 
@@ -18,10 +18,10 @@ function Handle(parameters) {
 Handle.prototype.build = function() {
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'handle.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
-	this.title = document.querySelectorAll('#handle .title')[0];
-	this.closeBtn = document.querySelectorAll('#handle .button.close')[0];
-	this.minimizeBtn = document.querySelectorAll('#handle .button.minimize')[0];
-	this.fullscreenBtn = document.querySelectorAll('#handle .button.fullscreen')[0];
+	this.title = this.el.querySelectorAll('.title')[0];
+	this.closeBtn = this.el.querySelectorAll('.button.close')[0];
+	this.minimizeBtn = this.el.querySelectorAll('.button.minimize')[0];
+	this.fullscreenBtn = this.el.querySelectorAll('.button.fullscreen')[0];
 	this.attachEvents();
 }
 
