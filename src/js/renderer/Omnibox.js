@@ -9,7 +9,8 @@ function Omnibox(parameters) {
 	this.modeIndex = 0;
 	this.mode = Object.keys(this.modes)[this.modeIndex];
 
-	this.el = document.querySelectorAll('#omnibox')[0];
+	// this.el = document.querySelectorAll('#omnibox')[0];
+	this.el = document.getElementsByTagName('omnibox')[0];
 	this.htmlData = undefined;
 	console.log(this.mode);
 	this.submitCallback = parameters.onsubmit;
@@ -20,8 +21,8 @@ function Omnibox(parameters) {
 
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'omnibox.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
-	this.input = document.querySelectorAll('#omnibox .input')[0];
-	this.tab = document.querySelectorAll('#omnibox .tab')[0];
+	this.input = this.el.querySelectorAll('.input')[0];
+	this.tab = this.el.querySelectorAll('.tab')[0];
 
 	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
 

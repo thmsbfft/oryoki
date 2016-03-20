@@ -142,19 +142,19 @@ body {
     opacity: 0;
     pointer-events: none; }
 
-#omnibox {
+omnibox {
   width: 100%;
   height: 100%;
   position: fixed; }
-  #omnibox .box {
+  omnibox .box {
     z-index: 99;
     max-width: 485px;
     top: calc(50px);
     position: relative;
     margin: auto; }
-    #omnibox .box ::-webkit-input-placeholder {
+    omnibox .box ::-webkit-input-placeholder {
       color: rgba(255, 255, 255, 0.2); }
-    #omnibox .box .input {
+    omnibox .box .input {
       width: calc(100% - 36px - 55px);
       font-family: 'Roboto Light', sans-serif;
       font-size: 18px;
@@ -167,9 +167,9 @@ body {
       padding-right: 79px;
       border-radius: 2px;
       transition: background-color 0.1s ease-out; }
-      #omnibox .box .input.highlight {
+      omnibox .box .input.highlight {
         background-color: #1F1F1F; }
-    #omnibox .box .tab {
+    omnibox .box .tab {
       border: 1px solid #323232;
       border-radius: 4px;
       position: absolute;
@@ -188,16 +188,16 @@ body {
       -webkit-user-select: none;
       user-select: none;
       cursor: default; }
-      #omnibox .box .tab.active {
+      omnibox .box .tab.active {
         color: rgba(255, 255, 255, 0.6); }
-      #omnibox .box .tab:hover {
+      omnibox .box .tab:hover {
         color: rgba(255, 255, 255, 0.6); }
-  #omnibox.show {
+  omnibox.show {
     animation: fade-in 0.1s 1 ease-out;
     display: block; }
-  #omnibox.hide {
+  omnibox.hide {
     display: none; }
-  #omnibox .overlay {
+  omnibox .overlay {
     -webkit-app-region: drag;
     width: 100%;
     height: 100%;
