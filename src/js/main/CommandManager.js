@@ -58,6 +58,15 @@ CommandManager.prototype.createMenus = function() {
 							click: function() {
 								UserManager.resetUserPreferencesToFactory();
 							}
+						},
+						{
+							type: 'separator'
+						},
+						{
+							label: 'Browse data...',
+							click: function() {
+								shell.openItem(UserManager.user.confPath);
+							}
 						}
 					]
 				},

@@ -81,6 +81,15 @@ CommandManager.prototype.createMenus = function() {
 							click: function() {
 								UserManager.resetUserPreferencesToFactory();
 							}
+						},
+						{
+							type: 'separator'
+						},
+						{
+							label: 'Browse data...',
+							click: function() {
+								shell.openItem(UserManager.user.confPath);
+							}
 						}
 					]
 				},
@@ -454,7 +463,7 @@ function Oryoki() {
 	this.windowsIndex = -1; // Index to make sure we assign unique Ids
 	this.windowCount = 0; // Counts the number of windows currently open
 	this.attachEvents();
-	this.clearCaches();
+	if(UserManager.getPreferenceByName("clear_cache_on_launch")) this.clearCaches();
 	this.createWindow();
 }
 
