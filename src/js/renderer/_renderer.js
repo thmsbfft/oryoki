@@ -312,6 +312,7 @@ function Omnibox(parameters) {
 	this.el.innerHTML = this.htmlData;
 	this.input = this.el.querySelectorAll('.input')[0];
 	this.tab = this.el.querySelectorAll('.tab')[0];
+	this.overlay = this.el.querySelectorAll('.overlay')[0];
 
 	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
 
@@ -552,30 +553,23 @@ Browser.prototype.onConsoleMessage = function(e) {
 
 Browser.prototype.hideHandle = function() {
 	this.handle.hide();
-
 	this.isHandleDisplayed = false;
 	this.resize();
 }
 
 Browser.prototype.showHandle = function() {
 	this.handle.show();
-	
 	this.isHandleDisplayed = true;
 	this.resize();
 }
 
 Browser.prototype.showOmnibox = function() {
 	this.omnibox.show();
-	// this.loader.show();
-	this.view.hide();
 }
 
 Browser.prototype.hideOmnibox = function() {
 	this.omnibox.hide();
 	this.loader.hide();
-	this.view.show();
-	// if(this.view.page == 'homepage') this.omnibox.show();
-	// else this.omnibox.hide();
 }
 
 Browser.prototype.showConsole = function() {
@@ -595,13 +589,9 @@ Browser.prototype.load = function(e, url) {
 
 Browser.prototype.reload = function() {
 	this.view.hide();
-	// this.omnibox.show();
-	// this.loader.show();
-	// this.loader.loading();
 	this.view.reload();
 }
 
 Browser.prototype.toggleDevTools = function() {
-	console.log('tututututu');
 	this.view.toggleDevTools();
 }

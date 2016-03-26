@@ -22,6 +22,7 @@ function Omnibox(parameters) {
 	this.el.innerHTML = this.htmlData;
 	this.input = this.el.querySelectorAll('.input')[0];
 	this.tab = this.el.querySelectorAll('.tab')[0];
+	this.overlay = this.el.querySelectorAll('.overlay')[0];
 
 	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
 

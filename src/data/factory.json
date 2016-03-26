@@ -1,8 +1,8 @@
 {
 	"show_title_bar" : true,
 	"use_alt_drag" : true,
-	"use_homepage" : true,
-	"homepage_url" : "http://thmsbfft.fr/demo/wiggle/",
+	"use_homepage" : false,
+	"homepage_url" : "",
 	"default_window_width" : 800,
 	"default_window_height" : 500,
 	"clear_cache_on_launch" : false,
