@@ -19,6 +19,7 @@ function Oryoki() {
 	this.focusedWindow = null;
 	this.windowsIndex = -1; // Index to make sure we assign unique Ids
 	this.windowCount = 0; // Counts the number of windows currently open
+
 	this.attachEvents();
 	if(UserManager.getPreferenceByName("clear_cache_on_launch")) this.clearCaches();
 	if(UserManager.getPreferenceByName("override_download_path")) app.setPath('downloads', UserManager.getPreferenceByName("download_path"));

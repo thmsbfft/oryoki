@@ -85,6 +85,8 @@ function View(parameters) {
 
 	this.canOpenDevTools = false;
 
+	this.isFirstLoad = true;
+
 	console.log('View!');
 
 	this.build();
@@ -167,6 +169,8 @@ View.prototype.onDidFinishLoad = function() {
 
 	removeClass(this.webview, 'loading');
 	addClass(this.webview, 'loaded');
+
+	ipcRenderer.send('onDidFinishLoad');
 
 	this.onDidFinishLoadCallback();
 }

@@ -28,6 +28,12 @@ function CommandManager() {
 	this.template = undefined;
 	this.menu = undefined;
 	c.log('INIT COMMANDMANAGER');
+
+	// Allow for renderer to set menus
+	ipcMain.on('set-menu-enabled', function(event, menuLabel, subMenuLabel, value) {
+	  this.setEnabled(menuLabel, subMenuLabel, value);
+	}.bind(this));
+
 	this.createMenus();
 }
 
@@ -360,6 +366,12 @@ CommandManager.prototype.setCheckbox = function(menuLabel, subMenuLabel, value) 
 	submenu[0].checked = value;
 }
 
+CommandManager.prototype.setEnabled = function(menuLabel, subMenuLabel, value) {
+	var menu = this.getMenuByLabel(menuLabel);
+	var submenu = this.getSubMenuByLabel(menu, subMenuLabel);
+	submenu[0].enabled = value;
+}
+
 CommandManager.prototype.getMenuByLabel = function(menuLabel) {
 	return this.menu.items.filter(item => item.label == menuLabel);
 }
@@ -477,6 +489,7 @@ function Oryoki() {
 	this.focusedWindow = null;
 	this.windowsIndex = -1; // Index to make sure we assign unique Ids
 	this.windowCount = 0; // Counts the number of windows currently open
+
 	this.attachEvents();
 	if(UserManager.getPreferenceByName("clear_cache_on_launch")) this.clearCaches();
 	if(UserManager.getPreferenceByName("override_download_path")) app.setPath('downloads', UserManager.getPreferenceByName("download_path"));
@@ -615,6 +628,7 @@ function Window(parameters) {
 	this.omnibox = true;
 	this.console = false;
 	this.isAlwaysOnTop = false;
+	this.isFirstLoad = true;
 	
 	app.commandLine.appendSwitch('enable-webvr');
 	app.commandLine.appendSwitch('enable-web-bluetooth');
@@ -641,7 +655,6 @@ function Window(parameters) {
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html');
 
 	this.browser.webContents.openDevTools();
-	// this.setAlwaysOnTopToggle();
 }
 
 Window.prototype.attachEvents = function() {
@@ -651,12 +664,20 @@ Window.prototype.attachEvents = function() {
 
 	ipcMain.on('setOmniboxShow', this.setOmniboxShow.bind(this));
 	ipcMain.on('setOmniboxHide', this.setOmniboxHide.bind(this));
+
+	ipcMain.on('onDidFinishLoad', this.onDidFinishLoad.bind(this));
 }
 
 Window.prototype.onReady = function() {
 	this.browser.webContents.send('ready');
 	if(this.url) this.load(this.url);
 	this.browser.show();
+}
+
+Window.prototype.onDidFinishLoad = function() {
+	c.log('WADDUP');
+	if(this.isFirstLoad) this.isFirstLoad = false;
+	this.updateMenus();
 }
 
 Window.prototype.onFocus = function() {
@@ -682,7 +703,10 @@ Window.prototype.updateMenus = function() {
 	CommandManager.setCheckbox('Window', 'Float on Top', this.isAlwaysOnTop);
 	CommandManager.setCheckbox('View', 'Title Bar', this.handle);
 	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
-	CommandManager.setCheckbox('View', 'Fullscreen', this.browser.isFullScreen());
+	if(this.browser) {
+		CommandManager.setCheckbox('View', 'Fullscreen', this.browser.isFullScreen());
+	}
+	CommandManager.setEnabled('View', 'Toggle Omnibox', !this.isFirstLoad);
 }
 
 Window.prototype.setOmniboxShow = function() {

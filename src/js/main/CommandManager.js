@@ -5,6 +5,12 @@ function CommandManager() {
 	// @if NODE_ENV='development'
 	c.log('INIT COMMANDMANAGER');
 	// @endif
+
+	// Allow for renderer to set menus
+	ipcMain.on('set-menu-enabled', function(event, menuLabel, subMenuLabel, value) {
+	  this.setEnabled(menuLabel, subMenuLabel, value);
+	}.bind(this));
+
 	this.createMenus();
 }
 
@@ -335,6 +341,12 @@ CommandManager.prototype.setCheckbox = function(menuLabel, subMenuLabel, value) 
 	var menu = this.getMenuByLabel(menuLabel);
 	var submenu = this.getSubMenuByLabel(menu, subMenuLabel);
 	submenu[0].checked = value;
+}
+
+CommandManager.prototype.setEnabled = function(menuLabel, subMenuLabel, value) {
+	var menu = this.getMenuByLabel(menuLabel);
+	var submenu = this.getSubMenuByLabel(menu, subMenuLabel);
+	submenu[0].enabled = value;
 }
 
 CommandManager.prototype.getMenuByLabel = function(menuLabel) {
