@@ -152,7 +152,8 @@ omnibox {
     max-width: 485px;
     top: calc(50px);
     position: relative;
-    margin: auto; }
+    margin: auto;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.15); }
     omnibox .box ::-webkit-input-placeholder {
       color: rgba(255, 255, 255, 0.2); }
     omnibox .box .input {
