@@ -23,10 +23,6 @@ function Browser(parameters) {
 
 	});
 
-	this.windowHelper = new WindowHelper({
-
-	});
-
 	this.view = new View({
 		'onDidFinishLoad' : this.onDidFinishLoad.bind(this),
 		'onDOMReady' : this.onDOMReady.bind(this),
@@ -38,13 +34,18 @@ function Browser(parameters) {
 	this.draggingOverlay = false;
 	
 	this.resize();
+
+	this.windowHelper = new WindowHelper({
+
+	});
+	
 	this.attachEvents();
 }
 
 Browser.prototype.resize = function() {
 	if(this.isHandleDisplayed) {
 		this.frame.style.width = window.innerWidth+"px";
-		this.frame.style.height = (window.innerHeight - this.handle.el.offsetHeight) + 'px';
+		this.frame.style.height = (window.innerHeight - this.handle.el.offsetHeight+1) + 'px';
 	}
 	else {
 		this.frame.style.width = window.innerWidth+"px";
