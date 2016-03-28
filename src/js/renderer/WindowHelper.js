@@ -1,14 +1,41 @@
 function WindowHelper(parameters) {
 
+	this.id = parameters.id;
+	this.isVisible = undefined;
 	this.el = document.getElementsByTagName('windowHelper')[0];
 
 	console.log('Window Helper');
 
 	window.addEventListener('resize', this.updateWindowDimensions.bind(this));
 
-	// this.hide();
+	this.attachEvents();
 	this.updateWindowDimensions();
-	this.show();
+	this.hide();
+}
+
+WindowHelper.prototype.attachEvents = function() {
+
+	ipcRenderer.on('hide_window_helper', function(event, windowId) {
+		if(windowId == this.id) {
+			this.hide();
+		}
+	}.bind(this));
+
+	ipcRenderer.on('show_window_helper', function(event, windowId) {
+		if(windowId == this.id) {
+			this.show();
+		}
+	}.bind(this));
+
+	ipcRenderer.on('toggle_window_helper', function(event, windowId) {
+		if(windowId == this.id) {
+			console.log('toggle_window_helper');
+			if(!this.isVisible) this.show();
+			else this.hide();
+			this.isVisible != this.isVisible;
+		}
+	}.bind(this));
+
 }
 
 WindowHelper.prototype.updateWindowDimensions = function() {
@@ -38,9 +65,13 @@ WindowHelper.prototype.updateWindowDimensions = function() {
 }
 
 WindowHelper.prototype.hide = function() {
+	console.log('Hiding');
+	this.isVisible = false;
 	this.el.className = 'hide';
 }
 
 WindowHelper.prototype.show = function() {
+	console.log('Showing');
+	this.isVisible = true;
 	this.el.className = 'show';
 }

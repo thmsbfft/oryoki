@@ -269,6 +269,16 @@ CommandManager.prototype.createMenus = function() {
 			label: 'Tools',
 			submenu: [
 				{
+					label: 'Window Helper',
+					accelerator: 'Cmd+Alt+M',
+					type: 'checkbox',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.toggleWindowHelper();
+						}
+					}
+				},
+				{
 					label: 'Mini Console',
 					accelerator: 'Cmd+Alt+C',
 					type: 'checkbox',

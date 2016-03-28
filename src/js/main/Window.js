@@ -19,6 +19,7 @@ function Window(parameters) {
 	this.handle = UserManager.getPreferenceByName('show_title_bar');
 	this.omnibox = true;
 	this.console = false;
+	this.windowHelper = false;
 	this.isAlwaysOnTop = false;
 	this.isFirstLoad = true;
 	
@@ -76,7 +77,7 @@ Window.prototype.onReady = function() {
 	this.browser.webContents.send('ready');
 	if(this.url) this.load(this.url);
 	this.browser.show();
-	
+
 }
 
 Window.prototype.onFocus = function() {
@@ -156,6 +157,11 @@ Window.prototype.toggleHandle = function() {
 		);
 	}
 	CommandManager.toggleChecked('View', 'Title Bar');
+}
+
+Window.prototype.toggleWindowHelper = function() {
+		this.windowHelper != this.windowHelper;
+		this.browser.webContents.send('toggle_window_helper', this.id);
 }
 
 Window.prototype.toggleConsole = function() {

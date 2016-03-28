@@ -36,9 +36,9 @@ function Browser(parameters) {
 	this.resize();
 
 	this.windowHelper = new WindowHelper({
-
+		'id' : this.id
 	});
-	
+
 	this.attachEvents();
 }
 
