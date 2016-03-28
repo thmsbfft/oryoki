@@ -1,5 +1,8 @@
 function Browser(parameters) {
 
+	this.id = window.location.hash.substring(1);
+	this.isFirstLoad = true;
+
 	this.isHandleDisplayed = ipcRenderer.sendSync('get-preference', 'show_title_bar');
 	this.frame = document.querySelectorAll('#frame')[0];
 
@@ -80,10 +83,14 @@ Browser.prototype.onKeyDown = function(e) {
 Browser.prototype.onKeyUp = function(e) {
 	if(!e) var e = window.event;
 	if(e.keyCode == 18) {
+		// ALT
 		this.dragOverlay.className = '';
 	}
 	else if(e.keyCode == 27) {
-		this.hideOmnibox();
+		// ESC
+		if(!this.isFirstLoad) {
+			this.hideOmnibox();
+		}
 	}
 }
 
@@ -99,6 +106,12 @@ Browser.prototype.onDOMReady = function() {
 }
 
 Browser.prototype.onDidFinishLoad = function(input) {
+
+	if(this.isFirstLoad) {
+		this.isFirstLoad = false;
+		ipcRenderer.send('onDidFinishFirstLoad', this.id);
+	}
+
 	this.omnibox.hide();
 	this.loader.hide();
 	this.view.show();

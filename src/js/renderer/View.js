@@ -97,8 +97,6 @@ View.prototype.onDidFinishLoad = function() {
 	removeClass(this.webview, 'loading');
 	addClass(this.webview, 'loaded');
 
-	ipcRenderer.send('onDidFinishLoad');
-
 	this.onDidFinishLoadCallback();
 }
 

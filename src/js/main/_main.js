@@ -616,6 +616,7 @@ function Window(parameters) {
 	c.log('INIT WINDOW');
 
 	this.id = parameters.id;
+
 	if(parameters.url != null) {
 		c.log(parameters.url);
 		this.url = parameters.url;
@@ -652,12 +653,13 @@ function Window(parameters) {
 	c.log('file://' + __dirname + '/src/html/index.html');
 
 	this.attachEvents();
-	this.browser.loadURL('file://' + __dirname + '/src/html/index.html');
+	this.browser.loadURL('file://' + __dirname + '/src/html/index.html' + '#' + this.id);
 
 	this.browser.webContents.openDevTools();
 }
 
 Window.prototype.attachEvents = function() {
+
 	this.browser.webContents.on('dom-ready', this.onReady.bind(this));
 	this.browser.on('focus', this.onFocus.bind(this));
 	this.browser.on('closed', this.onClosed.bind(this));
@@ -665,19 +667,21 @@ Window.prototype.attachEvents = function() {
 	ipcMain.on('setOmniboxShow', this.setOmniboxShow.bind(this));
 	ipcMain.on('setOmniboxHide', this.setOmniboxHide.bind(this));
 
-	ipcMain.on('onDidFinishLoad', this.onDidFinishLoad.bind(this));
+	ipcMain.on('onDidFinishFirstLoad', function(event, windowId) {
+		if(windowId == this.id) {
+			if(this.isFirstLoad) this.isFirstLoad = false;
+			this.updateMenus();
+		}
+	}.bind(this));
+
 }
 
 Window.prototype.onReady = function() {
+
 	this.browser.webContents.send('ready');
 	if(this.url) this.load(this.url);
 	this.browser.show();
-}
-
-Window.prototype.onDidFinishLoad = function() {
-	c.log('WADDUP');
-	if(this.isFirstLoad) this.isFirstLoad = false;
-	this.updateMenus();
+	
 }
 
 Window.prototype.onFocus = function() {
