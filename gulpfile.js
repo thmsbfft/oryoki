@@ -22,6 +22,7 @@ var renderer = [
 	'src/js/renderer/renderer.js',
 	'src/js/renderer/Loader.js',
 	'src/js/renderer/Console.js',
+	'src/js/renderer/WindowHelper.js',
 	'src/js/renderer/View.js',
 	'src/js/renderer/Handle.js',
 	'src/js/renderer/Omnibox.js',

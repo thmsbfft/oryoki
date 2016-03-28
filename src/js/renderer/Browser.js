@@ -23,6 +23,10 @@ function Browser(parameters) {
 
 	});
 
+	this.windowHelper = new WindowHelper({
+
+	});
+
 	this.view = new View({
 		'onDidFinishLoad' : this.onDidFinishLoad.bind(this),
 		'onDOMReady' : this.onDOMReady.bind(this),
