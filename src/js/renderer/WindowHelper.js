@@ -4,6 +4,9 @@ function WindowHelper(parameters) {
 	this.isVisible = undefined;
 	this.el = document.getElementsByTagName('windowHelper')[0];
 
+	this.widthInput = this.el.querySelectorAll('#width')[0];
+	this.heightInput = this.el.querySelectorAll('#height')[0];
+
 	console.log('Window Helper');
 
 	window.addEventListener('resize', this.updateWindowDimensions.bind(this));
@@ -15,6 +18,7 @@ function WindowHelper(parameters) {
 
 WindowHelper.prototype.attachEvents = function() {
 
+	// IPC
 	ipcRenderer.on('hide_window_helper', function(event, windowId) {
 		if(windowId == this.id) {
 			this.hide();
@@ -35,6 +39,14 @@ WindowHelper.prototype.attachEvents = function() {
 			this.isVisible != this.isVisible;
 		}
 	}.bind(this));
+
+	this.widthInput.addEventListener('click', function() {
+		this.select();
+	});
+
+	this.heightInput.addEventListener('click', function() {
+		this.select();
+	});
 
 }
 
