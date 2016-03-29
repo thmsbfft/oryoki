@@ -401,29 +401,17 @@ function Omnibox(parameters) {
 }
 
 Omnibox.prototype.attachEvents = function() {
+
 	this.input.addEventListener('keydown', this.onInputKeyDown.bind(this));
 	this.input.addEventListener('keyup', this.onInputKeyUp.bind(this));
 	this.tab.addEventListener('click', this.switchMode.bind(this));
 
-	window.addEventListener('keypress', this.onKeyPress.bind(this));
-}
-
-Omnibox.prototype.onKeyPress = function(e) {
-	if(this.isVisible) {
-		if(!e) var e = window.event;
-		if(!this.isFocus() && e.keyIdentifier !== "Meta") {
-			// If omnibox is not focused and keystroke is not a shortcut,
-			// focus the omnibox and add character to the field.
-			e.preventDefault();
-			if(e.shiftKey == false) {
-				this.input.value += String.fromCharCode(e.keyCode).toLowerCase();
-			}
-			else {
-				this.input.value += String.fromCharCode(e.keyCode).toUpperCase();
-			}
-		}
+	// Always keep the omnibox in focus
+	this.overlay.addEventListener('mousedown', function(e) {
 		this.focus();
-	}
+		e.preventDefault();
+	}.bind(this));
+
 }
 
 Omnibox.prototype.onInputKeyDown = function(e) {
