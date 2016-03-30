@@ -105,7 +105,7 @@ View.prototype.onDidFailLoad = function(e) {
 }
 
 View.prototype.onCrashed = function(e) {
-	console.log('did-fail-load: ', e.errorCode);
+	console.log('did-fail-load: ', e);
 }
 
 View.prototype.onDidGetResponseDetails = function(e) {
