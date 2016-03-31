@@ -4,12 +4,10 @@ windowHelper {
 	z-index: 99;
 	bottom: 20px;
 	right: 20px;
-	background: #252525;
+	background: #1f1f1f;
 	padding: 2px 10px;
 	border-radius: 4px;
 	text-align: center;
-	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.20);
-
 	color: rgba(255, 255, 255, 0.6);
 
 	&.show {
@@ -23,7 +21,7 @@ windowHelper {
 		font-family: 'Roboto Mono', sans-serif;
 		font-size: 12px;
 		color: rgba(255, 255, 255, 0.6);
-		background: #252525;
+		background: transparent;
 		width: 23px;
 		padding-left: 5px;
 		display: inline-block;
