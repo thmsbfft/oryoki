@@ -126,6 +126,10 @@ WindowHelper.prototype.attachEvents = function() {
 		this.onInputKeyUp(e);
 	}.bind(this));
 
+	this.el.addEventListener('keydown', function(e) {
+		this.onInputKeyDown(e);
+	}.bind(this));
+
 }
 
 WindowHelper.prototype.updateWindowDimensions = function() {
@@ -171,29 +175,45 @@ WindowHelper.prototype.show = function() {
 
 WindowHelper.prototype.onInputKeyUp = function(e) {
 
-	// TODO do arrow keys on key down to allow faster repeat
+	if(e.key.match(/[a-z]/i) && e.key.length == 1 || e.keyCode == 9) e.preventDefault();
+
+	switch(e.keyCode) {
+
+		case 9:
+			// Tab
+			if(e.target.id == 'width') this.heightInput.select();
+			else this.widthInput.select();
+			break;
+
+		case 13:
+			// Enter
+			this.requestNewWindowDimensions(
+				this.widthInput.value, this.heightInput.value
+			);
+			break;
+
+	}
+
+	this.updateUI();
+
+}
+
+WindowHelper.prototype.onInputKeyDown = function(e) {
+
+	if(e.key.match(/[a-z]/i) && e.key.length == 1 || e.keyCode == 9 || e.keyCode == 38 || e.keyCode == 40) e.preventDefault();
 
 	switch(e.keyCode) {
 
 		case 38:
 			// Arrow Up
 			this.increment(e, 'up');
+			e.target.select();
 			break;
 
 		case 40:
 			// Arrow Down
 			this.increment(e, 'down');
-			break;
-
-		case 9:
-			// Tab
-			break;
-
-		case 13:
-			// Enter Key
-			this.requestNewWindowDimensions(
-				this.widthInput.value, this.heightInput.value
-			);
+			e.target.select();
 			break;
 
 	}
