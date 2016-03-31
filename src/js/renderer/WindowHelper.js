@@ -40,6 +40,7 @@ WindowHelper.prototype.attachEvents = function() {
 		}
 	}.bind(this));
 
+	// Basic
 	this.widthInput.addEventListener('click', function() {
 		this.select();
 	});
@@ -97,16 +98,18 @@ WindowHelper.prototype.show = function() {
 
 WindowHelper.prototype.onInputKeyUp = function(e) {
 
-	console.log(e);
+	// TODO do arrow keys on key down to allow faster repeat
 
 	switch(e.keyCode) {
 
 		case 38:
 			// Arrow Up
+			this.increment(e, 'up');
 			break;
 
 		case 40:
 			// Arrow Down
+			this.increment(e, 'down');
 			break;
 
 		case 9:
@@ -129,30 +132,29 @@ WindowHelper.prototype.onInputKeyUp = function(e) {
 WindowHelper.prototype.requestNewWindowDimensions = function(width, height) {
 
 	console.log('Resizing to: ' + width + 'x' + height);
+	ipcRenderer.send('setWindowSize', parseInt(width), parseInt(height));
 
 }
 
-WindowHelper.prototype.slider = function(e, direction) {
-
-	// TODO need a new name
+WindowHelper.prototype.increment = function(e, direction) {
 
 	switch(direction) {
 
 		case 'up':
 			if(e.shiftKey) {
-				// Increment by 10
+				e.target.value = parseInt(e.target.value) + 10;
 			}
 			else {
-				// Increment by 1
+				e.target.value = parseInt(e.target.value) + 1;
 			}
 			break;
 
 		case 'down':
 			if(e.shiftKey) {
-				// Decrement by 10
+				e.target.value = parseInt(e.target.value) - 10;
 			}
 			else {
-				// Decrement by 1
+				e.target.value = parseInt(e.target.value) - 1;
 			}
 			break;
 

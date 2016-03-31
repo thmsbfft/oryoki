@@ -678,12 +678,24 @@ Window.prototype.attachEvents = function() {
 	ipcMain.on('setOmniboxShow', this.setOmniboxShow.bind(this));
 	ipcMain.on('setOmniboxHide', this.setOmniboxHide.bind(this));
 
-	ipcMain.on('onDidFinishFirstLoad', function(event, windowId) {
+	ipcMain.on('onDidFinishFirstLoad', function(e, windowId) {
 		if(windowId == this.id) {
 			if(this.isFirstLoad) this.isFirstLoad = false;
 			this.updateMenus();
 		}
 	}.bind(this));
+
+	ipcMain.on('setWindowSize', function(e, width, height) {
+		this.setSize(width, height);
+	}.bind(this));
+
+}
+
+Window.prototype.setSize = function(width, height) {
+
+	// TODO Account for handle :)
+
+	this.browser.setSize(width, height, true);
 
 }
 
