@@ -70,17 +70,40 @@ Window.prototype.attachEvents = function() {
 		}
 	}.bind(this));
 
-	ipcMain.on('setWindowSize', function(e, width, height) {
-		this.setSize(width, height);
+	ipcMain.on('setWindowSize', function(e, width, height, windowId) {
+		if(this.id == windowId) this.setSize(width, height);
 	}.bind(this));
 
 }
 
 Window.prototype.setSize = function(width, height) {
 
-	this.browser.setSize(width, height, true);
+	var currentScreen = electronScreen.getDisplayMatching(this.browser.getBounds());
+	var currentPosition = this.browser.getBounds();
 
-	// If supperior to screen, default to max screen size
+	var x = this.browser.getBounds().x;
+	var y = this.browser.getBounds().y;
+
+	// If requested dimensions are supperior to current screen,
+	// default to work area size
+	if(width > currentScreen.workArea.width) {
+		width = currentScreen.workArea.width;
+		x = currentScreen.workArea.x;
+	}
+	if(height > currentScreen.workArea.height) {
+		height = currentScreen.workArea.height;
+		y = currentScreen.workArea.y;
+	}
+
+	this.browser.setBounds({
+		x: x,
+		y: y,
+		width: width,
+		height: height
+	}, true);
+
+	// Ask WindowHelper to update the UI on we're done
+	this.browser.webContents.send('update_window_dimensions', this.id);
 
 }
 

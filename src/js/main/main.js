@@ -1,5 +1,6 @@
 'use strict';
 var electron = require('electron');
+var electronScreen = undefined;
 var ipcMain = require('electron').ipcMain;
 var Menu = require('electron').Menu;
 var MenuItem = require('electron').MenuItem;
@@ -13,6 +14,8 @@ var shell = require('electron').shell;
 var exec = require('child_process').exec;
 
 app.on('ready', function() {
+
+	electronScreen = electron.screen;
 
 	UserManager = new UserManager();
 	CommandManager = new CommandManager();

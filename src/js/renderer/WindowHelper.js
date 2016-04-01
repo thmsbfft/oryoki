@@ -40,6 +40,12 @@ WindowHelper.prototype.attachEvents = function() {
 		}
 	}.bind(this));
 
+	ipcRenderer.on('update_window_dimensions', function(event, windowId) {
+		if(windowId == this.id) {
+			this.updateWindowDimensions();
+		}
+	}.bind(this));
+
 	// Basic
 	this.widthInput.addEventListener('click', function() {
 		this.select();
@@ -154,7 +160,7 @@ WindowHelper.prototype.onInputKeyDown = function(e) {
 WindowHelper.prototype.requestNewWindowDimensions = function(width, height) {
 
 	console.log('Resizing to: ' + width + 'x' + height);
-	ipcRenderer.send('setWindowSize', parseInt(width), parseInt(height));
+	ipcRenderer.send('setWindowSize', parseInt(width), parseInt(height), this.id);
 
 }
 
