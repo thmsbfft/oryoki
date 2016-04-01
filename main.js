@@ -16,13 +16,6 @@ c.log(time);
 c.log('--------');
 c.log('');
 
-function Command(options) {
-
-	this.id = options.id;
-	this.accelerator = options.accelerator;
-	this.callback = options.callback;
-
-}
 function CommandManager() {
 	this.register = {};
 	this.template = undefined;
@@ -298,6 +291,18 @@ CommandManager.prototype.createMenus = function() {
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.toggleWindowHelper();
+						}
+					}
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Screenshot',
+					accelerator: 'Cmd+Shift+`',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.camera.takeScreenshot();
 						}
 					}
 				},
@@ -621,6 +626,27 @@ Oryoki.prototype.goToDownloads = function() {
 	shell.openItem(app.getPath('downloads'));
 
 }
+function Camera(window) {
+
+	// Camera uses the browserWindow
+	this.window = window;
+
+}
+
+Camera.prototype.takeScreenshot = function(fileName, callback) {
+
+	c.log('Smile!');
+	this.window.capturePage(function(image) {
+
+		fs.writeFile(app.getPath('downloads') + '/' + 'screenshot.png', image.toPng(), function(err) {
+			if(err)
+				throw err;
+			c.log('Saved screenshot!')
+		})
+
+	}.bind(this));
+
+}
 function Window(parameters) {
 
 	c.log('INIT WINDOW');
@@ -660,6 +686,8 @@ function Window(parameters) {
 	  	"experimentalCanvasFeatures": true
 	  }
 	});
+
+	this.camera = new Camera(this.browser);
 
 	c.log('file://' + __dirname + '/src/html/index.html');
 

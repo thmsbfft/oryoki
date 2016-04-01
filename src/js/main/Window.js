@@ -42,6 +42,8 @@ function Window(parameters) {
 	  }
 	});
 
+	this.camera = new Camera(this.browser);
+
 	// @if NODE_ENV='development'
 	c.log('file://' + __dirname + '/src/html/index.html');
 	// @endif

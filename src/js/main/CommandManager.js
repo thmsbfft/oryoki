@@ -279,6 +279,18 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
+					type: 'separator'
+				},
+				{
+					label: 'Screenshot',
+					accelerator: 'Cmd+Shift+`',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.camera.takeScreenshot();
+						}
+					}
+				},
+				{
 					label: 'Mini Console',
 					accelerator: 'Cmd+Alt+C',
 					type: 'checkbox',
