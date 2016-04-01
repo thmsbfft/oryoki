@@ -270,6 +270,12 @@ windowHelper {
     transition: background-color 0.1s ease-out; }
     windowHelper input.fourDigits {
       width: 30px; }
+    windowHelper input:focus {
+      color: #00EC91;
+      background: transparent; }
+    windowHelper input::selection {
+      color: #00EC91;
+      background: transparent; }
   windowHelper .separator {
     font-family: 'Roboto Mono', sans-serif;
     font-size: 10px;

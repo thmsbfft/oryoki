@@ -36,6 +36,16 @@ windowHelper {
 		&.fourDigits {
 			width: 30px;
 		}
+
+		&:focus {
+			color: #00EC91;
+			background: transparent;
+		}
+
+		&::selection {
+		    color: #00EC91;
+		    background: transparent;
+		}
 	}
 
 	.separator {
