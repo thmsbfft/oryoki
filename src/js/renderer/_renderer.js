@@ -181,6 +181,8 @@ WindowHelper.prototype.show = function() {
 	this.isVisible = true;
 	this.el.className = 'show';
 
+	this.widthInput.select();
+
 }
 
 WindowHelper.prototype.onInputKeyUp = function(e) {

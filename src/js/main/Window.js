@@ -138,6 +138,7 @@ Window.prototype.updateMenus = function() {
 	CommandManager.setCheckbox('Window', 'Float on Top', this.isAlwaysOnTop);
 	CommandManager.setCheckbox('View', 'Title Bar', this.handle);
 	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
+	CommandManager.setCheckbox('Tools', 'Window Helper', this.windowHelper);
 	if(this.browser) {
 		CommandManager.setCheckbox('View', 'Fullscreen', this.browser.isFullScreen());
 	}
@@ -197,6 +198,7 @@ Window.prototype.toggleHandle = function() {
 Window.prototype.toggleWindowHelper = function() {
 		this.windowHelper != this.windowHelper;
 		this.browser.webContents.send('toggle_window_helper', this.id);
+		CommandManager.toggleChecked('Tools', 'Window Helper');
 }
 
 Window.prototype.toggleConsole = function() {
