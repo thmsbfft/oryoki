@@ -693,9 +693,9 @@ Window.prototype.attachEvents = function() {
 
 Window.prototype.setSize = function(width, height) {
 
-	// TODO Account for handle :)
-
 	this.browser.setSize(width, height, true);
+
+	// If supperior to screen, default to max screen size
 
 }
 

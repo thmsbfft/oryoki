@@ -138,8 +138,8 @@ WindowHelper.prototype.attachEvents = function() {
 
 WindowHelper.prototype.updateWindowDimensions = function() {
 
-	this.widthInput.value = document.querySelectorAll('#frame')[0].offsetWidth;
-	this.heightInput.value = document.querySelectorAll('#frame')[0].offsetHeight;
+	this.widthInput.value = window.innerWidth;
+	this.heightInput.value = window.innerHeight;
 
 	this.updateUI();
 
