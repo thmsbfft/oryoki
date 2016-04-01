@@ -8,7 +8,6 @@ var gulp        = require('gulp'),
 
 var main = [
 	'src/js/main/console.js',
-	'src/js/main/Command.js',
 	'src/js/main/CommandManager.js',
 	'src/js/main/User.js',
 	'src/js/main/UserManager.js',
