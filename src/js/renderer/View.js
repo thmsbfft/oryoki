@@ -30,6 +30,7 @@ View.prototype.build = function() {
 }
 
 View.prototype.attachEvents = function() {
+
 	console.log('Attaching Webview Events');
 
 	// Loading Events
@@ -58,9 +59,11 @@ View.prototype.attachEvents = function() {
 	// this.webview.addEventListener('devtools-opened', this.onDevToolsOpened.bind(this));
 	// this.webview.addEventListener('devtools-focused', this.onDevToolsFocused.bind(this));
 	// this.webview.addEventListener('devtools-closed', this.onDevToolsClosed.bind(this));
+
 }
 
 View.prototype.load = function(input) {
+
 	console.log('Loading: ' + input);
 
 	removeClass(this.webview, 'hide');
@@ -68,36 +71,47 @@ View.prototype.load = function(input) {
 	addClass(this.webview, 'loading');
 
 	this.webview.setAttribute('src', input);
+
 }
 
 View.prototype.reload = function() {
-	this.webview.setAttribute('src', this.webview.getAttribute('src'))
+
+	this.webview.setAttribute('src', this.webview.getAttribute('src'));
+
 }
 
 View.prototype.toggleDevTools = function() {
+
 	if(this.canOpenDevTools && !this.webview.isDevToolsOpened()) {
 		this.webview.openDevTools();
 	}
 	else if(this.canOpenDevTools && this.webview.isDevToolsOpened()) {
 		this.webview.closeDevTools();
 	}
+
 }
 
 View.prototype.onLoadCommit = function(e) {
+
 	console.log('load-commit: ', e.url);
+
 }
 
 View.prototype.onPageTitleUpdated = function(e) {
+
 	this.onPageTitleUpdatedCallback(e.title);
+
 }
 
 View.prototype.onDidFinishLoad = function() {
+
 	console.log('onDidFinishLoad');
 
 	removeClass(this.webview, 'loading');
 	addClass(this.webview, 'loaded');
 
 	this.onDidFinishLoadCallback();
+	
 }
 
 View.prototype.onDidFailLoad = function(e) {

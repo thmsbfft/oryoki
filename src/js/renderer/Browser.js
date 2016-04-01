@@ -42,17 +42,6 @@ function Browser(parameters) {
 	this.attachEvents();
 }
 
-Browser.prototype.resize = function() {
-	if(this.isHandleDisplayed) {
-		this.frame.style.width = window.innerWidth+"px";
-		this.frame.style.height = (window.innerHeight - this.handle.el.offsetHeight+1) + 'px';
-	}
-	else {
-		this.frame.style.width = window.innerWidth+"px";
-		this.frame.style.height = window.innerHeight+"px";
-	}
-}
-
 Browser.prototype.attachEvents = function() {
 	console.log('Attaching events');
 
@@ -74,6 +63,17 @@ Browser.prototype.attachEvents = function() {
 
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
+}
+
+Browser.prototype.resize = function() {
+	if(this.isHandleDisplayed) {
+		this.frame.style.width = window.innerWidth+"px";
+		this.frame.style.height = (window.innerHeight - this.handle.el.offsetHeight+1) + 'px';
+	}
+	else {
+		this.frame.style.width = window.innerWidth+"px";
+		this.frame.style.height = window.innerHeight+"px";
+	}
 }
 
 Browser.prototype.onKeyDown = function(e) {

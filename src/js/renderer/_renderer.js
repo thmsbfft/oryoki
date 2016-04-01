@@ -54,22 +54,26 @@ Loader.prototype.show = function() {
 function Console(parameters) {
 
 	this.el = document.getElementsByTagName('console')[0];
-
-	console.log('Console');
-
 	this.hide();
+	
 }
 
 Console.prototype.updateMessage = function(e) {
+
 	this.el.innerHTML = e.message;
+
 }
 
 Console.prototype.hide = function() {
+
 	this.el.className = 'hide';
+
 }
 
 Console.prototype.show = function() {
+
 	this.el.className = 'show';
+
 }
 function WindowHelper(parameters) {
 
@@ -175,6 +179,7 @@ WindowHelper.prototype.show = function() {
 
 WindowHelper.prototype.onInputKeyUp = function(e) {
 
+	// Ignore letters and keys we use later on
 	if(e.key.match(/[a-z]/i) && e.key.length == 1 || e.keyCode == 9) e.preventDefault();
 
 	switch(e.keyCode) {
@@ -200,6 +205,7 @@ WindowHelper.prototype.onInputKeyUp = function(e) {
 
 WindowHelper.prototype.onInputKeyDown = function(e) {
 
+	// Ignore letters and keys we use later on
 	if(e.key.match(/[a-z]/i) && e.key.length == 1 || e.keyCode == 9 || e.keyCode == 38 || e.keyCode == 40) e.preventDefault();
 
 	switch(e.keyCode) {
@@ -286,6 +292,7 @@ View.prototype.build = function() {
 }
 
 View.prototype.attachEvents = function() {
+
 	console.log('Attaching Webview Events');
 
 	// Loading Events
@@ -314,9 +321,11 @@ View.prototype.attachEvents = function() {
 	// this.webview.addEventListener('devtools-opened', this.onDevToolsOpened.bind(this));
 	// this.webview.addEventListener('devtools-focused', this.onDevToolsFocused.bind(this));
 	// this.webview.addEventListener('devtools-closed', this.onDevToolsClosed.bind(this));
+
 }
 
 View.prototype.load = function(input) {
+
 	console.log('Loading: ' + input);
 
 	removeClass(this.webview, 'hide');
@@ -324,36 +333,47 @@ View.prototype.load = function(input) {
 	addClass(this.webview, 'loading');
 
 	this.webview.setAttribute('src', input);
+
 }
 
 View.prototype.reload = function() {
-	this.webview.setAttribute('src', this.webview.getAttribute('src'))
+
+	this.webview.setAttribute('src', this.webview.getAttribute('src'));
+
 }
 
 View.prototype.toggleDevTools = function() {
+
 	if(this.canOpenDevTools && !this.webview.isDevToolsOpened()) {
 		this.webview.openDevTools();
 	}
 	else if(this.canOpenDevTools && this.webview.isDevToolsOpened()) {
 		this.webview.closeDevTools();
 	}
+
 }
 
 View.prototype.onLoadCommit = function(e) {
+
 	console.log('load-commit: ', e.url);
+
 }
 
 View.prototype.onPageTitleUpdated = function(e) {
+
 	this.onPageTitleUpdatedCallback(e.title);
+
 }
 
 View.prototype.onDidFinishLoad = function() {
+
 	console.log('onDidFinishLoad');
 
 	removeClass(this.webview, 'loading');
 	addClass(this.webview, 'loaded');
 
 	this.onDidFinishLoadCallback();
+	
 }
 
 View.prototype.onDidFailLoad = function(e) {
@@ -654,17 +674,6 @@ function Browser(parameters) {
 	this.attachEvents();
 }
 
-Browser.prototype.resize = function() {
-	if(this.isHandleDisplayed) {
-		this.frame.style.width = window.innerWidth+"px";
-		this.frame.style.height = (window.innerHeight - this.handle.el.offsetHeight+1) + 'px';
-	}
-	else {
-		this.frame.style.width = window.innerWidth+"px";
-		this.frame.style.height = window.innerHeight+"px";
-	}
-}
-
 Browser.prototype.attachEvents = function() {
 	console.log('Attaching events');
 
@@ -686,6 +695,17 @@ Browser.prototype.attachEvents = function() {
 
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
+}
+
+Browser.prototype.resize = function() {
+	if(this.isHandleDisplayed) {
+		this.frame.style.width = window.innerWidth+"px";
+		this.frame.style.height = (window.innerHeight - this.handle.el.offsetHeight+1) + 'px';
+	}
+	else {
+		this.frame.style.width = window.innerWidth+"px";
+		this.frame.style.height = window.innerHeight+"px";
+	}
 }
 
 Browser.prototype.onKeyDown = function(e) {
