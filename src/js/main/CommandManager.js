@@ -291,6 +291,9 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
+					type: 'separator'
+				},
+				{
 					label: 'Mini Console',
 					accelerator: 'Cmd+Alt+C',
 					type: 'checkbox',
