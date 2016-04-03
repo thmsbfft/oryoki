@@ -225,6 +225,49 @@ omnibox {
   #loader.show {
     opacity: 1; }
 
+notifications {
+  position: fixed;
+  top: 3px;
+  right: 0; }
+  notifications.mute {
+    display: none; }
+  notifications .notification {
+    background-color: #1A1A1A;
+    padding: 1px 7px;
+    float: left;
+    border-radius: 2px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 200;
+    font-size: 10px;
+    display: inline-block;
+    letter-spacing: 0.6px;
+    line-height: 14.5px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-right: 3px;
+    transition: background-color 0.2s ease-out;
+    -webkit-user-select: none;
+    cursor: pointer;
+    animation: fade-in 0.4s ease-out; }
+    notifications .notification:hover {
+      background-color: #1f1f1f; }
+    notifications .notification:active {
+      background-color: #0D0D0D; }
+    notifications .notification.show {
+      display: block; }
+    notifications .notification.hide {
+      display: none; }
+    notifications .notification.error::before {
+      content: ' ';
+      width: 4px;
+      display: inline-block;
+      height: 4px;
+      border-radius: 4px;
+      margin-right: 6px;
+      margin-left: 2px;
+      position: relative;
+      top: -1px;
+      background-color: red; }
+
 console {
   position: fixed;
   bottom: 0;

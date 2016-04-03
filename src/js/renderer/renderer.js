@@ -11,5 +11,8 @@ ipcRenderer.on('ready', function() {
 	
 	console.log('Ready!');
 	Browser = new Browser();
+	NotificationManager = new NotificationManager({
+
+	});
 
 })

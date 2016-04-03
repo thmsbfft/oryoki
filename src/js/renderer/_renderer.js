@@ -24,8 +24,111 @@ ipcRenderer.on('ready', function() {
 	
 	console.log('Ready!');
 	Browser = new Browser();
+	NotificationManager = new NotificationManager({
+
+	});
 
 })
+function Notification(parameters) {
+
+	this.context = parameters.context;
+	this.el = undefined;
+	this.id = parameters.id;
+	this.callback = parameters.onclick;
+	this.type = parameters.type;
+
+	this.body = parameters.body;
+	this.lifespan = parameters.lifespan;
+	
+	console.log(this.type);
+
+	this.build();
+}
+
+Notification.prototype.build = function() {
+
+	this.el = document.createElement('div');
+	this.el.className = 'notification';
+	if(this.type) addClass(this.el, this.type);
+
+	this.el.id = this.id;
+	this.el.innerHTML = this.body;
+
+	if(this.callback) this.el.addEventListener('click', this.callback.bind(this));
+
+	this.el.addEventListener('mouseover', this.freeze.bind(this));
+	this.life = setTimeout(this.destroy.bind(this), this.lifespan);
+
+	this.context.appendChild(this.el);
+
+}
+
+Notification.prototype.freeze = function() {
+
+	clearTimeout(this.life);
+	this.el.addEventListener('mouseout', this.unfreeze.bind(this));
+
+}
+
+Notification.prototype.unfreeze = function() {
+
+	this.life = setTimeout(this.destroy.bind(this), this.lifespan);
+
+}
+
+Notification.prototype.destroy = function() {
+
+	console.log('Notification has died.');
+	this.context.removeChild(this.el);
+
+}
+function NotificationManager(parameters) {
+
+	this.id = window.location.hash.substring(1);
+	this.el = document.getElementsByTagName('notifications')[0];
+	this.notifications = [];
+
+	this.idCount = 0;
+	
+	this.display({
+		'body' : 'Loading http://facebook.com/',
+		'lifespan' : 4000,
+		'onclick' : this.test.bind(this),
+	});
+
+	this.display({
+		'body' : 'Webview Crashed.',
+		'lifespan' : 4000,
+		'onclick' : this.test.bind(this),
+		'type' : 'error'
+	});
+
+}
+
+NotificationManager.prototype.display = function(props) {
+
+	this.notifications.push(new Notification({
+		'context' : this.el,
+		'id' : this.idCount++,
+		'body': props.body,
+		'lifespan' : props.lifespan,
+		'type' : props.type,
+		'onclick' : props.onclick
+	}));
+
+}
+
+NotificationManager.prototype.mute = function() {
+
+	this.el.className = 'mute';
+
+}
+
+NotificationManager.prototype.test = function() {
+
+	console.log('Click on notification!!');
+
+}
 function Loader(parameters) {
 
 	this.el = document.querySelectorAll('#loader')[0];
