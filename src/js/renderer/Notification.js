@@ -47,7 +47,11 @@ Notification.prototype.unfreeze = function() {
 
 Notification.prototype.destroy = function() {
 
-	console.log('Notification has died.');
-	this.context.removeChild(this.el);
+	addClass(this.el, 'dying');
+	setTimeout(function() {
+		console.log('Notification has died.');
+		this.el.style.opacity = 0;
+		this.context.removeChild(this.el);
+	}.bind(this), 200)
 
 }

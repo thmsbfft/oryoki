@@ -865,18 +865,32 @@ Window.prototype.toggleOmnibox = function() {
 }
 
 Window.prototype.reload = function() {
+
 	this.browser.webContents.send('reload');
 }
 
 Window.prototype.load = function(url) {
+
+	this.browser.webContents.send('display-notification', {
+		'body' : 'Loading ' + url,
+		'lifespan' : 3000,
+	});
+
 	this.browser.webContents.send('load', url);
 }
 
 Window.prototype.navigateBack = function() {
+
 	this.browser.webContents.send('goBack');
 }
 
 Window.prototype.navigateForward = function() {
+
+	this.browser.webContents.send('display-notification', {
+		'body' : 'Navigating forward...',
+		'lifespan' : 2000,
+	});
+
 	this.browser.webContents.send('goForward');
 }
 

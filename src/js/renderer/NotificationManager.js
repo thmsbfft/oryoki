@@ -5,19 +5,10 @@ function NotificationManager(parameters) {
 	this.notifications = [];
 
 	this.idCount = 0;
-	
-	this.display({
-		'body' : 'Loading http://facebook.com/',
-		'lifespan' : 4000,
-		'onclick' : this.test.bind(this),
-	});
 
-	this.display({
-		'body' : 'Webview Crashed.',
-		'lifespan' : 4000,
-		'onclick' : this.test.bind(this),
-		'type' : 'error'
-	});
+	ipcRenderer.on('display-notification', function(e, props) {
+		this.display(props);
+	}.bind(this));
 
 }
 

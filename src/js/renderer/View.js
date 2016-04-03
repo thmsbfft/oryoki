@@ -64,7 +64,10 @@ View.prototype.attachEvents = function() {
 
 View.prototype.load = function(input) {
 
-	console.log('Loading: ' + input);
+	NotificationManager.display({
+		'body' : 'Loading ' + input,
+		'lifespan' : 3000,
+	});
 
 	removeClass(this.webview, 'hide');
 	addClass(this.webview, 'show');
@@ -75,6 +78,11 @@ View.prototype.load = function(input) {
 }
 
 View.prototype.reload = function() {
+
+	NotificationManager.display({
+		'body' : 'Reloading',
+		'lifespan' : 3000,
+	});
 
 	this.webview.setAttribute('src', this.webview.getAttribute('src'));
 
@@ -93,11 +101,21 @@ View.prototype.toggleDevTools = function() {
 
 View.prototype.onLoadCommit = function(e) {
 
+	NotificationManager.display({
+		'body' : 'Loading... ',
+		'lifespan' : 3000,
+	});
+
 	console.log('load-commit: ', e.url);
 
 }
 
 View.prototype.onPageTitleUpdated = function(e) {
+
+	NotificationManager.display({
+		'body' : 'Navigating to ' + e.title,
+		'lifespan' : 3000,
+	});
 
 	this.onPageTitleUpdatedCallback(e.title);
 
@@ -105,7 +123,10 @@ View.prototype.onPageTitleUpdated = function(e) {
 
 View.prototype.onDidFinishLoad = function() {
 
-	console.log('onDidFinishLoad');
+	NotificationManager.display({
+		'body' : 'Done',
+		'lifespan' : 3000,
+	});
 
 	removeClass(this.webview, 'loading');
 	addClass(this.webview, 'loaded');
@@ -115,6 +136,13 @@ View.prototype.onDidFinishLoad = function() {
 }
 
 View.prototype.onDidFailLoad = function(e) {
+	
+	NotificationManager.display({
+		'body' : 'Load failed',
+		'lifespan' : 4000,
+		'type': 'error'
+	});
+
 	console.log('webview crashed');
 }
 
@@ -155,13 +183,24 @@ View.prototype.hide = function() {
 
 View.prototype.goForward = function() {
 	if(this.webview.canGoForward()) {
+		
+		NotificationManager.display({
+			'body' : 'Navigating forward',
+			'lifespan' : 3000,
+		});
+
 		this.webview.goForward();
 	}
 }
 
 View.prototype.goBack = function() {
 	if(this.webview.canGoBack()) {
-		console.log('Going back!');
+		
+		NotificationManager.display({
+			'body' : 'Navigating back',
+			'lifespan' : 3000,
+		});
+
 		this.webview.goBack();
 	}
 }

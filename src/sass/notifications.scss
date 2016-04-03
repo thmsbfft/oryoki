@@ -36,12 +36,8 @@ notifications {
 			background-color: #0D0D0D;
 		}
 
-		&.show {
-			display: block;
-		}
-
-		&.hide {
-			display: none;
+		&.dying {
+			animation: fade-out 0.3s ease-out;
 		}
 
 		&.error {

@@ -252,10 +252,8 @@ notifications {
       background-color: #1f1f1f; }
     notifications .notification:active {
       background-color: #0D0D0D; }
-    notifications .notification.show {
-      display: block; }
-    notifications .notification.hide {
-      display: none; }
+    notifications .notification.dying {
+      animation: fade-out 0.3s ease-out; }
     notifications .notification.error::before {
       content: ' ';
       width: 4px;
