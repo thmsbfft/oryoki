@@ -249,6 +249,7 @@ Window.prototype.load = function(url) {
 	});
 
 	this.browser.webContents.send('load', url);
+
 }
 
 Window.prototype.navigateBack = function() {

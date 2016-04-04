@@ -28,12 +28,16 @@ notifications {
 		cursor: pointer;
 		animation: fade-in 0.4s ease-out;
 
-		&:hover {
-			background-color: #1f1f1f;
-		}
+		&.clickable {
+			text-decoration: underline;
+			
+			&:hover {
+				background-color: #1f1f1f;
+			}
 
-		&:active {
-			background-color: #0D0D0D;
+			&:active {
+				background-color: #0D0D0D;
+			}
 		}
 
 		&.dying {

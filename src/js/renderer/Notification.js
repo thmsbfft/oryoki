@@ -9,8 +9,6 @@ function Notification(parameters) {
 	this.body = parameters.body;
 	this.lifespan = parameters.lifespan;
 	
-	console.log(this.type);
-
 	this.build();
 }
 
@@ -23,7 +21,12 @@ Notification.prototype.build = function() {
 	this.el.id = this.id;
 	this.el.innerHTML = this.body;
 
-	if(this.callback) this.el.addEventListener('click', this.callback.bind(this));
+	console.log(this.callback);
+
+	if(this.callback) {
+		addClass(this.el, 'clickable');
+		this.el.addEventListener('click', this.callback.bind(this));
+	}
 
 	this.el.addEventListener('mouseover', this.freeze.bind(this));
 	this.life = setTimeout(this.destroy.bind(this), this.lifespan);

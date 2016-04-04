@@ -248,10 +248,12 @@ notifications {
     -webkit-user-select: none;
     cursor: pointer;
     animation: fade-in 0.4s ease-out; }
-    notifications .notification:hover {
-      background-color: #1f1f1f; }
-    notifications .notification:active {
-      background-color: #0D0D0D; }
+    notifications .notification.clickable {
+      text-decoration: underline; }
+      notifications .notification.clickable:hover {
+        background-color: #1f1f1f; }
+      notifications .notification.clickable:active {
+        background-color: #0D0D0D; }
     notifications .notification.dying {
       animation: fade-out 0.3s ease-out; }
     notifications .notification.error::before {
