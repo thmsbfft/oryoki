@@ -1,6 +1,7 @@
 function Notification(parameters) {
 
 	this.context = parameters.context;
+	this.onDeathCallback = parameters.onDeath;
 	this.el = undefined;
 	this.id = parameters.id;
 	this.callback = parameters.onclick;
@@ -20,8 +21,6 @@ Notification.prototype.build = function() {
 
 	this.el.id = this.id;
 	this.el.innerHTML = this.body;
-
-	console.log(this.callback);
 
 	if(this.callback) {
 		addClass(this.el, 'clickable');
@@ -55,6 +54,7 @@ Notification.prototype.destroy = function() {
 		console.log('Notification has died.');
 		this.el.style.opacity = 0;
 		this.context.removeChild(this.el);
+		this.onDeathCallback(this.id);
 	}.bind(this), 200)
 
 }

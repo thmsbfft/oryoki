@@ -65,7 +65,7 @@ View.prototype.attachEvents = function() {
 View.prototype.load = function(input) {
 
 	NotificationManager.display({
-		'body' : 'Loading ' + input,
+		'body' : 'Loading',
 		'lifespan' : 3000,
 	});
 
@@ -78,11 +78,6 @@ View.prototype.load = function(input) {
 }
 
 View.prototype.reload = function() {
-
-	NotificationManager.display({
-		'body' : 'Reloading',
-		'lifespan' : 3000,
-	});
 
 	this.webview.setAttribute('src', this.webview.getAttribute('src'));
 
@@ -102,7 +97,7 @@ View.prototype.toggleDevTools = function() {
 View.prototype.onLoadCommit = function(e) {
 
 	NotificationManager.display({
-		'body' : 'Loading... ',
+		'body' : 'Loading',
 		'lifespan' : 3000,
 	});
 
@@ -113,7 +108,7 @@ View.prototype.onLoadCommit = function(e) {
 View.prototype.onPageTitleUpdated = function(e) {
 
 	NotificationManager.display({
-		'body' : 'Navigating to ' + e.title,
+		'body' : e.title,
 		'lifespan' : 3000,
 	});
 
@@ -137,13 +132,39 @@ View.prototype.onDidFinishLoad = function() {
 
 View.prototype.onDidFailLoad = function(e) {
 	
-	NotificationManager.display({
-		'body' : 'Load failed',
-		'lifespan' : 4000,
-		'type': 'error'
-	});
+	switch(e.errorCode) {
 
-	console.log('webview crashed');
+		case -3:
+			// Not sure what this is related to
+			// Ignore
+			break;
+
+		case -105:
+			NotificationManager.display({
+				'body' : 'Server DNS address could not be found',
+				'lifespan' : 5000,
+				'type': 'error'
+			});
+			break;
+
+		case -102:
+			NotificationManager.display({
+				'body' : 'Host refused to connect',
+				'lifespan' : 5000,
+				'type': 'error'
+			});
+			break;
+
+		default:
+			NotificationManager.display({
+				'body' : 'Load failed',
+				'lifespan' : 4000,
+				'type': 'error'
+			});	
+
+	}
+
+	console.log('webview crashed:', e);
 }
 
 View.prototype.onCrashed = function(e) {
@@ -156,7 +177,7 @@ View.prototype.onDidGetResponseDetails = function(e) {
 
 View.prototype.onNewWindow = function(e) {
 	console.log('Requesting new window for: ', e.url);
-	ipcRenderer.send('newWindow', [e.url]); // TODO ADD PARAMETER FOR URL
+	ipcRenderer.send('newWindow', [e.url]);
 }
 
 View.prototype.onConsoleMessage = function(e) {

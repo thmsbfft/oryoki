@@ -14,14 +14,26 @@ function NotificationManager(parameters) {
 
 NotificationManager.prototype.display = function(props) {
 
-	this.notifications.push(new Notification({
-		'context' : this.el,
-		'id' : this.idCount++,
-		'body': props.body,
-		'lifespan' : props.lifespan,
-		'type' : props.type,
-		'onclick' : props.onclick
-	}));
+	var isAlreadyDisplayed = false;
+
+	this.notifications.forEach(function(notification) {
+		if(notification.body == props.body) {
+			isAlreadyDisplayed = true;
+			return;
+		}
+	}.bind(this));
+
+	if(!isAlreadyDisplayed) {
+		this.notifications.push(new Notification({
+			'onDeath' : this.onNotificationDeath.bind(this),
+			'context' : this.el,
+			'id' : this.idCount++,
+			'body': props.body,
+			'lifespan' : props.lifespan,
+			'type' : props.type,
+			'onclick' : props.onclick
+		}));
+	}
 
 }
 
@@ -31,8 +43,12 @@ NotificationManager.prototype.mute = function() {
 
 }
 
-NotificationManager.prototype.test = function() {
+NotificationManager.prototype.onNotificationDeath = function(id) {
 
-	console.log('Click on notification!!');
+	this.notifications.forEach(function(notification, index) {
+		if(notification.id == id) {
+			this.notifications.splice(index, 1);
+		}
+	}.bind(this));
 
 }
