@@ -673,6 +673,10 @@ Handle.prototype.changeTitle = function(newTitle) {
 	}
 	this.title.innerHTML = newTitle;
 }
+
+Handle.prototype.getTitle = function() {
+	return this.title.innerHTML;
+}
 function Omnibox(parameters) {
 
 	this.isVisible = undefined;
@@ -873,6 +877,8 @@ Browser.prototype.attachEvents = function() {
 
 	ipcRenderer.on('toggleDevTools', this.toggleDevTools.bind(this));
 
+	ipcRenderer.on('get_handle_title', this.getHandleTitle.bind(this));
+
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
 }
@@ -952,6 +958,10 @@ Browser.prototype.showHandle = function() {
 	this.handle.show();
 	this.isHandleDisplayed = true;
 	this.resize();
+}
+
+Browser.prototype.getHandleTitle = function() {
+	return this.handle.getTitle();
 }
 
 Browser.prototype.showOmnibox = function() {

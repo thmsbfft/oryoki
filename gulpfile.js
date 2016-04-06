@@ -7,6 +7,7 @@ var gulp        = require('gulp'),
 	livereload	= require('gulp-livereload');
 
 var main = [
+	'src/js/main/utils.js',
 	'src/js/main/console.js',
 	'src/js/main/CommandManager.js',
 	'src/js/main/User.js',

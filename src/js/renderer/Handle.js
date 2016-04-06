@@ -52,3 +52,7 @@ Handle.prototype.changeTitle = function(newTitle) {
 	}
 	this.title.innerHTML = newTitle;
 }
+
+Handle.prototype.getTitle = function() {
+	return this.title.innerHTML;
+}
