@@ -495,7 +495,7 @@ View.prototype.onLoadCommit = function(e) {
 View.prototype.onPageTitleUpdated = function(e) {
 
 	NotificationManager.display({
-		'body' : e.title,
+		'body' : '→ ' + e.title,
 		'lifespan' : 3000,
 	});
 
@@ -504,11 +504,6 @@ View.prototype.onPageTitleUpdated = function(e) {
 }
 
 View.prototype.onDidFinishLoad = function() {
-
-	NotificationManager.display({
-		'body' : 'Done',
-		'lifespan' : 3000,
-	});
 
 	removeClass(this.webview, 'loading');
 	addClass(this.webview, 'loaded');
