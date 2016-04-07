@@ -112,7 +112,7 @@ Browser.prototype.onDOMReady = function() {
 	this.handle.changeTitle(this.view.getTitle());
 }
 
-Browser.prototype.onDidFinishLoad = function(input) {
+Browser.prototype.onDidFinishLoad = function() {
 
 	if(this.isFirstLoad) {
 		this.isFirstLoad = false;
@@ -122,6 +122,7 @@ Browser.prototype.onDidFinishLoad = function(input) {
 	this.omnibox.hide();
 	this.loader.hide();
 	this.view.show();
+
 }
 
 Browser.prototype.onPageTitleUpdated = function(newTitle) {

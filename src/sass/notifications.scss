@@ -59,5 +59,28 @@ notifications {
 			}
 		}
 
+		&.counter {
+
+			// background-color: #1e71f7;
+			// color: white;
+			// font-family: 'Roboto Mono Regular', sans-serif;
+			// font-size: 10px;
+			// // letter-spacing: 1px;
+			// text-transform: uppercase;
+
+			&::before {
+				content: ' ';
+				width: 4px;
+				display: inline-block;
+				height: 4px;
+				border-radius: 4px;
+				margin-right: 6px;
+				margin-left: 2px;
+				position: relative;
+				top: -1px;
+				background-color: #1e71f7;
+			}
+		}
+
 	}
 }

@@ -14,6 +14,10 @@ function View(parameters) {
 
 	this.isFirstLoad = true;
 
+	this.isLoadingTimerRunning = false;
+	this.loadingTimerStart = undefined;
+	this.loadingTimerEnd = undefined;
+
 	console.log('View!');
 
 	this.build();
@@ -35,6 +39,7 @@ View.prototype.attachEvents = function() {
 
 	// Loading Events
 	this.webview.addEventListener('load-commit', this.onLoadCommit.bind(this));
+	this.webview.addEventListener('did-frame-finish-load', this.onDidFrameFinishLoad.bind(this));
 	this.webview.addEventListener('did-finish-load', this.onDidFinishLoad.bind(this));
 	this.webview.addEventListener('did-fail-load', this.onDidFailLoad.bind(this));
 	this.webview.addEventListener('did-get-response-details', this.onDidGetResponseDetails.bind(this));
@@ -101,7 +106,30 @@ View.prototype.onLoadCommit = function(e) {
 		'lifespan' : 3000,
 	});
 
-	console.log('load-commit: ', e.url);
+	console.log('load-commit: ', e);
+	if(!this.isLoadingTimerRunning && e.isMainFrame) {
+		// Start the timer
+		this.isLoadingTimerRunning = true;
+		this.loadingTimerStart = e.timeStamp;
+	}
+
+}
+
+View.prototype.onDidFrameFinishLoad = function(e) {
+
+	console.log('FINISH', e.timeStamp);
+	if(this.isLoadingTimerRunning && e.isMainFrame) {
+		// Stop the timer
+		this.isLoadingTimerRunning = false;
+		this.loadingTimerEnd = e.timeStamp;
+
+		NotificationManager.display({
+			'body' : Math.round(this.loadingTimerEnd - this.loadingTimerStart) + ' ms',
+			'lifespan' : 3000,
+			'type' : 'counter'
+		});
+
+	}
 
 }
 

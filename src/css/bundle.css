@@ -267,6 +267,17 @@ notifications {
       position: relative;
       top: -1px;
       background-color: red; }
+    notifications .notification.counter::before {
+      content: ' ';
+      width: 4px;
+      display: inline-block;
+      height: 4px;
+      border-radius: 4px;
+      margin-right: 6px;
+      margin-left: 2px;
+      position: relative;
+      top: -1px;
+      background-color: #1e71f7; }
 
 console {
   position: fixed;
