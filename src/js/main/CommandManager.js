@@ -291,6 +291,24 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
+					label: 'Start Recording',
+					accelerator: 'Cmd+Shift+P',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.camera.startRecording();
+						}
+					}
+				},
+				{
+					label: 'Stop Recording',
+					accelerator: 'Cmd+Alt+Shift+P',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.camera.stopRecording();
+						}
+					}
+				},
+				{
 					type: 'separator'
 				},
 				{

@@ -2,6 +2,9 @@ function Camera(browserWindow) {
 
 	// Camera uses the browserWindow
 	this.browser = browserWindow;
+	this.isRecording = false;
+	this.ticker = undefined;
+	this.frameCount = 0;
 
 }
 
@@ -41,12 +44,48 @@ Camera.prototype.onScreenshotTaken = function() {
 
 	// TODO : Make this clickable
 
-	// ipcMain.on('screenshot-taken', this.revealScreenshot.bind(this));
-
 }
 
 Camera.prototype.revealScreenshot = function() {
 
 	shell.openItem(app.getPath('downloads'));
+
+}
+
+Camera.prototype.startRecording = function() {
+
+	c.log('Recording...');
+	if(!this.isRecording) {
+		this.isRecording = true;
+		this.ticker = setInterval(this.recordFrame.bind(this), 1000 / 30);
+	}
+
+}
+
+Camera.prototype.recordFrame = function() {
+
+	if(this.isRecording) {
+
+		this.browser.capturePage(function(image) {
+
+			fs.writeFile(app.getPath('downloads') + '/' + this.frameCount + '.png', image.toPng(), function(err) {
+				if(err)
+					throw err;
+				c.log('Frame:', this.frameCount);
+				this.frameCount++;
+			}.bind(this));
+
+		}.bind(this));
+
+	}
+
+}
+
+Camera.prototype.stopRecording = function() {
+
+	c.log('Finished recording!');
+	this.isRecording = false;
+	this.frameCount = 0;
+	clearInterval(this.ticker);
 
 }
