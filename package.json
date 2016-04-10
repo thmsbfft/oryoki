@@ -1,6 +1,6 @@
 {
   "name": "oryoki",
-  "productName" : "Oryoki",
+  "productName": "Oryoki",
   "version": "0.0.2",
   "description": "",
   "main": "main.js",
@@ -12,6 +12,7 @@
     "electron-localshortcut": "^0.6.0",
     "electron-packager": "^5.2.0",
     "electron-prebuilt": "^0.36.0",
+    "fluent-ffmpeg": "^2.0.1",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-copy": "0.0.2",

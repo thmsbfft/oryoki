@@ -3,7 +3,8 @@ function Camera(browserWindow) {
 	// Camera uses the browserWindow
 	this.browser = browserWindow;
 	this.isRecording = false;
-	this.ticker = undefined;
+
+	this.videoStream = undefined;
 	this.frameCount = 0;
 
 }
@@ -54,28 +55,17 @@ Camera.prototype.revealScreenshot = function() {
 
 Camera.prototype.startRecording = function() {
 
-	c.log('Recording...');
-	if(!this.isRecording) {
-		this.isRecording = true;
-		this.ticker = setInterval(this.recordFrame.bind(this), 1000 / 30);
-	}
+	c.log('Start recording');
+	this.videoStream = fs.createWriteStream(app.getPath('downloads') + '/screengrab.mp4');
+	this.browser.webContents.beginFrameSubscription(this.recordFrame);
 
 }
 
-Camera.prototype.recordFrame = function() {
+Camera.prototype.recordFrame = function(frameBuffer) {
 
 	if(this.isRecording) {
 
-		this.browser.capturePage(function(image) {
-
-			fs.writeFile(app.getPath('downloads') + '/' + this.frameCount + '.png', image.toPng(), function(err) {
-				if(err)
-					throw err;
-				c.log('Frame:', this.frameCount);
-				this.frameCount++;
-			}.bind(this));
-
-		}.bind(this));
+		// Save frame to tmp folder
 
 	}
 
@@ -84,8 +74,10 @@ Camera.prototype.recordFrame = function() {
 Camera.prototype.stopRecording = function() {
 
 	c.log('Finished recording!');
-	this.isRecording = false;
-	this.frameCount = 0;
-	clearInterval(this.ticker);
+	this.browser.webContents.endFrameSubscription();
+
+	// Encode frames using ffmpeg
+	// Save video to downloads
+	// Delete frames from tmp folder
 
 }
