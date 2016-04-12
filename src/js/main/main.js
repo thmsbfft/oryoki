@@ -13,6 +13,9 @@ var fs = require('fs');
 var shell = require('electron').shell;
 var exec = require('child_process').exec;
 var ffmpeg = require('fluent-ffmpeg');
+var bmp = require('bmp-js');
+var nativeImage = require('native-image');
+var os = require('os');
 
 app.on('ready', function() {
 
