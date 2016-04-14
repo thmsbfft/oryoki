@@ -101,9 +101,14 @@ function NotificationManager(parameters) {
 		this.display(props);
 	}.bind(this));
 
+	ipcRenderer.on('mute-notifications', this.mute.bind(this));
+	ipcRenderer.on('unmute-notifications', this.unmute.bind(this));
+
 }
 
 NotificationManager.prototype.display = function(props) {
+
+	if(this.isMuted) return;
 
 	var isAlreadyDisplayed = false;
 
@@ -130,7 +135,17 @@ NotificationManager.prototype.display = function(props) {
 
 NotificationManager.prototype.mute = function() {
 
+	console.log('Muting notifications');
+	this.isMuted = true;
 	this.el.className = 'mute';
+
+}
+
+NotificationManager.prototype.unmute = function() {
+
+	console.log('Unmute notifications');
+	this.isMuted = false;
+	this.el.className = '';
 
 }
 

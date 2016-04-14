@@ -7,5 +7,6 @@
 	"default_window_height" : 500,
 	"clear_cache_on_launch" : false,
 	"override_download_path" : false,
-	"download_path" : ""
+	"download_path" : "",
+	"mute_notifications_while_recording" : true
 }

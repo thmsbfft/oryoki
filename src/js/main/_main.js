@@ -708,6 +708,9 @@ Camera.prototype.startRecording = function() {
 	if(!this.isRecording) {
 		c.log('Start recording');
 		this.isRecording = true;
+		if(UserManager.getPreferenceByName("mute_notifications_while_recording")) {
+			this.browser.webContents.send('mute-notifications');
+		}
 		this.browser.webContents.beginFrameSubscription(this.recordRaw.bind(this));
 	}
 	else {
@@ -802,6 +805,9 @@ Camera.prototype.stopRecording = function() {
 	this.browser.webContents.endFrameSubscription();
 	this.isRecording = false;
 	this.frameCount = 0;
+	if(UserManager.getPreferenceByName("mute_notifications_while_recording")) {
+		this.browser.webContents.send('unmute-notifications');
+	}
 
 	// Encode frames using ffmpeg
 	// Save video to downloads
