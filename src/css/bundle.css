@@ -41,6 +41,12 @@ table {
   50% {
     border-color: rgba(0, 236, 145, 0.6); } }
 
+@keyframes pulse {
+  0% {
+    opacity: 1; }
+  50% {
+    opacity: 0; } }
+
 @keyframes fade-in {
   0% {
     opacity: 0; }
@@ -141,6 +147,16 @@ handle {
   #view.hide {
     opacity: 0;
     pointer-events: none; }
+  #view::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 10px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    animation: pulse 0.8s infinite; }
 
 omnibox {
   width: 100%;

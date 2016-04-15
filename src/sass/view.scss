@@ -9,4 +9,15 @@
 		opacity: 0;
 		pointer-events: none;
 	}
+	&::before {
+		content: '';
+		width: 10px;
+		height: 10px;
+		background: red;
+		border-radius: 10px;
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		animation: pulse 0.8s infinite;
+	}
 }

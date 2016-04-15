@@ -1076,14 +1076,12 @@ Window.prototype.setAlwaysOnTopToggle = function() {
 
 Window.prototype.lockDimensions = function() {
 
-	c.log('Locking dimensions');
 	this.browser.setResizable(false);
 
 }
 
 Window.prototype.unlockDimensions = function() {
 
-	c.log('Unlocking dimensions');
 	this.browser.setResizable(true);
 
 }
