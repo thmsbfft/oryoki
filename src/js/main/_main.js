@@ -646,10 +646,13 @@ Oryoki.prototype.goToDownloads = function() {
 	shell.openItem(app.getPath('downloads'));
 
 }
-function Camera(browserWindow) {
+function Camera(parameters) {
 
 	// Camera uses the browserWindow
-	this.browser = browserWindow;
+	this.browser = parameters.browser;
+	this.onRecordingBeginCallback = parameters.onRecordingBegin;
+	this.onRecordingEndCallback = parameters.onRecordingEnd;
+
 	this.isRecording = false;
 
 	this.videoStream = undefined;
@@ -708,6 +711,7 @@ Camera.prototype.startRecording = function() {
 	if(!this.isRecording) {
 		c.log('Start recording');
 		this.isRecording = true;
+		this.onRecordingBeginCallback();
 		if(UserManager.getPreferenceByName("mute_notifications_while_recording")) {
 			this.browser.webContents.send('mute-notifications');
 		}
@@ -804,6 +808,7 @@ Camera.prototype.stopRecording = function() {
 	c.log('Finished recording!');
 	this.browser.webContents.endFrameSubscription();
 	this.isRecording = false;
+	this.onRecordingEndCallback();
 	this.frameCount = 0;
 	if(UserManager.getPreferenceByName("mute_notifications_while_recording")) {
 		this.browser.webContents.send('unmute-notifications');
@@ -854,7 +859,11 @@ function Window(parameters) {
 	  }
 	});
 
-	this.camera = new Camera(this.browser);
+	this.camera = new Camera({
+		browser: this.browser,
+		onRecordingBegin: this.lockDimensions.bind(this),
+		onRecordingEnd: this.unlockDimensions.bind(this)
+	});
 
 	c.log('file://' + __dirname + '/src/html/index.html');
 
@@ -1063,6 +1072,20 @@ Window.prototype.setAlwaysOnTopToggle = function() {
 	this.isAlwaysOnTop =! this.isAlwaysOnTop;
 	this.browser.setAlwaysOnTop(this.isAlwaysOnTop);
 	CommandManager.toggleChecked('Window', 'Float on Top');
+}
+
+Window.prototype.lockDimensions = function() {
+
+	c.log('Locking dimensions');
+	this.browser.setResizable(false);
+
+}
+
+Window.prototype.unlockDimensions = function() {
+
+	c.log('Unlocking dimensions');
+	this.browser.setResizable(true);
+
 }
 'use strict';
 var electron = require('electron');

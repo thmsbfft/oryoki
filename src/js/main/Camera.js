@@ -1,7 +1,10 @@
-function Camera(browserWindow) {
+function Camera(parameters) {
 
 	// Camera uses the browserWindow
-	this.browser = browserWindow;
+	this.browser = parameters.browser;
+	this.onRecordingBeginCallback = parameters.onRecordingBegin;
+	this.onRecordingEndCallback = parameters.onRecordingEnd;
+
 	this.isRecording = false;
 
 	this.videoStream = undefined;
@@ -60,6 +63,7 @@ Camera.prototype.startRecording = function() {
 	if(!this.isRecording) {
 		c.log('Start recording');
 		this.isRecording = true;
+		this.onRecordingBeginCallback();
 		if(UserManager.getPreferenceByName("mute_notifications_while_recording")) {
 			this.browser.webContents.send('mute-notifications');
 		}
@@ -156,6 +160,7 @@ Camera.prototype.stopRecording = function() {
 	c.log('Finished recording!');
 	this.browser.webContents.endFrameSubscription();
 	this.isRecording = false;
+	this.onRecordingEndCallback();
 	this.frameCount = 0;
 	if(UserManager.getPreferenceByName("mute_notifications_while_recording")) {
 		this.browser.webContents.send('unmute-notifications');

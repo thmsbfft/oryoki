@@ -42,7 +42,11 @@ function Window(parameters) {
 	  }
 	});
 
-	this.camera = new Camera(this.browser);
+	this.camera = new Camera({
+		browser: this.browser,
+		onRecordingBegin: this.lockDimensions.bind(this),
+		onRecordingEnd: this.unlockDimensions.bind(this)
+	});
 
 	// @if NODE_ENV='development'
 	c.log('file://' + __dirname + '/src/html/index.html');
@@ -271,4 +275,16 @@ Window.prototype.setAlwaysOnTopToggle = function() {
 	this.isAlwaysOnTop =! this.isAlwaysOnTop;
 	this.browser.setAlwaysOnTop(this.isAlwaysOnTop);
 	CommandManager.toggleChecked('Window', 'Float on Top');
+}
+
+Window.prototype.lockDimensions = function() {
+
+	this.browser.setResizable(false);
+
+}
+
+Window.prototype.unlockDimensions = function() {
+
+	this.browser.setResizable(true);
+
 }
