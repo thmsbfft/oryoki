@@ -460,6 +460,8 @@ View.prototype.attachEvents = function() {
 	// IPC
 	ipcRenderer.on('goBack', this.goBack.bind(this));
 	ipcRenderer.on('goForward', this.goForward.bind(this));
+	ipcRenderer.on('recordingBegin', this.onRecordingBegin.bind(this));
+	ipcRenderer.on('recordingEnd', this.onRecordingEnd.bind(this));
 
 
 	// Devtools
@@ -619,14 +621,6 @@ View.prototype.getTitle = function() {
 	return this.webview.getTitle();
 }
 
-View.prototype.show = function() {
-	this.el.className = 'show';
-}
-
-View.prototype.hide = function() {
-	this.el.className = 'hide';
-}
-
 View.prototype.goForward = function() {
 	if(this.webview.canGoForward()) {
 		
@@ -649,6 +643,22 @@ View.prototype.goBack = function() {
 
 		this.webview.goBack();
 	}
+}
+
+View.prototype.onRecordingBegin = function() {
+
+	addClass(this.el, 'recording');
+	if(!ipcRenderer.sendSync('get-preference', 'display_recording_hint')) {
+		addClass(this.el, 'hint-off');
+	}
+
+}
+
+View.prototype.onRecordingEnd = function() {
+
+	console.log('Doing something now!');
+	this.className = '';
+
 }
 
 // View.prototype.onDevToolsOpened = function() {
@@ -883,6 +893,7 @@ function Browser(parameters) {
 	});
 
 	this.view = new View({
+		'id' : this.id,
 		'onDidFinishLoad' : this.onDidFinishLoad.bind(this),
 		'onDOMReady' : this.onDOMReady.bind(this),
 		'onPageTitleUpdated' : this.onPageTitleUpdated.bind(this),
@@ -980,7 +991,6 @@ Browser.prototype.onDidFinishLoad = function() {
 
 	this.omnibox.hide();
 	this.loader.hide();
-	this.view.show();
 
 }
 
@@ -1033,7 +1043,6 @@ Browser.prototype.load = function(e, url) {
 }
 
 Browser.prototype.reload = function() {
-	this.view.hide();
 	this.view.reload();
 }
 

@@ -141,13 +141,7 @@ handle {
 #view {
   width: 100%;
   height: 100%; }
-  #view.show {
-    opacity: 1;
-    pointer-events: auto; }
-  #view.hide {
-    opacity: 0;
-    pointer-events: none; }
-  #view::before {
+  #view.recording::before {
     content: '';
     width: 10px;
     height: 10px;
@@ -157,6 +151,8 @@ handle {
     top: 20px;
     right: 20px;
     animation: pulse 0.8s infinite; }
+  #view.recording.hint-off::before {
+    background: transparent; }
 
 omnibox {
   width: 100%;

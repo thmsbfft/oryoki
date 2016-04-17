@@ -648,6 +648,8 @@ Oryoki.prototype.goToDownloads = function() {
 }
 function Camera(parameters) {
 
+	this.id = parameters.id;
+
 	// Camera uses the browserWindow
 	this.browser = parameters.browser;
 	this.onRecordingBeginCallback = parameters.onRecordingBegin;
@@ -710,6 +712,7 @@ Camera.prototype.startRecording = function() {
 
 	if(!this.isRecording) {
 		c.log('Start recording');
+		this.browser.webContents.send('recordingBegin');
 		this.isRecording = true;
 		this.onRecordingBeginCallback();
 		if(UserManager.getPreferenceByName("mute_notifications_while_recording")) {
@@ -806,8 +809,9 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 Camera.prototype.stopRecording = function() {
 
 	c.log('Finished recording!');
-	this.browser.webContents.endFrameSubscription();
 	this.isRecording = false;
+	this.browser.webContents.send('recordingEnd');
+	this.browser.webContents.endFrameSubscription();
 	this.onRecordingEndCallback();
 	this.frameCount = 0;
 	if(UserManager.getPreferenceByName("mute_notifications_while_recording")) {
@@ -1100,9 +1104,6 @@ var fs = require('fs');
 var shell = require('electron').shell;
 var exec = require('child_process').exec;
 var ffmpeg = require('fluent-ffmpeg');
-var bmp = require('bmp-js');
-var nativeImage = require('native-image');
-var os = require('os');
 
 app.on('ready', function() {
 

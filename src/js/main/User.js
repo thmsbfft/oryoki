@@ -12,7 +12,9 @@ function User(name) {
 	// Check if Oryoki has data
 	fs.access(this.confPath, fs.F_OK, (err) => {
 		if(err) {
+			// @if NODE_ENV='development'
 			c.log('No access!');
+			// @endif
 			fs.mkdir(this.confPath, 0777, (err) => {
 				if (err.code == 'EEXIST') cb(null);
 				else c.log(err);

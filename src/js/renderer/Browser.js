@@ -24,6 +24,7 @@ function Browser(parameters) {
 	});
 
 	this.view = new View({
+		'id' : this.id,
 		'onDidFinishLoad' : this.onDidFinishLoad.bind(this),
 		'onDOMReady' : this.onDOMReady.bind(this),
 		'onPageTitleUpdated' : this.onPageTitleUpdated.bind(this),
@@ -121,7 +122,6 @@ Browser.prototype.onDidFinishLoad = function() {
 
 	this.omnibox.hide();
 	this.loader.hide();
-	this.view.show();
 
 }
 
@@ -174,7 +174,6 @@ Browser.prototype.load = function(e, url) {
 }
 
 Browser.prototype.reload = function() {
-	this.view.hide();
 	this.view.reload();
 }
 
