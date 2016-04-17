@@ -1,6 +1,7 @@
-function User(name) {
+function User(name, factory) {
 
 	this.name = name;
+	this.factory = factory;
 
 	// Storing in ~/Library/Application Support
 	this.confPath = app.getPath('appData') + '/' + app.getName() + '/';
@@ -10,7 +11,7 @@ function User(name) {
 	this.history = undefined;
 
 	// Check if Oryoki has data
-	fs.access(this.confPath, fs.F_OK, (err) => {
+	fs.accessSync(this.confPath, fs.F_OK, (err) => {
 		if(err) {
 			// @if NODE_ENV='development'
 			c.log('No access!');
@@ -23,36 +24,59 @@ function User(name) {
 	});
 
 	this.getPreferences();
-	this.watchFile('preferences.json', this.getPreferences.bind(this));
-
-}
-
-User.prototype.checkPathforFile = function(fileName, callback) {
-
-	// Check if conf file exists
-	// If it doesn't, then callback to create default file
+	// this.watchFile('preferences.json', this.getPreferences.bind(this));
 
 }
 
 User.prototype.getPreferences = function() {
 
-	// @if NODE_ENV='development'
-	c.log('USER:', this.name);
-	// @endif
-
-	this.preferences = this.getConfFile('preferences.json');
+	this.preferences = this.getConfFile('preferences.json', this.createPreferences.bind(this));
 
 }
 
 User.prototype.watchFile = function(fileName, callback) {
 
-	fs.watch(this.confPath + fileName, callback);
+	fs.watch(path.resolve(this.confPath, fileName), callback);
 
 }
 
-User.prototype.getConfFile = function(fileName) {
+User.prototype.getConfFile = function(fileName, callback) {
 
-	c.log('Getting file...');
-	return JSON.parse(fs.readFileSync(this.confPath + fileName, 'utf8'));
+	c.log('Getting file ' + path.resolve(this.confPath, fileName));
+
+	// Check if conf file exists
+	// If it doesn't, then callback to create default file
+
+	try {
+
+		fs.statSync(path.resolve(this.confPath, fileName));	
+
+	}
+	catch(err) {
+
+		if(err.code === 'ENOENT') {
+			// Create file
+			callback();
+			return;
+		}
+		else {
+			throw err;
+		}
+
+	}
+	finally {
+
+		return JSON.parse(fs.readFileSync(this.confPath + fileName, 'utf8'));
+
+	}
+
+}
+
+User.prototype.createPreferences = function() {
+
+	c.log('Creating preferences...');
+	fs.writeFileSync(this.confPath + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), 'utf8', (err) => {
+		if (err) throw err;
+	});
 
 }

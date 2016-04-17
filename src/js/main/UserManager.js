@@ -1,8 +1,10 @@
 function UserManager() {
-	this.factoryPreferences = JSON.parse(fs.readFileSync(__dirname + '/src/data/factory.json', 'utf8'));
+	this.factory = {
+		'preferences' : JSON.parse(fs.readFileSync(__dirname + '/src/data/factory.json', 'utf8'))
+	}
 	
 	// We'll only use one user for now.
-	this.user = new User('Oryoki');
+	this.user = new User('Oryoki', this.factory);
 
 	// Allow for renderer to use preferences
 	ipcMain.on('get-preference', function(event, name) {
@@ -20,12 +22,12 @@ UserManager.prototype.getPreferenceByName = function(name) {
 		return this.user.preferences[name];
 	}
 	else {
-		return this.factoryPreferences[name];
+		return this.factory.preferences[name];
 	}
 }
 
 UserManager.prototype.resetUserPreferencesToFactory = function() {
-	fs.writeFile(this.user.confPath + 'preferences.json', JSON.stringify(this.factoryPreferences, null, 4), function(err) {
+	fs.writeFile(this.user.confPath + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), function(err) {
 		// @if NODE_ENV='development'
 		if(err) c.log(err);
 		// @endif
