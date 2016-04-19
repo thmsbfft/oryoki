@@ -928,6 +928,7 @@ Browser.prototype.attachEvents = function() {
 
 	ipcRenderer.on('load', this.load.bind(this));
 	ipcRenderer.on('reload', this.reload.bind(this));
+	ipcRenderer.on('reloadIgnoringCache', this.reloadIgnoringCache.bind(this));
 
 	ipcRenderer.on('toggleDevTools', this.toggleDevTools.bind(this));
 
@@ -1043,7 +1044,11 @@ Browser.prototype.load = function(e, url) {
 }
 
 Browser.prototype.reload = function() {
-	this.view.reload();
+	this.view.webview.reload();
+}
+
+Browser.prototype.reloadIgnoringCache = function() {
+	this.view.webview.reloadIgnoringCache();
 }
 
 Browser.prototype.toggleDevTools = function() {

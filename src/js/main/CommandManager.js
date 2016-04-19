@@ -218,8 +218,7 @@ CommandManager.prototype.createMenus = function() {
 					click: function() {
 						if(Oryoki) {
 							if(Oryoki.focusedWindow) {
-								Oryoki.clearCaches();
-								Oryoki.focusedWindow.reload();
+								Oryoki.focusedWindow.reloadIgnoringCache();
 							}
 						}
 					}

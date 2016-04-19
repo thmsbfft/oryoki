@@ -233,8 +233,7 @@ CommandManager.prototype.createMenus = function() {
 					click: function() {
 						if(Oryoki) {
 							if(Oryoki.focusedWindow) {
-								Oryoki.clearCaches();
-								Oryoki.focusedWindow.reload();
+								Oryoki.focusedWindow.reloadIgnoringCache();
 							}
 						}
 					}
@@ -1064,6 +1063,12 @@ Window.prototype.toggleOmnibox = function() {
 Window.prototype.reload = function() {
 
 	this.browser.webContents.send('reload');
+}
+
+Window.prototype.reloadIgnoringCache = function() {
+
+	this.browser.webContents.send('reloadIgnoringCache');
+
 }
 
 Window.prototype.load = function(url) {

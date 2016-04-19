@@ -245,6 +245,12 @@ Window.prototype.reload = function() {
 	this.browser.webContents.send('reload');
 }
 
+Window.prototype.reloadIgnoringCache = function() {
+
+	this.browser.webContents.send('reloadIgnoringCache');
+
+}
+
 Window.prototype.load = function(url) {
 
 	this.browser.webContents.send('display-notification', {
