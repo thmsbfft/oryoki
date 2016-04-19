@@ -147,12 +147,20 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 		}
 
 		// Save frame to tmp folder
-		fs.writeFile(app.getPath('downloads') + '/' + this.frameCount + '.bmp', tempBuffer, function(err) {
+		fs.writeFile(UserManager.user.confPath + 'tmp/recording/' + this.frameCount + '.bmp', tempBuffer, function(err) {
 			if(err)
 				throw err;
 			this.frameCount++;
 			c.log('Frame: ', this.frameCount);
 		}.bind(this));
+
+
+		// fs.writeFile(app.getPath('downloads') + '/' + this.frameCount + '.bmp', tempBuffer, function(err) {
+		// 	if(err)
+		// 		throw err;
+		// 	this.frameCount++;
+		// 	c.log('Frame: ', this.frameCount);
+		// }.bind(this));
 
 	}
 

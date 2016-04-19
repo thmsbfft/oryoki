@@ -426,19 +426,8 @@ function User(name, factory) {
 	this.bookmarks = undefined;
 	this.history = undefined;
 
-	// Check if Oryoki has data
-	fs.accessSync(this.confPath, fs.F_OK, (err) => {
-		if(err) {
-			c.log('No access!');
-			fs.mkdir(this.confPath, 0777, (err) => {
-				if (err.code == 'EEXIST') cb(null);
-				else c.log(err);
-			});
-		}
-	});
-
 	this.getPreferences();
-	// this.watchFile('preferences.json', this.getPreferences.bind(this));
+	this.watchFile('preferences.json', this.getPreferences.bind(this));
 
 }
 
@@ -456,20 +445,16 @@ User.prototype.watchFile = function(fileName, callback) {
 
 User.prototype.getConfFile = function(fileName, callback) {
 
-	c.log('Getting file ' + path.resolve(this.confPath, fileName));
-
-	// Check if conf file exists
-	// If it doesn't, then callback to create default file
-
 	try {
 
+		// Check if conf file exists
 		fs.statSync(path.resolve(this.confPath, fileName));	
 
 	}
 	catch(err) {
 
 		if(err.code === 'ENOENT') {
-			// Create file
+			// If not, create file
 			callback();
 			return;
 		}
@@ -488,7 +473,6 @@ User.prototype.getConfFile = function(fileName, callback) {
 
 User.prototype.createPreferences = function() {
 
-	c.log('Creating preferences...');
 	fs.writeFileSync(this.confPath + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), 'utf8', (err) => {
 		if (err) throw err;
 	});
@@ -823,12 +807,20 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 		}
 
 		// Save frame to tmp folder
-		fs.writeFile(app.getPath('downloads') + '/' + this.frameCount + '.bmp', tempBuffer, function(err) {
+		fs.writeFile(UserManager.user.confPath + 'tmp/recording/' + this.frameCount + '.bmp', tempBuffer, function(err) {
 			if(err)
 				throw err;
 			this.frameCount++;
 			c.log('Frame: ', this.frameCount);
 		}.bind(this));
+
+
+		// fs.writeFile(app.getPath('downloads') + '/' + this.frameCount + '.bmp', tempBuffer, function(err) {
+		// 	if(err)
+		// 		throw err;
+		// 	this.frameCount++;
+		// 	c.log('Frame: ', this.frameCount);
+		// }.bind(this));
 
 	}
 
