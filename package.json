@@ -9,10 +9,9 @@
     "build": "gulp build && electron-packager ./ Oryoki --overwrite --out=build --app-version=0.0.1 --platform=darwin --arch=x64 --version=0.36.0 --icon=icon.icns --ignore=\"electron-packager|package.json|(src/sass)|(node_modules/gulp-[a-z]+)|build|gulpfile|stdout.log\""
   },
   "devDependencies": {
-    "bmp-js": "0.0.1",
     "electron-localshortcut": "^0.6.0",
-    "electron-packager": "^5.2.0",
-    "electron-prebuilt": "^0.36.0",
+    "electron-packager": "^7.0.0",
+    "electron-prebuilt": "^0.37.6",
     "fluent-ffmpeg": "^2.0.1",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
