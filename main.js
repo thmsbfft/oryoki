@@ -581,10 +581,8 @@ Camera.prototype.takeScreenshot = function() {
 
 	this.browser.capturePage(function(image) {
 
-		c.log(image);
-
-		var day = pad(new Date().getDay());
-		var month = pad(new Date().getMonth());
+		var day = pad(new Date().getDate());
+		var month = pad(new Date().getMonth() + 1);
 		var year = new Date().getFullYear();
 		var date = day + '-' + month + '-' + year;
 
@@ -772,6 +770,18 @@ Camera.prototype.stopRecording = function() {
 	// 	}.bind(this))
 	// 	.save(app.getPath('downloads') + '/' + 'oryoki-recording.mov');
 
+	var day = pad(new Date().getDate());
+	var month = pad(new Date().getMonth() + 1);
+	var year = new Date().getFullYear();
+	var date = day + '-' + month + '-' + year;
+
+	var hrs = pad(new Date().getHours());
+	var min = pad(new Date().getMinutes());
+	var sec = pad(new Date().getSeconds());
+	var time = hrs + '-' + min + '-' + sec;
+
+	var name = 'oryoki-recording-' + date + '-' + time;
+
 	encoding = ffmpeg()
 		.on('start', function() {
 			c.log('Begin encoding');
@@ -787,7 +797,7 @@ Camera.prototype.stopRecording = function() {
 		.withInputFPS(60)
 		.withOutputFps(30)
 		.videoCodec('prores_ks')
-		.save(app.getPath('downloads') + '/' + 'oryoki-recording.mov');
+		.save(app.getPath('downloads') + '/' + name + '.mov');
 
 }
 
