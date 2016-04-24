@@ -204,13 +204,42 @@ Camera.prototype.stopRecording = function() {
 	}
 
 	// Encode frames using ffmpeg
-	// ffmpeg()
-	// 	.withFpsInput(60)
-	// 	.
+	// encoding = ffmpeg()
+	// 	.input(this.recordingPath + '/' + '%05d.bmp')
+	// 	.withInputFPS(60)
+	// 	.addOptions(['-qp 0', '-preset ultrafast', '-profile:v high444',  '-pix_fmt yuvj420p'])
+	// 	.on('start', function() {
+	// 		c.log('Begin encoding...');
+	// 	}.bind(this))
+	// 	.videoCodec('libx264')
+	// 	.withOutputFps(30)
+	// 	// .withVideoBitrate('18000k')
+	// 	.format('mov')
+	// 	.on('error', function() {
+	// 		c.log('Error encoding video')
+	// 	}.bind(this))
+	// 	.on('end', function() {
+	// 		c.log('Finished encoding!');
+	// 		this.cleanTmpRecording();
+	// 	}.bind(this))
+	// 	.save(app.getPath('downloads') + '/' + 'oryoki-recording.mov');
 
-	// Save video to downloads
-
-	// this.cleanTmpRecording();
+	encoding = ffmpeg()
+		.on('start', function() {
+			c.log('Begin encoding');
+		}.bind(this))
+		.on('end', function() {
+			c.log('Finished encoding');
+			this.cleanTmpRecording();
+		}.bind(this))
+		.on('error', function(err) {
+			c.log('Error encoding: ' + err.message);
+		}.bind(this))
+		.input(this.recordingPath + '/' + '%05d.bmp')
+		.withInputFPS(60)
+		.withOutputFps(30)
+		.videoCodec('prores_ks')
+		.save(app.getPath('downloads') + '/' + 'oryoki-recording.mov');
 
 }
 
