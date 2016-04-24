@@ -722,13 +722,18 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 			}
 		}
 
+		// Left pad frame number for ffmpeg
+		var frameNumber = '00000'.substring(this.frameCount.toString().length) + this.frameCount.toString();
 		// Save frame to tmp folder
-		fs.writeFile(this.recordingPath + '/' + this.frameCount + '.bmp', tempBuffer, function(err) {
-			if(err)
-				throw err;
-			this.frameCount++;
-			c.log('Frame: ', this.frameCount);
-		}.bind(this));
+		fs.writeFileSync(this.recordingPath + '/' + frameNumber + '.bmp', tempBuffer);
+		this.frameCount++;
+
+		// fs.writeFile(this.recordingPath + '/' + frameNumber + '.bmp', tempBuffer, function(err) {
+		// 	if(err)
+		// 		throw err;
+		// 	this.frameCount++;
+		// 	c.log('Frame: ', this.frameCount);
+		// }.bind(this));
 
 	}
 
@@ -747,6 +752,10 @@ Camera.prototype.stopRecording = function() {
 	}
 
 	// Encode frames using ffmpeg
+	// ffmpeg()
+	// 	.withFpsInput(60)
+	// 	.
+
 	// Save video to downloads
 
 	// this.cleanTmpRecording();
