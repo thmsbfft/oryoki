@@ -9,12 +9,12 @@ var gulp        = require('gulp'),
 var main = [
 	'src/js/main/utils.js',
 	'src/js/main/console.js',
-	'src/js/main/CommandManager.js',
 	'src/js/main/User.js',
 	'src/js/main/UserManager.js',
-	'src/js/main/Oryoki.js',
+	'src/js/main/CommandManager.js',
 	'src/js/main/Camera.js',
 	'src/js/main/Window.js',
+	'src/js/main/Oryoki.js',
 	'src/js/main/main.js'
 ];
 

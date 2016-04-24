@@ -15,6 +15,139 @@ c.log(time);
 c.log('--------');
 c.log('');
 
+function User(name, factory) {
+
+	this.name = name;
+	this.factory = factory;
+
+	// Storing in ~/Library/Application Support/Oryoki | Electron
+
+	this.confPath = app.getPath('appData') + '/' + app.getName();
+	// Check
+	try {
+		fs.statSync(this.confPath);
+	}
+	catch(err) {
+		if(err.code === 'ENOENT') {
+			c.log('Creating App Data directory')
+			fs.mkdirSync(this.confPath);
+		}
+		else {
+			throw err;
+		}
+	}
+
+	this.tmpPath = this.confPath + '/' + 'Temporary';
+	// Check
+	try {
+		fs.statSync(this.tmpPath);
+	}
+	catch(err) {
+		if(err.code === 'ENOENT') {
+			c.log('Creating tmp directory');
+			fs.mkdirSync(this.tmpPath);
+		}
+		else {
+			throw err;
+		}
+	}
+
+	this.preferences = undefined;
+	this.bookmarks = undefined;
+	this.history = undefined;
+
+	c.log('SALUT');
+
+	this.getPreferences();
+	this.watchFile('preferences.json', this.getPreferences.bind(this));
+}
+
+User.prototype.getPreferences = function() {
+
+	this.preferences = this.getConfFile('preferences.json', this.createPreferences.bind(this));
+
+}
+
+User.prototype.watchFile = function(fileName, callback) {
+
+	fs.watch(path.resolve(this.confPath, fileName), callback);
+
+}
+
+User.prototype.getConfFile = function(fileName, callback) {
+
+	c.log('Getting conf file...');
+
+	try {
+
+		// Check if conf file exists
+		fs.statSync(this.confPath + '/' + fileName);	
+
+	}
+	catch(err) {
+
+		if(err.code === 'ENOENT') {
+			// If not, create file
+			callback();
+		}
+		else {
+			throw err;
+		}
+	}
+	finally {
+
+		return JSON.parse(fs.readFileSync(this.confPath + '/' + fileName, 'utf8'));
+
+	}
+
+}
+
+User.prototype.createPreferences = function() {
+
+	c.log(this.confPath + '/' + 'preferences.json');
+
+	fs.writeFileSync(this.confPath + '/' + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), 'utf8', (err) => {
+		if (err) throw err;
+	});
+
+}
+function UserManager() {
+	this.factory = {
+		'preferences' : JSON.parse(fs.readFileSync(__dirname + '/src/data/factory.json', 'utf8'))
+	}
+	
+	// We'll only use one user for now.
+	this.user = new User('Oryoki', this.factory);
+
+	// Allow for renderer to use preferences
+	ipcMain.on('get-preference', function(event, name) {
+	  console.log(name);
+	  event.returnValue = this.getPreferenceByName(name);
+	}.bind(this));
+}
+
+UserManager.prototype.getPreferenceByName = function(name) {
+	/* 
+	Checks default user for preference
+	If not defined, falls back to factory setting.
+	*/
+	if(this.user.preferences[name] !== undefined) {
+		return this.user.preferences[name];
+	}
+	else {
+		return this.factory.preferences[name];
+	}
+}
+
+UserManager.prototype.resetUserPreferencesToFactory = function() {
+	fs.writeFile(this.user.confPath + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), function(err) {
+		if(err) c.log(err);
+	});
+}
+
+UserManager.prototype.openPreferencesFile = function() {
+	shell.openItem(this.user.confPath + "preferences.json");
+}
 function CommandManager() {
 	this.register = {};
 	this.template = undefined;
@@ -413,250 +546,6 @@ CommandManager.prototype.getMenuByLabel = function(menuLabel) {
 CommandManager.prototype.getSubMenuByLabel = function(menu, subMenuLabel) {
 	return menu[0].submenu.items.filter(item => item.label == subMenuLabel);
 }
-function User(name, factory) {
-
-	this.name = name;
-	this.factory = factory;
-
-	// Storing in ~/Library/Application Support
-	this.confPath = app.getPath('appData') + '/' + app.getName() + '/';
-
-	this.preferences = undefined;
-	this.bookmarks = undefined;
-	this.history = undefined;
-
-	this.getPreferences();
-	this.watchFile('preferences.json', this.getPreferences.bind(this));
-
-}
-
-User.prototype.getPreferences = function() {
-
-	this.preferences = this.getConfFile('preferences.json', this.createPreferences.bind(this));
-
-}
-
-User.prototype.watchFile = function(fileName, callback) {
-
-	fs.watch(path.resolve(this.confPath, fileName), callback);
-
-}
-
-User.prototype.getConfFile = function(fileName, callback) {
-
-	try {
-
-		// Check if conf file exists
-		fs.statSync(path.resolve(this.confPath, fileName));	
-
-	}
-	catch(err) {
-
-		if(err.code === 'ENOENT') {
-			// If not, create file
-			callback();
-			return;
-		}
-		else {
-			throw err;
-		}
-
-	}
-	finally {
-
-		return JSON.parse(fs.readFileSync(this.confPath + fileName, 'utf8'));
-
-	}
-
-}
-
-User.prototype.createPreferences = function() {
-
-	fs.writeFileSync(this.confPath + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), 'utf8', (err) => {
-		if (err) throw err;
-	});
-
-}
-function UserManager() {
-	this.factory = {
-		'preferences' : JSON.parse(fs.readFileSync(__dirname + '/src/data/factory.json', 'utf8'))
-	}
-	
-	// We'll only use one user for now.
-	this.user = new User('Oryoki', this.factory);
-
-	// Allow for renderer to use preferences
-	ipcMain.on('get-preference', function(event, name) {
-	  console.log(name);
-	  event.returnValue = this.getPreferenceByName(name);
-	}.bind(this));
-}
-
-UserManager.prototype.getPreferenceByName = function(name) {
-	/* 
-	Checks default user for preference
-	If not defined, falls back to factory setting.
-	*/
-	if(this.user.preferences[name] !== undefined) {
-		return this.user.preferences[name];
-	}
-	else {
-		return this.factory.preferences[name];
-	}
-}
-
-UserManager.prototype.resetUserPreferencesToFactory = function() {
-	fs.writeFile(this.user.confPath + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), function(err) {
-		if(err) c.log(err);
-	});
-}
-
-UserManager.prototype.openPreferencesFile = function() {
-	shell.openItem(this.user.confPath + "preferences.json");
-}
-function Oryoki() {
-
-	app.on('window-all-closed', function() {
-	  if (process.platform != 'darwin') {
-	    app.quit();
-	  }
-	});
-
-	c.log(app.getName());
-	c.log(app.getVersion());
-
-	this.versions = {
-		'oryoki' : '0.0.2',
-		'chromeVersion' : process.versions.chrome,
-		'electronVersion' : process.versions.electron
-	}
-
-	this.windows = [];
-	this.focusedWindow = null;
-	this.windowsIndex = -1; // Index to make sure we assign unique Ids
-	this.windowCount = 0; // Counts the number of windows currently open
-
-	this.attachEvents();
-	if(UserManager.getPreferenceByName("clear_cache_on_launch")) this.clearCaches();
-	if(UserManager.getPreferenceByName("override_download_path")) app.setPath('downloads', UserManager.getPreferenceByName("download_path"));
-	this.createWindow();
-}
-
-Oryoki.prototype.attachEvents = function() {
-	ipcMain.on('newWindow', this.createWindow.bind(this));
-	ipcMain.on('minimizeWindow', this.minimizeWindow.bind(this));
-	ipcMain.on('closeWindow', this.closeWindow.bind(this));
-	ipcMain.on('fullscreenWindow', this.toggleFullScreen.bind(this));
-}
-
-Oryoki.prototype.createWindow = function(e, url) {
-	if(url) {
-		// _target = blank
-		var url = url[0];
-	}
-	else if(UserManager.getPreferenceByName("use_homepage")) {
-		// homepage
-		var url = UserManager.getPreferenceByName("homepage_url");
-	}
-
-	c.log('Creating new window...');
-
-	this.windowsIndex++;
-	this.windowCount++;
-
-	c.log('Currently ', this.windowsCount, 'windows open');
-
-	if(this.windowCount == 1) {
-		this.windows[this.windowsIndex] = new Window({
-			'id' : this.windowsIndex,
-			'url' : url ? url : null,
-			'onFocus' : this.onFocusChange.bind(this),
-			'onClose' : this.onCloseWindow.bind(this)
-		});
-		this.windows[this.windowsIndex].browser.center();
-	}
-	else {
-		this.windows[this.windowsIndex] = new Window({
-			'id' : this.windowsIndex,
-			'url' : url ? url : null,
-			'onFocus' : this.onFocusChange.bind(this),
-			'onClose' : this.onCloseWindow.bind(this),
-			'x' : this.focusedWindow.browser.getPosition()[0]+50,
-			'y' : this.focusedWindow.browser.getPosition()[1]+50
-		});
-	}
-}
-
-Oryoki.prototype.onFocusChange = function(w) {
-	this.focusedWindow = w;
-	c.log('New focus: ', this.focusedWindow.id);
-}
-
-Oryoki.prototype.closeWindow = function() {
-	// This function to be triggered when click on emulated traffic lights.
-	this.focusedWindow.close();
-	this.onCloseWindow();
-}
-
-Oryoki.prototype.onCloseWindow = function() {
-	if(this.windowCount > 0) {
-		c.log('Closing window #'+ this.focusedWindow.id);
-		// this.focusedWindow.close();
-		this.windowCount--;
-		var index = this.windows.indexOf(this.focusedWindow);
-		if (index > -1) {
-			this.windows.splice(index, 1);
-		}
-	}
-	if(this.windowCount == 0) {
-		this.focusedWindow = null;
-	}
-}
-
-Oryoki.prototype.minimizeWindow = function() {
-	if(this.windowCount > 0) {
-		this.focusedWindow.browser.minimize();
-	}
-}
-
-Oryoki.prototype.toggleFullScreen = function() {
-	if(this.windowCount > 0) {
-		this.focusedWindow.browser.setFullScreen(!this.focusedWindow.browser.isFullScreen());
-	}
-	CommandManager.toggleChecked('View', 'Fullscreen');
-}
-
-Oryoki.prototype.clearCaches = function() {
-
-	var caches = [
-		'Cache',
-		'GPUCache'
-	];
-
-	caches.forEach(function(element) {
-
-		var folderPath = UserManager.user.confPath + element;
-		folderPath = folderPath.replace(' ', '\\ ');
-		c.log('Will delete: ' + folderPath);
-		exec('cd ' + folderPath + ' && rm *');
-
-	});
-
-}
-
-Oryoki.prototype.clearLocalStorage = function() {
-
-	var folderPath = UserManager.user.confPath.replace(' ', '\\ ') + 'Local\\ Storage';
-	c.log('Will delete: ' + folderPath);
-	exec('cd ' + folderPath + ' && rm *');
-
-}
-
-Oryoki.prototype.goToDownloads = function() {
-
-	shell.openItem(app.getPath('downloads'));
-
-}
 function Camera(parameters) {
 
 	this.id = parameters.id;
@@ -667,6 +556,20 @@ function Camera(parameters) {
 	this.onRecordingEndCallback = parameters.onRecordingEnd;
 
 	this.isRecording = false;
+	this.recordingPath = UserManager.user.tmpPath + '/' + 'Recording';
+
+	// Create tmp recording path if not there yet
+	try {
+		fs.statSync(this.recordingPath);
+	}
+	catch(err) {
+		if(err.code === 'ENOENT') {
+			fs.mkdirSync(this.recordingPath);
+		}
+		else {
+			throw err;
+		}
+	}
 
 	this.videoStream = undefined;
 	this.frameCount = 0;
@@ -740,8 +643,6 @@ Camera.prototype.startRecording = function() {
 Camera.prototype.recordRaw = function(frameBuffer) {
 
 	if(this.isRecording) {
-
-		stream = fs.createWriteStream(app.getPath('downloads') + '/' + this.frameCount + '.bmp');
 		
 		/*
 		Encoder for raw pixel data adapted from https://github.com/shaozilee/bmp-js/blob/master/lib/encoder.js
@@ -806,7 +707,7 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 		}
 
 		// Save frame to tmp folder
-		fs.writeFile(UserManager.user.confPath + 'tmp/recording/' + this.frameCount + '.bmp', tempBuffer, function(err) {
+		fs.writeFile(this.recordingPath + '/' + this.frameCount + '.bmp', tempBuffer, function(err) {
 			if(err)
 				throw err;
 			this.frameCount++;
@@ -1112,6 +1013,149 @@ Window.prototype.lockDimensions = function() {
 Window.prototype.unlockDimensions = function() {
 
 	this.browser.setResizable(true);
+
+}
+function Oryoki() {
+
+	app.on('window-all-closed', function() {
+	  if (process.platform != 'darwin') {
+	    app.quit();
+	  }
+	});
+
+	c.log(app.getName());
+	c.log(app.getVersion());
+
+	this.versions = {
+		'oryoki' : '0.0.2',
+		'chromeVersion' : process.versions.chrome,
+		'electronVersion' : process.versions.electron
+	}
+
+	this.windows = [];
+	this.focusedWindow = null;
+	this.windowsIndex = -1; // Index to make sure we assign unique Ids
+	this.windowCount = 0; // Counts the number of windows currently open
+
+	this.attachEvents();
+	if(UserManager.getPreferenceByName("clear_cache_on_launch")) this.clearCaches();
+	if(UserManager.getPreferenceByName("override_download_path")) app.setPath('downloads', UserManager.getPreferenceByName("download_path"));
+	this.createWindow();
+}
+
+Oryoki.prototype.attachEvents = function() {
+	ipcMain.on('newWindow', this.createWindow.bind(this));
+	ipcMain.on('minimizeWindow', this.minimizeWindow.bind(this));
+	ipcMain.on('closeWindow', this.closeWindow.bind(this));
+	ipcMain.on('fullscreenWindow', this.toggleFullScreen.bind(this));
+}
+
+Oryoki.prototype.createWindow = function(e, url) {
+	if(url) {
+		// _target = blank
+		var url = url[0];
+	}
+	else if(UserManager.getPreferenceByName("use_homepage")) {
+		// homepage
+		var url = UserManager.getPreferenceByName("homepage_url");
+	}
+
+	c.log('Creating new window...');
+
+	this.windowsIndex++;
+	this.windowCount++;
+
+	c.log('Currently ', this.windowsCount, 'windows open');
+
+	if(this.windowCount == 1) {
+		this.windows[this.windowsIndex] = new Window({
+			'id' : this.windowsIndex,
+			'url' : url ? url : null,
+			'onFocus' : this.onFocusChange.bind(this),
+			'onClose' : this.onCloseWindow.bind(this)
+		});
+		this.windows[this.windowsIndex].browser.center();
+	}
+	else {
+		this.windows[this.windowsIndex] = new Window({
+			'id' : this.windowsIndex,
+			'url' : url ? url : null,
+			'onFocus' : this.onFocusChange.bind(this),
+			'onClose' : this.onCloseWindow.bind(this),
+			'x' : this.focusedWindow.browser.getPosition()[0]+50,
+			'y' : this.focusedWindow.browser.getPosition()[1]+50
+		});
+	}
+}
+
+Oryoki.prototype.onFocusChange = function(w) {
+	this.focusedWindow = w;
+	c.log('New focus: ', this.focusedWindow.id);
+}
+
+Oryoki.prototype.closeWindow = function() {
+	// This function to be triggered when click on emulated traffic lights.
+	this.focusedWindow.close();
+	this.onCloseWindow();
+}
+
+Oryoki.prototype.onCloseWindow = function() {
+	if(this.windowCount > 0) {
+		c.log('Closing window #'+ this.focusedWindow.id);
+		// this.focusedWindow.close();
+		this.windowCount--;
+		var index = this.windows.indexOf(this.focusedWindow);
+		if (index > -1) {
+			this.windows.splice(index, 1);
+		}
+	}
+	if(this.windowCount == 0) {
+		this.focusedWindow = null;
+	}
+}
+
+Oryoki.prototype.minimizeWindow = function() {
+	if(this.windowCount > 0) {
+		this.focusedWindow.browser.minimize();
+	}
+}
+
+Oryoki.prototype.toggleFullScreen = function() {
+	if(this.windowCount > 0) {
+		this.focusedWindow.browser.setFullScreen(!this.focusedWindow.browser.isFullScreen());
+	}
+	CommandManager.toggleChecked('View', 'Fullscreen');
+}
+
+Oryoki.prototype.clearCaches = function() {
+
+	var caches = [
+		'Cache',
+		'GPUCache'
+	];
+
+	caches.forEach(function(element) {
+
+		var folderPath = UserManager.user.confPath + element;
+		folderPath = folderPath.replace(' ', '\\ ');
+		c.log('Will delete: ' + folderPath);
+		exec('cd ' + folderPath + ' && rm *');
+
+	});
+
+}
+
+Oryoki.prototype.clearLocalStorage = function() {
+
+	var folderPath = UserManager.user.confPath.replace(' ', '\\ ') + 'Local\\ Storage';
+	c.log('Will delete: ' + folderPath);
+	exec('cd ' + folderPath + ' && rm *');
+
+}
+
+Oryoki.prototype.goToDownloads = function() {
+
+	shell.openItem(app.getPath('downloads'));
 
 }
 'use strict';

@@ -8,6 +8,20 @@ function Camera(parameters) {
 	this.onRecordingEndCallback = parameters.onRecordingEnd;
 
 	this.isRecording = false;
+	this.recordingPath = UserManager.user.tmpPath + '/' + 'Recording';
+
+	// Create tmp recording path if not there yet
+	try {
+		fs.statSync(this.recordingPath);
+	}
+	catch(err) {
+		if(err.code === 'ENOENT') {
+			fs.mkdirSync(this.recordingPath);
+		}
+		else {
+			throw err;
+		}
+	}
 
 	this.videoStream = undefined;
 	this.frameCount = 0;
@@ -81,8 +95,6 @@ Camera.prototype.startRecording = function() {
 Camera.prototype.recordRaw = function(frameBuffer) {
 
 	if(this.isRecording) {
-
-		stream = fs.createWriteStream(app.getPath('downloads') + '/' + this.frameCount + '.bmp');
 		
 		/*
 		Encoder for raw pixel data adapted from https://github.com/shaozilee/bmp-js/blob/master/lib/encoder.js
@@ -147,7 +159,7 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 		}
 
 		// Save frame to tmp folder
-		fs.writeFile(UserManager.user.confPath + 'tmp/recording/' + this.frameCount + '.bmp', tempBuffer, function(err) {
+		fs.writeFile(this.recordingPath + '/' + this.frameCount + '.bmp', tempBuffer, function(err) {
 			if(err)
 				throw err;
 			this.frameCount++;
