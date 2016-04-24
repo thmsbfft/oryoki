@@ -657,7 +657,7 @@ View.prototype.onRecordingBegin = function() {
 View.prototype.onRecordingEnd = function() {
 
 	console.log('Doing something now!');
-	this.className = '';
+	this.el.className = '';
 
 }
 

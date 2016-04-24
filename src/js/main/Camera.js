@@ -13,6 +13,7 @@ function Camera(parameters) {
 	// Create tmp recording path if not there yet
 	try {
 		fs.statSync(this.recordingPath);
+		this.cleanTmpRecording();
 	}
 	catch(err) {
 		if(err.code === 'ENOENT') {
