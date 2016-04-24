@@ -784,10 +784,16 @@ Camera.prototype.stopRecording = function() {
 
 	encoding = ffmpeg()
 		.on('start', function() {
-			c.log('Begin encoding');
+			this.browser.webContents.send('display-notification', {
+				'body' : 'Encoding...',
+				'lifespan' : 3000,
+			});
 		}.bind(this))
 		.on('end', function() {
-			c.log('Finished encoding');
+			this.browser.webContents.send('display-notification', {
+				'body' : 'Finished encoding',
+				'lifespan' : 3000,
+			});
 			this.cleanTmpRecording();
 		}.bind(this))
 		.on('error', function(err) {
