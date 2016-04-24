@@ -78,6 +78,21 @@ Camera.prototype.startRecording = function() {
 
 	if(!this.isRecording) {
 		c.log('Start recording');
+
+		// Check tmp folder and clean it
+		try {
+			fs.statSync(this.recordingPath);
+			this.cleanTmpRecording();
+		}
+		catch(err) {
+			if(err.code === 'ENOENT') {
+				fs.mkdirSync(this.recordingPath);
+			}
+			else {
+				throw err;
+			}
+		}
+
 		this.browser.webContents.send('recordingBegin');
 		this.isRecording = true;
 		this.onRecordingBeginCallback();
@@ -166,14 +181,6 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 			c.log('Frame: ', this.frameCount);
 		}.bind(this));
 
-
-		// fs.writeFile(app.getPath('downloads') + '/' + this.frameCount + '.bmp', tempBuffer, function(err) {
-		// 	if(err)
-		// 		throw err;
-		// 	this.frameCount++;
-		// 	c.log('Frame: ', this.frameCount);
-		// }.bind(this));
-
 	}
 
 }
@@ -192,6 +199,23 @@ Camera.prototype.stopRecording = function() {
 
 	// Encode frames using ffmpeg
 	// Save video to downloads
-	// Delete frames from tmp folder
+
+	// this.cleanTmpRecording();
+
+}
+
+Camera.prototype.cleanTmpRecording = function() {
+
+	try {
+		var frames = fs.readdirSync(this.recordingPath);
+	}
+	catch(err) { return; }
+
+	if(frames.length > 0) {
+		for(var i = 0; i < frames.length; i++) {
+			var framePath = this.recordingPath + '/' + frames[i];
+			fs.unlinkSync(framePath);
+		}
+	}
 
 }
