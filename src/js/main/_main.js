@@ -723,7 +723,7 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 		// Left pad frame number for ffmpeg
 		var frameNumber = '00000'.substring(this.frameCount.toString().length) + this.frameCount.toString();
 		// Save frame to tmp folder
-		fs.writeFileSync(this.recordingPath + '/' + frameNumber + '.bmp', tempBuffer);
+		fs.writeFile(this.recordingPath + '/' + frameNumber + '.bmp', tempBuffer);
 		this.frameCount++;
 
 		// fs.writeFile(this.recordingPath + '/' + frameNumber + '.bmp', tempBuffer, function(err) {
