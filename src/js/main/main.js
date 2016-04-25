@@ -13,6 +13,7 @@ var fs = require('fs');
 var shell = require('electron').shell;
 var exec = require('child_process').exec;
 var ffmpeg = require('fluent-ffmpeg');
+var gm = require('gm');
 
 app.on('ready', function() {
 

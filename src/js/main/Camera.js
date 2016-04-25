@@ -201,27 +201,6 @@ Camera.prototype.stopRecording = function() {
 		this.browser.webContents.send('unmute-notifications');
 	}
 
-	// Encode frames using ffmpeg
-	// encoding = ffmpeg()
-	// 	.input(this.recordingPath + '/' + '%05d.bmp')
-	// 	.withInputFPS(60)
-	// 	.addOptions(['-qp 0', '-preset ultrafast', '-profile:v high444',  '-pix_fmt yuvj420p'])
-	// 	.on('start', function() {
-	// 		c.log('Begin encoding...');
-	// 	}.bind(this))
-	// 	.videoCodec('libx264')
-	// 	.withOutputFps(30)
-	// 	// .withVideoBitrate('18000k')
-	// 	.format('mov')
-	// 	.on('error', function() {
-	// 		c.log('Error encoding video')
-	// 	}.bind(this))
-	// 	.on('end', function() {
-	// 		c.log('Finished encoding!');
-	// 		this.cleanTmpRecording();
-	// 	}.bind(this))
-	// 	.save(app.getPath('downloads') + '/' + 'oryoki-recording.mov');
-
 	var day = pad(new Date().getDate());
 	var month = pad(new Date().getMonth() + 1);
 	var year = new Date().getFullYear();
@@ -234,28 +213,71 @@ Camera.prototype.stopRecording = function() {
 
 	var name = 'oryoki-recording-' + date + '-' + time;
 
-	encoding = ffmpeg()
-		.on('start', function() {
-			this.browser.webContents.send('display-notification', {
-				'body' : 'Encoding...',
-				'lifespan' : 3000,
-			});
-		}.bind(this))
-		.on('end', function() {
-			this.browser.webContents.send('display-notification', {
-				'body' : 'Finished encoding',
-				'lifespan' : 3000,
-			});
-			this.cleanTmpRecording();
-		}.bind(this))
-		.on('error', function(err) {
-			c.log('Error encoding: ' + err.message);
-		}.bind(this))
-		.input(this.recordingPath + '/' + '%05d.bmp')
-		.withInputFPS(60)
-		.withOutputFps(30)
-		.videoCodec('prores_ks')
-		.save(app.getPath('downloads') + '/' + name + '.mov');
+	// Start encoding
+	switch(UserManager.getPreferenceByName("video_recording_quality")) {
+
+		case "lossless":
+
+			encoding = ffmpeg()
+				.on('start', function() {
+					this.browser.webContents.send('display-notification', {
+						'body' : 'Encoding lossless video...',
+						'lifespan' : 3000,
+					});
+				}.bind(this))
+				.on('end', function() {
+					this.browser.webContents.send('display-notification', {
+						'body' : 'Finished encoding',
+						'lifespan' : 3000,
+					});
+					this.cleanTmpRecording();
+				}.bind(this))
+				.on('error', function(err) {
+					c.log('Error encoding: ' + err.message);
+				}.bind(this))
+				.input(this.recordingPath + '/' + '%05d.bmp')
+				.withInputFps(60)
+				.withOutputFps(30)
+				.videoCodec('prores_ks')
+				.save(app.getPath('downloads') + '/' + name + '.mov');
+
+			break;
+		
+		case "lossy":
+
+			encoding = ffmpeg()
+				.on('start', function() {
+					this.browser.webContents.send('display-notification', {
+						'body' : 'Encoding lossy video...',
+						'lifespan' : 3000,
+					});
+				}.bind(this))
+				.on('end', function() {
+					this.browser.webContents.send('display-notification', {
+						'body' : 'Finished encoding',
+						'lifespan' : 3000,
+					});
+					this.cleanTmpRecording();
+				}.bind(this))
+				.on('error', function(err) {
+					c.log('Error encoding: ' + err.message);
+				}.bind(this))
+				.input(this.recordingPath + '/' + '%05d.bmp')
+				.withInputFps(60)
+				.withOutputFps(30)
+				.videoCodec('libx264')
+				.withVideoBitrate('10000k')
+				.addOptions(['-preset ultrafast', '-pix_fmt yuvj420p'])
+				.save(app.getPath('downloads') + '/' + name + '.mp4');
+
+			break;
+
+		case "gif":
+
+			c.log('Encoding a gif...');
+
+
+	}
 
 }
 

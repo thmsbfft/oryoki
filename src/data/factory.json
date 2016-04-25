@@ -10,6 +10,5 @@
 	"download_path" : "",
 	"mute_notifications_while_recording" : true,
 	"display_recording_hint" : true,
-	"recording_format" : "video",
-	"video_quality" : "lossless"
+	"video_recording_quality" : "lossless"
 }
