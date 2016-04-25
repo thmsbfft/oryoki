@@ -9,5 +9,7 @@
 	"override_download_path" : false,
 	"download_path" : "",
 	"mute_notifications_while_recording" : true,
-	"display_recording_hint" : true
+	"display_recording_hint" : true,
+	"recording_format" : "video",
+	"video_quality" : "lossless"
 }

@@ -27,7 +27,7 @@ UserManager.prototype.getPreferenceByName = function(name) {
 }
 
 UserManager.prototype.resetUserPreferencesToFactory = function() {
-	fs.writeFile(this.user.confPath + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), function(err) {
+	fs.writeFile(this.user.confPath + '/' + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), function(err) {
 		// @if NODE_ENV='development'
 		if(err) c.log(err);
 		// @endif
@@ -35,5 +35,5 @@ UserManager.prototype.resetUserPreferencesToFactory = function() {
 }
 
 UserManager.prototype.openPreferencesFile = function() {
-	shell.openItem(this.user.confPath + "preferences.json");
+	shell.openItem(this.user.confPath + '/' + 'preferences.json');
 }

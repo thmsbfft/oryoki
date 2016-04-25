@@ -53,7 +53,7 @@ User.prototype.getPreferences = function() {
 
 User.prototype.watchFile = function(fileName, callback) {
 
-	fs.watch(path.resolve(this.confPath, fileName), callback);
+	fs.watch(this.confPath + '/' + fileName, callback);
 
 }
 
