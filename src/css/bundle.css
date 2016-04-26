@@ -83,7 +83,8 @@ handle {
   height: 22px;
   text-align: center; }
   handle .title {
-    padding-top: 6px;
+    margin-top: 2px;
+    padding: 3px 8px;
     text-align: center;
     font-family: 'Roboto Light', sans-serif;
     font-size: 12px;
@@ -91,7 +92,25 @@ handle {
     -webkit-app-region: drag;
     -webkit-user-select: none;
     user-select: none;
-    cursor: default; }
+    cursor: pointer;
+    background: transparent;
+    border-radius: 20px;
+    transition: background 0.2s; }
+    handle .title::after {
+      width: 9px;
+      height: 9px;
+      position: relative;
+      top: -1px;
+      content: '';
+      background: url(../media/arrow-down.svg);
+      display: inline-block;
+      margin-left: 4px;
+      opacity: 0.2;
+      transition: opacity 0.2s; }
+    handle .title:hover::after {
+      opacity: 1; }
+    handle .title:active {
+      background: rgba(255, 255, 255, 0.1); }
   handle .button {
     position: absolute;
     -webkit-app-region: no-drag;

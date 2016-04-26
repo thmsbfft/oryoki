@@ -35,6 +35,7 @@ Handle.prototype.attachEvents = function() {
 	this.fullscreenBtn.addEventListener('click', function() {
 		ipcRenderer.send('fullscreenWindow');
 	});
+	this.title.addEventListener('click', this.openMenu.bind(this));
 }
 
 Handle.prototype.hide = function() {
@@ -55,4 +56,38 @@ Handle.prototype.changeTitle = function(newTitle) {
 
 Handle.prototype.getTitle = function() {
 	return this.title.innerHTML;
+}
+
+Handle.prototype.openMenu = function(e) {
+	
+	e.preventDefault();
+	console.log('Opening menu');
+	var menu = new Menu();
+	menu.append(
+		new MenuItem(
+			{
+				label: 'Copy URL',
+				click: function() {
+					console.log('Menu item clicked!')
+				}
+			}
+		)
+	);
+	menu.append(
+		new MenuItem(
+			{
+				label: 'Previous',
+				click: function() {
+					console.log('Menu item clicked!')
+				}
+			}
+		)
+	);
+
+	// Weird calc to get menu position right
+	var x = this.el.offsetWidth / 2 - 46;
+	var y = this.el.offsetHeight + 5;
+
+	menu.popup(remote.getCurrentWindow(), x, y);
+
 }

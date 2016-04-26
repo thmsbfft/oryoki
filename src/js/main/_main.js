@@ -722,16 +722,20 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 
 		// Left pad frame number for ffmpeg
 		var frameNumber = '00000'.substring(this.frameCount.toString().length) + this.frameCount.toString();
+		
 		// Save frame to tmp folder
-		fs.writeFile(this.recordingPath + '/' + frameNumber + '.bmp', tempBuffer);
-		this.frameCount++;
+		if(UserManager.getPreferenceByName("mute_notifications_while_recording") == "async") {
 
-		// fs.writeFile(this.recordingPath + '/' + frameNumber + '.bmp', tempBuffer, function(err) {
-		// 	if(err)
-		// 		throw err;
-		// 	this.frameCount++;
-		// 	c.log('Frame: ', this.frameCount);
-		// }.bind(this));
+			fs.writeFile(this.recordingPath + '/' + frameNumber + '.bmp', tempBuffer);
+
+		}
+		else if(UserManager.getPreferenceByName("mute_notifications_while_recording") == "sync") {
+
+			fs.writeFileSync(this.recordingPath + '/' + frameNumber + '.bmp', tempBuffer);
+
+		}
+
+		this.frameCount++;
 
 	}
 
@@ -822,8 +826,7 @@ Camera.prototype.stopRecording = function() {
 
 		case "gif":
 
-			c.log('Encoding a gif...');
-
+			// c.log('Encoding a gif...');
 
 	}
 
@@ -878,6 +881,7 @@ function Window(parameters) {
 	  y: parameters.y ? parameters.y : 660,
 	  minWidth: 600,
 	  minHeight: 350,
+	  darkTheme: true,
 	  webPreferences: {
 	  	"experimentalFeatures": true,
 	  	"experimentalCanvasFeatures": true

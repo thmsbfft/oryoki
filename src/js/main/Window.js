@@ -36,6 +36,7 @@ function Window(parameters) {
 	  y: parameters.y ? parameters.y : 660,
 	  minWidth: 600,
 	  minHeight: 350,
+	  darkTheme: true,
 	  webPreferences: {
 	  	"experimentalFeatures": true,
 	  	"experimentalCanvasFeatures": true
