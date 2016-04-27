@@ -89,7 +89,7 @@ handle {
     font-family: 'Roboto Light', sans-serif;
     font-size: 12px;
     display: inline-block;
-    -webkit-app-region: drag;
+    -webkit-app-region: no-drag;
     -webkit-user-select: none;
     user-select: none;
     cursor: pointer;
