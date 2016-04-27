@@ -713,7 +713,7 @@ Handle.prototype.attachEvents = function() {
 	this.fullscreenBtn.addEventListener('click', function() {
 		ipcRenderer.send('fullscreenWindow');
 	});
-	this.title.addEventListener('click', this.openMenu.bind(this));
+	this.title.addEventListener('mouseup', this.openMenu.bind(this));
 }
 
 Handle.prototype.hide = function() {
@@ -739,7 +739,7 @@ Handle.prototype.getTitle = function() {
 Handle.prototype.openMenu = function(e) {
 	
 	e.preventDefault();
-	console.log('Opening menu');
+	
 	var menu = new Menu();
 	menu.append(
 		new MenuItem(

@@ -19,7 +19,12 @@ handle {
 		cursor: pointer;
 		background: transparent;
 		border-radius: 20px;
-		transition: background 0.2s;
+		transition: background 0.1s;
+		&.selected {
+			&::after {
+				opacity: 1;
+			}
+		}
 		&::after {
 			width: 9px;
 			height: 9px;
