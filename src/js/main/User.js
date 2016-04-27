@@ -39,21 +39,14 @@ function User(name, factory) {
 	this.bookmarks = undefined;
 	this.history = undefined;
 
-	c.log('SALUT');
-
 	this.getPreferences();
-	this.watchFile('preferences.json', this.getPreferences.bind(this));
+	fs.watchFile(this.confPath + '/' + 'preferences.json', this.getPreferences.bind(this));
+
 }
 
 User.prototype.getPreferences = function() {
 
 	this.preferences = this.getConfFile('preferences.json', this.createPreferences.bind(this));
-
-}
-
-User.prototype.watchFile = function(fileName, callback) {
-
-	fs.watch(this.confPath + '/' + fileName, callback);
 
 }
 
