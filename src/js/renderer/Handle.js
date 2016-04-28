@@ -68,7 +68,8 @@ Handle.prototype.openMenu = function(e) {
 			{
 				label: 'Copy URL',
 				click: function() {
-					console.log('URL:', Browser.view.webview.getAttribute('src'));
+					clipboard.writeText(Browser.view.webview.getAttribute('src'));
+					// console.log('URL:', Browser.view.webview.getAttribute('src'));
 				}
 			}
 		)

@@ -14,6 +14,7 @@ function removeClass (el, className) {
 'use strict';
 var ipcRenderer = require('electron').ipcRenderer;
 const remote = require('electron').remote;
+const clipboard = remote.clipboard;
 const Menu = remote.Menu;
 const MenuItem = remote.MenuItem;
 
@@ -746,7 +747,8 @@ Handle.prototype.openMenu = function(e) {
 			{
 				label: 'Copy URL',
 				click: function() {
-					console.log('URL:', Browser.view.webview.getAttribute('src'));
+					clipboard.writeText(Browser.view.webview.getAttribute('src'));
+					// console.log('URL:', Browser.view.webview.getAttribute('src'));
 				}
 			}
 		)

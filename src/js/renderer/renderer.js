@@ -1,6 +1,7 @@
 'use strict';
 var ipcRenderer = require('electron').ipcRenderer;
 const remote = require('electron').remote;
+const clipboard = remote.clipboard;
 const Menu = remote.Menu;
 const MenuItem = remote.MenuItem;
 
