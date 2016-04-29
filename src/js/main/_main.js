@@ -651,6 +651,8 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 
 	if(this.isRecording) {
 		
+		c.log(this.frameCount);
+
 		/*
 		Encoder for raw pixel data adapted from https://github.com/shaozilee/bmp-js/blob/master/lib/encoder.js
 		With the help of Lucas Dupin (http://lucasdup.in/)
@@ -717,12 +719,12 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 		var frameNumber = '00000'.substring(this.frameCount.toString().length) + this.frameCount.toString();
 		
 		// Save frame to tmp folder
-		if(UserManager.getPreferenceByName("mute_notifications_while_recording") == "async") {
+		if(UserManager.getPreferenceByName("video_recording_mode") == "async") {
 
 			fs.writeFile(this.recordingPath + '/' + frameNumber + '.bmp', tempBuffer);
 
 		}
-		else if(UserManager.getPreferenceByName("mute_notifications_while_recording") == "sync") {
+		else if(UserManager.getPreferenceByName("video_recording_mode") == "sync") {
 
 			fs.writeFileSync(this.recordingPath + '/' + frameNumber + '.bmp', tempBuffer);
 
