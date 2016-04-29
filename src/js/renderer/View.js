@@ -61,6 +61,8 @@ View.prototype.attachEvents = function() {
 	ipcRenderer.on('recordingBegin', this.onRecordingBegin.bind(this));
 	ipcRenderer.on('recordingEnd', this.onRecordingEnd.bind(this));
 
+	// Contextual Menu
+	this.el.addEventListener('mouseup', this.openContextualMenu.bind(this));
 
 	// Devtools
 	// this.webview.addEventListener('devtools-opened', this.onDevToolsOpened.bind(this));
@@ -256,6 +258,40 @@ View.prototype.onRecordingEnd = function() {
 
 	console.log('Doing something now!');
 	this.el.className = '';
+
+}
+
+View.prototype.openContextualMenu = function(e) {
+
+	if(e.which == 3 && e.button == 2) {
+
+		e.preventDefault();
+		
+		var menu = new Menu();
+		menu.append(
+			new MenuItem(
+				{
+					label: 'Copy',
+					click: function() {
+						this.webview.copy();
+					}.bind(this)
+				}
+			)
+		);
+		menu.append(
+			new MenuItem(
+				{
+					label: 'Inspect Element',
+					click: function() {
+						console.log('Inspect Element!');
+					}
+				}
+			)
+		);
+
+		menu.popup(remote.getCurrentWindow());
+
+	}
 
 }
 
