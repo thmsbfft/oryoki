@@ -88,7 +88,7 @@ View.prototype.load = function(input) {
 
 View.prototype.reload = function() {
 
-	this.webview.setAttribute('src', this.webview.getAttribute('src'));
+	this.webview.reload();
 
 }
 
@@ -266,13 +266,59 @@ View.prototype.openContextualMenu = function(e) {
 	e.preventDefault();
 	
 	var menu = new Menu();
+
+	menu.append(
+		new MenuItem(
+			{
+				label: 'Back',
+				enabled: this.webview.canGoBack(),
+				click: () => {
+					this.webview.goBack();
+				}
+			}
+		)
+	);
+	menu.append(
+		new MenuItem(
+			{
+				label: 'Forward',
+				enabled: this.webview.canGoForward(),
+				click: () => {
+					this.webview.goForward();
+				}
+			}
+		)
+	);
+	menu.append(
+		new MenuItem(
+			{
+				label: 'Reload',
+				click: () => {
+					this.webview.reload();
+				}	
+			}
+		)
+	);
+	menu.append(
+		new MenuItem(
+			{
+				type: 'separator'
+			}
+		)
+	);
 	menu.append(
 		new MenuItem(
 			{
 				label: 'Copy',
-				click: function() {
-					this.webview.copy();
-				}.bind(this)
+				accelerator: 'CmdOrCtrl+C',
+				role: 'copy'
+			}
+		)
+	);
+	menu.append(
+		new MenuItem(
+			{
+				type: 'separator'
 			}
 		)
 	);
