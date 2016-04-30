@@ -740,13 +740,13 @@ Camera.prototype.stopRecording = function() {
 
 	c.log('Finished recording!');
 	this.isRecording = false;
-	this.browser.webContents.send('recordingEnd');
 	this.browser.webContents.endFrameSubscription();
 	this.onRecordingEndCallback();
 	this.frameCount = 0;
 	if(UserManager.getPreferenceByName("mute_notifications_while_recording")) {
 		this.browser.webContents.send('unmute-notifications');
 	}
+	this.browser.webContents.send('recordingEnd');
 
 	var day = pad(new Date().getDate());
 	var month = pad(new Date().getMonth() + 1);

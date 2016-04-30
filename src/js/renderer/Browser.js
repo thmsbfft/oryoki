@@ -65,6 +65,9 @@ Browser.prototype.attachEvents = function() {
 
 	ipcRenderer.on('get_handle_title', this.getHandleTitle.bind(this));
 
+	ipcRenderer.on('recordingBegin', this.hideDragOverlay.bind(this));
+	ipcRenderer.on('recordingEnd', this.showDragOverlay.bind(this));
+
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
 }
@@ -84,7 +87,7 @@ Browser.prototype.onKeyDown = function(e) {
 	if(!e) var e = window.event;
 	if(e.keyCode == 18) {
 		if(ipcRenderer.sendSync('get-preference', 'use_alt_drag')) {
-			this.dragOverlay.className = 'active';
+			addClass(this.dragOverlay, 'active');
 		}
 	}
 }
@@ -93,7 +96,7 @@ Browser.prototype.onKeyUp = function(e) {
 	if(!e) var e = window.event;
 	if(e.keyCode == 18) {
 		// ALT
-		this.dragOverlay.className = '';
+		removeClass(this.dragOverlay, 'active');
 	}
 	else if(e.keyCode == 27) {
 		// ESC
@@ -184,4 +187,17 @@ Browser.prototype.reloadIgnoringCache = function() {
 
 Browser.prototype.toggleDevTools = function() {
 	this.view.toggleDevTools();
+}
+
+Browser.prototype.hideDragOverlay = function() {
+
+	removeClass(this.dragOverlay, 'invisible');
+	addClass(this.dragOverlay, 'invisible');
+
+}
+
+Browser.prototype.showDragOverlay = function() {
+
+	removeClass(this.dragOverlay, 'invisible');
+
 }
