@@ -1072,12 +1072,16 @@ Browser.prototype.resize = function() {
 }
 
 Browser.prototype.onKeyDown = function(e) {
-	if(!e) var e = window.event;
-	if(e.keyCode == 18) {
+
+	if(e.altKey && !e.shiftKey && !e.metaKey && !e.ctrlKey) {
 		if(ipcRenderer.sendSync('get-preference', 'use_alt_drag')) {
 			addClass(this.dragOverlay, 'active');
 		}
 	}
+	else if(e.shiftKey || e.metaKey || e.ctrlKey) {
+		removeClass(this.dragOverlay, 'active');
+	}
+	
 }
 
 Browser.prototype.onKeyUp = function(e) {
