@@ -58,6 +58,16 @@ NotificationManager.prototype.unmute = function() {
 
 }
 
+NotificationManager.prototype.killOfType = function(type) {
+
+	this.notifications.forEach(function(notification, index) {
+		if(notification.type == type) {
+			notification.destroy();
+		}
+	})
+
+}
+
 NotificationManager.prototype.onNotificationDeath = function(id) {
 
 	this.notifications.forEach(function(notification, index) {

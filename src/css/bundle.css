@@ -240,24 +240,6 @@ omnibox {
     left: 0;
     z-index: 88; }
 
-#loader {
-  display: block;
-  border: 3px solid #00EC91;
-  border-radius: 100%;
-  width: 22px;
-  height: 22px;
-  position: fixed;
-  bottom: 50px;
-  right: 50px;
-  transition: border-color 0.2s, opacity 0.3s;
-  opacity: 0; }
-  #loader.loading {
-    animation: blink 0.2s infinite ease-out; }
-  #loader.hide {
-    opacity: 0; }
-  #loader.show {
-    opacity: 1; }
-
 notifications {
   position: fixed;
   top: 3px;

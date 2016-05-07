@@ -15,10 +15,6 @@ function Browser(parameters) {
 
 	});
 
-	this.loader = new Loader({
-
-	});
-
 	this.console = new Console({
 
 	});
@@ -112,7 +108,6 @@ Browser.prototype.onKeyUp = function(e) {
 
 Browser.prototype.onSubmit = function(input) {
 	console.log('Browser submit!');
-	this.loader.loading();
 	this.view.load(input);
 }
 
@@ -129,7 +124,6 @@ Browser.prototype.onDidFinishLoad = function() {
 	}
 
 	this.omnibox.hide();
-	this.loader.hide();
 
 }
 
@@ -163,7 +157,6 @@ Browser.prototype.showOmnibox = function() {
 
 Browser.prototype.hideOmnibox = function() {
 	this.omnibox.hide();
-	this.loader.hide();
 }
 
 Browser.prototype.showConsole = function() {
@@ -177,7 +170,6 @@ Browser.prototype.hideConsole = function() {
 Browser.prototype.load = function(e, url) {
 	console.log('Loading new window url: ', url);
 	this.omnibox.hide();
-	this.loader.loading();
 	this.view.load(url);
 }
 

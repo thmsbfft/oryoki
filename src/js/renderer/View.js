@@ -76,6 +76,7 @@ View.prototype.load = function(input) {
 	NotificationManager.display({
 		'body' : 'Loading',
 		'lifespan' : 3000,
+		'type' : 'loading'
 	});
 
 	removeClass(this.webview, 'hide');
@@ -108,6 +109,7 @@ View.prototype.onLoadCommit = function(e) {
 	NotificationManager.display({
 		'body' : 'Loading',
 		'lifespan' : 3000,
+		'type' : 'loading'
 	});
 
 	console.log('load-commit: ', e);
@@ -139,10 +141,12 @@ View.prototype.onDidFrameFinishLoad = function(e) {
 
 View.prototype.onPageTitleUpdated = function(e) {
 
-	NotificationManager.display({
-		'body' : '→ ' + e.title,
-		'lifespan' : 3000,
-	});
+	if(!Browser.isHandleDisplayed) {
+		NotificationManager.display({
+			'body' : '→ ' + e.title,
+			'lifespan' : 3000,
+		});
+	}
 
 	this.onPageTitleUpdatedCallback(e.title);
 
@@ -152,6 +156,8 @@ View.prototype.onDidFinishLoad = function() {
 
 	removeClass(this.webview, 'loading');
 	addClass(this.webview, 'loaded');
+
+	NotificationManager.killOfType('loading');
 
 	this.onDidFinishLoadCallback();
 	
@@ -185,7 +191,7 @@ View.prototype.onDidFailLoad = function(e) {
 		default:
 			NotificationManager.display({
 				'body' : 'Load failed',
-				'lifespan' : 4000,
+				'lifespan' : 5000,
 				'type': 'error'
 			});	
 

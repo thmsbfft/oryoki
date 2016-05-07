@@ -154,6 +154,16 @@ NotificationManager.prototype.unmute = function() {
 
 }
 
+NotificationManager.prototype.killOfType = function(type) {
+
+	this.notifications.forEach(function(notification, index) {
+		if(notification.type == type) {
+			notification.destroy();
+		}
+	})
+
+}
+
 NotificationManager.prototype.onNotificationDeath = function(id) {
 
 	this.notifications.forEach(function(notification, index) {
@@ -162,31 +172,6 @@ NotificationManager.prototype.onNotificationDeath = function(id) {
 		}
 	}.bind(this));
 
-}
-function Loader(parameters) {
-
-	this.el = document.querySelectorAll('#loader')[0];
-
-	console.log('Loader');
-
-	this.hide();
-}
-
-Loader.prototype.loading = function() {
-	this.show();
-	addClass(this.el, 'loading');
-}
-
-Loader.prototype.reset = function() {
-	this.el.className = 'show';
-}
-
-Loader.prototype.hide = function() {
-	this.el.className = 'hide';
-}
-
-Loader.prototype.show = function() {
-	this.el.className = 'show';
 }
 function Console(parameters) {
 
@@ -490,6 +475,7 @@ View.prototype.load = function(input) {
 	NotificationManager.display({
 		'body' : 'Loading',
 		'lifespan' : 3000,
+		'type' : 'loading'
 	});
 
 	removeClass(this.webview, 'hide');
@@ -522,6 +508,7 @@ View.prototype.onLoadCommit = function(e) {
 	NotificationManager.display({
 		'body' : 'Loading',
 		'lifespan' : 3000,
+		'type' : 'loading'
 	});
 
 	console.log('load-commit: ', e);
@@ -553,10 +540,12 @@ View.prototype.onDidFrameFinishLoad = function(e) {
 
 View.prototype.onPageTitleUpdated = function(e) {
 
-	NotificationManager.display({
-		'body' : '→ ' + e.title,
-		'lifespan' : 3000,
-	});
+	if(!Browser.isHandleDisplayed) {
+		NotificationManager.display({
+			'body' : '→ ' + e.title,
+			'lifespan' : 3000,
+		});
+	}
 
 	this.onPageTitleUpdatedCallback(e.title);
 
@@ -566,6 +555,8 @@ View.prototype.onDidFinishLoad = function() {
 
 	removeClass(this.webview, 'loading');
 	addClass(this.webview, 'loaded');
+
+	NotificationManager.killOfType('loading');
 
 	this.onDidFinishLoadCallback();
 	
@@ -599,7 +590,7 @@ View.prototype.onDidFailLoad = function(e) {
 		default:
 			NotificationManager.display({
 				'body' : 'Load failed',
-				'lifespan' : 4000,
+				'lifespan' : 5000,
 				'type': 'error'
 			});	
 
@@ -1010,10 +1001,6 @@ function Browser(parameters) {
 
 	});
 
-	this.loader = new Loader({
-
-	});
-
 	this.console = new Console({
 
 	});
@@ -1107,7 +1094,6 @@ Browser.prototype.onKeyUp = function(e) {
 
 Browser.prototype.onSubmit = function(input) {
 	console.log('Browser submit!');
-	this.loader.loading();
 	this.view.load(input);
 }
 
@@ -1124,7 +1110,6 @@ Browser.prototype.onDidFinishLoad = function() {
 	}
 
 	this.omnibox.hide();
-	this.loader.hide();
 
 }
 
@@ -1158,7 +1143,6 @@ Browser.prototype.showOmnibox = function() {
 
 Browser.prototype.hideOmnibox = function() {
 	this.omnibox.hide();
-	this.loader.hide();
 }
 
 Browser.prototype.showConsole = function() {
@@ -1172,7 +1156,6 @@ Browser.prototype.hideConsole = function() {
 Browser.prototype.load = function(e, url) {
 	console.log('Loading new window url: ', url);
 	this.omnibox.hide();
-	this.loader.loading();
 	this.view.load(url);
 }
 

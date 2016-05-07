@@ -59,6 +59,22 @@ notifications {
 			}
 		}
 
+		&.loading {
+			// &::before {
+			// 	content: ' ';
+			// 	width: 4px;
+			// 	display: inline-block;
+			// 	height: 4px;
+			// 	border-radius: 4px;
+			// 	margin-right: 6px;
+			// 	margin-left: 2px;
+			// 	position: relative;
+			// 	top: -1px;
+			// 	background-color: #00EC91;
+			// 	animation: blink 0.2s infinite ease-out;
+			// }
+		}
+
 		&.counter {
 
 			// background-color: #1e71f7;
