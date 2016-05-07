@@ -435,6 +435,15 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
+					label: 'Copy Screenshot',
+					accelerator: 'Cmd+Shift+C',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.camera.copyScreenshot();
+						}
+					}
+				},
+				{
 					label: 'Start Recording',
 					accelerator: 'Cmd+Shift+P',
 					click: function() {
@@ -593,22 +602,28 @@ Camera.prototype.takeScreenshot = function() {
 		fs.writeFile(app.getPath('downloads') + '/' + name + '.png', image.toPng(), function(err) {
 			if(err)
 				throw err;
-			this.onScreenshotTaken();
+			this.browser.webContents.send('display-notification', {
+				'body' : 'Screenshot saved',
+				'lifespan' : 3000,
+			});
 		}.bind(this));
 
 	}.bind(this));
 
 }
 
-Camera.prototype.onScreenshotTaken = function() {
+Camera.prototype.copyScreenshot = function() {
 
-	this.browser.webContents.send('display-notification', {
-		'body' : 'Screenshot saved',
-		'lifespan' : 3000,
-		// 'onclick' : this.revealScreenshot.bind(this)
-	});
+	this.browser.capturePage(function(image) {
 
-	// TODO : Make this clickable
+		clipboard.writeImage(image);
+
+		this.browser.webContents.send('display-notification', {
+			'body' : 'Screenshot copied to clipboard',
+			'lifespan' : 3000,
+		});
+
+	}.bind(this));
 
 }
 

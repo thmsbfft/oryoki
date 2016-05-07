@@ -294,6 +294,15 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
+					label: 'Copy Screenshot',
+					accelerator: 'Cmd+Shift+C',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.camera.copyScreenshot();
+						}
+					}
+				},
+				{
 					label: 'Start Recording',
 					accelerator: 'Cmd+Shift+P',
 					click: function() {
