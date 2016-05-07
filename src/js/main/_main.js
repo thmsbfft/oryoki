@@ -152,6 +152,10 @@ function CommandManager() {
 	  this.setEnabled(menuLabel, subMenuLabel, value);
 	}.bind(this));
 
+	ipcMain.on('set-menu-checked', function(event, menuLabel, subMenuLabel, value) {
+		this.setCheckbox(menuLabel, subMenuLabel, value);
+	}.bind(this));
+
 	this.createMenus();
 }
 

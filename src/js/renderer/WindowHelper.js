@@ -110,6 +110,13 @@ WindowHelper.prototype.show = function() {
 
 WindowHelper.prototype.onInputKeyUp = function(e) {
 
+	if(e.key == "Escape") {
+
+		this.hide();
+		ipcRenderer.send('set-menu-checked', 'Tools', 'Window Helper', false);
+
+	}
+
 	// Ignore letters and keys we use later on
 	if(e.key.match(/[a-z]/i) && e.key.length == 1 || e.keyCode == 9) e.preventDefault();
 
