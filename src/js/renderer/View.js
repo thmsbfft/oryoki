@@ -75,7 +75,7 @@ View.prototype.load = function(input) {
 
 	NotificationManager.display({
 		'body' : 'Loading',
-		'lifespan' : 3000,
+		'lifespan' : 2800,
 		'type' : 'loading'
 	});
 
@@ -157,7 +157,7 @@ View.prototype.onDidFinishLoad = function() {
 	removeClass(this.webview, 'loading');
 	addClass(this.webview, 'loaded');
 
-	NotificationManager.killOfType('loading');
+	// NotificationManager.killOfType('loading');
 
 	this.onDidFinishLoadCallback();
 	

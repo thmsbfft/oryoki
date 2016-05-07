@@ -30,7 +30,7 @@ Notification.prototype.build = function() {
 	this.el.addEventListener('mouseover', this.freeze.bind(this));
 	this.life = setTimeout(this.destroy.bind(this), this.lifespan);
 
-	this.context.appendChild(this.el);
+	this.context.insertBefore(this.el, this.context.firstChild);
 
 }
 

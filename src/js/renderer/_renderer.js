@@ -66,7 +66,7 @@ Notification.prototype.build = function() {
 	this.el.addEventListener('mouseover', this.freeze.bind(this));
 	this.life = setTimeout(this.destroy.bind(this), this.lifespan);
 
-	this.context.appendChild(this.el);
+	this.context.insertBefore(this.el, this.context.firstChild);
 
 }
 
@@ -151,16 +151,6 @@ NotificationManager.prototype.unmute = function() {
 	console.log('Unmute notifications');
 	this.isMuted = false;
 	this.el.className = '';
-
-}
-
-NotificationManager.prototype.killOfType = function(type) {
-
-	this.notifications.forEach(function(notification, index) {
-		if(notification.type == type) {
-			notification.destroy();
-		}
-	})
 
 }
 
@@ -474,7 +464,7 @@ View.prototype.load = function(input) {
 
 	NotificationManager.display({
 		'body' : 'Loading',
-		'lifespan' : 3000,
+		'lifespan' : 2800,
 		'type' : 'loading'
 	});
 
@@ -556,7 +546,7 @@ View.prototype.onDidFinishLoad = function() {
 	removeClass(this.webview, 'loading');
 	addClass(this.webview, 'loaded');
 
-	NotificationManager.killOfType('loading');
+	// NotificationManager.killOfType('loading');
 
 	this.onDidFinishLoadCallback();
 	
