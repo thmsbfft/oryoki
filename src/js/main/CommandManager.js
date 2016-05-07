@@ -303,6 +303,9 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
+					type: 'separator'
+				},
+				{
 					label: 'Start Recording',
 					accelerator: 'Cmd+Shift+P',
 					click: function() {
