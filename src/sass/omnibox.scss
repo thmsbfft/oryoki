@@ -30,6 +30,9 @@ omnibox {
 			&.highlight {
 				background-color: #1F1F1F;
 			}
+			&::selection {
+				background-color: rgba(255, 255, 255, 0.1);
+			}
 		}
 		.tab {
 			display: none;

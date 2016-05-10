@@ -205,6 +205,8 @@ omnibox {
       transition: background-color 0.1s ease-out; }
       omnibox .box .input.highlight {
         background-color: #1F1F1F; }
+      omnibox .box .input::selection {
+        background-color: rgba(255, 255, 255, 0.1); }
     omnibox .box .tab {
       display: none;
       border: 1px solid #323232;
