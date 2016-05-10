@@ -822,9 +822,9 @@ Handle.prototype.openMenu = function(e) {
 	menu.append(
 		new MenuItem(
 			{
-				label: 'Previous',
+				label: 'Copy Screenshot',
 				click: function() {
-					console.log('Menu item clicked!')
+					ipcRenderer.send('copy-screenshot');
 				}
 			}
 		)

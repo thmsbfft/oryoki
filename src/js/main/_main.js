@@ -584,6 +584,14 @@ function Camera(parameters) {
 	this.videoStream = undefined;
 	this.frameCount = 0;
 
+
+	this.attachEvents();
+}
+
+Camera.prototype.attachEvents = function() {
+
+	ipcMain.on('copy-screenshot', this.copyScreenshot.bind(this));
+
 }
 
 Camera.prototype.takeScreenshot = function() {
