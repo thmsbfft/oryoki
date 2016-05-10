@@ -106,6 +106,8 @@ View.prototype.toggleDevTools = function() {
 
 View.prototype.onLoadCommit = function(e) {
 
+	if(this.isFirstLoad) this.isFirstLoad = false;
+
 	NotificationManager.display({
 		'body' : 'Loading',
 		'lifespan' : 3000,

@@ -61,7 +61,7 @@ Handle.prototype.getTitle = function() {
 Handle.prototype.openMenu = function(e) {
 	
 	e.preventDefault();
-	
+
 	var menu = new Menu();
 	menu.append(
 		new MenuItem(
@@ -69,7 +69,6 @@ Handle.prototype.openMenu = function(e) {
 				label: 'Copy URL',
 				click: function() {
 					clipboard.writeText(Browser.view.webview.getAttribute('src'));
-					// console.log('URL:', Browser.view.webview.getAttribute('src'));
 				}
 			}
 		)
@@ -81,6 +80,66 @@ Handle.prototype.openMenu = function(e) {
 				click: function() {
 					ipcRenderer.send('copy-screenshot');
 				}
+			}
+		)
+	);
+	menu.append(
+		new MenuItem(
+			{
+				type: 'separator'
+			}
+		)
+	);
+	if(Browser.view.isFirstLoad) {
+		menu.append(
+			new MenuItem(
+				{
+					label: 'Back',
+					enabled: false
+				}
+			)
+		);
+		menu.append(
+			new MenuItem(
+				{
+					label: 'Forward',
+					enabled: false
+				}
+			)
+		);
+	}
+	else {
+		menu.append(
+			new MenuItem(
+				{
+					label: 'Back',
+					enabled: Browser.view.webview.canGoBack(),
+					click: () => {
+						Browser.view.webview.goBack();
+					}
+				}
+			)
+		);
+		menu.append(
+			new MenuItem(
+				{
+					label: 'Forward',
+					enabled: Browser.view.webview.canGoForward(),
+					click: () => {
+						Browser.view.webview.goForward();
+					}
+				}
+			)
+		);
+	}
+	menu.append(
+		new MenuItem(
+			{
+				label: 'Reload',
+				enabled: !Browser.view.isFirstLoad,
+				click: () => {
+					Browser.view.webview.reload();
+				}	
 			}
 		)
 	);
