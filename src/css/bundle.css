@@ -178,7 +178,8 @@ handle {
 omnibox {
   width: 100%;
   height: 100%;
-  position: fixed; }
+  position: fixed;
+  -webkit-app-region: drag; }
   omnibox .box {
     z-index: 99;
     max-width: 485px;
@@ -188,6 +189,7 @@ omnibox {
     omnibox .box ::-webkit-input-placeholder {
       color: rgba(255, 255, 255, 0.2); }
     omnibox .box .input {
+      -webkit-app-region: no-drag;
       width: calc(100% - 36px - 55px);
       font-family: 'Roboto Light', sans-serif;
       font-size: 18px;
@@ -197,6 +199,7 @@ omnibox {
       outline: none;
       border: none;
       padding: 12px;
+      position: relative;
       padding-right: 79px;
       border-radius: 2px;
       transition: background-color 0.1s ease-out; }
@@ -231,7 +234,6 @@ omnibox {
   omnibox.hide {
     display: none; }
   omnibox .overlay {
-    -webkit-app-region: drag;
     width: 100%;
     height: 100%;
     background-color: #141414;

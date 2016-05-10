@@ -11,7 +11,6 @@ function Omnibox(parameters) {
 
 	this.el = document.getElementsByTagName('omnibox')[0];
 	this.htmlData = undefined;
-	console.log(this.mode);
 	this.submitCallback = parameters.onsubmit;
 
 	console.log('Omnibox!');

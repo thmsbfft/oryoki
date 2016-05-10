@@ -2,6 +2,7 @@ omnibox {
 	width: 100%;
 	height: 100%;
 	position: fixed;
+	-webkit-app-region: drag;
 	.box {
 		z-index: 99;
 		max-width: 485px;
@@ -12,6 +13,7 @@ omnibox {
 		   color: rgba(255, 255, 255, 0.2);
 		}
 		.input {
+			-webkit-app-region: no-drag;
 			width: calc(100% - 36px - 55px);
 			font-family: 'Roboto Light', sans-serif;
 			font-size: 18px;
@@ -21,6 +23,7 @@ omnibox {
 			outline: none;
 			border: none;
 			padding: 12px;
+			position: relative;
 			padding-right: 79px;
 			border-radius: 2px;
 			transition: background-color 0.1s ease-out;
@@ -65,7 +68,6 @@ omnibox {
 		display: none;
 	}
 	.overlay {
-		-webkit-app-region: drag;
 		width: 100%;
 		height: 100%;
 		background-color: #141414;
