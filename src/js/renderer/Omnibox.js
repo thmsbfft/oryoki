@@ -117,6 +117,7 @@ Omnibox.prototype.show = function() {
 	removeClass(this.el, 'hide');
 	addClass(this.el, 'show');
 	this.focus();
+	this.el.querySelectorAll('input')[0].select();
 	ipcRenderer.send('setOmniboxShow');
 }
 
