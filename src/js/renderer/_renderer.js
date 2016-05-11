@@ -541,7 +541,7 @@ View.prototype.onPageTitleUpdated = function(e) {
 
 	this.onPageTitleUpdatedCallback(e.title);
 
-	Browser.omnibox.input.value = this.webview.getAttribute('src');
+	Browser.omnibox.input.value = this.webview.getAttribute('src').split('://')[1];
 
 }
 
