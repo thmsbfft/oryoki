@@ -313,6 +313,23 @@ console {
     display: block; }
   console.hide {
     display: none; }
+  console input {
+    -webkit-app-region: no-drag;
+    width: calc(100% - 36px - 55px);
+    color: rgba(255, 255, 255, 0.7);
+    background: #252525;
+    line-height: 11px;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+    position: relative;
+    padding-right: 79px;
+    border-radius: 2px;
+    transition: background-color 0.1s ease-out; }
+    console input.highlight {
+      background-color: #1F1F1F; }
+    console input::selection {
+      background-color: rgba(255, 255, 255, 0.2); }
 
 windowHelper {
   position: fixed;
