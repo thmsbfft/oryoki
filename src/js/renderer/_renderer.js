@@ -997,6 +997,9 @@ Omnibox.prototype.onInputKeyUp = function(e) {
 		removeClass(this.input, 'highlight');
 		this.submit();
 	}
+	if(e.key == "Escape") {
+		if(!Browser.isFirstLoad) this.hide()
+	}
 }
 
 Omnibox.prototype.submit = function() {
@@ -1164,12 +1167,6 @@ Browser.prototype.onKeyUp = function(e) {
 	if(e.keyCode == 18) {
 		// ALT
 		removeClass(this.dragOverlay, 'active');
-	}
-	else if(e.keyCode == 27) {
-		// ESC
-		if(!this.isFirstLoad) {
-			this.hideOmnibox();
-		}
 	}
 }
 

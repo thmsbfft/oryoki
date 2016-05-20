@@ -67,6 +67,9 @@ Omnibox.prototype.onInputKeyUp = function(e) {
 		removeClass(this.input, 'highlight');
 		this.submit();
 	}
+	if(e.key == "Escape") {
+		if(!Browser.isFirstLoad) this.hide()
+	}
 }
 
 Omnibox.prototype.submit = function() {

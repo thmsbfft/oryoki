@@ -98,12 +98,6 @@ Browser.prototype.onKeyUp = function(e) {
 		// ALT
 		removeClass(this.dragOverlay, 'active');
 	}
-	else if(e.keyCode == 27) {
-		// ESC
-		if(!this.isFirstLoad) {
-			this.hideOmnibox();
-		}
-	}
 }
 
 Browser.prototype.onSubmit = function(input) {
