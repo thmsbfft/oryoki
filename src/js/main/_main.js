@@ -1017,6 +1017,8 @@ Window.prototype.updateMenus = function() {
 		CommandManager.setCheckbox('View', 'Fullscreen', this.browser.isFullScreen());
 	}
 	CommandManager.setEnabled('View', 'Toggle Omnibox', !this.isFirstLoad);
+	CommandManager.setEnabled('Tools', 'Mini Console', !this.isFirstLoad);
+	CommandManager.setEnabled('Tools', 'Toggle Devtools', !this.isFirstLoad);
 }
 
 Window.prototype.setOmniboxShow = function() {

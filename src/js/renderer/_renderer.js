@@ -176,6 +176,7 @@ function Console(parameters) {
 Console.prototype.attachEvents = function() {
 
 	this.input.addEventListener('focus', this.clear.bind(this));
+
 	this.input.addEventListener('keyup', function(e) {
 		if (e.keyCode == 13) { this.submit(); }
 		else if(e.key == "Escape") { this.hide(); }
