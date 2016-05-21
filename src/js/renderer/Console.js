@@ -1,5 +1,8 @@
 function Console(parameters) {
 
+	this.id = parameters.id;
+	this.isVisible = false;
+
 	this.el = document.getElementsByTagName('console')[0];
 	this.input = this.el.getElementsByTagName('input')[0];
 
@@ -14,7 +17,19 @@ Console.prototype.attachEvents = function() {
 
 	this.input.addEventListener('keyup', function(e) {
 		if (e.keyCode == 13) { this.submit(); }
-		else if(e.key == "Escape") { this.hide(); }
+		else if(e.key == "Escape") { 
+			this.hide();
+			ipcRenderer.send('set-menu-checked', 'Tools', 'Mini Console', false);
+		}
+	}.bind(this));
+
+	ipcRenderer.on('toggle_mini_console', function(event, windowId) {
+		if(windowId == this.id) {
+			console.log('toggle_window_helper');
+			if(!this.isVisible) this.show();
+			else this.hide();
+			this.isVisible != this.isVisible;
+		}
 	}.bind(this));
 
 }
@@ -40,12 +55,14 @@ Console.prototype.submit = function() {
 
 Console.prototype.hide = function() {
 
+	this.isVisible = false;
 	this.el.className = 'hide';
 
 }
 
 Console.prototype.show = function() {
 
+	this.isVisible = true;
 	this.el.className = 'show';
 	this.input.focus();
 

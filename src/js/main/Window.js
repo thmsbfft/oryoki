@@ -206,30 +206,19 @@ Window.prototype.toggleHandle = function() {
 }
 
 Window.prototype.toggleWindowHelper = function() {
+
 		this.windowHelper != this.windowHelper;
 		this.browser.webContents.send('toggle_window_helper', this.id);
 		CommandManager.toggleChecked('Tools', 'Window Helper');
+
 }
 
 Window.prototype.toggleConsole = function() {
-	// @if NODE_ENV='development'
-	c.log(this.console);
-	// @endif
-	if(this.console) {
-		// @if NODE_ENV='development'
-		c.log('Hiding console');
-		// @endif
-		this.console = false;
-		this.browser.webContents.send('hideConsole');
-	}
-	else {
-		// @if NODE_ENV='development'
-		c.log('Showing console');
-		// @endif
-		this.console = true;
-		this.browser.webContents.send('showConsole');
-	}
+
+	this.console != this.console;
+	this.browser.webContents.send('toggle_mini_console', this.id);
 	CommandManager.toggleChecked('Tools', 'Mini Console');
+
 }
 
 Window.prototype.toggleOmnibox = function() {

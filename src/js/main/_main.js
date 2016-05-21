@@ -1064,24 +1064,19 @@ Window.prototype.toggleHandle = function() {
 }
 
 Window.prototype.toggleWindowHelper = function() {
+
 		this.windowHelper != this.windowHelper;
 		this.browser.webContents.send('toggle_window_helper', this.id);
 		CommandManager.toggleChecked('Tools', 'Window Helper');
+
 }
 
 Window.prototype.toggleConsole = function() {
-	c.log(this.console);
-	if(this.console) {
-		c.log('Hiding console');
-		this.console = false;
-		this.browser.webContents.send('hideConsole');
-	}
-	else {
-		c.log('Showing console');
-		this.console = true;
-		this.browser.webContents.send('showConsole');
-	}
+
+	this.console != this.console;
+	this.browser.webContents.send('toggle_mini_console', this.id);
 	CommandManager.toggleChecked('Tools', 'Mini Console');
+
 }
 
 Window.prototype.toggleOmnibox = function() {

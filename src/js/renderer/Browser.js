@@ -16,7 +16,7 @@ function Browser(parameters) {
 	});
 
 	this.console = new Console({
-
+		'id' : this.id
 	});
 
 	this.view = new View({
