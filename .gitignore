@@ -3,5 +3,6 @@ build
 .sass-cache
 .DS_Store
 stdout.log
+main.js
 src/js/main/_main.js
 src/css/
