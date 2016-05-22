@@ -12,7 +12,9 @@ function User(name, factory) {
 	}
 	catch(err) {
 		if(err.code === 'ENOENT') {
+			// @if NODE_ENV='development'
 			c.log('Creating App Data directory')
+			// @endif
 			fs.mkdirSync(this.confPath);
 		}
 		else {
@@ -27,7 +29,9 @@ function User(name, factory) {
 	}
 	catch(err) {
 		if(err.code === 'ENOENT') {
+			// @if NODE_ENV='development'
 			c.log('Creating tmp directory');
+			// @endif
 			fs.mkdirSync(this.tmpPath);
 		}
 		else {
@@ -52,7 +56,9 @@ User.prototype.getPreferences = function() {
 
 User.prototype.getConfFile = function(fileName, callback) {
 
-	c.log('Getting conf file...');
+	// @if NODE_ENV='development'
+	c.log('[USER] Getting conf file: ' + fileName);
+	// @endif
 
 	try {
 
@@ -79,8 +85,6 @@ User.prototype.getConfFile = function(fileName, callback) {
 }
 
 User.prototype.createPreferences = function() {
-
-	c.log(this.confPath + '/' + 'preferences.json');
 
 	fs.writeFileSync(this.confPath + '/' + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), 'utf8', (err) => {
 		if (err) throw err;

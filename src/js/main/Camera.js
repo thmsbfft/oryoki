@@ -90,7 +90,10 @@ Camera.prototype.revealScreenshot = function() {
 Camera.prototype.startRecording = function() {
 
 	if(!this.isRecording) {
-		c.log('Start recording');
+
+		// @if NODE_ENV='development'
+		c.log('[CAMERA] Start recording');
+		// @endif
 
 		// Check tmp folder and clean it
 		try {
@@ -115,7 +118,9 @@ Camera.prototype.startRecording = function() {
 		this.browser.webContents.beginFrameSubscription(this.recordRaw.bind(this));
 	}
 	else {
-		c.log('Already recording');
+		// @if NODE_ENV='development'
+		c.log('[CAMERA] Already recording');
+		// @endif
 	}
 
 }
@@ -124,7 +129,9 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 
 	if(this.isRecording) {
 		
-		c.log(this.frameCount);
+		// @if NODE_ENV='development'
+		c.log('[CAMERA] #'+this.frameCount);
+		// @endif
 
 		/*
 		Encoder for raw pixel data adapted from https://github.com/shaozilee/bmp-js/blob/master/lib/encoder.js
@@ -211,7 +218,10 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 
 Camera.prototype.stopRecording = function() {
 
-	c.log('Finished recording!');
+	// @if NODE_ENV='development'
+	c.log('[CAMERA] Finished recording!');
+	// @endif
+
 	this.isRecording = false;
 	this.browser.webContents.endFrameSubscription();
 	this.onRecordingEndCallback();
@@ -253,7 +263,9 @@ Camera.prototype.stopRecording = function() {
 					this.cleanTmpRecording();
 				}.bind(this))
 				.on('error', function(err) {
+					// @if NODE_ENV='development'
 					c.log('Error encoding: ' + err.message);
+					// @endif
 				}.bind(this))
 				.input(this.recordingPath + '/' + '%05d.bmp')
 				.withInputFps(60)
@@ -280,7 +292,9 @@ Camera.prototype.stopRecording = function() {
 					this.cleanTmpRecording();
 				}.bind(this))
 				.on('error', function(err) {
+					// @if NODE_ENV='development'
 					c.log('Error encoding: ' + err.message);
+					// @endif
 				}.bind(this))
 				.input(this.recordingPath + '/' + '%05d.bmp')
 				.withInputFps(60)
@@ -294,7 +308,9 @@ Camera.prototype.stopRecording = function() {
 
 		case "gif":
 
-			// c.log('Encoding a gif...');
+			// @if NODE_ENV='development'
+			c.log('Encoding a gif...');
+			// @endif
 
 	}
 

@@ -17,7 +17,6 @@ function Window(parameters) {
 	this.onCloseCallback = parameters.onClose;
 
 	this.handle = UserManager.getPreferenceByName('show_title_bar');
-	c.log('YO: '+this.handle);
 	this.omnibox = true;
 	this.console = false;
 	this.windowHelper = false;
