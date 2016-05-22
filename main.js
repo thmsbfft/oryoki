@@ -14,7 +14,6 @@ function User(name, factory) {
 	}
 	catch(err) {
 		if(err.code === 'ENOENT') {
-			c.log('Creating App Data directory')
 			fs.mkdirSync(this.confPath);
 		}
 		else {
@@ -29,7 +28,6 @@ function User(name, factory) {
 	}
 	catch(err) {
 		if(err.code === 'ENOENT') {
-			c.log('Creating tmp directory');
 			fs.mkdirSync(this.tmpPath);
 		}
 		else {
@@ -54,7 +52,6 @@ User.prototype.getPreferences = function() {
 
 User.prototype.getConfFile = function(fileName, callback) {
 
-	c.log('Getting conf file...');
 
 	try {
 
@@ -81,8 +78,6 @@ User.prototype.getConfFile = function(fileName, callback) {
 }
 
 User.prototype.createPreferences = function() {
-
-	c.log(this.confPath + '/' + 'preferences.json');
 
 	fs.writeFileSync(this.confPath + '/' + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), 'utf8', (err) => {
 		if (err) throw err;
@@ -630,7 +625,7 @@ Camera.prototype.revealScreenshot = function() {
 Camera.prototype.startRecording = function() {
 
 	if(!this.isRecording) {
-		c.log('Start recording');
+
 
 		// Check tmp folder and clean it
 		try {
@@ -655,7 +650,6 @@ Camera.prototype.startRecording = function() {
 		this.browser.webContents.beginFrameSubscription(this.recordRaw.bind(this));
 	}
 	else {
-		c.log('Already recording');
 	}
 
 }
@@ -664,7 +658,6 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 
 	if(this.isRecording) {
 		
-		c.log(this.frameCount);
 
 		/*
 		Encoder for raw pixel data adapted from https://github.com/shaozilee/bmp-js/blob/master/lib/encoder.js
@@ -751,7 +744,7 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 
 Camera.prototype.stopRecording = function() {
 
-	c.log('Finished recording!');
+
 	this.isRecording = false;
 	this.browser.webContents.endFrameSubscription();
 	this.onRecordingEndCallback();
@@ -793,7 +786,6 @@ Camera.prototype.stopRecording = function() {
 					this.cleanTmpRecording();
 				}.bind(this))
 				.on('error', function(err) {
-					c.log('Error encoding: ' + err.message);
 				}.bind(this))
 				.input(this.recordingPath + '/' + '%05d.bmp')
 				.withInputFps(60)
@@ -820,7 +812,6 @@ Camera.prototype.stopRecording = function() {
 					this.cleanTmpRecording();
 				}.bind(this))
 				.on('error', function(err) {
-					c.log('Error encoding: ' + err.message);
 				}.bind(this))
 				.input(this.recordingPath + '/' + '%05d.bmp')
 				.withInputFps(60)
@@ -834,7 +825,6 @@ Camera.prototype.stopRecording = function() {
 
 		case "gif":
 
-			// c.log('Encoding a gif...');
 
 	}
 
@@ -868,7 +858,6 @@ function Window(parameters) {
 	this.onCloseCallback = parameters.onClose;
 
 	this.handle = UserManager.getPreferenceByName('show_title_bar');
-	c.log('YO: '+this.handle);
 	this.omnibox = true;
 	this.console = false;
 	this.windowHelper = false;

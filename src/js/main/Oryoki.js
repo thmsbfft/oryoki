@@ -6,8 +6,10 @@ function Oryoki() {
 	  }
 	});
 
+	// @if NODE_ENV='development'
 	c.log(app.getName());
 	c.log(app.getVersion());
+	// @endif
 
 	this.versions = {
 		'oryoki' : '0.0.2',
@@ -129,7 +131,9 @@ Oryoki.prototype.clearCaches = function() {
 
 		var folderPath = UserManager.user.confPath + element;
 		folderPath = folderPath.replace(' ', '\\ ');
-		c.log('Will delete: ' + folderPath);
+		// @if NODE_ENV='development'
+		c.log('[ORYOKI] Will delete: ' + folderPath);
+		// @endif
 		exec('cd ' + folderPath + ' && rm *');
 
 	});
@@ -139,7 +143,9 @@ Oryoki.prototype.clearCaches = function() {
 Oryoki.prototype.clearLocalStorage = function() {
 
 	var folderPath = UserManager.user.confPath.replace(' ', '\\ ') + 'Local\\ Storage';
-	c.log('Will delete: ' + folderPath);
+	// @if NODE_ENV='development'
+	c.log('[ORYOKI] Will delete: ' + folderPath);
+	// @endif
 	exec('cd ' + folderPath + ' && rm *');
 
 }
