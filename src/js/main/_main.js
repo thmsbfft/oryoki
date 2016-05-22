@@ -1,19 +1,4 @@
 function pad(n) { return ("0" + n).slice(-2); }
-var Console = require('console').Console;
-var fs = require('fs');
-var output = fs.createWriteStream('./stdout.log');
-var c = new Console(output);
-
-var hrs = pad(new Date().getHours());
-var min = pad(new Date().getMinutes());
-var sec = pad(new Date().getSeconds());
-var time = hrs + ':' + min + ':' + sec;
-
-c.log('');
-c.log('--------');
-c.log(time);
-c.log('--------');
-c.log('');
 
 function User(name, factory) {
 
@@ -134,7 +119,6 @@ UserManager.prototype.getPreferenceByName = function(name) {
 
 UserManager.prototype.resetUserPreferencesToFactory = function() {
 	fs.writeFile(this.user.confPath + '/' + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), function(err) {
-		if(err) c.log(err);
 	});
 }
 
@@ -145,7 +129,6 @@ function CommandManager() {
 	this.register = {};
 	this.template = undefined;
 	this.menu = undefined;
-	c.log('INIT COMMANDMANAGER');
 
 	// Allow for renderer to set menus
 	ipcMain.on('set-menu-enabled', function(event, menuLabel, subMenuLabel, value) {
@@ -874,12 +857,10 @@ Camera.prototype.cleanTmpRecording = function() {
 }
 function Window(parameters) {
 
-	c.log('INIT WINDOW');
 
 	this.id = parameters.id;
 
 	if(parameters.url != null) {
-		c.log(parameters.url);
 		this.url = parameters.url;
 	}
 
@@ -920,12 +901,10 @@ function Window(parameters) {
 		onRecordingEnd: this.unlockDimensions.bind(this)
 	});
 
-	c.log('file://' + __dirname + '/src/html/index.html');
 
 	this.attachEvents();
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html' + '#' + this.id);
 
-	this.browser.webContents.openDevTools();
 }
 
 Window.prototype.attachEvents = function() {
@@ -1030,20 +1009,17 @@ Window.prototype.setOmniboxHide = function() {
 }
 
 Window.prototype.showOmnibox = function() {
-	c.log('Showing Omnibox');
 	this.omnibox = true;
 	this.browser.webContents.send('showOmnibox');
 }
 
 Window.prototype.hideOmnibox = function() {
-	c.log('Hiding Omnibox');
 	this.omnibox = false;
 	this.browser.webContents.send('hideOmnibox');
 }
 
 Window.prototype.toggleHandle = function() {
 	if(this.handle) {
-		c.log('Hiding handle!');
 		this.handle = false;
 		this.browser.webContents.send('hideHandle');
 		this.browser.setSize(
@@ -1052,7 +1028,6 @@ Window.prototype.toggleHandle = function() {
 		);
 	}
 	else {
-		c.log('Showing handle');
 		this.handle = true;
 		this.browser.webContents.send('showHandle');
 		this.browser.setSize(
@@ -1080,7 +1055,6 @@ Window.prototype.toggleConsole = function() {
 }
 
 Window.prototype.toggleOmnibox = function() {
-	c.log('Toggling Omnibox');
 	if(this.omnibox) {
 		this.hideOmnibox();
 	}
@@ -1188,12 +1162,10 @@ Oryoki.prototype.createWindow = function(e, url) {
 		var url = UserManager.getPreferenceByName("homepage_url");
 	}
 
-	c.log('Creating new window...');
 
 	this.windowsIndex++;
 	this.windowCount++;
 
-	c.log('Currently ', this.windowsCount, 'windows open');
 
 	if(this.windowCount == 1) {
 		this.windows[this.windowsIndex] = new Window({
@@ -1218,7 +1190,6 @@ Oryoki.prototype.createWindow = function(e, url) {
 
 Oryoki.prototype.onFocusChange = function(w) {
 	this.focusedWindow = w;
-	c.log('New focus: ', this.focusedWindow.id);
 }
 
 Oryoki.prototype.closeWindow = function() {
@@ -1229,7 +1200,6 @@ Oryoki.prototype.closeWindow = function() {
 
 Oryoki.prototype.onCloseWindow = function() {
 	if(this.windowCount > 0) {
-		c.log('Closing window #'+ this.focusedWindow.id);
 		// this.focusedWindow.close();
 		this.windowCount--;
 		var index = this.windows.indexOf(this.focusedWindow);
