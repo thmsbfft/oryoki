@@ -263,6 +263,7 @@ Camera.prototype.stopRecording = function() {
 					this.cleanTmpRecording();
 				}.bind(this))
 				.on('error', function(err) {
+					throw err;
 					// @if NODE_ENV='development'
 					c.log('Error encoding: ' + err.message);
 					// @endif
@@ -292,6 +293,7 @@ Camera.prototype.stopRecording = function() {
 					this.cleanTmpRecording();
 				}.bind(this))
 				.on('error', function(err) {
+					throw err;
 					// @if NODE_ENV='development'
 					c.log('Error encoding: ' + err.message);
 					// @endif
