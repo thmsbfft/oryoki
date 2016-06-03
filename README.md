@@ -4,6 +4,6 @@
 
 ## Status
 
-Almost Beta. The project is actively being developped by [@thmsbfft](https://twitter.com/thmsbfft).
+Almost Beta. Developped by [@thmsbfft](https://twitter.com/thmsbfft).
 
 #### License [MIT](LICENSE.md)
