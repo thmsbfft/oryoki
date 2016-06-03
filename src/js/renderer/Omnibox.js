@@ -26,7 +26,7 @@ function Omnibox(parameters) {
 
 	this.attachEvents();
 	
-	console.log('[R] Created Omnibox');
+	console.log('[Omnibox] Created Omnibox');
 	this.show();
 
 }
@@ -85,7 +85,7 @@ Omnibox.prototype.submit = function() {
 
 	if(this.mode == 'url') {
 		if(domain.test(raw) || port.test(raw)) {
-			// console.log('This is a domain!');
+			// This is a domain
 			if (!raw.match(/^[a-zA-Z]+:\/\//))
 			{
 			    output = 'http://' + raw;
@@ -95,7 +95,7 @@ Omnibox.prototype.submit = function() {
 			}
 		}
 		else {
-			// console.log('This is not a domain!');
+			// This is not a domain
 			output = 'https://www.google.com/ncr?gws_rd=ssl#q=' + raw;
 		}
 	}
@@ -109,7 +109,6 @@ Omnibox.prototype.submit = function() {
 
 Omnibox.prototype.switchMode = function() {
 
-	console.log('Switching mode');
 	this.input.value = '';
 	this.modeIndex++;
 	if(this.modeIndex >= Object.keys(this.modes).length) {
@@ -124,6 +123,9 @@ Omnibox.prototype.switchMode = function() {
 Omnibox.prototype.show = function() {
 
 	this.isVisible = true;
+	if (Browser.view) {
+		this.input.value = Browser.view.webview.getAttribute('src').split('://')[1];
+	}
 	removeClass(this.el, 'hide');
 	addClass(this.el, 'show');
 	this.focus();
@@ -150,5 +152,5 @@ Omnibox.prototype.isFocus = function() {
 Omnibox.prototype.focus = function() {
 
 	this.el.querySelectorAll('input')[0].focus();
-	
+
 }

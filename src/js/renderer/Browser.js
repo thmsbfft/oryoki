@@ -6,6 +6,14 @@ function Browser(parameters) {
 	this.isHandleDisplayed = ipcRenderer.sendSync('get-preference', 'show_title_bar');
 	this.frame = document.querySelectorAll('#frame')[0];
 
+	this.view = new View({
+		'id' : this.id,
+		'onDidFinishLoad' : this.onDidFinishLoad.bind(this),
+		'onDOMReady' : this.onDOMReady.bind(this),
+		'onPageTitleUpdated' : this.onPageTitleUpdated.bind(this),
+		'onConsoleMessage' : this.onConsoleMessage.bind(this)
+	});
+
 	this.omnibox = new Omnibox({
 		'mode' : 'url',
 		'onsubmit' : this.onSubmit.bind(this)
@@ -17,14 +25,6 @@ function Browser(parameters) {
 
 	this.console = new Console({
 		'id' : this.id
-	});
-
-	this.view = new View({
-		'id' : this.id,
-		'onDidFinishLoad' : this.onDidFinishLoad.bind(this),
-		'onDOMReady' : this.onDOMReady.bind(this),
-		'onPageTitleUpdated' : this.onPageTitleUpdated.bind(this),
-		'onConsoleMessage' : this.onConsoleMessage.bind(this)
 	});
 
 	this.dragOverlay = document.querySelectorAll('#dragOverlay')[0];
@@ -162,7 +162,7 @@ Browser.prototype.hideConsole = function() {
 }
 
 Browser.prototype.load = function(e, url) {
-	console.log('Loading new window url: ', url);
+	console.log('[R] Loading new window url: ', url);
 	this.omnibox.hide();
 	this.view.load(url);
 }
