@@ -35,6 +35,9 @@ Omnibox.prototype.attachEvents = function() {
 
 	this.input.addEventListener('keydown', this.onInputKeyDown.bind(this));
 	this.input.addEventListener('keyup', this.onInputKeyUp.bind(this));
+	this.input.addEventListener('copy', this.onCopy.bind(this));
+	this.input.addEventListener('cut', this.onCopy.bind(this));
+
 	this.tab.addEventListener('click', this.switchMode.bind(this));
 
 	// Always keep the omnibox in focus
@@ -71,6 +74,27 @@ Omnibox.prototype.onInputKeyUp = function(e) {
 	}
 	if(e.key == "Escape") {
 		if(!Browser.isFirstLoad) this.hide()
+	}
+
+}
+
+Omnibox.prototype.onCopy = function(e) {
+
+	console.log('[OMNIBOX] Copy');
+
+	var selectionRangeLength = window.getSelection().toString().length;
+
+	if(selectionRangeLength == this.input.value.length && selectionRangeLength != 0) {
+		
+		// If all input is selected
+		// copy full URL from webview
+		if(Browser.view.webview.getAttribute('src') != null) {
+
+			clipboard.writeText(Browser.view.webview.getAttribute('src'));
+			if(e.type == 'cut') this.input.value = '';
+			e.preventDefault();
+
+		}
 	}
 
 }
@@ -129,7 +153,7 @@ Omnibox.prototype.show = function() {
 	removeClass(this.el, 'hide');
 	addClass(this.el, 'show');
 	this.focus();
-	this.el.querySelectorAll('input')[0].select();
+	this.input.select();
 	ipcRenderer.send('setOmniboxShow');
 
 }
