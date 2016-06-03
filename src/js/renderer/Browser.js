@@ -40,7 +40,6 @@ function Browser(parameters) {
 }
 
 Browser.prototype.attachEvents = function() {
-	console.log('Attaching events');
 
 	window.addEventListener('resize', this.resize.bind(this));
 
@@ -69,6 +68,7 @@ Browser.prototype.attachEvents = function() {
 }
 
 Browser.prototype.resize = function() {
+
 	if(this.isHandleDisplayed) {
 		this.frame.style.width = window.innerWidth+"px";
 		this.frame.style.height = (window.innerHeight - this.handle.el.offsetHeight+1) + 'px';
@@ -77,6 +77,7 @@ Browser.prototype.resize = function() {
 		this.frame.style.width = window.innerWidth+"px";
 		this.frame.style.height = window.innerHeight+"px";
 	}
+
 }
 
 Browser.prototype.onKeyDown = function(e) {
@@ -101,12 +102,12 @@ Browser.prototype.onKeyUp = function(e) {
 }
 
 Browser.prototype.onSubmit = function(input) {
-	console.log('Browser submit!');
+	console.log('[BROWSER] Submit');
 	this.view.load(input);
 }
 
 Browser.prototype.onDOMReady = function() {
-	console.log('DOM Ready!');
+	console.log('[BROWSER] DOM Ready');
 	this.handle.changeTitle(this.view.getTitle());
 }
 
@@ -162,7 +163,7 @@ Browser.prototype.hideConsole = function() {
 }
 
 Browser.prototype.load = function(e, url) {
-	console.log('[R] Loading new window url: ', url);
+	console.log('[BROWSER] Loading new window url: ', url);
 	this.omnibox.hide();
 	this.view.load(url);
 }
