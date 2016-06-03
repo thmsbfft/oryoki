@@ -2,6 +2,7 @@ function Notification(parameters) {
 
 	this.context = parameters.context;
 	this.onDeathCallback = parameters.onDeath;
+
 	this.el = undefined;
 	this.id = parameters.id;
 	this.callback = parameters.onclick;
@@ -9,7 +10,8 @@ function Notification(parameters) {
 
 	this.body = parameters.body;
 	this.lifespan = parameters.lifespan;
-	
+	this.maxBodyLength = 30;
+
 	this.build();
 }
 
@@ -18,6 +20,11 @@ Notification.prototype.build = function() {
 	this.el = document.createElement('div');
 	this.el.className = 'notification';
 	if(this.type) addClass(this.el, this.type);
+
+	// Cut too long notifications
+	if(this.body.length > this.maxBodyLength) {
+		this.body = this.body.substring(0, this.maxBodyLength) + '...';
+	}
 
 	this.el.id = this.id;
 	this.el.innerHTML = this.body;
