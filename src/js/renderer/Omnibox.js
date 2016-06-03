@@ -6,14 +6,13 @@ function Omnibox(parameters) {
 		'url' : 'Search',
 		'lucky' : 'Lucky'
 	};
+
 	this.modeIndex = 0;
 	this.mode = Object.keys(this.modes)[this.modeIndex];
 
 	this.el = document.getElementsByTagName('omnibox')[0];
 	this.htmlData = undefined;
 	this.submitCallback = parameters.onsubmit;
-
-	console.log('Omnibox!');
 
 	this.isTabDown = false;
 
@@ -26,6 +25,8 @@ function Omnibox(parameters) {
 	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
 
 	this.attachEvents();
+	
+	console.log('[R] Created Omnibox');
 	this.show();
 
 }
@@ -45,8 +46,7 @@ Omnibox.prototype.attachEvents = function() {
 }
 
 Omnibox.prototype.onInputKeyDown = function(e) {
-	if(!e) var e = window.event;
-	// console.log(e.keyCode);
+
 	if(e.keyCode == 9) {
 		if(!this.isTabDown) this.switchMode();
 		addClass(this.tab, 'active');
@@ -56,9 +56,11 @@ Omnibox.prototype.onInputKeyDown = function(e) {
 	if(e.keyCode == 13) {
 		addClass(this.input, 'highlight');
 	}
+
 }
 
 Omnibox.prototype.onInputKeyUp = function(e) {
+
 	if(e.keyCode == 9) {
 		this.isTabDown = false;
 		removeClass(this.tab, 'active');
@@ -70,6 +72,7 @@ Omnibox.prototype.onInputKeyUp = function(e) {
 	if(e.key == "Escape") {
 		if(!Browser.isFirstLoad) this.hide()
 	}
+
 }
 
 Omnibox.prototype.submit = function() {
@@ -101,9 +104,11 @@ Omnibox.prototype.submit = function() {
 	}
 
 	this.submitCallback(output);
+
 }
 
 Omnibox.prototype.switchMode = function() {
+
 	console.log('Switching mode');
 	this.input.value = '';
 	this.modeIndex++;
@@ -113,28 +118,37 @@ Omnibox.prototype.switchMode = function() {
 	this.mode = Object.keys(this.modes)[this.modeIndex];
 
 	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
+
 }
 
 Omnibox.prototype.show = function() {
+
 	this.isVisible = true;
 	removeClass(this.el, 'hide');
 	addClass(this.el, 'show');
 	this.focus();
 	this.el.querySelectorAll('input')[0].select();
 	ipcRenderer.send('setOmniboxShow');
+
 }
 
 Omnibox.prototype.hide = function() {
+
 	this.isVisible = false;
 	removeClass(this.el, 'show');
 	addClass(this.el, 'hide');
 	ipcRenderer.send('setOmniboxHide');
+
 }
 
 Omnibox.prototype.isFocus = function() {
+
 	return this.input === document.activeElement;
+
 }
 
 Omnibox.prototype.focus = function() {
+
 	this.el.querySelectorAll('input')[0].focus();
+	
 }
