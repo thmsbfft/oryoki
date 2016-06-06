@@ -83,7 +83,7 @@ Browser.prototype.resize = function() {
 Browser.prototype.onKeyDown = function(e) {
 
 	if(e.altKey && !e.shiftKey && !e.metaKey && !e.ctrlKey) {
-		if(ipcRenderer.sendSync('get-preference', 'use_alt_drag')) {
+		if(ipcRenderer.sendSync('get-preference', 'use_alt_drag') && !ipcRenderer.sendSync('is-fullscreen', this.id)) {
 			addClass(this.dragOverlay, 'active');
 		}
 	}

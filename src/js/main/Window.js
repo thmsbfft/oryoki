@@ -77,6 +77,12 @@ Window.prototype.attachEvents = function() {
 		}
 	}.bind(this));
 
+	ipcMain.on('is-fullscreen', function(event, id) {
+		if(this.id == id) {
+			event.returnValue = this.browser.isFullScreen();
+		}
+	}.bind(this));
+
 	ipcMain.on('setWindowSize', function(e, width, height, windowId) {
 		if(this.id == windowId) this.setSize(width, height);
 	}.bind(this));
