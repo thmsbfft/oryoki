@@ -13,6 +13,7 @@
     "electron-packager": "^7.0.2",
     "electron-prebuilt": "^1.2.1",
     "fluent-ffmpeg": "^2.0.1",
+    "gm": "^1.22.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-copy": "0.0.2",
