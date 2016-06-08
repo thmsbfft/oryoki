@@ -34,7 +34,7 @@ var renderer = [
 
 // ELECTRON
 gulp.task('console', function() {
-	return 	run('ttab tail -f stdout.log').exec();
+	return run('ttab tail -f stdout.log').exec();
 });
 
 gulp.task('start', function() {

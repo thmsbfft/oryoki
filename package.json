@@ -3,6 +3,10 @@
   "productName": "Oryoki",
   "version": "0.0.3",
   "description": "",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/thmsbfft/oryoki.git"
+  },
   "main": "main.js",
   "scripts": {
     "start": "electron main.js",
