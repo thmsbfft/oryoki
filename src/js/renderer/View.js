@@ -18,7 +18,7 @@ function View(parameters) {
 	this.loadingTimerStart = undefined;
 	this.loadingTimerEnd = undefined;
 
-	console.log('View!');
+	console.log('[View] ☑️');
 
 	this.build();
 }
@@ -35,7 +35,7 @@ View.prototype.build = function() {
 
 View.prototype.attachEvents = function() {
 
-	console.log('Attaching Webview Events');
+	console.log('[View] Attaching Events');
 
 	// Loading Events
 	this.webview.addEventListener('load-commit', this.onLoadCommit.bind(this));

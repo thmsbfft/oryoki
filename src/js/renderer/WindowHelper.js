@@ -7,7 +7,7 @@ function WindowHelper(parameters) {
 	this.widthInput = this.el.querySelectorAll('#width')[0];
 	this.heightInput = this.el.querySelectorAll('#height')[0];
 
-	console.log('Window Helper');
+	console.log('[Window Helper] ☑️');
 
 	window.addEventListener('resize', this.updateWindowDimensions.bind(this));
 

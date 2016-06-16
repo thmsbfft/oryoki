@@ -7,8 +7,8 @@ function Oryoki() {
 	});
 
 	// @if NODE_ENV='development'
-	c.log(app.getName());
-	c.log(app.getVersion());
+	c.log('[Oryoki] ✔');
+	c.log('[Oryoki] v.' + app.getVersion());
 	// @endif
 
 	this.versions = {
@@ -46,14 +46,14 @@ Oryoki.prototype.createWindow = function(e, url) {
 	}
 
 	// @if NODE_ENV='development'
-	c.log('Creating new window...');
+	c.log('[Oryoki] Creating new window');
 	// @endif
 
 	this.windowsIndex++;
 	this.windowCount++;
 
 	// @if NODE_ENV='development'
-	c.log('Currently ', this.windowsCount, 'windows open');
+	c.log('[Oryoki] Currently', this.windowCount, 'windows open');
 	// @endif
 
 	if(this.windowCount == 1) {
@@ -80,7 +80,7 @@ Oryoki.prototype.createWindow = function(e, url) {
 Oryoki.prototype.onFocusChange = function(w) {
 	this.focusedWindow = w;
 	// @if NODE_ENV='development'
-	c.log('New focus: ', this.focusedWindow.id);
+	c.log('[Oryoki] New focus:', this.focusedWindow.id);
 	// @endif
 }
 
@@ -93,7 +93,7 @@ Oryoki.prototype.closeWindow = function() {
 Oryoki.prototype.onCloseWindow = function() {
 	if(this.windowCount > 0) {
 		// @if NODE_ENV='development'
-		c.log('Closing window #'+ this.focusedWindow.id);
+		c.log('[Oryoki] Closing window #'+ this.focusedWindow.id);
 		// @endif
 		// this.focusedWindow.close();
 		this.windowCount--;

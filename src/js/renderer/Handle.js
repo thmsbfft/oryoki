@@ -4,7 +4,7 @@ function Handle(parameters) {
 	this.title = undefined;
 	this.htmlData = undefined;
 
-	console.log('Handle');
+	console.log('[Handle] ☑️');
 
 	if(ipcRenderer.sendSync('get-preference', 'show_title_bar')) {
 		this.show();

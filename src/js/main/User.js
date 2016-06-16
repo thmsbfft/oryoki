@@ -57,7 +57,7 @@ User.prototype.getPreferences = function() {
 User.prototype.getConfFile = function(fileName, callback) {
 
 	// @if NODE_ENV='development'
-	c.log('[USER] Getting conf file: ' + fileName);
+	c.log('[User] Getting conf file: ' + fileName);
 	// @endif
 
 	try {

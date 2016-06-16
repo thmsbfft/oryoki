@@ -3,7 +3,7 @@ function CommandManager() {
 	this.template = undefined;
 	this.menu = undefined;
 	// @if NODE_ENV='development'
-	c.log('INIT COMMANDMANAGER');
+	c.log('[Command Manager] ✔');
 	// @endif
 
 	// Allow for renderer to set menus
