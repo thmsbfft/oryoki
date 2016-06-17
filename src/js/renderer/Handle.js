@@ -16,6 +16,7 @@ function Handle(parameters) {
 }
 
 Handle.prototype.build = function() {
+
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'handle.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
 	this.title = this.el.querySelectorAll('.title')[0];
@@ -23,9 +24,11 @@ Handle.prototype.build = function() {
 	this.minimizeBtn = this.el.querySelectorAll('.button.minimize')[0];
 	this.fullscreenBtn = this.el.querySelectorAll('.button.fullscreen')[0];
 	this.attachEvents();
+
 }
 
 Handle.prototype.attachEvents = function() {
+
 	this.closeBtn.addEventListener('click', function() {
 		ipcRenderer.send('closeWindow');
 	});
@@ -36,26 +39,35 @@ Handle.prototype.attachEvents = function() {
 		ipcRenderer.send('fullscreenWindow');
 	});
 	this.title.addEventListener('mouseup', this.openMenu.bind(this));
+
 }
 
 Handle.prototype.hide = function() {
+
 	this.el.className = 'hide';
+
 }
 
 Handle.prototype.show = function() {
+
 	this.el.className = 'show';
+
 }
 
 Handle.prototype.changeTitle = function(newTitle) {
+
 	this.el.setAttribute('title', newTitle);
 	if(newTitle.length > 60) {
 		newTitle = newTitle.substring(0, 60) + '...';
 	}
 	this.title.innerHTML = newTitle;
+
 }
 
 Handle.prototype.getTitle = function() {
+
 	return this.title.innerHTML;
+
 }
 
 Handle.prototype.openMenu = function(e) {
@@ -67,6 +79,7 @@ Handle.prototype.openMenu = function(e) {
 		new MenuItem(
 			{
 				label: 'Copy URL',
+				enabled: !Browser.isFirstLoad,
 				click: function() {
 					clipboard.writeText(Browser.view.webview.getAttribute('src'));
 				}
