@@ -33,7 +33,9 @@ function Camera(parameters) {
 
 Camera.prototype.attachEvents = function() {
 
-	ipcMain.on('copy-screenshot', this.copyScreenshot.bind(this));
+	ipcMain.on('copy-screenshot', function(event, id) {
+		this.copyScreenshot(id);
+	}.bind(this));
 
 }
 
@@ -66,18 +68,20 @@ Camera.prototype.takeScreenshot = function() {
 
 }
 
-Camera.prototype.copyScreenshot = function() {
+Camera.prototype.copyScreenshot = function(id) {
 
-	this.browser.capturePage(function(image) {
+	if(id == this.id) {
+		this.browser.capturePage(function(image) {
 
-		clipboard.writeImage(image);
+			clipboard.writeImage(image);
 
-		this.browser.webContents.send('display-notification', {
-			'body' : 'Screenshot copied to clipboard',
-			'lifespan' : 3000,
-		});
+			this.browser.webContents.send('display-notification', {
+				'body' : 'Screenshot copied to clipboard',
+				'lifespan' : 3000,
+			});
 
-	}.bind(this));
+		}.bind(this));
+	}
 
 }
 

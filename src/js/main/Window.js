@@ -44,6 +44,7 @@ function Window(parameters) {
 	});
 
 	this.camera = new Camera({
+		id: this.id,
 		browser: this.browser,
 		onRecordingBegin: this.lockDimensions.bind(this),
 		onRecordingEnd: this.unlockDimensions.bind(this)

@@ -298,7 +298,7 @@ CommandManager.prototype.createMenus = function() {
 					accelerator: 'Cmd+Shift+C',
 					click: function() {
 						if(Oryoki.focusedWindow) {
-							Oryoki.focusedWindow.camera.copyScreenshot();
+							Oryoki.focusedWindow.camera.copyScreenshot(Oryoki.focusedWindow.id);
 						}
 					}
 				},

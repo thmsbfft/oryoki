@@ -91,7 +91,7 @@ Handle.prototype.openMenu = function(e) {
 			{
 				label: 'Copy Screenshot',
 				click: function() {
-					ipcRenderer.send('copy-screenshot');
+					ipcRenderer.send('copy-screenshot', Browser.id);
 				}
 			}
 		)
