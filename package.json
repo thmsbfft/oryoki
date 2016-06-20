@@ -3,9 +3,9 @@
   "productName": "Oryoki",
   "version": "0.0.3",
   "description": "",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/thmsbfft/oryoki.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thmsbfft/oryoki.git"
   },
   "main": "main.js",
   "scripts": {
@@ -14,8 +14,8 @@
   },
   "devDependencies": {
     "electron-localshortcut": "^0.6.0",
-    "electron-packager": "^7.0.2",
-    "electron-prebuilt": "^1.2.1",
+    "electron-packager": "^7.0.4",
+    "electron-prebuilt": "^1.2.3",
     "fluent-ffmpeg": "^2.0.1",
     "gm": "^1.22.0",
     "gulp": "^3.9.0",
@@ -25,8 +25,8 @@
     "gulp-livereload": "^3.8.1",
     "gulp-preprocess": "^2.0.0",
     "gulp-rename": "^1.2.2",
-    "gulp-run": "^1.6.12",
-    "gulp-sass": "^2.1.1",
+    "gulp-run": "^1.7.1",
+    "gulp-sass": "^2.3.2",
     "openurl": "^1.1.1",
     "preprocess": "^3.0.2"
   }
