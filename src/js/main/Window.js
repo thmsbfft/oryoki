@@ -139,6 +139,10 @@ Window.prototype.close = function() {
 }
 
 Window.prototype.onClosed = function() {
+	// @if NODE_ENV='development'
+	c.log('[Window] Closed');
+	// @endif
+	// this.camera.abortProcesses();
 	CommandManager.unregisterAll(this.browser);
 	this.browser = null;
 	this.onCloseCallback();

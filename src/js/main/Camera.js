@@ -8,6 +8,7 @@ function Camera(parameters) {
 	this.onRecordingEndCallback = parameters.onRecordingEnd;
 
 	this.isRecording = false;
+	this.isEncoding = false;
 	this.recordingPath = UserManager.user.tmpPath + '/' + 'Recording';
 
 	// Create tmp recording path if not there yet
@@ -24,9 +25,8 @@ function Camera(parameters) {
 		}
 	}
 
-	this.videoStream = undefined;
+	this.ffmpegCommand = undefined;
 	this.frameCount = 0;
-
 
 	this.attachEvents();
 }
@@ -94,7 +94,6 @@ Camera.prototype.revealScreenshot = function() {
 Camera.prototype.startRecording = function() {
 
 	if(!this.isRecording) {
-
 		// @if NODE_ENV='development'
 		c.log('[CAMERA] Start recording');
 		// @endif
@@ -252,20 +251,15 @@ Camera.prototype.stopRecording = function() {
 
 		case "lossless":
 
-			encoding = ffmpeg()
+			this.ffmpegCommand = ffmpeg()
 				.on('start', function() {
+					this.isEncoding = true;
 					this.browser.webContents.send('display-notification', {
 						'body' : 'Encoding lossless video...',
 						'lifespan' : 3000,
 					});
 				}.bind(this))
-				.on('end', function() {
-					this.browser.webContents.send('display-notification', {
-						'body' : 'Finished encoding',
-						'lifespan' : 3000,
-					});
-					this.cleanTmpRecording();
-				}.bind(this))
+				.on('end', this.onEncodingEnd.bind(this))
 				.on('error', function(err) {
 					throw err;
 					// @if NODE_ENV='development'
@@ -282,20 +276,15 @@ Camera.prototype.stopRecording = function() {
 		
 		case "lossy":
 
-			encoding = ffmpeg()
+			this.ffmpegCommand = ffmpeg()
 				.on('start', function() {
+					this.isEncoding = true;
 					this.browser.webContents.send('display-notification', {
 						'body' : 'Encoding lossy video...',
 						'lifespan' : 3000,
 					});
 				}.bind(this))
-				.on('end', function() {
-					this.browser.webContents.send('display-notification', {
-						'body' : 'Finished encoding',
-						'lifespan' : 3000,
-					});
-					this.cleanTmpRecording();
-				}.bind(this))
+				.on('end', this.onEncodingEnd.bind(this))
 				.on('error', function(err) {
 					throw err;
 					// @if NODE_ENV='development'
@@ -319,6 +308,23 @@ Camera.prototype.stopRecording = function() {
 			// @endif
 
 	}
+
+}
+
+Camera.prototype.onEncodingEnd = function() {
+
+	this.isEncoding = false;
+
+	try {
+		this.browser.webContents.send('display-notification', {
+			'body' : 'Finished encoding',
+			'lifespan' : 3000,
+		});
+	}
+	catch(err) { return; }
+
+	this.cleanTmpRecording();
+	this.ffmpegCommand = undefined;
 
 }
 

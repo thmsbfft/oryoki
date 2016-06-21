@@ -86,6 +86,9 @@ Oryoki.prototype.onFocusChange = function(w) {
 
 Oryoki.prototype.closeWindow = function() {
 	// This function to be triggered when click on emulated traffic lights.
+	// @if NODE_ENV='development'
+	c.log('[Oryoki] Close window');
+	// @endif
 	this.focusedWindow.close();
 	this.onCloseWindow();
 }
@@ -95,7 +98,7 @@ Oryoki.prototype.onCloseWindow = function() {
 		// @if NODE_ENV='development'
 		c.log('[Oryoki] Closing window #'+ this.focusedWindow.id);
 		// @endif
-		// this.focusedWindow.close();
+
 		this.windowCount--;
 		var index = this.windows.indexOf(this.focusedWindow);
 		if (index > -1) {
