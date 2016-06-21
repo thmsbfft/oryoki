@@ -90,6 +90,7 @@ Handle.prototype.openMenu = function(e) {
 		new MenuItem(
 			{
 				label: 'Copy Screenshot',
+				accelerator: 'Cmd+Shift+C',
 				click: function() {
 					ipcRenderer.send('copy-screenshot', Browser.id);
 				}
@@ -126,6 +127,7 @@ Handle.prototype.openMenu = function(e) {
 			new MenuItem(
 				{
 					label: 'Back',
+					accelerator: 'Cmd+Left',
 					enabled: Browser.view.webview.canGoBack(),
 					click: () => {
 						Browser.view.webview.goBack();
@@ -137,6 +139,7 @@ Handle.prototype.openMenu = function(e) {
 			new MenuItem(
 				{
 					label: 'Forward',
+					accelerator: 'Cmd+Right',
 					enabled: Browser.view.webview.canGoForward(),
 					click: () => {
 						Browser.view.webview.goForward();
@@ -149,6 +152,7 @@ Handle.prototype.openMenu = function(e) {
 		new MenuItem(
 			{
 				label: 'Reload',
+				accelerator: 'Cmd+R',
 				enabled: !Browser.view.isFirstLoad,
 				click: () => {
 					Browser.view.webview.reload();
