@@ -285,7 +285,7 @@ CommandManager.prototype.createMenus = function() {
 					type: 'separator'
 				},
 				{
-					label: 'Screenshot',
+					label: 'Save Screenshot',
 					accelerator: 'Cmd+Shift+`',
 					click: function() {
 						if(Oryoki.focusedWindow) {
