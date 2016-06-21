@@ -26,16 +26,20 @@ function Oryoki() {
 	if(UserManager.getPreferenceByName("clear_cache_on_launch")) this.clearCaches();
 	if(UserManager.getPreferenceByName("override_download_path")) app.setPath('downloads', UserManager.getPreferenceByName("download_path"));
 	this.createWindow();
+
 }
 
 Oryoki.prototype.attachEvents = function() {
+
 	ipcMain.on('newWindow', this.createWindow.bind(this));
 	ipcMain.on('minimizeWindow', this.minimizeWindow.bind(this));
 	ipcMain.on('closeWindow', this.closeWindow.bind(this));
 	ipcMain.on('fullscreenWindow', this.toggleFullScreen.bind(this));
+
 }
 
 Oryoki.prototype.createWindow = function(e, url) {
+
 	if(url) {
 		// _target = blank
 		var url = url[0];
@@ -57,6 +61,7 @@ Oryoki.prototype.createWindow = function(e, url) {
 	// @endif
 
 	if(this.windowCount == 1) {
+		// No window open -> create a centered window
 		this.windows[this.windowsIndex] = new Window({
 			'id' : this.windowsIndex,
 			'url' : url ? url : null,
@@ -66,6 +71,7 @@ Oryoki.prototype.createWindow = function(e, url) {
 		this.windows[this.windowsIndex].browser.center();
 	}
 	else {
+		// Window already open -> create a window offset relative to focused window
 		this.windows[this.windowsIndex] = new Window({
 			'id' : this.windowsIndex,
 			'url' : url ? url : null,
@@ -75,52 +81,67 @@ Oryoki.prototype.createWindow = function(e, url) {
 			'y' : this.focusedWindow.browser.getPosition()[1]+50
 		});
 	}
+
 }
 
 Oryoki.prototype.onFocusChange = function(w) {
+
 	this.focusedWindow = w;
+	
 	// @if NODE_ENV='development'
 	c.log('[Oryoki] New focus:', this.focusedWindow.id);
 	// @endif
+
 }
 
 Oryoki.prototype.closeWindow = function() {
+
 	// This function to be triggered when click on emulated traffic lights.
+
 	// @if NODE_ENV='development'
 	c.log('[Oryoki] Close window');
 	// @endif
+	
 	this.focusedWindow.close();
 	this.onCloseWindow();
+
 }
 
 Oryoki.prototype.onCloseWindow = function() {
+
 	if(this.windowCount > 0) {
 		// @if NODE_ENV='development'
 		c.log('[Oryoki] Closing window #'+ this.focusedWindow.id);
 		// @endif
-
 		this.windowCount--;
 		var index = this.windows.indexOf(this.focusedWindow);
 		if (index > -1) {
 			this.windows.splice(index, 1);
 		}
 	}
+
 	if(this.windowCount == 0) {
 		this.focusedWindow = null;
 	}
+
 }
 
 Oryoki.prototype.minimizeWindow = function() {
+
 	if(this.windowCount > 0) {
 		this.focusedWindow.browser.minimize();
 	}
+
 }
 
 Oryoki.prototype.toggleFullScreen = function() {
+
 	if(this.windowCount > 0) {
 		this.focusedWindow.browser.setFullScreen(!this.focusedWindow.browser.isFullScreen());
 	}
+
 	CommandManager.toggleChecked('View', 'Fullscreen');
+
 }
 
 Oryoki.prototype.clearCaches = function() {

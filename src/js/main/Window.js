@@ -6,9 +6,12 @@ function Window(parameters) {
 
 	this.id = parameters.id;
 
+	app.commandLine.appendSwitch('enable-webvr');
+	app.commandLine.appendSwitch('enable-web-bluetooth');
+
 	if(parameters.url != null) {
 		// @if NODE_ENV='development'
-		c.log(parameters.url);
+		c.log('[Window] Creating with URL: ' + parameters.url);
 		// @endif
 		this.url = parameters.url;
 	}
@@ -22,9 +25,6 @@ function Window(parameters) {
 	this.windowHelper = false;
 	this.isAlwaysOnTop = false;
 	this.isFirstLoad = true;
-	
-	app.commandLine.appendSwitch('enable-webvr');
-	app.commandLine.appendSwitch('enable-web-bluetooth');
 
 	this.browser = new BrowserWindow({
 	  width: UserManager.getPreferenceByName('default_window_width'),
@@ -130,15 +130,20 @@ Window.prototype.onReady = function() {
 }
 
 Window.prototype.onFocus = function() {
+
 	this.onFocusCallback(this);
 	this.updateMenus();
+
 }
 
 Window.prototype.close = function() {
+
 	this.browser.close();
+
 }
 
 Window.prototype.onClosed = function() {
+
 	// @if NODE_ENV='development'
 	c.log('[Window] Closed');
 	// @endif
@@ -146,50 +151,67 @@ Window.prototype.onClosed = function() {
 	CommandManager.unregisterAll(this.browser);
 	this.browser = null;
 	this.onCloseCallback();
+
 }
 
 Window.prototype.toggleDevTools = function() {
+
 	this.browser.webContents.send('toggleDevTools');
+
 }
 
 Window.prototype.updateMenus = function() {
+
 	CommandManager.setCheckbox('Window', 'Float on Top', this.isAlwaysOnTop);
 	CommandManager.setCheckbox('View', 'Title Bar', this.handle);
 	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
 	CommandManager.setCheckbox('Tools', 'Window Helper', this.windowHelper);
-	if(this.browser) {
-		CommandManager.setCheckbox('View', 'Fullscreen', this.browser.isFullScreen());
-	}
 	CommandManager.setEnabled('View', 'Toggle Omnibox', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Mini Console', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Toggle Devtools', !this.isFirstLoad);
+
+	if(this.browser) {
+		CommandManager.setCheckbox('View', 'Fullscreen', this.browser.isFullScreen());
+	}
+
 }
 
 Window.prototype.setOmniboxShow = function() {
+
 	this.omnibox = true;
+
 }
 
 Window.prototype.setOmniboxHide = function() {
+
 	this.omnibox = false;
+
 }
 
 Window.prototype.showOmnibox = function() {
+
 	// @if NODE_ENV='development'
 	c.log('[Window] Showing Omnibox');
 	// @endif
+
 	this.omnibox = true;
 	this.browser.webContents.send('showOmnibox');
+
 }
 
 Window.prototype.hideOmnibox = function() {
+
 	// @if NODE_ENV='development'
 	c.log('[Window] Hiding Omnibox');
 	// @endif
+
 	this.omnibox = false;
 	this.browser.webContents.send('hideOmnibox');
+
 }
 
 Window.prototype.toggleHandle = function() {
+
 	if(this.handle) {
 		// @if NODE_ENV='development'
 		c.log('[Window] Hiding handle!');
@@ -213,6 +235,7 @@ Window.prototype.toggleHandle = function() {
 		);
 	}
 	CommandManager.toggleChecked('View', 'Title Bar');
+
 }
 
 Window.prototype.toggleWindowHelper = function() {
@@ -232,6 +255,7 @@ Window.prototype.toggleConsole = function() {
 }
 
 Window.prototype.toggleOmnibox = function() {
+
 	// @if NODE_ENV='development'
 	c.log('[Window] Toggling Omnibox');
 	// @endif
@@ -241,6 +265,7 @@ Window.prototype.toggleOmnibox = function() {
 	else {
 		this.showOmnibox();
 	}
+
 }
 
 Window.prototype.reload = function() {
@@ -281,9 +306,11 @@ Window.prototype.navigateForward = function() {
 }
 
 Window.prototype.setAlwaysOnTopToggle = function() {
+
 	this.isAlwaysOnTop =! this.isAlwaysOnTop;
 	this.browser.setAlwaysOnTop(this.isAlwaysOnTop);
 	CommandManager.toggleChecked('Window', 'Float on Top');
+	
 }
 
 Window.prototype.lockDimensions = function() {
