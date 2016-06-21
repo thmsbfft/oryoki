@@ -218,10 +218,22 @@ Window.prototype.toggleHandle = function() {
 		// @endif
 		this.handle = false;
 		this.browser.webContents.send('hideHandle');
-		this.browser.setSize(
-			this.browser.getSize()[0],
-			this.browser.getSize()[1] - 22
-		);
+
+		if(this.browser.isFullScreen()) {
+			var currentScreen = electronScreen.getDisplayMatching(this.browser.getBounds());
+			this.browser.setBounds({
+				x: 0,
+				y: 0,
+				width: currentScreen.workArea.width,
+				height: currentScreen.workArea.height
+			}, false);
+		}
+		else {
+			this.browser.setSize(
+				this.browser.getSize()[0],
+				this.browser.getSize()[1] - 22 // 22 being the handle's height :(
+			);
+		}
 	}
 	else {
 		// @if NODE_ENV='development'
@@ -229,11 +241,24 @@ Window.prototype.toggleHandle = function() {
 		// @endif
 		this.handle = true;
 		this.browser.webContents.send('showHandle');
-		this.browser.setSize(
-			this.browser.getSize()[0],
-			this.browser.getSize()[1] + 22
-		);
+
+		if(this.browser.isFullScreen()) {
+			var currentScreen = electronScreen.getDisplayMatching(this.browser.getBounds());
+			this.browser.setBounds({
+				x: 0,
+				y: 0,
+				width: currentScreen.workArea.width,
+				height: currentScreen.workArea.height
+			}, false);
+		}
+		else {
+			this.browser.setSize(
+				this.browser.getSize()[0],
+				this.browser.getSize()[1] + 22
+			);
+		}
 	}
+
 	CommandManager.toggleChecked('View', 'Title Bar');
 
 }
@@ -310,7 +335,7 @@ Window.prototype.setAlwaysOnTopToggle = function() {
 	this.isAlwaysOnTop =! this.isAlwaysOnTop;
 	this.browser.setAlwaysOnTop(this.isAlwaysOnTop);
 	CommandManager.toggleChecked('Window', 'Float on Top');
-	
+
 }
 
 Window.prototype.lockDimensions = function() {
