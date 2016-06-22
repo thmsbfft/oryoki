@@ -30,7 +30,7 @@ function Window(parameters) {
 	  width: UserManager.getPreferenceByName('default_window_width'),
 	  height: UserManager.getPreferenceByName('default_window_height'),
 	  frame: false,
-	  backgroundColor: '#000',
+	  backgroundColor: '#141414',
 	  show: false,
 	  x: parameters.x ? parameters.x : 890,
 	  y: parameters.y ? parameters.y : 660,
@@ -165,7 +165,7 @@ Window.prototype.updateMenus = function() {
 	CommandManager.setCheckbox('Window', 'Float on Top', this.isAlwaysOnTop);
 	CommandManager.setCheckbox('View', 'Title Bar', this.handle);
 	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
-	CommandManager.setCheckbox('Tools', 'Window Helper', this.windowHelper);
+	CommandManager.setCheckbox('Tools', 'Window Helper', this.windowHelper && !this.browser.isFullScreen());
 	CommandManager.setEnabled('View', 'Toggle Omnibox', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Mini Console', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Toggle Devtools', !this.isFirstLoad);
