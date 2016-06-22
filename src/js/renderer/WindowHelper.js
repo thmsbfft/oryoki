@@ -113,6 +113,7 @@ WindowHelper.prototype.onInputKeyUp = function(e) {
 	if(e.key == "Escape") {
 
 		this.hide();
+		if(Browser.omnibox.isVisible) Browser.omnibox.focus();
 		ipcRenderer.send('set-menu-checked', 'Tools', 'Window Helper', false);
 
 	}
