@@ -15,7 +15,7 @@
   "devDependencies": {
     "electron-localshortcut": "^0.6.0",
     "electron-packager": "^7.0.4",
-    "electron-prebuilt": "^1.2.3",
+    "electron-prebuilt": "^1.2.5",
     "fluent-ffmpeg": "^2.0.1",
     "gm": "^1.22.0",
     "gulp": "^3.9.0",
