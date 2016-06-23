@@ -60,13 +60,13 @@ Handle.prototype.changeTitle = function(newTitle) {
 	if(newTitle.length > 60) {
 		newTitle = newTitle.substring(0, 60) + '...';
 	}
-	this.title.innerHTML = newTitle;
+	this.title.innerText = newTitle;
 
 }
 
 Handle.prototype.getTitle = function() {
 
-	return this.title.innerHTML;
+	return this.title.innerText;
 
 }
 

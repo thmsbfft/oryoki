@@ -27,7 +27,7 @@ Notification.prototype.build = function() {
 	}
 
 	this.el.id = this.id;
-	this.el.innerHTML = this.body;
+	this.el.innerText = this.body;
 
 	if(this.callback) {
 		addClass(this.el, 'clickable');
