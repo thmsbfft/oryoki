@@ -249,7 +249,7 @@ Camera.prototype.stopRecording = function() {
 	// Start encoding
 	switch(UserManager.getPreferenceByName("video_recording_quality")) {
 
-		case "lossless":
+		case "prores":
 
 			this.ffmpegCommand = ffmpeg()
 				.on('start', function() {
@@ -274,7 +274,7 @@ Camera.prototype.stopRecording = function() {
 
 			break;
 		
-		case "lossy":
+		case "mp4":
 
 			this.ffmpegCommand = ffmpeg()
 				.on('start', function() {

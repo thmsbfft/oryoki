@@ -11,5 +11,5 @@
 	"mute_notifications_while_recording" : true,
 	"display_recording_hint" : true,
 	"video_recording_mode" : "async",
-	"video_recording_quality" : "lossless"
+	"video_recording_quality" : "mp4"
 }
