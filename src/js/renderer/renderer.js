@@ -7,6 +7,7 @@ const MenuItem = remote.MenuItem;
 
 var fs = require('fs');
 var path = require('path');
+
 var conf = {
 	'chromeVersion' : process.versions.chrome,
 	'electronVersion' : process.versions.electron

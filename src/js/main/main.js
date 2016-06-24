@@ -1,4 +1,6 @@
 'use strict';
+process.env['PATH'] ='/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin'
+
 var electron = require('electron');
 var electronScreen = undefined;
 var ipcMain = require('electron').ipcMain;
