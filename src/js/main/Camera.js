@@ -255,7 +255,7 @@ Camera.prototype.stopRecording = function() {
 				.on('start', function() {
 					this.isEncoding = true;
 					this.browser.webContents.send('display-notification', {
-						'body' : 'Encoding lossless video...',
+						'body' : 'Encoding ProRes',
 						'lifespan' : 3000,
 					});
 				}.bind(this))
@@ -280,7 +280,7 @@ Camera.prototype.stopRecording = function() {
 				.on('start', function() {
 					this.isEncoding = true;
 					this.browser.webContents.send('display-notification', {
-						'body' : 'Encoding lossy video...',
+						'body' : 'Encoding MP4',
 						'lifespan' : 3000,
 					});
 				}.bind(this))
