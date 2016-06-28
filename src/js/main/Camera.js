@@ -307,6 +307,37 @@ Camera.prototype.stopRecording = function() {
 			c.log('Encoding a gif...');
 			// @endif
 
+		default:
+
+			this.browser.webContents.send('display-notification', {
+				'body' : 'Invalid argument – ' + UserManager.getPreferenceByName("video_recording_quality"),
+				'type' : 'error',
+				'lifespan' : 3000
+			});
+
+			this.ffmpegCommand = ffmpeg()
+				.on('start', function() {
+					this.isEncoding = true;
+					this.browser.webContents.send('display-notification', {
+						'body' : 'Encoding MP4',
+						'lifespan' : 3000,
+					});
+				}.bind(this))
+				.on('end', this.onEncodingEnd.bind(this))
+				.on('error', function(err) {
+					throw err;
+					// @if NODE_ENV='development'
+					c.log('Error encoding: ' + err.message);
+					// @endif
+				}.bind(this))
+				.input(this.recordingPath + '/' + '%05d.bmp')
+				.withInputFps(60)
+				.withOutputFps(30)
+				.videoCodec('libx264')
+				.withVideoBitrate('10000k')
+				.addOptions(['-preset ultrafast', '-pix_fmt yuvj420p'])
+				.save(app.getPath('downloads') + '/' + name + '.mp4');
+
 	}
 
 }
