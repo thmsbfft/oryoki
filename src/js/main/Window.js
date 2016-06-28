@@ -220,7 +220,6 @@ Window.prototype.toggleHandle = function() {
 		this.browser.webContents.send('hideHandle');
 
 		if(this.browser.isFullScreen()) {
-			c.log('Setting window size for fullscreen!');
 			var currentScreen = electronScreen.getDisplayMatching(this.browser.getBounds());
 			this.browser.setBounds({
 				x: 0,
