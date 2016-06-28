@@ -1,5 +1,7 @@
 # Ōryōki
 
+> Project website: [oryoki.io](http://oryoki.io/)
+
 Ōryōki [応量器] is a small, thin container for the web.
 
 ![Oryoki](https://github.com/thmsbfft/oryoki/blob/master/oryoki.png?raw=true "Oryoki")
@@ -18,7 +20,7 @@
 
 Almost Beta. Developped by [@thmsbfft](https://twitter.com/thmsbfft).
 
-## 🔜🔜🔜🔜🔜
+## To-do
 
 These improvements are aimed at a more final release.
 
