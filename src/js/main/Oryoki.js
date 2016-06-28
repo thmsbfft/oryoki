@@ -23,7 +23,7 @@ function Oryoki() {
 	this.windowCount = 0; // Counts the number of windows currently open
 
 	this.attachEvents();
-	if(UserManager.getPreferenceByName("clear_cache_on_launch")) this.clearCaches();
+	if(UserManager.getPreferenceByName("clear_caches_on_launch")) this.clearCaches();
 	if(UserManager.getPreferenceByName("override_download_path")) app.setPath('downloads', UserManager.getPreferenceByName("download_path"));
 	this.createWindow();
 
@@ -151,6 +151,8 @@ Oryoki.prototype.clearCaches = function() {
 		'GPUCache'
 	];
 
+	var errors = 0;
+
 	caches.forEach(function(element) {
 
 		var folderPath = UserManager.user.confPath + '/' + element;
@@ -159,14 +161,9 @@ Oryoki.prototype.clearCaches = function() {
 		c.log('[ORYOKI] Will delete: ' + folderPath);
 		// @endif
 		exec('cd ' + folderPath + ' && rm *', function(error, stdout, stderr) {
-
 			if(error) {
-				if(this.focusedWindow) {
-					this.focusedWindow.browser.webContents.send('display-notification', {
-						'body' : 'Error – ' + error,
-						'lifespan' : 3000,
-					});
-				}
+				errors++;
+				// If folder is already clear, do nothing
 			}
 		}.bind(this));
 	}.bind(this));
@@ -188,20 +185,13 @@ Oryoki.prototype.clearLocalStorage = function() {
 	// @endif
 	exec('cd ' + folderPath + ' && rm *', function(error, stdout, stderr) {
 		if(error) {
-			if(this.focusedWindow) {
-				this.focusedWindow.browser.webContents.send('display-notification', {
-					'body' : 'Error – ' + error,
-					'lifespan' : 3000,
-				});
-			}
+			// If folder is already clear, do nothing
 		}
-		else {
-			if(this.focusedWindow) {
-				this.focusedWindow.browser.webContents.send('display-notification', {
-					'body' : 'Cleared local storage',
-					'lifespan' : 3000,
-				});
-			}
+		if(this.focusedWindow) {
+			this.focusedWindow.browser.webContents.send('display-notification', {
+				'body' : 'Cleared local storage',
+				'lifespan' : 3000,
+			});
 		}
 	}.bind(this));
 
