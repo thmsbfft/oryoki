@@ -1,6 +1,6 @@
 # Ōryōki
 
-Ōryōki [応量器] is a small, thin container for the web. Built on top of Electron, the app aims to create a nicer, more focused environment for creative coding.
+Ōryōki [応量器] is a small, thin container for the web.
 
 ![Oryoki](https://github.com/thmsbfft/oryoki/blob/master/oryoki.png?raw=true "Oryoki")
 
@@ -18,7 +18,7 @@
 
 Almost Beta. Developped by [@thmsbfft](https://twitter.com/thmsbfft).
 
-## 🔜
+## 🔜🔜🔜🔜🔜
 
 These improvements are aimed at a more final release.
 
@@ -27,5 +27,11 @@ These improvements are aimed at a more final release.
 * Omnibox dictionary
 * A real mini console
 * Local server wizard
+
+## Contributing
+
+> Code needs a little cleanup.
+
+Feedback and suggestions welcome here, or write@oryoki.io.
 
 #### License [MIT](LICENSE.md)
