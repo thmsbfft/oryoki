@@ -1,5 +1,7 @@
 # Ōryōki
 
+> 🚩 _experimental project_
+
 > Project website: [oryoki.io](http://oryoki.io/)
 
 Ōryōki [応量器] is a small, thin container for the web.
