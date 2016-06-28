@@ -153,24 +153,57 @@ Oryoki.prototype.clearCaches = function() {
 
 	caches.forEach(function(element) {
 
-		var folderPath = UserManager.user.confPath + element;
+		var folderPath = UserManager.user.confPath + '/' + element;
 		folderPath = folderPath.replace(' ', '\\ ');
 		// @if NODE_ENV='development'
 		c.log('[ORYOKI] Will delete: ' + folderPath);
 		// @endif
-		exec('cd ' + folderPath + ' && rm *');
+		exec('cd ' + folderPath + ' && rm *', function(error, stdout, stderr) {
 
-	});
+			if(error) {
+				if(this.focusedWindow) {
+					this.focusedWindow.browser.webContents.send('display-notification', {
+						'body' : 'Error – ' + error,
+						'lifespan' : 3000,
+					});
+				}
+			}
+		}.bind(this));
+	}.bind(this));
+
+	if(this.focusedWindow) {
+		this.focusedWindow.browser.webContents.send('display-notification', {
+			'body' : 'Cleared caches',
+			'lifespan' : 3000
+		});
+	}
 
 }
 
 Oryoki.prototype.clearLocalStorage = function() {
 
-	var folderPath = UserManager.user.confPath.replace(' ', '\\ ') + 'Local\\ Storage';
+	var folderPath = UserManager.user.confPath.replace(' ', '\\ ') + '/Local\\ Storage';
 	// @if NODE_ENV='development'
 	c.log('[ORYOKI] Will delete: ' + folderPath);
 	// @endif
-	exec('cd ' + folderPath + ' && rm *');
+	exec('cd ' + folderPath + ' && rm *', function(error, stdout, stderr) {
+		if(error) {
+			if(this.focusedWindow) {
+				this.focusedWindow.browser.webContents.send('display-notification', {
+					'body' : 'Error – ' + error,
+					'lifespan' : 3000,
+				});
+			}
+		}
+		else {
+			if(this.focusedWindow) {
+				this.focusedWindow.browser.webContents.send('display-notification', {
+					'body' : 'Cleared local storage',
+					'lifespan' : 3000,
+				});
+			}
+		}
+	}.bind(this));
 
 }
 

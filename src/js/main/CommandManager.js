@@ -84,7 +84,7 @@ CommandManager.prototype.createMenus = function() {
 					type: 'separator'
 				},
 				{
-					label: 'Clear Cache',
+					label: 'Clear Caches',
 					click: function() {
 						if(Oryoki) Oryoki.clearCaches();
 					}
