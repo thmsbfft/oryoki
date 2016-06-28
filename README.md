@@ -4,7 +4,7 @@
 
 Ōryōki [応量器] is a small, thin container for the web.
 
-![Oryoki](https://github.com/thmsbfft/oryoki/blob/master/oryoki.png?raw=true "Oryoki")
+![Oryoki](https://github.com/thmsbfft/oryoki/blob/master/oryoki.jpg?raw=true "Oryoki")
 
 ## Features
 
