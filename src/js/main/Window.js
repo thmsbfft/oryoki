@@ -220,12 +220,13 @@ Window.prototype.toggleHandle = function() {
 		this.browser.webContents.send('hideHandle');
 
 		if(this.browser.isFullScreen()) {
+			c.log('Setting window size for fullscreen!');
 			var currentScreen = electronScreen.getDisplayMatching(this.browser.getBounds());
 			this.browser.setBounds({
 				x: 0,
 				y: 0,
-				width: currentScreen.workArea.width,
-				height: currentScreen.workArea.height
+				width: currentScreen.size.width,
+				height: currentScreen.size.height
 			}, false);
 		}
 		else {
@@ -247,8 +248,8 @@ Window.prototype.toggleHandle = function() {
 			this.browser.setBounds({
 				x: 0,
 				y: 0,
-				width: currentScreen.workArea.width,
-				height: currentScreen.workArea.height
+				width: currentScreen.bounds.width,
+				height: currentScreen.bounds.height
 			}, false);
 		}
 		else {
