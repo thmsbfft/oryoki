@@ -2,7 +2,7 @@
 
 > 🚩 _experimental_ 🚩 [oryoki.io](http://oryoki.io/)
 
-Ōryōki [応量器] is a small, thin container for the web.
+Ōryōki [応量器] is an experimental web browser with a thin interface.
 
 ![Oryoki](https://github.com/thmsbfft/oryoki/blob/master/oryoki.jpg?raw=true "Oryoki")
 
