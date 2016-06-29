@@ -1,3 +1,6 @@
+var fs = require('fs');
+var os = require('os');
+
 function Browser(parameters) {
 
 	this.id = window.location.hash.substring(1);
@@ -108,6 +111,19 @@ Browser.prototype.onSubmit = function(input) {
 
 Browser.prototype.onDOMReady = function() {
 	console.log('[BROWSER] DOM Ready');
+
+	var url = new URL(this.view.webview.src);
+	var host = url.host.replace('www.', '');
+	var pluginPath = os.homedir() + '/.js/' + host + '.js';
+
+	fs.readFile(pluginPath, 'utf8', function(err, contents) {
+		if (err) {
+			console.log('[PLUGINS] Couldn\'t find plugin for ' + host + ' at ' + pluginPath);
+		} else {
+			this.view.webview.executeJavaScript(contents);
+		}
+	}.bind(this));
+
 	this.handle.changeTitle(this.view.getTitle());
 }
 
