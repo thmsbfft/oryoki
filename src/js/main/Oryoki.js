@@ -19,7 +19,7 @@ function Oryoki() {
 
 	this.windows = [];
 	this.focusedWindow = null;
-	this.windowsIndex = -1; // Index to make sure we assign unique Ids
+	this.windowsIndex = 0; // Index to make sure we assign unique Ids
 	this.windowCount = 0; // Counts the number of windows currently open
 
 	this.attachEvents();
@@ -53,14 +53,7 @@ Oryoki.prototype.createWindow = function(e, url) {
 	c.log('[Oryoki] Creating new window');
 	// @endif
 
-	this.windowsIndex++;
-	this.windowCount++;
-
-	// @if NODE_ENV='development'
-	c.log('[Oryoki] Currently', this.windowCount, 'windows open');
-	// @endif
-
-	if(this.windowCount == 1) {
+	if(this.windowCount == 0) {
 		// No window open -> create a centered window
 		this.windows[this.windowsIndex] = new Window({
 			'id' : this.windowsIndex,
@@ -81,6 +74,13 @@ Oryoki.prototype.createWindow = function(e, url) {
 			'y' : this.focusedWindow.browser.getPosition()[1]+50
 		});
 	}
+
+	this.windowsIndex++;
+	this.windowCount++;
+
+	// @if NODE_ENV='development'
+	c.log('[Oryoki] Currently', this.windowCount, 'windows open');
+	// @endif
 
 }
 
