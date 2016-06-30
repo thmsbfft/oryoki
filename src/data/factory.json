@@ -11,5 +11,6 @@
 	"mute_notifications_while_recording" : true,
 	"display_recording_hint" : true,
 	"video_recording_mode" : "async",
+	"plugin_path" : "~/Library/Application Support/Oryoki/plugins",
 	"video_recording_quality" : "mp4"
 }

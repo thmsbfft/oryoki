@@ -114,7 +114,8 @@ Browser.prototype.onDOMReady = function() {
 
 	var url = new URL(this.view.webview.src);
 	var host = url.host.replace('www.', '');
-	var pluginPath = os.homedir() + '/.js/' + host + '.js';
+	var pluginFolder = ipcRenderer.sendSync('get-preference', 'plugin_path');
+	var pluginPath = pluginFolder + host + '.js';
 
 	fs.readFile(pluginPath, 'utf8', function(err, contents) {
 		if (err) {
