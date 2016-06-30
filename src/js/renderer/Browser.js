@@ -7,6 +7,7 @@ function Browser(parameters) {
 	this.isFirstLoad = true;
 
 	this.isHandleDisplayed = ipcRenderer.sendSync('get-preference', 'show_title_bar');
+	this.pluginsEnabled = ipcRenderer.sendSync('get-preference', 'plugins_enabled');
 	this.frame = document.querySelectorAll('#frame')[0];
 
 	this.view = new View({
@@ -66,6 +67,9 @@ Browser.prototype.attachEvents = function() {
 	ipcRenderer.on('recordingBegin', this.hideDragOverlay.bind(this));
 	ipcRenderer.on('recordingEnd', this.showDragOverlay.bind(this));
 
+	ipcRenderer.on('enablePlugins', this.enablePlugins.bind(this));
+	ipcRenderer.on('disablePlugins', this.disablePlugins.bind(this));
+
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
 }
@@ -112,18 +116,20 @@ Browser.prototype.onSubmit = function(input) {
 Browser.prototype.onDOMReady = function() {
 	console.log('[BROWSER] DOM Ready');
 
-	var url = new URL(this.view.webview.src);
-	var host = url.host.replace('www.', '');
-	var pluginFolder = ipcRenderer.sendSync('get-preference', 'plugin_path');
-	var pluginPath = pluginFolder + host + '.js';
+	if (this.pluginsEnabled) {
+		var url = new URL(this.view.webview.src);
+		var host = url.host.replace('www.', '');
+		var pluginFolder = ipcRenderer.sendSync('get-preference', 'plugin_path');
+		var pluginPath = pluginFolder + host + '.js';
 
-	fs.readFile(pluginPath, 'utf8', function(err, contents) {
-		if (err) {
-			console.log('[PLUGINS] Couldn\'t find plugin for ' + host + ' at ' + pluginPath);
-		} else {
-			this.view.webview.executeJavaScript(contents);
-		}
-	}.bind(this));
+		fs.readFile(pluginPath, 'utf8', function(err, contents) {
+			if (err) {
+				console.log('[PLUGINS] Couldn\'t find plugin for ' + host + ' at ' + pluginPath);
+			} else {
+				this.view.webview.executeJavaScript(contents);
+			}
+			}.bind(this));
+	}
 
 	this.handle.changeTitle(this.view.getTitle());
 }
@@ -157,6 +163,14 @@ Browser.prototype.showHandle = function() {
 	this.handle.show();
 	this.isHandleDisplayed = true;
 	this.resize();
+}
+
+Browser.prototype.enablePlugins = function() {
+	this.pluginsEnabled = true;
+}
+
+Browser.prototype.disablePlugins = function() {
+	this.pluginsEnabled = false;
 }
 
 Browser.prototype.getHandleTitle = function() {
@@ -195,6 +209,10 @@ Browser.prototype.reloadIgnoringCache = function() {
 
 Browser.prototype.toggleDevTools = function() {
 	this.view.toggleDevTools();
+}
+
+Browser.prototype.togglePlugins = function() {
+	this.view.togglePlugins();
 }
 
 Browser.prototype.hideDragOverlay = function() {
