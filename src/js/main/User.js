@@ -44,6 +44,24 @@ function User(name, factory) {
 	this.history = undefined;
 
 	this.getPreferences();
+
+	this.pluginsPath = this.preferences.plugin_path;
+	// Check
+	try {
+		fs.statSync(this.pluginsPath);
+	}
+	catch(err) {
+		if(err.code === 'ENOENT') {
+			// @if NODE_ENV='development'
+			c.log('Creating plugin directory');
+			// @endif
+			fs.mkdirSync(this.pluginsPath);
+		}
+		else {
+			throw err;
+		}
+	}
+
 	fs.watchFile(this.confPath + '/' + 'preferences.json', this.getPreferences.bind(this));
 
 }

@@ -19,6 +19,7 @@ function Window(parameters) {
 	this.onFocusCallback = parameters.onFocus;
 	this.onCloseCallback = parameters.onClose;
 
+	this.pluginsEnabled = UserManager.getPreferenceByName('plugins_enabled');
 	this.handle = UserManager.getPreferenceByName('show_title_bar');
 	this.omnibox = true;
 	this.console = false;
@@ -157,6 +158,29 @@ Window.prototype.onClosed = function() {
 Window.prototype.toggleDevTools = function() {
 
 	this.browser.webContents.send('toggleDevTools');
+
+}
+
+
+Window.prototype.togglePlugins = function() {
+
+	if(this.pluginsEnabled) {
+		// @if NODE_ENV='development'
+		c.log('[Window] Disabling plugins!');
+		// @endif
+		this.pluginsEnabled = false;
+		this.browser.webContents.send('disablePlugins');
+	}
+	else {
+		// @if NODE_ENV='development'
+		c.log('[Window] Enabling plugins');
+		// @endif
+		this.pluginsEnabled = true;
+		this.browser.webContents.send('enablePlugins');
+	}
+
+	CommandManager.toggleChecked('Tools', 'Plugins');
+
 
 }
 
