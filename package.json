@@ -29,5 +29,6 @@
     "gulp-sass": "^2.3.2",
     "openurl": "^1.1.1",
     "preprocess": "^3.0.2"
-  }
+  },
+  "license": "MIT"
 }
