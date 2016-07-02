@@ -8,8 +8,12 @@ function UserManager() {
 
 	// Allow for renderer to use preferences
 	ipcMain.on('get-preference', function(event, name) {
-	  console.log(name);
 	  event.returnValue = this.getPreferenceByName(name);
+	}.bind(this));
+
+	// Allow for renderer to use user paths
+	ipcMain.on('get-user-path', function(event, name) {
+	  event.returnValue = this.user.paths[name];
 	}.bind(this));
 }
 
@@ -39,5 +43,5 @@ UserManager.prototype.resetUserPreferencesToFactory = function() {
 }
 
 UserManager.prototype.openPreferencesFile = function() {
-	shell.openItem(this.user.confPath + '/' + 'preferences.json');
+	shell.openItem(this.user.paths.conf + '/' + 'preferences.json');
 }

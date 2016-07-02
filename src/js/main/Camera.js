@@ -9,7 +9,7 @@ function Camera(parameters) {
 
 	this.isRecording = false;
 	this.isEncoding = false;
-	this.recordingPath = UserManager.user.tmpPath + '/' + 'Recording';
+	this.recordingPath = UserManager.user.paths.tmp + '/' + 'Recording';
 
 	// Create tmp recording path if not there yet
 	try {

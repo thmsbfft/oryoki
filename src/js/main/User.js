@@ -2,37 +2,38 @@ function User(name, factory) {
 
 	this.name = name;
 	this.factory = factory;
+	this.paths = {};
 
 	// Storing in ~/Library/Application Support/Oryoki | Electron
 
-	this.confPath = app.getPath('appData') + '/' + app.getName();
+	this.paths.conf = app.getPath('appData') + '/' + app.getName();
 	// Check
 	try {
-		fs.statSync(this.confPath);
+		fs.statSync(this.paths.conf);
 	}
 	catch(err) {
 		if(err.code === 'ENOENT') {
 			// @if NODE_ENV='development'
 			c.log('Creating App Data directory')
 			// @endif
-			fs.mkdirSync(this.confPath);
+			fs.mkdirSync(this.paths.conf);
 		}
 		else {
 			throw err;
 		}
 	}
 
-	this.tmpPath = this.confPath + '/' + 'Temporary';
+	this.paths.tmp = this.paths.conf + '/' + 'Temporary';
 	// Check
 	try {
-		fs.statSync(this.tmpPath);
+		fs.statSync(this.paths.tmp);
 	}
 	catch(err) {
 		if(err.code === 'ENOENT') {
 			// @if NODE_ENV='development'
 			c.log('Creating tmp directory');
 			// @endif
-			fs.mkdirSync(this.tmpPath);
+			fs.mkdirSync(this.paths.tmp);
 		}
 		else {
 			throw err;
@@ -44,7 +45,7 @@ function User(name, factory) {
 	this.history = undefined;
 
 	this.getPreferences();
-	fs.watchFile(this.confPath + '/' + 'preferences.json', this.getPreferences.bind(this));
+	fs.watchFile(this.paths.conf + '/' + 'preferences.json', this.getPreferences.bind(this));
 
 }
 
@@ -63,7 +64,7 @@ User.prototype.getConfFile = function(fileName, callback) {
 	try {
 
 		// Check if conf file exists
-		fs.statSync(this.confPath + '/' + fileName);	
+		fs.statSync(this.paths.conf + '/' + fileName);	
 
 	}
 	catch(err) {
@@ -78,7 +79,7 @@ User.prototype.getConfFile = function(fileName, callback) {
 	}
 	finally {
 
-		return JSON.parse(fs.readFileSync(this.confPath + '/' + fileName, 'utf8'));
+		return JSON.parse(fs.readFileSync(this.paths.conf + '/' + fileName, 'utf8'));
 
 	}
 
@@ -86,8 +87,21 @@ User.prototype.getConfFile = function(fileName, callback) {
 
 User.prototype.createPreferences = function() {
 
-	fs.writeFileSync(this.confPath + '/' + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), 'utf8', (err) => {
+	fs.writeFileSync(this.paths.conf + '/' + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), 'utf8', (err) => {
 		if (err) throw err;
 	});
 
+}
+
+UserManager.prototype.getPreferenceByName = function(name) {
+	/* 
+	Checks user for preference
+	If not defined, falls back to factory setting.
+	*/
+	if(this.preferences[name] !== undefined) {
+		return this.preferences[name];
+	}
+	else {
+		return this.factory.preferences[name];
+	}
 }

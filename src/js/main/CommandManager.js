@@ -75,7 +75,7 @@ CommandManager.prototype.createMenus = function() {
 						{
 							label: 'Browse data...',
 							click: function() {
-								shell.openItem(UserManager.user.confPath);
+								shell.openItem(UserManager.user.paths.conf);
 							}
 						}
 					]
