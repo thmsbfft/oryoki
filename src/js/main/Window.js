@@ -20,6 +20,7 @@ function Window(parameters) {
 	this.onCloseCallback = parameters.onClose;
 
 	this.handle = UserManager.getPreferenceByName('show_title_bar');
+	this.webPluginsEnabled = UserManager.getPreferenceByName('enable_web_plugins');
 	this.omnibox = true;
 	this.console = false;
 	this.windowHelper = false;
@@ -58,7 +59,7 @@ function Window(parameters) {
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html' + '#' + this.id);
 
 	// @if NODE_ENV='development'
-	// this.browser.webContents.openDevTools();
+	this.browser.webContents.openDevTools();
 	// @endif
 }
 
@@ -160,15 +161,39 @@ Window.prototype.toggleDevTools = function() {
 
 }
 
+Window.prototype.toggleWebPlugins = function() {
+
+	if(this.webPluginsEnabled) {
+		// @if NODE_ENV='development'
+		c.log('[Window] Disabling plugins!');
+		// @endif
+		this.webPluginsEnabled = false;
+		this.browser.webContents.send('disableWebPlugins');
+	}
+	else {
+		// @if NODE_ENV='development'
+		c.log('[Window] Enabling plugins!');
+		// @endif
+		this.webPluginsEnabled = true;
+		this.browser.webContents.send('enableWebPlugins');
+	}
+
+	CommandManager.toggleChecked('Tools', 'Web Plugins');
+	this.reload();
+
+}
+
 Window.prototype.updateMenus = function() {
 
 	CommandManager.setCheckbox('Window', 'Float on Top', this.isAlwaysOnTop);
 	CommandManager.setCheckbox('View', 'Title Bar', this.handle);
 	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
 	CommandManager.setCheckbox('Tools', 'Window Helper', this.windowHelper && !this.browser.isFullScreen());
+	CommandManager.setCheckbox('Tools', 'Web Plugins', this.webPluginsEnabled);
 	CommandManager.setEnabled('View', 'Toggle Omnibox', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Mini Console', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Toggle Devtools', !this.isFirstLoad);
+	CommandManager.setEnabled('Tools', 'Web Plugins', !this.isFirstLoad);
 
 	if(this.browser) {
 		CommandManager.setCheckbox('View', 'Fullscreen', this.browser.isFullScreen());

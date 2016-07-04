@@ -14,26 +14,9 @@ function User(name, factory) {
 	catch(err) {
 		if(err.code === 'ENOENT') {
 			// @if NODE_ENV='development'
-			c.log('Creating App Data directory')
+			c.log('[User] Creating App Data directory')
 			// @endif
 			fs.mkdirSync(this.paths.conf);
-		}
-		else {
-			throw err;
-		}
-	}
-
-	this.paths.tmp = this.paths.conf + '/' + 'Temporary';
-	// Check
-	try {
-		fs.statSync(this.paths.tmp);
-	}
-	catch(err) {
-		if(err.code === 'ENOENT') {
-			// @if NODE_ENV='development'
-			c.log('Creating tmp directory');
-			// @endif
-			fs.mkdirSync(this.paths.tmp);
 		}
 		else {
 			throw err;
@@ -46,6 +29,47 @@ function User(name, factory) {
 
 	this.getPreferences();
 	fs.watchFile(this.paths.conf + '/' + 'preferences.json', this.getPreferences.bind(this));
+
+	this.paths.tmp = this.paths.conf + '/' + 'Temporary';
+	// Check
+	try {
+		fs.statSync(this.paths.tmp);
+	}
+	catch(err) {
+		if(err.code === 'ENOENT') {
+			// @if NODE_ENV='development'
+			c.log('[User] Creating tmp directory');
+			// @endif
+			fs.mkdirSync(this.paths.tmp);
+		}
+		else {
+			throw err;
+		}
+	}
+
+	if(this.getPreferenceByName('web_plugins_path') != "") {
+		// Path is set
+		this.paths.webPlugins = this.getPreferenceByName('web_plugins_path');
+	}
+	else {
+		this.paths.webPlugins = this.paths.conf + '/' + 'Web Plugins';
+	}
+
+	// Check
+	try {
+		fs.statSync(this.paths.webPlugins);
+	}
+	catch(err) {
+		if(err.code === 'ENOENT') {
+			// @if NODE_ENV='development'
+			c.log('[User] Creating web plugins directory');
+			// @endif
+			fs.mkdirSync(this.paths.webPlugins);
+		}
+		else {
+			throw err;
+		}
+	}
 
 }
 
@@ -93,7 +117,7 @@ User.prototype.createPreferences = function() {
 
 }
 
-UserManager.prototype.getPreferenceByName = function(name) {
+User.prototype.getPreferenceByName = function(name) {
 	/* 
 	Checks user for preference
 	If not defined, falls back to factory setting.

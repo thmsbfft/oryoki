@@ -346,6 +346,25 @@ CommandManager.prototype.createMenus = function() {
 							}
 						}
 					}
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Web Plugins',
+					type: 'checkbox',
+					checked: true,
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.toggleWebPlugins();
+						}
+					}
+				},
+				{
+					label: 'Browse Web Plugins...',
+					click: function() {
+						shell.openItem(UserManager.user.paths.webPlugins);
+					}
 				}
 			]
 		},

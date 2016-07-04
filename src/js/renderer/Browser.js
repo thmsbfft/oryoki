@@ -4,6 +4,7 @@ function Browser(parameters) {
 	this.isFirstLoad = true;
 
 	this.isHandleDisplayed = ipcRenderer.sendSync('get-preference', 'show_title_bar');
+	this.webPluginsEnabled = ipcRenderer.sendSync('get-preference', 'enable_web_plugins');
 	this.frame = document.querySelectorAll('#frame')[0];
 
 	this.view = new View({
@@ -63,6 +64,9 @@ Browser.prototype.attachEvents = function() {
 	ipcRenderer.on('recordingBegin', this.hideDragOverlay.bind(this));
 	ipcRenderer.on('recordingEnd', this.showDragOverlay.bind(this));
 
+	ipcRenderer.on('enableWebPlugins', this.enableWebPlugins.bind(this));
+	ipcRenderer.on('disableWebPlugins', this.disableWebPlugins.bind(this));
+
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
 }
@@ -108,6 +112,24 @@ Browser.prototype.onSubmit = function(input) {
 
 Browser.prototype.onDOMReady = function() {
 	console.log('[BROWSER] DOM Ready');
+
+	if (this.webPluginsEnabled) {
+		var url = new URL(this.view.webview.src);
+		var host = url.host.replace('www.', '');
+		var webPluginsFolder = ipcRenderer.sendSync('get-user-path', 'webPlugins');
+		var pluginPath = path.resolve(webPluginsFolder, host + '.js');
+
+		console.log('Looking for plugin:', pluginPath);
+
+		fs.readFile(pluginPath, 'utf8', function(err, contents) {
+			if (err) {
+				console.log('[PLUGINS] Couldn\'t find plugin for ' + host + ' at ' + pluginPath);
+			} else {
+				this.view.webview.executeJavaScript(contents);
+			}
+		}.bind(this));
+	}
+
 	this.handle.changeTitle(this.view.getTitle());
 }
 
@@ -160,6 +182,14 @@ Browser.prototype.showConsole = function() {
 
 Browser.prototype.hideConsole = function() {
 	this.console.hide();
+}
+
+Browser.prototype.enableWebPlugins = function() {
+	this.webPluginsEnabled = true;
+}
+
+Browser.prototype.disableWebPlugins = function() {
+	this.webPluginsEnabled = false;
 }
 
 Browser.prototype.load = function(e, url) {
