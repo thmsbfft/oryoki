@@ -71,11 +71,14 @@ function User(name, factory) {
 		}
 	}
 
+	this.getPreferences();
+	fs.watchFile(this.paths.conf + '/' + 'oryoki-preferences.json', this.getPreferences.bind(this));
+
 }
 
 User.prototype.getPreferences = function() {
 
-	this.preferences = this.getConfFile('preferences.json', this.createPreferences.bind(this));
+	this.preferences = this.getConfFile('oryoki-preferences.json', this.createPreferences.bind(this));
 
 }
 
@@ -103,7 +106,12 @@ User.prototype.getConfFile = function(fileName, callback) {
 	}
 	finally {
 
-		return JSON.parse(fs.readFileSync(this.paths.conf + '/' + fileName, 'utf8'));
+		// Erase comments to validate JSON
+		var raw = fs.readFileSync(this.paths.conf + '/' + fileName, 'utf8');
+		var re = /\/\/.*/g; // Any line that starts with `//`
+		var stripped = raw.replace(re, '');
+
+		return JSON.parse(stripped);
 
 	}
 
@@ -111,7 +119,7 @@ User.prototype.getConfFile = function(fileName, callback) {
 
 User.prototype.createPreferences = function() {
 
-	fs.writeFileSync(this.paths.conf + '/' + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), 'utf8', (err) => {
+	fs.writeFileSync(this.paths.conf + '/' + 'oryoki-preferences.json', JSON.stringify(this.factory.preferences, null, 4), 'utf8', (err) => {
 		if (err) throw err;
 	});
 
