@@ -1,6 +1,12 @@
 function UserManager() {
+
+	// Erase comments to validate JSON
+	var raw = fs.readFileSync(__dirname + '/src/data/factory.json', 'utf8');
+	var re = /\/\/.*/g; // Any line that starts with `//`
+	var stripped = raw.replace(re, '');
+
 	this.factory = {
-		'preferences' : JSON.parse(fs.readFileSync(__dirname + '/src/data/factory.json', 'utf8'))
+		'preferences' : JSON.parse(stripped)
 	}
 	
 	// We'll only use one user for now.
@@ -31,7 +37,7 @@ UserManager.prototype.getPreferenceByName = function(name) {
 }
 
 UserManager.prototype.resetUserPreferencesToFactory = function() {
-	fs.writeFile(this.user.confPath + '/' + 'preferences.json', JSON.stringify(this.factory.preferences, null, 4), function(err) {
+	fs.writeFile(this.user.paths.conf + '/' + 'oryoki-preferences.json', fs.readFileSync(__dirname + '/src/data/factory.json', 'utf8'), function(err) {
 		// @if NODE_ENV='development'
 		if(err) c.log(err);
 		// @endif
@@ -43,5 +49,5 @@ UserManager.prototype.resetUserPreferencesToFactory = function() {
 }
 
 UserManager.prototype.openPreferencesFile = function() {
-	shell.openItem(this.user.paths.conf + '/' + 'preferences.json');
+	shell.openItem(this.user.paths.conf + '/' + 'oryoki-preferences.json');
 }

@@ -1,15 +1,41 @@
+// 
+//	Preferences set here will override factory (default) settings.
+//	This file can be reset using Oryoki > Preferences > Reset.
+//
+//	Note: this file only accepts comments starting with `//`.
+//
 {
+	// Set to false to hide the title bar by default
 	"show_title_bar" : true,
+
+	// Set to false to disable alt+drag to drag windows
 	"use_alt_drag" : true,
+
+	// Set to true to use a URL as homepage
 	"use_homepage" : false,
 	"homepage_url" : "",
+
+	// Dimensions used for new windows
 	"default_window_width" : 800,
 	"default_window_height" : 500,
+
+	// Set to true to automatically clear caches
 	"clear_caches_on_launch" : false,
+	
+	// Set a custom download path here
 	"override_download_path" : false,
 	"download_path" : "",
+
 	"mute_notifications_while_recording" : true,
 	"display_recording_hint" : true,
+
+	// async | sync
+	// async tries to display frames smoothly and record as many as possible
+	// sync records every frame but doesn't display all of them
 	"video_recording_mode" : "async",
+
+	// mp4 | prores
+	// mp4 is quick and relatively dirty
+	// prores is slow and lossless
 	"video_recording_quality" : "mp4"
 }
