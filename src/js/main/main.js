@@ -7,6 +7,7 @@ var ipcMain = require('electron').ipcMain;
 var Menu = require('electron').Menu;
 var MenuItem = require('electron').MenuItem;
 var app = electron.app;
+var Tray = electron.Tray;
 const {clipboard} = require('electron');
 var electronLocalshortcut = require('electron-localshortcut');
 var BrowserWindow = electron.BrowserWindow;

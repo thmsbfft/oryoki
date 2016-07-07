@@ -11,6 +11,8 @@ function Camera(parameters) {
 	this.isEncoding = false;
 	this.recordingPath = UserManager.user.paths.tmp + '/' + 'Recording';
 
+	this.tray = null;
+
 	// Create tmp recording path if not there yet
 	try {
 		fs.statSync(this.recordingPath);
@@ -113,6 +115,7 @@ Camera.prototype.startRecording = function() {
 		}
 
 		app.dock.setBadge('R');
+		this.showTray();
 		this.browser.webContents.send('recordingBegin');
 		this.isRecording = true;
 		this.onRecordingBeginCallback();
@@ -228,6 +231,7 @@ Camera.prototype.stopRecording = function() {
 		// @endif
 
 		app.dock.setBadge('');
+		this.hideTray();
 		this.isRecording = false;
 		this.browser.webContents.endFrameSubscription();
 		this.onRecordingEndCallback();
@@ -377,5 +381,26 @@ Camera.prototype.cleanTmpRecording = function() {
 			fs.unlinkSync(framePath);
 		}
 	}
+
+}
+
+Camera.prototype.showTray = function() {
+
+	this.tray = new Tray(path.join(__dirname, '/src/media/tray-icon.png'));
+	var contextMenu = Menu.buildFromTemplate([
+		{label: 'Item1', type: 'radio'},
+		{label: 'Item2', type: 'radio'},
+		{label: 'Item3', type: 'radio', checked: true},
+		{label: 'Item4', type: 'radio'}
+	]);
+	this.tray.setToolTip('Ōryōki • REC');
+	this.tray.setContextMenu(contextMenu);
+
+}
+
+Camera.prototype.hideTray = function() {
+
+	this.tray.destroy();
+	this.tray = null;
 
 }
