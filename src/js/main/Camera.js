@@ -8,6 +8,8 @@ function Camera(parameters) {
 	this.onRecordingEndCallback = parameters.onRecordingEnd;
 
 	this.isRecording = false;
+	CommandManager.setEnabled('Tools', 'Stop Recording', false);
+
 	this.isEncoding = false;
 	this.recordingPath = UserManager.user.paths.tmp + '/' + 'Recording';
 
@@ -116,6 +118,8 @@ Camera.prototype.startRecording = function() {
 
 		app.dock.setBadge('R');
 		this.showTray();
+		CommandManager.setEnabled('Tools', 'Start Recording', false);
+		CommandManager.setEnabled('Tools', 'Stop Recording', true);
 		this.browser.webContents.send('recordingBegin');
 		this.isRecording = true;
 		this.onRecordingBeginCallback();
@@ -231,6 +235,8 @@ Camera.prototype.stopRecording = function() {
 		// @endif
 
 		app.dock.setBadge('');
+		CommandManager.setEnabled('Tools', 'Start Recording', true);
+		CommandManager.setEnabled('Tools', 'Stop Recording', false);
 		this.hideTray();
 		this.isRecording = false;
 		this.browser.webContents.endFrameSubscription();
