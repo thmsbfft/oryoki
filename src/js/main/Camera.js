@@ -386,12 +386,24 @@ Camera.prototype.cleanTmpRecording = function() {
 
 Camera.prototype.showTray = function() {
 
-	this.tray = new Tray(path.join(__dirname, '/src/media/tray-icon.png'));
+	this.tray = new Tray(path.join(__dirname, '/src/media/tray-icon-blackTemplate.png'));
+	this.tray.setPressedImage(path.join(__dirname, '/src/media/tray-icon-whiteTemplate.png'));
+
 	var contextMenu = Menu.buildFromTemplate([
-		{label: 'Item1', type: 'radio'},
-		{label: 'Item2', type: 'radio'},
-		{label: 'Item3', type: 'radio', checked: true},
-		{label: 'Item4', type: 'radio'}
+		{
+			label: 'Ōryōki is recording', 
+			enabled: false
+		},
+		{
+			type: 'separator'
+		},
+		{
+			label: 'Stop Recording',
+			accelerator: 'Cmd+Alt+Shift+P', 
+			click: function() {
+				this.stopRecording();
+			}.bind(this)
+		},
 	]);
 	this.tray.setToolTip('Ōryōki • REC');
 	this.tray.setContextMenu(contextMenu);
