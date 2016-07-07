@@ -25,9 +25,8 @@
 	// Set a custom download path here
 	"override_download_path" : false,
 	"download_path" : "",
-
+	
 	"mute_notifications_while_recording" : true,
-	"display_recording_hint" : true,
 
 	// async | sync
 	// async tries to display frames smoothly and record as many as possible

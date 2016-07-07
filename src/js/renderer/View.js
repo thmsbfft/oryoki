@@ -258,16 +258,13 @@ View.prototype.goBack = function() {
 View.prototype.onRecordingBegin = function() {
 
 	addClass(this.el, 'recording');
-	if(!ipcRenderer.sendSync('get-preference', 'display_recording_hint')) {
-		addClass(this.el, 'hint-off');
-	}
 
 }
 
 View.prototype.onRecordingEnd = function() {
 
-	console.log('Doing something now!');
-	this.el.className = '';
+	// this.el.className = '';
+	removeClass(this.el, 'recording');
 
 }
 

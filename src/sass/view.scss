@@ -6,17 +6,12 @@
 			content: '';
 			width: 10px;
 			height: 10px;
-			background: red;
+			background: transparent;
 			border-radius: 10px;
 			position: absolute;
 			top: 20px;
 			right: 20px;
 			animation: pulse 0.8s infinite;
-		}
-		&.hint-off {
-			&::before {
-				background: transparent;
-			}
 		}
 	}
 }
