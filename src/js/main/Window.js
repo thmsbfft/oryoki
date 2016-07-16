@@ -40,7 +40,7 @@ function Window(parameters) {
 	  webPreferences: {
 	  	"experimentalFeatures": true,
 	  	"experimentalCanvasFeatures": true
-	  }
+	  },
 	});
 
 	this.camera = new Camera({
@@ -88,6 +88,12 @@ Window.prototype.attachEvents = function() {
 		if(this.id == windowId) this.setSize(width, height);
 	}.bind(this));
 
+	ipcMain.on('updateMenuTitle', function(event, id, newTitle) {
+		if(this.id == id) {
+			this.browser.setTitle(newTitle);
+		}
+	}.bind(this));
+
 }
 
 Window.prototype.setSize = function(width, height) {
@@ -116,7 +122,7 @@ Window.prototype.setSize = function(width, height) {
 		height: height
 	}, true);
 
-	// Ask WindowHelper to update the UI on we're done
+	// Ask WindowHelper to update the UI once we're done
 	this.browser.webContents.send('update_window_dimensions', this.id);
 
 }
