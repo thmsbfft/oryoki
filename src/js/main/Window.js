@@ -41,7 +41,7 @@ function Window(parameters) {
 	  webPreferences: {
 	  	"experimentalFeatures": true,
 	  	"experimentalCanvasFeatures": true
-	  }
+	  },
 	});
 
 	this.camera = new Camera({
@@ -65,6 +65,10 @@ function Window(parameters) {
 
 Window.prototype.attachEvents = function() {
 
+	this.browser.once('ready-to-show', () => {
+		this.browser.show();
+	});
+
 	this.browser.webContents.on('dom-ready', this.onReady.bind(this));
 	this.browser.on('focus', this.onFocus.bind(this));
 	this.browser.on('closed', this.onClosed.bind(this));
@@ -87,6 +91,12 @@ Window.prototype.attachEvents = function() {
 
 	ipcMain.on('setWindowSize', function(e, width, height, windowId) {
 		if(this.id == windowId) this.setSize(width, height);
+	}.bind(this));
+
+	ipcMain.on('updateMenuTitle', function(event, id, newTitle) {
+		if(this.id == id) {
+			this.browser.setTitle(newTitle);
+		}
 	}.bind(this));
 
 }
@@ -117,7 +127,7 @@ Window.prototype.setSize = function(width, height) {
 		height: height
 	}, true);
 
-	// Ask WindowHelper to update the UI on we're done
+	// Ask WindowHelper to update the UI once we're done
 	this.browser.webContents.send('update_window_dimensions', this.id);
 
 }
@@ -126,7 +136,6 @@ Window.prototype.onReady = function() {
 
 	this.browser.webContents.send('ready');
 	if(this.url) this.load(this.url);
-	this.browser.show();
 
 }
 
@@ -186,11 +195,11 @@ Window.prototype.toggleWebPlugins = function() {
 Window.prototype.updateMenus = function() {
 
 	CommandManager.setCheckbox('Window', 'Float on Top', this.isAlwaysOnTop);
+	CommandManager.setCheckbox('Window', 'Window Helper', this.windowHelper && !this.browser.isFullScreen());
 	CommandManager.setCheckbox('View', 'Title Bar', this.handle);
-	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
-	CommandManager.setCheckbox('Tools', 'Window Helper', this.windowHelper && !this.browser.isFullScreen());
-	CommandManager.setCheckbox('Tools', 'Web Plugins', this.webPluginsEnabled);
 	CommandManager.setEnabled('View', 'Toggle Omnibox', !this.isFirstLoad);
+	CommandManager.setCheckbox('Tools', 'Web Plugins', this.webPluginsEnabled);
+	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
 	CommandManager.setEnabled('Tools', 'Mini Console', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Toggle Devtools', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Web Plugins', !this.isFirstLoad);
@@ -292,7 +301,7 @@ Window.prototype.toggleWindowHelper = function() {
 
 		this.windowHelper != this.windowHelper;
 		this.browser.webContents.send('toggle_window_helper', this.id);
-		CommandManager.toggleChecked('Tools', 'Window Helper');
+		CommandManager.toggleChecked('Window', 'Window Helper');
 
 }
 

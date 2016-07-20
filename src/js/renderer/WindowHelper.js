@@ -114,7 +114,7 @@ WindowHelper.prototype.onInputKeyUp = function(e) {
 
 		this.hide();
 		if(Browser.omnibox.isVisible) Browser.omnibox.focus();
-		ipcRenderer.send('set-menu-checked', 'Tools', 'Window Helper', false);
+		ipcRenderer.send('set-menu-checked', 'Window', 'Window Helper', false);
 
 	}
 

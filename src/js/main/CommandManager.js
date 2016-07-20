@@ -48,6 +48,10 @@ CommandManager.prototype.createMenus = function() {
 					role: 'about'
 				},
 				{
+					label: 'Version ' + app.getVersion(),
+					enabled: false
+				},
+				{
 					type: 'separator'
 				},
 				{
@@ -123,6 +127,26 @@ CommandManager.prototype.createMenus = function() {
 			]
 		},
 		{
+			label: 'File',
+			submenu: [
+				{
+					label: 'New Window',
+					accelerator: 'Cmd+N',
+					click: function() {
+						if(Oryoki) Oryoki.createWindow();
+					}
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Close Window',
+					accelerator: 'Cmd+W',
+					role: 'close'
+				}
+			]
+		},
+		{
 			label: 'Edit',
 			submenu: [
 				{
@@ -157,26 +181,6 @@ CommandManager.prototype.createMenus = function() {
 					label: 'Select All',
 					accelerator: 'CmdOrCtrl+A',
 					role: 'selectall'
-				}
-			]
-		},
-		{
-			label: 'File',
-			submenu: [
-				{
-					label: 'New Window',
-					accelerator: 'Cmd+N',
-					click: function() {
-						if(Oryoki) Oryoki.createWindow();
-					}
-				},
-				{
-					type: 'separator'
-				},
-				{
-					label: 'Close Window',
-					accelerator: 'Cmd+W',
-					role: 'close'
 				}
 			]
 		},
@@ -272,19 +276,6 @@ CommandManager.prototype.createMenus = function() {
 			label: 'Tools',
 			submenu: [
 				{
-					label: 'Window Helper',
-					accelerator: 'Cmd+Alt+M',
-					type: 'checkbox',
-					click: function() {
-						if(Oryoki.focusedWindow) {
-							Oryoki.focusedWindow.toggleWindowHelper();
-						}
-					}
-				},
-				{
-					type: 'separator'
-				},
-				{
 					label: 'Save Screenshot',
 					accelerator: 'Cmd+Shift+`',
 					click: function() {
@@ -370,11 +361,28 @@ CommandManager.prototype.createMenus = function() {
 		},
 		{
 			label: 'Window',
+			role: 'window',
 			submenu: [
+				{
+					label: 'Window Helper',
+					accelerator: 'Cmd+Alt+M',
+					type: 'checkbox',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.toggleWindowHelper();
+						}
+					}
+				},
+				{
+					type: 'separator'
+				},
 				{
 					label: 'Minimize',
 					accelerator: 'Cmd+M',
 					role: 'minimize'
+				},
+				{
+					type: 'separator'
 				},
 				{
 					label: 'Float on Top',

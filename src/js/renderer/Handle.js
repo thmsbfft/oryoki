@@ -62,6 +62,8 @@ Handle.prototype.changeTitle = function(newTitle) {
 	}
 	this.title.innerText = newTitle;
 
+	ipcRenderer.send('updateMenuTitle', Browser.id, newTitle);
+
 }
 
 Handle.prototype.getTitle = function() {

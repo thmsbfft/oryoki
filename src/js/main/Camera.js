@@ -8,8 +8,12 @@ function Camera(parameters) {
 	this.onRecordingEndCallback = parameters.onRecordingEnd;
 
 	this.isRecording = false;
+	CommandManager.setEnabled('Tools', 'Stop Recording', false);
+
 	this.isEncoding = false;
 	this.recordingPath = UserManager.user.paths.tmp + '/' + 'Recording';
+
+	this.tray = null;
 
 	// Create tmp recording path if not there yet
 	try {
@@ -112,6 +116,10 @@ Camera.prototype.startRecording = function() {
 			}
 		}
 
+		app.dock.setBadge('R');
+		this.showTray();
+		CommandManager.setEnabled('Tools', 'Start Recording', false);
+		CommandManager.setEnabled('Tools', 'Stop Recording', true);
 		this.browser.webContents.send('recordingBegin');
 		this.isRecording = true;
 		this.onRecordingBeginCallback();
@@ -221,122 +229,129 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 
 Camera.prototype.stopRecording = function() {
 
-	// @if NODE_ENV='development'
-	c.log('[CAMERA] Finished recording!');
-	// @endif
+	if(this.isRecording) {
+		// @if NODE_ENV='development'
+		c.log('[CAMERA] Finished recording!');
+		// @endif
 
-	this.isRecording = false;
-	this.browser.webContents.endFrameSubscription();
-	this.onRecordingEndCallback();
-	this.frameCount = 0;
-	if(UserManager.getPreferenceByName("mute_notifications_while_recording")) {
-		this.browser.webContents.send('unmute-notifications');
-	}
-	this.browser.webContents.send('recordingEnd');
+		app.dock.setBadge('');
+		CommandManager.setEnabled('Tools', 'Start Recording', true);
+		CommandManager.setEnabled('Tools', 'Stop Recording', false);
+		this.hideTray();
+		this.isRecording = false;
+		this.browser.webContents.endFrameSubscription();
+		this.onRecordingEndCallback();
+		this.frameCount = 0;
+		if(UserManager.getPreferenceByName("mute_notifications_while_recording")) {
+			this.browser.webContents.send('unmute-notifications');
+		}
+		this.browser.webContents.send('recordingEnd');
 
-	var day = pad(new Date().getDate());
-	var month = pad(new Date().getMonth() + 1);
-	var year = new Date().getFullYear();
-	var date = day + '-' + month + '-' + year;
+		var day = pad(new Date().getDate());
+		var month = pad(new Date().getMonth() + 1);
+		var year = new Date().getFullYear();
+		var date = day + '-' + month + '-' + year;
 
-	var hrs = pad(new Date().getHours());
-	var min = pad(new Date().getMinutes());
-	var sec = pad(new Date().getSeconds());
-	var time = hrs + '-' + min + '-' + sec;
+		var hrs = pad(new Date().getHours());
+		var min = pad(new Date().getMinutes());
+		var sec = pad(new Date().getSeconds());
+		var time = hrs + '-' + min + '-' + sec;
 
-	var name = 'oryoki-recording-' + date + '-' + time;
+		var name = 'oryoki-recording-' + date + '-' + time;
 
-	// Start encoding
-	switch(UserManager.getPreferenceByName("video_recording_quality")) {
+		// Start encoding
+		switch(UserManager.getPreferenceByName("video_recording_quality")) {
 
-		case "prores":
+			case "prores":
 
-			this.ffmpegCommand = ffmpeg()
-				.on('start', function() {
-					this.isEncoding = true;
-					this.browser.webContents.send('display-notification', {
-						'body' : 'Encoding ProRes',
-						'lifespan' : 3000,
-					});
-				}.bind(this))
-				.on('end', this.onEncodingEnd.bind(this))
-				.on('error', function(err) {
-					throw err;
-					// @if NODE_ENV='development'
-					c.log('Error encoding: ' + err.message);
-					// @endif
-				}.bind(this))
-				.input(this.recordingPath + '/' + '%05d.bmp')
-				.withInputFps(60)
-				.withOutputFps(30)
-				.videoCodec('prores_ks')
-				.save(app.getPath('downloads') + '/' + name + '.mov');
+				this.ffmpegCommand = ffmpeg()
+					.on('start', function() {
+						this.isEncoding = true;
+						this.browser.webContents.send('display-notification', {
+							'body' : 'Encoding ProRes',
+							'lifespan' : 3000,
+						});
+					}.bind(this))
+					.on('end', this.onEncodingEnd.bind(this))
+					.on('error', function(err) {
+						throw err;
+						// @if NODE_ENV='development'
+						c.log('Error encoding: ' + err.message);
+						// @endif
+					}.bind(this))
+					.input(this.recordingPath + '/' + '%05d.bmp')
+					.withInputFps(60)
+					.withOutputFps(30)
+					.videoCodec('prores_ks')
+					.save(app.getPath('downloads') + '/' + name + '.mov');
 
-			break;
-		
-		case "mp4":
+				break;
+			
+			case "mp4":
 
-			this.ffmpegCommand = ffmpeg()
-				.on('start', function() {
-					this.isEncoding = true;
-					this.browser.webContents.send('display-notification', {
-						'body' : 'Encoding MP4',
-						'lifespan' : 3000,
-					});
-				}.bind(this))
-				.on('end', this.onEncodingEnd.bind(this))
-				.on('error', function(err) {
-					throw err;
-					// @if NODE_ENV='development'
-					c.log('Error encoding: ' + err.message);
-					// @endif
-				}.bind(this))
-				.input(this.recordingPath + '/' + '%05d.bmp')
-				.withInputFps(60)
-				.withOutputFps(30)
-				.videoCodec('libx264')
-				.withVideoBitrate('10000k')
-				.addOptions(['-preset ultrafast', '-pix_fmt yuvj420p'])
-				.save(app.getPath('downloads') + '/' + name + '.mp4');
+				this.ffmpegCommand = ffmpeg()
+					.on('start', function() {
+						this.isEncoding = true;
+						this.browser.webContents.send('display-notification', {
+							'body' : 'Encoding MP4',
+							'lifespan' : 3000,
+						});
+					}.bind(this))
+					.on('end', this.onEncodingEnd.bind(this))
+					.on('error', function(err) {
+						throw err;
+						// @if NODE_ENV='development'
+						c.log('Error encoding: ' + err.message);
+						// @endif
+					}.bind(this))
+					.input(this.recordingPath + '/' + '%05d.bmp')
+					.withInputFps(60)
+					.withOutputFps(30)
+					.videoCodec('libx264')
+					.withVideoBitrate('10000k')
+					.addOptions(['-preset ultrafast', '-pix_fmt yuvj420p'])
+					.save(app.getPath('downloads') + '/' + name + '.mp4');
 
-			break;
+				break;
 
-		case "gif":
+			case "gif":
 
-			// @if NODE_ENV='development'
-			c.log('Encoding a gif...');
-			// @endif
+				// @if NODE_ENV='development'
+				c.log('Encoding a gif...');
+				// @endif
 
-		default:
+			default:
 
-			this.browser.webContents.send('display-notification', {
-				'body' : 'Invalid argument – ' + UserManager.getPreferenceByName("video_recording_quality"),
-				'type' : 'error',
-				'lifespan' : 3000
-			});
+				this.browser.webContents.send('display-notification', {
+					'body' : 'Invalid argument – ' + UserManager.getPreferenceByName("video_recording_quality"),
+					'type' : 'error',
+					'lifespan' : 3000
+				});
 
-			this.ffmpegCommand = ffmpeg()
-				.on('start', function() {
-					this.isEncoding = true;
-					this.browser.webContents.send('display-notification', {
-						'body' : 'Encoding MP4',
-						'lifespan' : 3000,
-					});
-				}.bind(this))
-				.on('end', this.onEncodingEnd.bind(this))
-				.on('error', function(err) {
-					throw err;
-					// @if NODE_ENV='development'
-					c.log('Error encoding: ' + err.message);
-					// @endif
-				}.bind(this))
-				.input(this.recordingPath + '/' + '%05d.bmp')
-				.withInputFps(60)
-				.withOutputFps(30)
-				.videoCodec('libx264')
-				.withVideoBitrate('10000k')
-				.addOptions(['-preset ultrafast', '-pix_fmt yuvj420p'])
-				.save(app.getPath('downloads') + '/' + name + '.mp4');
+				this.ffmpegCommand = ffmpeg()
+					.on('start', function() {
+						this.isEncoding = true;
+						this.browser.webContents.send('display-notification', {
+							'body' : 'Encoding MP4',
+							'lifespan' : 3000,
+						});
+					}.bind(this))
+					.on('end', this.onEncodingEnd.bind(this))
+					.on('error', function(err) {
+						throw err;
+						// @if NODE_ENV='development'
+						c.log('Error encoding: ' + err.message);
+						// @endif
+					}.bind(this))
+					.input(this.recordingPath + '/' + '%05d.bmp')
+					.withInputFps(60)
+					.withOutputFps(30)
+					.videoCodec('libx264')
+					.withVideoBitrate('10000k')
+					.addOptions(['-preset ultrafast', '-pix_fmt yuvj420p'])
+					.save(app.getPath('downloads') + '/' + name + '.mp4');
+
+		}
 
 	}
 
@@ -372,5 +387,38 @@ Camera.prototype.cleanTmpRecording = function() {
 			fs.unlinkSync(framePath);
 		}
 	}
+
+}
+
+Camera.prototype.showTray = function() {
+
+	this.tray = new Tray(path.join(__dirname, '/src/media/tray-icon-blackTemplate.png'));
+	this.tray.setPressedImage(path.join(__dirname, '/src/media/tray-icon-whiteTemplate.png'));
+
+	var contextMenu = Menu.buildFromTemplate([
+		{
+			label: 'Ōryōki is recording', 
+			enabled: false
+		},
+		{
+			type: 'separator'
+		},
+		{
+			label: 'Stop Recording',
+			accelerator: 'Cmd+Alt+Shift+P', 
+			click: function() {
+				this.stopRecording();
+			}.bind(this)
+		},
+	]);
+	this.tray.setToolTip('Ōryōki • REC');
+	this.tray.setContextMenu(contextMenu);
+
+}
+
+Camera.prototype.hideTray = function() {
+
+	this.tray.destroy();
+	this.tray = null;
 
 }

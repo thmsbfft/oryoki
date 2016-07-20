@@ -14,7 +14,7 @@ omnibox {
 		}
 		.input {
 			-webkit-app-region: no-drag;
-			width: calc(100% - 36px - 55px);
+			width: calc(100% - 24px);
 			font-family: 'Roboto Light', sans-serif;
 			font-size: 18px;
 			color: rgba(255, 255, 255, 0.6);
@@ -24,7 +24,6 @@ omnibox {
 			border: none;
 			padding: 12px;
 			position: relative;
-			padding-right: 79px;
 			border-radius: 2px;
 			transition: background-color 0.1s ease-out;
 			&.highlight {
