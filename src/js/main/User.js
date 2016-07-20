@@ -28,7 +28,6 @@ function User(name, factory) {
 	this.history = undefined;
 
 	this.getPreferences();
-	fs.watchFile(this.paths.conf + '/' + 'preferences.json', this.getPreferences.bind(this));
 
 	this.paths.tmp = this.paths.conf + '/' + 'Temporary';
 	// Check
@@ -47,6 +46,15 @@ function User(name, factory) {
 		}
 	}
 
+	fs.watchFile(this.paths.conf + '/' + 'oryoki-preferences.json', this.onPreferencesChange.bind(this));
+	this.onPreferencesChange();
+
+}
+
+User.prototype.onPreferencesChange = function() {
+
+	this.getPreferences();
+	
 	if(this.getPreferenceByName('web_plugins_path') != "") {
 		// Path is set
 		this.paths.webPlugins = this.getPreferenceByName('web_plugins_path');
@@ -70,9 +78,6 @@ function User(name, factory) {
 			throw err;
 		}
 	}
-
-	this.getPreferences();
-	fs.watchFile(this.paths.conf + '/' + 'oryoki-preferences.json', this.getPreferences.bind(this));
 
 }
 

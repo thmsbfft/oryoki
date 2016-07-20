@@ -18,7 +18,7 @@
 	// Set to false to disable web plugins by default
 	"enable_web_plugins" : true,
 	
-	// Set a custom web plugin path here
+	// Set a custom web plugin path (absolute) here
 	"web_plugins_path" : "",
 
 	// Dimensions used for new windows
@@ -28,7 +28,7 @@
 	// Set to true to automatically clear caches
 	"clear_caches_on_launch" : false,
 	
-	// Set a custom download path here
+	// Set a custom download path (absolute) here
 	"override_download_path" : false,
 	"download_path" : "",
 	
