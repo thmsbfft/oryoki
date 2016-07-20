@@ -276,19 +276,6 @@ CommandManager.prototype.createMenus = function() {
 			label: 'Tools',
 			submenu: [
 				{
-					label: 'Window Helper',
-					accelerator: 'Cmd+Alt+M',
-					type: 'checkbox',
-					click: function() {
-						if(Oryoki.focusedWindow) {
-							Oryoki.focusedWindow.toggleWindowHelper();
-						}
-					}
-				},
-				{
-					type: 'separator'
-				},
-				{
 					label: 'Save Screenshot',
 					accelerator: 'Cmd+Shift+`',
 					click: function() {
@@ -357,6 +344,19 @@ CommandManager.prototype.createMenus = function() {
 			label: 'Window',
 			role: 'window',
 			submenu: [
+				{
+					label: 'Window Helper',
+					accelerator: 'Cmd+Alt+M',
+					type: 'checkbox',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.toggleWindowHelper();
+						}
+					}
+				},
+				{
+					type: 'separator'
+				},
 				{
 					label: 'Minimize',
 					accelerator: 'Cmd+M',

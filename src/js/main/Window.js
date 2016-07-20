@@ -171,7 +171,7 @@ Window.prototype.updateMenus = function() {
 	CommandManager.setCheckbox('Window', 'Float on Top', this.isAlwaysOnTop);
 	CommandManager.setCheckbox('View', 'Title Bar', this.handle);
 	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
-	CommandManager.setCheckbox('Tools', 'Window Helper', this.windowHelper && !this.browser.isFullScreen());
+	CommandManager.setCheckbox('Window', 'Window Helper', this.windowHelper && !this.browser.isFullScreen());
 	CommandManager.setEnabled('View', 'Toggle Omnibox', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Mini Console', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Toggle Devtools', !this.isFirstLoad);
@@ -273,7 +273,7 @@ Window.prototype.toggleWindowHelper = function() {
 
 		this.windowHelper != this.windowHelper;
 		this.browser.webContents.send('toggle_window_helper', this.id);
-		CommandManager.toggleChecked('Tools', 'Window Helper');
+		CommandManager.toggleChecked('Window', 'Window Helper');
 
 }
 
