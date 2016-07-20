@@ -64,6 +64,10 @@ function Window(parameters) {
 
 Window.prototype.attachEvents = function() {
 
+	this.browser.once('ready-to-show', () => {
+		this.browser.show();
+	});
+
 	this.browser.webContents.on('dom-ready', this.onReady.bind(this));
 	this.browser.on('focus', this.onFocus.bind(this));
 	this.browser.on('closed', this.onClosed.bind(this));
@@ -131,7 +135,6 @@ Window.prototype.onReady = function() {
 
 	this.browser.webContents.send('ready');
 	if(this.url) this.load(this.url);
-	this.browser.show();
 
 }
 
