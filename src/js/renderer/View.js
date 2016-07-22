@@ -73,9 +73,8 @@ View.prototype.attachEvents = function() {
 
 View.prototype.load = function(input) {
 
-	NotificationManager.display({
+	StatusManager.display({
 		'body' : 'Loading',
-		'lifespan' : 2800,
 		'type' : 'loading'
 	});
 
@@ -108,9 +107,8 @@ View.prototype.onLoadCommit = function(e) {
 
 	if(this.isFirstLoad) this.isFirstLoad = false;
 
-	NotificationManager.display({
+	StatusManager.display({
 		'body' : 'Loading',
-		'lifespan' : 3000,
 		'type' : 'loading'
 	});
 
@@ -131,9 +129,8 @@ View.prototype.onDidFrameFinishLoad = function(e) {
 		this.isLoadingTimerRunning = false;
 		this.loadingTimerEnd = e.timeStamp;
 
-		NotificationManager.display({
+		StatusManager.display({
 			'body' : Math.round(this.loadingTimerEnd - this.loadingTimerStart) + ' ms',
-			'lifespan' : 3000,
 			'type' : 'counter'
 		});
 
@@ -144,9 +141,8 @@ View.prototype.onDidFrameFinishLoad = function(e) {
 View.prototype.onPageTitleUpdated = function(e) {
 
 	if(!Browser.isHandleDisplayed) {
-		NotificationManager.display({
-			'body' : '→ ' + e.title,
-			'lifespan' : 3000,
+		StatusManager.display({
+			'body' : '→ ' + e.title
 		});
 	}
 
@@ -161,7 +157,7 @@ View.prototype.onDidFinishLoad = function() {
 	removeClass(this.webview, 'loading');
 	addClass(this.webview, 'loaded');
 
-	// NotificationManager.killOfType('loading');
+	// StatusManager.killOfType('loading');
 
 	this.onDidFinishLoadCallback();
 	
@@ -177,25 +173,22 @@ View.prototype.onDidFailLoad = function(e) {
 			break;
 
 		case -105:
-			NotificationManager.display({
+			StatusManager.display({
 				'body' : 'Server DNS address could not be found',
-				'lifespan' : 5000,
 				'type': 'error'
 			});
 			break;
 
 		case -102:
-			NotificationManager.display({
+			StatusManager.display({
 				'body' : 'Host refused to connect',
-				'lifespan' : 5000,
 				'type': 'error'
 			});
 			break;
 
 		default:
-			NotificationManager.display({
+			StatusManager.display({
 				'body' : 'Load failed',
-				'lifespan' : 5000,
 				'type': 'error'
 			});	
 
@@ -234,9 +227,8 @@ View.prototype.getTitle = function() {
 View.prototype.goForward = function() {
 	if(this.webview.canGoForward()) {
 		
-		NotificationManager.display({
-			'body' : 'Navigating forward',
-			'lifespan' : 3000,
+		StatusManager.display({
+			'body' : 'Navigating forward'
 		});
 
 		this.webview.goForward();
@@ -246,9 +238,8 @@ View.prototype.goForward = function() {
 View.prototype.goBack = function() {
 	if(this.webview.canGoBack()) {
 		
-		NotificationManager.display({
-			'body' : 'Navigating back',
-			'lifespan' : 3000,
+		StatusManager.display({
+			'body' : 'Navigating back'
 		});
 
 		this.webview.goBack();

@@ -340,9 +340,8 @@ Window.prototype.reloadIgnoringCache = function() {
 
 Window.prototype.load = function(url) {
 
-	this.browser.webContents.send('display-notification', {
-		'body' : 'Loading ' + url,
-		'lifespan' : 3000,
+	this.browser.webContents.send('display-status', {
+		'body' : 'Loading ' + url
 	});
 
 	this.browser.webContents.send('load', url);
@@ -356,9 +355,8 @@ Window.prototype.navigateBack = function() {
 
 Window.prototype.navigateForward = function() {
 
-	this.browser.webContents.send('display-notification', {
-		'body' : 'Navigating forward...',
-		'lifespan' : 2000,
+	this.browser.webContents.send('display-status', {
+		'body' : 'Navigating forward...'
 	});
 
 	this.browser.webContents.send('goForward');

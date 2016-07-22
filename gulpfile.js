@@ -21,8 +21,8 @@ var main = [
 var renderer = [
 	'src/js/renderer/utils.js',
 	'src/js/renderer/renderer.js',
-	'src/js/renderer/Notification.js',
-	'src/js/renderer/NotificationManager.js',
+	'src/js/renderer/Status.js',
+	'src/js/renderer/StatusManager.js',
 	'src/js/renderer/Loader.js',
 	'src/js/renderer/Console.js',
 	'src/js/renderer/WindowHelper.js',

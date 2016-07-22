@@ -62,9 +62,8 @@ Camera.prototype.takeScreenshot = function() {
 		fs.writeFile(app.getPath('downloads') + '/' + name + '.png', image.toPng(), function(err) {
 			if(err)
 				throw err;
-			this.browser.webContents.send('display-notification', {
-				'body' : 'Screenshot saved',
-				'lifespan' : 3000,
+			this.browser.webContents.send('display-status', {
+				'body' : 'Screenshot saved'
 			});
 		}.bind(this));
 
@@ -79,9 +78,8 @@ Camera.prototype.copyScreenshot = function(id) {
 
 			clipboard.writeImage(image);
 
-			this.browser.webContents.send('display-notification', {
-				'body' : 'Screenshot copied to clipboard',
-				'lifespan' : 3000,
+			this.browser.webContents.send('display-status', {
+				'body' : 'Screenshot copied to clipboard'
 			});
 
 		}.bind(this));
@@ -267,9 +265,8 @@ Camera.prototype.stopRecording = function() {
 				this.ffmpegCommand = ffmpeg()
 					.on('start', function() {
 						this.isEncoding = true;
-						this.browser.webContents.send('display-notification', {
-							'body' : 'Encoding ProRes',
-							'lifespan' : 3000,
+						this.browser.webContents.send('display-status', {
+							'body' : 'Encoding ProRes'
 						});
 					}.bind(this))
 					.on('end', this.onEncodingEnd.bind(this))
@@ -292,9 +289,8 @@ Camera.prototype.stopRecording = function() {
 				this.ffmpegCommand = ffmpeg()
 					.on('start', function() {
 						this.isEncoding = true;
-						this.browser.webContents.send('display-notification', {
-							'body' : 'Encoding MP4',
-							'lifespan' : 3000,
+						this.browser.webContents.send('display-status', {
+							'body' : 'Encoding MP4'
 						});
 					}.bind(this))
 					.on('end', this.onEncodingEnd.bind(this))
@@ -322,18 +318,16 @@ Camera.prototype.stopRecording = function() {
 
 			default:
 
-				this.browser.webContents.send('display-notification', {
+				this.browser.webContents.send('display-status', {
 					'body' : 'Invalid argument – ' + UserManager.getPreferenceByName("video_recording_quality"),
-					'type' : 'error',
-					'lifespan' : 3000
+					'type' : 'error'
 				});
 
 				this.ffmpegCommand = ffmpeg()
 					.on('start', function() {
 						this.isEncoding = true;
-						this.browser.webContents.send('display-notification', {
-							'body' : 'Encoding MP4',
-							'lifespan' : 3000,
+						this.browser.webContents.send('display-status', {
+							'body' : 'Encoding MP4'
 						});
 					}.bind(this))
 					.on('end', this.onEncodingEnd.bind(this))
@@ -362,9 +356,8 @@ Camera.prototype.onEncodingEnd = function() {
 	this.isEncoding = false;
 
 	try {
-		this.browser.webContents.send('display-notification', {
-			'body' : 'Finished encoding',
-			'lifespan' : 3000,
+		this.browser.webContents.send('display-status', {
+			'body' : 'Finished encoding'
 		});
 	}
 	catch(err) { return; }

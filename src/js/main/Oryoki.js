@@ -172,9 +172,8 @@ Oryoki.prototype.clearCaches = function() {
 	}.bind(this));
 
 	if(this.focusedWindow) {
-		this.focusedWindow.browser.webContents.send('display-notification', {
-			'body' : 'Cleared caches',
-			'lifespan' : 3000
+		this.focusedWindow.browser.webContents.send('display-status', {
+			'body' : 'Cleared caches'
 		});
 	}
 
@@ -191,9 +190,8 @@ Oryoki.prototype.clearLocalStorage = function() {
 			// If folder is already clear, do nothing
 		}
 		if(this.focusedWindow) {
-			this.focusedWindow.browser.webContents.send('display-notification', {
-				'body' : 'Cleared local storage',
-				'lifespan' : 3000,
+			this.focusedWindow.browser.webContents.send('display-status', {
+				'body' : 'Cleared local storage'
 			});
 		}
 	}.bind(this));

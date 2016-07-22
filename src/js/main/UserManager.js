@@ -42,9 +42,8 @@ UserManager.prototype.resetUserPreferencesToFactory = function() {
 		// @if NODE_ENV='development'
 		if(err) c.log(err);
 		// @endif
-		Oryoki.focusedWindow.browser.webContents.send('display-notification', {
-			'body' : 'Preferences reset',
-			'lifespan' : 3000
+		Oryoki.focusedWindow.browser.webContents.send('display-status', {
+			'body' : 'Preferences reset'
 		});
 	});
 }

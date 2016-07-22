@@ -1,0 +1,81 @@
+status {
+
+	position: fixed;
+	top: 0;
+	right: 0;
+
+	text-align: right;
+	padding: 3.5px 7px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+	font-size: 10px;
+	display: inline-block;
+	letter-spacing: 0.4px;
+	line-height: 15px;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	color: rgba(255, 255, 255, 0.85);
+	background: rgba(40,40,40,0.7);
+	pointer-events: none;
+	border-bottom-left-radius: 4px;
+	// box-shadow: -1px 1px 10px rgba(0,0,0,0.5);
+
+	&.hide {
+		display: none;
+	}
+
+	// &.error {
+	// 	&::before {
+	// 		content: ' ';
+	// 		width: 4px;
+	// 		display: inline-block;
+	// 		height: 4px;
+	// 		border-radius: 4px;
+	// 		margin-right: 6px;
+	// 		margin-left: 2px;
+	// 		position: relative;
+	// 		top: -1px;
+	// 		background-color: red;
+	// 	}
+	// }
+
+	// &.loading {
+	// 	// &::before {
+	// 	// 	content: ' ';
+	// 	// 	width: 4px;
+	// 	// 	display: inline-block;
+	// 	// 	height: 4px;
+	// 	// 	border-radius: 4px;
+	// 	// 	margin-right: 6px;
+	// 	// 	margin-left: 2px;
+	// 	// 	position: relative;
+	// 	// 	top: -1px;
+	// 	// 	background-color: #00EC91;
+	// 	// 	animation: blink 0.2s infinite ease-out;
+	// 	// }
+	// }
+
+	// &.counter {
+
+	// 	// background-color: #1e71f7;
+	// 	// color: white;
+	// 	// font-family: 'Roboto Mono Regular', sans-serif;
+	// 	// font-size: 10px;
+	// 	// // letter-spacing: 1px;
+	// 	// text-transform: uppercase;
+
+	// 	&::before {
+	// 		content: ' ';
+	// 		width: 4px;
+	// 		display: inline-block;
+	// 		height: 4px;
+	// 		border-radius: 4px;
+	// 		margin-right: 6px;
+	// 		margin-left: 2px;
+	// 		position: relative;
+	// 		top: -1px;
+	// 		background-color: #1e71f7;
+	// 	}
+	// }
+
+}

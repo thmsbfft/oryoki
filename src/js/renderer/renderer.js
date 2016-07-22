@@ -18,7 +18,7 @@ ipcRenderer.on('ready', function() {
 	
 	console.log('[IPC] ☑️');
 	Browser = new Browser();
-	NotificationManager = new NotificationManager({
+	StatusManager = new StatusManager({
 
 	});
 

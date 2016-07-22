@@ -1,4 +1,4 @@
-function Notification(parameters) {
+function Status(parameters) {
 
 	this.context = parameters.context;
 	this.onDeathCallback = parameters.onDeath;
@@ -15,7 +15,7 @@ function Notification(parameters) {
 	this.build();
 }
 
-Notification.prototype.build = function() {
+Notification.build = function() {
 
 	this.el = document.createElement('div');
 	this.el.className = 'notification';
@@ -41,20 +41,20 @@ Notification.prototype.build = function() {
 
 }
 
-Notification.prototype.freeze = function() {
+Notification.freeze = function() {
 
 	clearTimeout(this.life);
 	this.el.addEventListener('mouseout', this.unfreeze.bind(this));
 
 }
 
-Notification.prototype.unfreeze = function() {
+Notification.unfreeze = function() {
 
 	this.life = setTimeout(this.destroy.bind(this), this.lifespan);
 
 }
 
-Notification.prototype.destroy = function() {
+Notification.destroy = function() {
 
 	addClass(this.el, 'dying');
 	setTimeout(function() {
