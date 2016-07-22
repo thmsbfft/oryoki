@@ -181,7 +181,7 @@ Oryoki.prototype.clearCaches = function() {
 
 Oryoki.prototype.clearLocalStorage = function() {
 
-	var folderPath = UserManager.user.confPath.replace(' ', '\\ ') + '/Local\\ Storage';
+	var folderPath = UserManager.user.paths.conf.replace(' ', '\\ ') + '/Local\\ Storage';
 	// @if NODE_ENV='development'
 	c.log('[ORYOKI] Will delete: ' + folderPath);
 	// @endif
