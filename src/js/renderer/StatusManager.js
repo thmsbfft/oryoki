@@ -6,7 +6,8 @@ function StatusManager(parameters) {
 	this.el = document.getElementsByTagName('status')[0];
 	this.history = [];
 	
-	this.isVisible = true;
+	this.isVisible = false;
+	this.visibilityTimer = null;
 
 	ipcRenderer.on('display-status', function(e, props) {
 		this.display(props);
@@ -20,6 +21,16 @@ function StatusManager(parameters) {
 StatusManager.prototype.display = function(props) {
 
 	this.el.innerHTML = props.body;
+	this.el.className = 'fade-in';
+
+	clearTimeout(this.visibilityTimer);
+	this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 1200);
+
+}
+
+StatusManager.prototype.fadeOut = function() {
+
+	this.el.className = 'fade-out';
 
 }
 

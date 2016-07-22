@@ -19,9 +19,20 @@ status {
 	pointer-events: none;
 	border-bottom-left-radius: 4px;
 	// box-shadow: -1px 1px 10px rgba(0,0,0,0.5);
+	opacity: 0;
 
-	&.hide {
+	&.disabled {
 		display: none;
+	}
+
+	&.fade-in {
+		opacity: 1;
+		transition: opacity 0.5s ease-out;
+	}
+
+	&.fade-out {
+		opacity: 0;
+		transition: opacity 1s ease-in;
 	}
 
 	// &.error {
