@@ -42,7 +42,7 @@ UserManager.prototype.resetUserPreferencesToFactory = function() {
 		// @if NODE_ENV='development'
 		if(err) c.log(err);
 		// @endif
-		Oryoki.focusedWindow.browser.webContents.send('display-status', {
+		Oryoki.focusedWindow.browser.webContents.send('log-status', {
 			'body' : 'Preferences reset'
 		});
 	});

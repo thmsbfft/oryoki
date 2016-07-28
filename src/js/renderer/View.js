@@ -73,7 +73,7 @@ View.prototype.attachEvents = function() {
 
 View.prototype.load = function(input) {
 
-	StatusManager.display({
+	StatusManager.log({
 		'body' : 'Loading',
 		'type' : 'loading'
 	});
@@ -107,7 +107,7 @@ View.prototype.onLoadCommit = function(e) {
 
 	if(this.isFirstLoad) this.isFirstLoad = false;
 
-	StatusManager.display({
+	StatusManager.log({
 		'body' : 'Loading',
 		'type' : 'loading'
 	});
@@ -129,7 +129,7 @@ View.prototype.onDidFrameFinishLoad = function(e) {
 		this.isLoadingTimerRunning = false;
 		this.loadingTimerEnd = e.timeStamp;
 
-		StatusManager.display({
+		StatusManager.log({
 			'body' : Math.round(this.loadingTimerEnd - this.loadingTimerStart) + ' ms',
 			'type' : 'counter'
 		});
@@ -141,7 +141,7 @@ View.prototype.onDidFrameFinishLoad = function(e) {
 View.prototype.onPageTitleUpdated = function(e) {
 
 	if(!Browser.isHandleDisplayed) {
-		StatusManager.display({
+		StatusManager.log({
 			'body' : '→ ' + e.title
 		});
 	}
@@ -157,8 +157,6 @@ View.prototype.onDidFinishLoad = function() {
 	removeClass(this.webview, 'loading');
 	addClass(this.webview, 'loaded');
 
-	// StatusManager.killOfType('loading');
-
 	this.onDidFinishLoadCallback();
 	
 }
@@ -173,21 +171,21 @@ View.prototype.onDidFailLoad = function(e) {
 			break;
 
 		case -105:
-			StatusManager.display({
+			StatusManager.log({
 				'body' : 'Server DNS address could not be found',
 				'type': 'error'
 			});
 			break;
 
 		case -102:
-			StatusManager.display({
+			StatusManager.log({
 				'body' : 'Host refused to connect',
 				'type': 'error'
 			});
 			break;
 
 		default:
-			StatusManager.display({
+			StatusManager.log({
 				'body' : 'Load failed',
 				'type': 'error'
 			});	
@@ -227,7 +225,7 @@ View.prototype.getTitle = function() {
 View.prototype.goForward = function() {
 	if(this.webview.canGoForward()) {
 		
-		StatusManager.display({
+		StatusManager.log({
 			'body' : 'Navigating forward'
 		});
 
@@ -238,7 +236,7 @@ View.prototype.goForward = function() {
 View.prototype.goBack = function() {
 	if(this.webview.canGoBack()) {
 		
-		StatusManager.display({
+		StatusManager.log({
 			'body' : 'Navigating back'
 		});
 

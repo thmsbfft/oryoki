@@ -340,7 +340,7 @@ Window.prototype.reloadIgnoringCache = function() {
 
 Window.prototype.load = function(url) {
 
-	this.browser.webContents.send('display-status', {
+	this.browser.webContents.send('log-status', {
 		'body' : 'Loading ' + url
 	});
 
@@ -355,7 +355,7 @@ Window.prototype.navigateBack = function() {
 
 Window.prototype.navigateForward = function() {
 
-	this.browser.webContents.send('display-status', {
+	this.browser.webContents.send('log-status', {
 		'body' : 'Navigating forward...'
 	});
 

@@ -62,7 +62,7 @@ Camera.prototype.takeScreenshot = function() {
 		fs.writeFile(app.getPath('downloads') + '/' + name + '.png', image.toPng(), function(err) {
 			if(err)
 				throw err;
-			this.browser.webContents.send('display-status', {
+			this.browser.webContents.send('log-status', {
 				'body' : 'Screenshot saved'
 			});
 		}.bind(this));
@@ -78,7 +78,7 @@ Camera.prototype.copyScreenshot = function(id) {
 
 			clipboard.writeImage(image);
 
-			this.browser.webContents.send('display-status', {
+			this.browser.webContents.send('log-status', {
 				'body' : 'Screenshot copied to clipboard'
 			});
 
@@ -265,7 +265,7 @@ Camera.prototype.stopRecording = function() {
 				this.ffmpegCommand = ffmpeg()
 					.on('start', function() {
 						this.isEncoding = true;
-						this.browser.webContents.send('display-status', {
+						this.browser.webContents.send('log-status', {
 							'body' : 'Encoding ProRes'
 						});
 					}.bind(this))
@@ -289,7 +289,7 @@ Camera.prototype.stopRecording = function() {
 				this.ffmpegCommand = ffmpeg()
 					.on('start', function() {
 						this.isEncoding = true;
-						this.browser.webContents.send('display-status', {
+						this.browser.webContents.send('log-status', {
 							'body' : 'Encoding MP4'
 						});
 					}.bind(this))
@@ -318,7 +318,7 @@ Camera.prototype.stopRecording = function() {
 
 			default:
 
-				this.browser.webContents.send('display-status', {
+				this.browser.webContents.send('log-status', {
 					'body' : 'Invalid argument – ' + UserManager.getPreferenceByName("video_recording_quality"),
 					'type' : 'error'
 				});
@@ -326,7 +326,7 @@ Camera.prototype.stopRecording = function() {
 				this.ffmpegCommand = ffmpeg()
 					.on('start', function() {
 						this.isEncoding = true;
-						this.browser.webContents.send('display-status', {
+						this.browser.webContents.send('log-status', {
 							'body' : 'Encoding MP4'
 						});
 					}.bind(this))
@@ -356,7 +356,7 @@ Camera.prototype.onEncodingEnd = function() {
 	this.isEncoding = false;
 
 	try {
-		this.browser.webContents.send('display-status', {
+		this.browser.webContents.send('log-status', {
 			'body' : 'Finished encoding'
 		});
 	}
