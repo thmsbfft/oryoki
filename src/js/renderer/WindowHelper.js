@@ -145,7 +145,7 @@ WindowHelper.prototype.onInputKeyUp = function(e) {
 WindowHelper.prototype.onInputKeyDown = function(e) {
 
 	// Ignore letters and keys we use later on
-	if(e.key.match(/[a-z]/i) && e.key.length == 1 || e.keyCode == 9 || e.keyCode == 38 || e.keyCode == 40) e.preventDefault();
+	if(e.metaKey == false && e.key.match(/[a-z]/i) && e.key.length == 1 || e.keyCode == 9 || e.keyCode == 38 || e.keyCode == 40) e.preventDefault();
 
 	switch(e.keyCode) {
 
