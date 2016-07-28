@@ -59,7 +59,7 @@ CommandManager.prototype.createMenus = function() {
 					submenu: [
 						{
 							label: 'Open',
-							accelerator: 'Command+,',
+							accelerator: 'CmdOrCtrl+,',
 							click: function() {
 								UserManager.openPreferencesFile();
 							}
@@ -104,12 +104,12 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Hide ' + name,
-					accelerator: 'Command+H',
+					accelerator: 'CmdOrCtrl+H',
 					role: 'hide'
 				},
 				{
 					label: 'Hide Others',
-					accelerator: 'Command+Alt+H',
+					accelerator: 'CmdOrCtrl+Alt+H',
 					role: 'hideothers'
 				},
 				{
@@ -121,7 +121,7 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Quit',
-					accelerator: 'Command+Q',
+					accelerator: 'CmdOrCtrl+Q',
 					click: function() { app.quit() }
 				}
 			]
@@ -131,7 +131,7 @@ CommandManager.prototype.createMenus = function() {
 			submenu: [
 				{
 					label: 'New Window',
-					accelerator: 'Cmd+N',
+					accelerator: 'CmdOrCtrl+N',
 					click: function() {
 						if(Oryoki) Oryoki.createWindow();
 					}
@@ -141,7 +141,7 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Close Window',
-					accelerator: 'Cmd+W',
+					accelerator: 'CmdOrCtrl+W',
 					role: 'close'
 				}
 			]
@@ -189,7 +189,7 @@ CommandManager.prototype.createMenus = function() {
 			submenu: [
 				{
 					label: 'Title Bar',
-					accelerator: 'Cmd+/',
+					accelerator: 'CmdOrCtrl+/',
 					type: 'checkbox',
 					click:function() {
 						if(Oryoki.focusedWindow) {
@@ -199,7 +199,7 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Toggle Omnibox',
-					accelerator: 'Cmd+L',
+					accelerator: 'CmdOrCtrl+L',
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.toggleOmnibox();
@@ -245,7 +245,7 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Navigate Back',
-					accelerator: 'Cmd+Left',
+					accelerator: 'CmdOrCtrl+Left',
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.navigateBack();
@@ -254,7 +254,7 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Navigate Forward',
-					accelerator: 'Cmd+Right',
+					accelerator: 'CmdOrCtrl+Right',
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.navigateForward();
@@ -277,7 +277,7 @@ CommandManager.prototype.createMenus = function() {
 			submenu: [
 				{
 					label: 'Save Screenshot',
-					accelerator: 'Cmd+Shift+`',
+					accelerator: 'CmdOrCtrl+Shift+`',
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.camera.takeScreenshot();
@@ -286,7 +286,7 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Copy Screenshot',
-					accelerator: 'Cmd+Shift+C',
+					accelerator: 'CmdOrCtrl+Shift+C',
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.camera.copyScreenshot(Oryoki.focusedWindow.id);
@@ -298,7 +298,7 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Start Recording',
-					accelerator: 'Cmd+Shift+P',
+					accelerator: 'CmdOrCtrl+Shift+P',
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.camera.startRecording();
@@ -307,7 +307,7 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Stop Recording',
-					accelerator: 'Cmd+Alt+Shift+P',
+					accelerator: 'CmdOrCtrl+Alt+Shift+P',
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.camera.stopRecording();
@@ -319,7 +319,7 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Mini Console',
-					accelerator: 'Cmd+Alt+C',
+					accelerator: 'CmdOrCtrl+Alt+C',
 					type: 'checkbox',
 					click: function() {
 						if(Oryoki.focusedWindow) {
@@ -329,7 +329,7 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Toggle Devtools',
-					accelerator: 'Cmd+Alt+I',
+					accelerator: 'CmdOrCtrl+Alt+I',
 					click: function() {
 						if(Oryoki) {
 							if(Oryoki.focusedWindow) {
@@ -365,7 +365,7 @@ CommandManager.prototype.createMenus = function() {
 			submenu: [
 				{
 					label: 'Window Helper',
-					accelerator: 'Cmd+Alt+M',
+					accelerator: 'CmdOrCtrl+Alt+M',
 					type: 'checkbox',
 					click: function() {
 						if(Oryoki.focusedWindow) {
@@ -378,7 +378,7 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Minimize',
-					accelerator: 'Cmd+M',
+					accelerator: 'CmdOrCtrl+M',
 					role: 'minimize'
 				},
 				{
