@@ -19,7 +19,9 @@ function UserManager() {
 
 	// Allow for renderer to use user paths
 	ipcMain.on('get-user-path', function(event, name) {
+		// @if NODE_ENV='development'
 		c.log('Returning path: '+this.user.paths[name]);
+		// @endif
 	  event.returnValue = this.user.paths[name];
 	}.bind(this));
 }
