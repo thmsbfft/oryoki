@@ -171,21 +171,21 @@ View.prototype.onDidFailLoad = function(e) {
 			break;
 
 		case -105:
-			StatusManager.log({
+			StatusManager.error({
 				'body' : 'Server DNS address could not be found',
 				'type': 'error'
 			});
 			break;
 
 		case -102:
-			StatusManager.log({
+			StatusManager.error({
 				'body' : 'Host refused to connect',
 				'type': 'error'
 			});
 			break;
 
 		default:
-			StatusManager.log({
+			StatusManager.error({
 				'body' : 'Load failed',
 				'type': 'error'
 			});	

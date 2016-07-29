@@ -7,6 +7,7 @@ function StatusManager(parameters) {
 	this.history = [];
 	
 	this.isVisible = false;
+	this.isFrozen = false;
 	this.visibilityTimer = null;
 
 	ipcRenderer.on('log-status', function(e, props) {
@@ -20,11 +21,30 @@ function StatusManager(parameters) {
 
 StatusManager.prototype.log = function(props) {
 
+	if(this.isFrozen) return;
+
 	this.el.innerHTML = props.body;
 	this.el.className = 'fade-in';
 
 	clearTimeout(this.visibilityTimer);
 	this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 1200);
+
+}
+
+StatusManager.prototype.error = function(props) {
+
+	this.el.innerHTML = props.body;
+	this.el.className = 'fade-in error';
+
+	this.freeze();
+
+}
+
+StatusManager.prototype.freeze = function() {
+
+	clearTimeout(this.visibilityTimer);
+	console.log('Freeze!');
+	this.isFrozen = true;
 
 }
 

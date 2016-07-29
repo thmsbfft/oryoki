@@ -18,6 +18,11 @@ status {
 	border-bottom-left-radius: 4px;
 	opacity: 0;
 
+	&.error {
+		color: white;
+		background: orange;
+	}
+
 	&.disabled {
 		display: none;
 	}
