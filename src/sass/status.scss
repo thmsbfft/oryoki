@@ -9,7 +9,7 @@ status {
 	font-weight: 300;
 	font-size: 10px;
 	display: inline-block;
-	letter-spacing: 0.4px;
+	letter-spacing: 0.5px;
 	line-height: 15px;
 	text-rendering: optimizeLegibility;
 	color: rgba(255, 255, 255, 0.6);
@@ -17,13 +17,13 @@ status {
 	pointer-events: none;
 	border-bottom-left-radius: 4px;
 	opacity: 0;
+	transition: opacity 0.5s ease-out;
 
-	&.error {
-		// color: rgba(255, 255, 255, 0.7);;
-		// background: orange;
-		icon {
-			padding-right: 5px;
-		}
+	icon {
+		padding-right: 5px;
+		position: relative;
+		top: 0.5px;
+		color: rgba(255, 255, 255, 0.8);
 	}
 
 	&.disabled {
@@ -43,60 +43,7 @@ status {
 	@media (-webkit-min-device-pixel-ratio: 2) { 
 	    -webkit-font-smoothing: antialiased;
 	    color: rgba(255, 255, 255, 0.85);
+	    letter-spacing: 0.4px;
 	}
-
-	// &.error {
-	// 	&::before {
-	// 		content: ' ';
-	// 		width: 4px;
-	// 		display: inline-block;
-	// 		height: 4px;
-	// 		border-radius: 4px;
-	// 		margin-right: 6px;
-	// 		margin-left: 2px;
-	// 		position: relative;
-	// 		top: -1px;
-	// 		background-color: red;
-	// 	}
-	// }
-
-	// &.loading {
-	// 	// &::before {
-	// 	// 	content: ' ';
-	// 	// 	width: 4px;
-	// 	// 	display: inline-block;
-	// 	// 	height: 4px;
-	// 	// 	border-radius: 4px;
-	// 	// 	margin-right: 6px;
-	// 	// 	margin-left: 2px;
-	// 	// 	position: relative;
-	// 	// 	top: -1px;
-	// 	// 	background-color: #00EC91;
-	// 	// 	animation: blink 0.2s infinite ease-out;
-	// 	// }
-	// }
-
-	// &.counter {
-
-	// 	// background-color: #1e71f7;
-	// 	// color: white;
-	// 	// font-family: 'Roboto Mono Regular', sans-serif;
-	// 	// font-size: 10px;
-	// 	// // letter-spacing: 1px;
-	// 	// text-transform: uppercase;
-
-	// 	&::before {
-	// 		content: ' ';
-	// 		width: 4px;
-	// 		display: inline-block;
-	// 		height: 4px;
-	// 		border-radius: 4px;
-	// 		margin-right: 6px;
-	// 		margin-left: 2px;
-	// 		position: relative;
-	// 		top: -1px;
-	// 		background-color: #1e71f7;
-	// 	}
-	// }
 
 }

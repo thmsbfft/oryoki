@@ -32,6 +32,16 @@ StatusManager.prototype.log = function(props) {
 
 }
 
+StatusManager.prototype.number = function(props) {
+
+	this.el.innerHTML = '<icon>' + '⏲' + '</icon>' + props.body;
+	this.el.className = 'fade-in number';
+
+	clearTimeout(this.visibilityTimer);
+	this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 1200);
+
+}
+
 StatusManager.prototype.error = function(props) {
 
 	this.el.innerHTML = '<icon>' + '⚠️' + '</icon>' + props.body;

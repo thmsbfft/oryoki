@@ -74,7 +74,7 @@ View.prototype.attachEvents = function() {
 View.prototype.load = function(input) {
 
 	StatusManager.log({
-		'body' : 'Loading',
+		'body' : '•••',
 		'type' : 'loading'
 	});
 
@@ -109,7 +109,7 @@ View.prototype.onLoadCommit = function(e) {
 	if(this.isFirstLoad) this.isFirstLoad = false;
 
 	StatusManager.log({
-		'body' : 'Loading',
+		'body' : '•••',
 		'type' : 'loading'
 	});
 
@@ -130,9 +130,8 @@ View.prototype.onDidFrameFinishLoad = function(e) {
 		this.isLoadingTimerRunning = false;
 		this.loadingTimerEnd = e.timeStamp;
 
-		StatusManager.log({
-			'body' : Math.round(this.loadingTimerEnd - this.loadingTimerStart) + ' ms',
-			'type' : 'counter'
+		StatusManager.number({
+			'body' : Math.round(this.loadingTimerEnd - this.loadingTimerStart) + ' ms'
 		});
 
 	}
@@ -140,12 +139,6 @@ View.prototype.onDidFrameFinishLoad = function(e) {
 }
 
 View.prototype.onPageTitleUpdated = function(e) {
-
-	if(!Browser.isHandleDisplayed) {
-		StatusManager.log({
-			'body' : '→ ' + e.title
-		});
-	}
 
 	this.onPageTitleUpdatedCallback(e.title);
 
@@ -164,6 +157,8 @@ View.prototype.onDidFinishLoad = function() {
 
 View.prototype.onDidFailLoad = function(e) {
 	
+	Browser.showOmnibox();
+
 	switch(e.errorCode) {
 
 		case -3:
