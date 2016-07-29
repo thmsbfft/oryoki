@@ -21,6 +21,7 @@ function StatusManager(parameters) {
 
 StatusManager.prototype.log = function(props) {
 
+	// Stop logging stuff if an error is displayed
 	if(this.isFrozen) return;
 
 	this.el.innerHTML = props.body;
@@ -33,7 +34,7 @@ StatusManager.prototype.log = function(props) {
 
 StatusManager.prototype.error = function(props) {
 
-	this.el.innerHTML = props.body;
+	this.el.innerHTML = '<icon>' + '⚠️' + '</icon>' + props.body;
 	this.el.className = 'fade-in error';
 
 	this.freeze();
@@ -43,8 +44,14 @@ StatusManager.prototype.error = function(props) {
 StatusManager.prototype.freeze = function() {
 
 	clearTimeout(this.visibilityTimer);
-	console.log('Freeze!');
 	this.isFrozen = true;
+
+}
+
+StatusManager.prototype.unFreeze = function() {
+
+	this.isFrozen = false;
+	this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 1200);
 
 }
 

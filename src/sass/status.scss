@@ -19,8 +19,11 @@ status {
 	opacity: 0;
 
 	&.error {
-		color: white;
-		background: orange;
+		// color: rgba(255, 255, 255, 0.7);;
+		// background: orange;
+		icon {
+			padding-right: 5px;
+		}
 	}
 
 	&.disabled {

@@ -38,6 +38,7 @@ function Browser(parameters) {
 	});
 
 	this.attachEvents();
+
 }
 
 Browser.prototype.attachEvents = function() {
@@ -69,6 +70,7 @@ Browser.prototype.attachEvents = function() {
 
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
+
 }
 
 Browser.prototype.resize = function() {
@@ -98,19 +100,26 @@ Browser.prototype.onKeyDown = function(e) {
 }
 
 Browser.prototype.onKeyUp = function(e) {
+
 	if(!e) var e = window.event;
 	if(e.keyCode == 18) {
 		// ALT
 		removeClass(this.dragOverlay, 'active');
 	}
+
 }
 
 Browser.prototype.onSubmit = function(input) {
+
 	console.log('[BROWSER] Submit');
+
+	if(StatusManager.isFrozen) StatusManager.unFreeze();
 	this.view.load(input);
+
 }
 
 Browser.prototype.onDOMReady = function() {
+
 	console.log('[BROWSER] DOM Ready');
 
 	if (this.webPluginsEnabled) {
@@ -131,6 +140,7 @@ Browser.prototype.onDOMReady = function() {
 	}
 
 	this.handle.changeTitle(this.view.getTitle());
+
 }
 
 Browser.prototype.onDidFinishLoad = function() {
@@ -203,6 +213,7 @@ Browser.prototype.reload = function() {
 }
 
 Browser.prototype.reloadIgnoringCache = function() {
+	if(StatusManager.isFrozen) StatusManager.unFreeze();
 	this.view.webview.reloadIgnoringCache();
 }
 

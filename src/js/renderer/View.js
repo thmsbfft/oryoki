@@ -88,6 +88,7 @@ View.prototype.load = function(input) {
 
 View.prototype.reload = function() {
 
+	if(StatusManager.isFrozen) StatusManager.unFreeze();
 	this.webview.reload();
 
 }
