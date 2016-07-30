@@ -121,8 +121,8 @@ Camera.prototype.startRecording = function() {
 		this.browser.webContents.send('recordingBegin');
 		this.isRecording = true;
 		this.onRecordingBeginCallback();
-		if(UserManager.getPreferenceByName("mute_notifications_while_recording")) {
-			this.browser.webContents.send('mute-notifications');
+		if(UserManager.getPreferenceByName("hide_status_while_recording")) {
+			this.browser.webContents.send('hide-status');
 		}
 		this.browser.webContents.beginFrameSubscription(this.recordRaw.bind(this));
 	}
@@ -240,8 +240,8 @@ Camera.prototype.stopRecording = function() {
 		this.browser.webContents.endFrameSubscription();
 		this.onRecordingEndCallback();
 		this.frameCount = 0;
-		if(UserManager.getPreferenceByName("mute_notifications_while_recording")) {
-			this.browser.webContents.send('unmute-notifications');
+		if(UserManager.getPreferenceByName('hide_status_while_recording')) {
+			this.browser.webContents.send('show-status');
 		}
 		this.browser.webContents.send('recordingEnd');
 
@@ -266,7 +266,8 @@ Camera.prototype.stopRecording = function() {
 					.on('start', function() {
 						this.isEncoding = true;
 						this.browser.webContents.send('log-status', {
-							'body' : 'Encoding ProRes'
+							'body' : 'Encoding MP4',
+							'icon' : '🎬'
 						});
 					}.bind(this))
 					.on('end', this.onEncodingEnd.bind(this))
@@ -290,7 +291,8 @@ Camera.prototype.stopRecording = function() {
 					.on('start', function() {
 						this.isEncoding = true;
 						this.browser.webContents.send('log-status', {
-							'body' : 'Encoding MP4'
+							'body' : 'Encoding MP4',
+							'icon' : '🎬'
 						});
 					}.bind(this))
 					.on('end', this.onEncodingEnd.bind(this))
@@ -357,7 +359,8 @@ Camera.prototype.onEncodingEnd = function() {
 
 	try {
 		this.browser.webContents.send('log-status', {
-			'body' : 'Finished encoding'
+			'body' : 'Finished encoding',
+			'icon' : '✅'
 		});
 	}
 	catch(err) { return; }

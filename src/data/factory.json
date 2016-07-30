@@ -32,7 +32,8 @@
 	"override_download_path" : false,
 	"download_path" : "",
 	
-	"mute_notifications_while_recording" : true,
+	// Hide the status bar when recording
+	"hide_status_while_recording" : true,
 
 	// async | sync
 	// async tries to display frames smoothly and record as many as possible

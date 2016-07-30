@@ -1,4 +1,4 @@
-status {
+ status {
 
 	position: fixed;
 	top: 0;
@@ -20,13 +20,13 @@ status {
 	transition: opacity 0.5s ease-out;
 
 	icon {
-		padding-right: 5px;
+		padding-right: 7px;
 		position: relative;
 		top: 0.5px;
 		color: rgba(255, 255, 255, 0.8);
 	}
 
-	&.disabled {
+	&.hide {
 		display: none;
 	}
 
@@ -44,6 +44,10 @@ status {
 	    -webkit-font-smoothing: antialiased;
 	    color: rgba(255, 255, 255, 0.85);
 	    letter-spacing: 0.4px;
+
+	    icon {
+	    	padding-right: 5px;
+	    }
 	}
 
 }

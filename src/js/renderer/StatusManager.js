@@ -24,18 +24,15 @@ StatusManager.prototype.log = function(props) {
 	// Stop logging stuff if an error is displayed
 	if(this.isFrozen) return;
 
-	this.el.innerHTML = props.body;
-	this.el.className = 'fade-in';
+	if(props.icon) {
+		this.el.innerHTML = '<icon>' + props.icon + '</icon>' + props.body;
+	}
+	else {
+		this.el.innerHTML = props.body;
+	}
 
-	clearTimeout(this.visibilityTimer);
-	this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 1200);
-
-}
-
-StatusManager.prototype.number = function(props) {
-
-	this.el.innerHTML = '<icon>' + '⏲' + '</icon>' + props.body;
-	this.el.className = 'fade-in number';
+	removeClass(this.el, 'fade-out');
+	addClass(this.el, 'fade-in');
 
 	clearTimeout(this.visibilityTimer);
 	this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 1200);
@@ -45,7 +42,8 @@ StatusManager.prototype.number = function(props) {
 StatusManager.prototype.error = function(props) {
 
 	this.el.innerHTML = '<icon>' + '⚠️' + '</icon>' + props.body;
-	this.el.className = 'fade-in error';
+	removeClass(this.el, 'fade-out');
+	addClass(this.el, 'fade-in');
 
 	this.freeze();
 
@@ -73,14 +71,20 @@ StatusManager.prototype.fadeOut = function() {
 
 StatusManager.prototype.hide = function() {
 
+	this.el.innerHTML = '';
+
 	this.isVisible = false;
-	this.el.className = 'disabled';
+	addClass(this.el, 'hide');
+
+	this.freeze();
 
 }
 
 StatusManager.prototype.show = function() {
 
 	this.isVisible = true;
-	this.el.className = '';
+	removeClass(this.el, 'hide');
+
+	this.unFreeze();
 
 }

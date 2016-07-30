@@ -130,8 +130,9 @@ View.prototype.onDidFrameFinishLoad = function(e) {
 		this.isLoadingTimerRunning = false;
 		this.loadingTimerEnd = e.timeStamp;
 
-		StatusManager.number({
-			'body' : Math.round(this.loadingTimerEnd - this.loadingTimerStart) + ' ms'
+		StatusManager.log({
+			'body' : Math.round(this.loadingTimerEnd - this.loadingTimerStart) + ' ms',
+			'icon' : '⏲'
 		});
 
 	}
