@@ -158,7 +158,7 @@ Oryoki.prototype.clearCaches = function() {
 
 	caches.forEach(function(element) {
 
-		var folderPath = UserManager.user.confPath + '/' + element;
+		var folderPath = UserManager.user.paths.conf + '/' + element;
 		folderPath = folderPath.replace(' ', '\\ ');
 		// @if NODE_ENV='development'
 		c.log('[ORYOKI] Will delete: ' + folderPath);
@@ -172,6 +172,7 @@ Oryoki.prototype.clearCaches = function() {
 	}.bind(this));
 
 	if(this.focusedWindow) {
+		this.focusedWindow.browser.webContents.send('unfreeze-status');
 		this.focusedWindow.browser.webContents.send('log-status', {
 			'body' : 'Cleared caches'
 		});
@@ -190,6 +191,7 @@ Oryoki.prototype.clearLocalStorage = function() {
 			// If folder is already clear, do nothing
 		}
 		if(this.focusedWindow) {
+			this.focusedWindow.browser.webContents.send('unfreeze-status');
 			this.focusedWindow.browser.webContents.send('log-status', {
 				'body' : 'Cleared local storage'
 			});
