@@ -18,6 +18,10 @@ function StatusManager(parameters) {
 		this.error(props);
 	}.bind(this));
 
+	ipcRenderer.on('unfreeze-status', function(e, props) {
+		this.unFreeze();
+	}.bind(this));
+
 	ipcRenderer.on('hide-status', this.hide.bind(this));
 	ipcRenderer.on('show-status', this.show.bind(this));
 

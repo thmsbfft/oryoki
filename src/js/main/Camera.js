@@ -62,6 +62,7 @@ Camera.prototype.takeScreenshot = function() {
 		fs.writeFile(app.getPath('downloads') + '/' + name + '.png', image.toPng(), function(err) {
 			if(err)
 				throw err;
+			this.browser.webContents.send('unfreeze-status');
 			this.browser.webContents.send('log-status', {
 				'body' : 'Screenshot saved'
 			});
@@ -77,7 +78,7 @@ Camera.prototype.copyScreenshot = function(id) {
 		this.browser.capturePage(function(image) {
 
 			clipboard.writeImage(image);
-
+			this.browser.webContents.send('unfreeze-status');
 			this.browser.webContents.send('log-status', {
 				'body' : 'Screenshot copied to clipboard'
 			});
