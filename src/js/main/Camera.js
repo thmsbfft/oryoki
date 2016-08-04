@@ -97,6 +97,17 @@ Camera.prototype.startRecording = function() {
 
 	if(!this.isRecording) {
 
+		// Check if ffmpeg is around
+		try {
+			execSync('ffmpeg -h');
+		}
+		catch (err) {
+			this.browser.webContents.send('error-status', {
+				'body' : 'Can\'t find ffmpeg'
+			});
+			return;
+		}
+
 		// Check frame size for mp4 recording
 		if(UserManager.getPreferenceByName("video_recording_quality") == 'mp4') {
 			if(this.browser.getSize()[0] % 2 !== 0 || this.browser.getSize()[1] % 2 !== 0) {
