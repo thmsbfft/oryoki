@@ -14,6 +14,10 @@ function StatusManager(parameters) {
 		this.log(props);
 	}.bind(this));
 
+	ipcRenderer.on('error-status', function(e, props) {
+		this.error(props);
+	}.bind(this));
+
 	ipcRenderer.on('hide-status', this.hide.bind(this));
 	ipcRenderer.on('show-status', this.show.bind(this));
 

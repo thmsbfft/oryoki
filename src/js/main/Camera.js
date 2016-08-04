@@ -96,6 +96,17 @@ Camera.prototype.revealScreenshot = function() {
 Camera.prototype.startRecording = function() {
 
 	if(!this.isRecording) {
+
+		// Check frame size for mp4 recording
+		if(UserManager.getPreferenceByName("video_recording_quality") == 'mp4') {
+			if(this.browser.getSize()[0] % 2 !== 0 || this.browser.getSize()[1] % 2 !== 0) {
+				this.browser.webContents.send('error-status', {
+					'body' : 'Window dimensions must be even numbers'
+				});
+				return;
+			}
+		}
+
 		// @if NODE_ENV='development'
 		c.log('[CAMERA] Start recording');
 		// @endif
@@ -266,7 +277,7 @@ Camera.prototype.stopRecording = function() {
 					.on('start', function() {
 						this.isEncoding = true;
 						this.browser.webContents.send('log-status', {
-							'body' : 'Encoding MP4',
+							'body' : 'Encoding ProRes',
 							'icon' : '🎬'
 						});
 					}.bind(this))
