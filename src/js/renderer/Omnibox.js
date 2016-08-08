@@ -14,12 +14,9 @@ function Omnibox(parameters) {
 	this.htmlData = undefined;
 	this.submitCallback = parameters.onsubmit;
 
-	this.isTabDown = false;
-
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'omnibox.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
 	this.input = this.el.querySelectorAll('.input')[0];
-	this.tab = this.el.querySelectorAll('.tab')[0];
 	this.overlay = this.el.querySelectorAll('.overlay')[0];
 
 	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
@@ -38,8 +35,6 @@ Omnibox.prototype.attachEvents = function() {
 	this.input.addEventListener('copy', this.onCopy.bind(this));
 	this.input.addEventListener('cut', this.onCopy.bind(this));
 
-	this.tab.addEventListener('click', this.switchMode.bind(this));
-
 	// Always keep the omnibox in focus
 	this.overlay.addEventListener('mousedown', function(e) {
 		this.focus();
@@ -51,13 +46,12 @@ Omnibox.prototype.attachEvents = function() {
 Omnibox.prototype.onInputKeyDown = function(e) {
 
 	if(e.keyCode == 9) {
-		if(!this.isTabDown) this.switchMode();
-		addClass(this.tab, 'active');
-		this.isTabDown = true;
-		e.preventDefault();
+		// Tab
 	}
 	if(e.keyCode == 13) {
+		// Enter
 		addClass(this.input, 'highlight');
+		e.preventDefault();
 	}
 
 }
@@ -65,12 +59,13 @@ Omnibox.prototype.onInputKeyDown = function(e) {
 Omnibox.prototype.onInputKeyUp = function(e) {
 
 	if(e.keyCode == 9) {
-		this.isTabDown = false;
-		removeClass(this.tab, 'active');
+		// Tab
 	}
 	if(e.keyCode == 13) {
+		// Enter
 		removeClass(this.input, 'highlight');
 		this.submit();
+		e.preventDefault();
 	}
 	if(e.key == "Escape") {
 		if(!Browser.isFirstLoad) this.hide()
@@ -101,7 +96,7 @@ Omnibox.prototype.onCopy = function(e) {
 
 Omnibox.prototype.submit = function() {
 
-	var raw = this.el.querySelectorAll('input')[0].value;
+	var raw = this.input.innerText;
 	var output = null;
 
 	var domain = new RegExp(/[a-z]+(\.[a-z]+)+/ig);
@@ -153,7 +148,7 @@ Omnibox.prototype.show = function() {
 	removeClass(this.el, 'hide');
 	addClass(this.el, 'show');
 	this.focus();
-	this.input.select();
+	this.selectAll();
 	ipcRenderer.send('setOmniboxShow');
 
 }
@@ -175,6 +170,13 @@ Omnibox.prototype.isFocus = function() {
 
 Omnibox.prototype.focus = function() {
 
-	this.el.querySelectorAll('input')[0].focus();
+	this.input.focus();
+
+}
+
+Omnibox.prototype.selectAll = function() {
+
+	this.input.focus();
+	document.execCommand('selectAll', false, null);
 
 }
