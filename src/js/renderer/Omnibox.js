@@ -38,9 +38,9 @@ Omnibox.prototype.attachEvents = function() {
 }
 
 Omnibox.prototype.updateSearchDictionary = function(e, dictionary) {
-	
+
 	this.searchDictionary = dictionary;
-	console.log(this.searchDictionary.default);
+	console.log('New dic: ', this.searchDictionary);
 
 }
 
@@ -103,27 +103,66 @@ Omnibox.prototype.submit = function() {
 	var domain = new RegExp(/[a-z]+(\.[a-z]+)+/ig);
 	var port = new RegExp(/(:[0-9]*)\w/g);
 
-	if(this.mode == 'url') {
-		if(domain.test(raw) || port.test(raw)) {
-			// This is a domain
-			if (!raw.match(/^[a-zA-Z]+:\/\//))
-			{
-			    output = 'http://' + raw;
-			}
-			else {
-				output = raw;
-			}
-		}
-		else {
-			// This is not a domain
-			output = 'https://www.google.com/ncr?gws_rd=ssl#q=' + raw;
-		}
+	var customSearch = this.getCustomSearch();
+
+	if (customSearch == null) {
+		// Use default
+		console.log(this.searchDictionary.default);
 	}
-	else if(this.mode == 'lucky') {
-		output = 'http://www.google.com/search?q=' + raw + '&btnI';
+	else {
+		// Use custom search
+		output = customSearch.url;
+		console.log(output);
 	}
 
-	this.submitCallback(output);
+	// if(this.mode == 'url') {
+	// 	if(domain.test(raw) || port.test(raw)) {
+	// 		// This is a domain
+	// 		if (!raw.match(/^[a-zA-Z]+:\/\//))
+	// 		{
+	// 		    output = 'http://' + raw;
+	// 		}
+	// 		else {
+	// 			output = raw;
+	// 		}
+	// 	}
+	// 	else {
+	// 		// This is not a domain
+	// 		output = 'https://www.google.com/ncr?gws_rd=ssl#q=' + raw;
+	// 	}
+	// }
+	// else if(this.mode == 'lucky') {
+	// 	output = 'http://www.google.com/search?q=' + raw + '&btnI';
+	// }
+
+	// this.submitCallback(output);
+
+}
+
+Omnibox.prototype.getCustomSearch = function() {
+
+	var raw = this.input.innerText;
+	
+	// If there's only one word, return null
+	if(raw.split(" ").length <= 1) return null;
+
+	// Get keyword
+	var re = /^.*[\ ]/; // match until first space character, including space
+	var res = re.exec(raw);
+	res = res[0].substring(0, res[0].length - 1); // erase space
+	
+	// Look for a match
+	var match = this.searchDictionary.custom.filter(function(search) {
+		return search.keyword == res
+	}.bind(this));
+
+	// Return the match
+	if(match.length == 0) {
+		return null;
+	}
+	else {
+		return match[0];
+	}
 
 }
 
