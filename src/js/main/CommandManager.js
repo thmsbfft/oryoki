@@ -103,6 +103,15 @@ CommandManager.prototype.createMenus = function() {
 					type: 'separator'
 				},
 				{
+					label: 'Search dictionary...',
+					click: function() {
+						shell.openItem(UserManager.user.paths.conf + '/' + 'search-dictionary.json');
+					}
+				},
+				{
+					type: 'separator'
+				},
+				{
 					label: 'Hide ' + name,
 					accelerator: 'CmdOrCtrl+H',
 					role: 'hide'
