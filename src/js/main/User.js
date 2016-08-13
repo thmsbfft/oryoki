@@ -48,6 +48,19 @@ function User(name, factory) {
 	fs.watchFile(this.paths.conf + '/' + 'oryoki-preferences.json', this.onPreferencesChange.bind(this));
 	this.onPreferencesChange();
 
+	fs.watchFile(this.paths.conf + '/' + 'search-dictionary.json', function() {
+		// @if NODE_ENV='development'
+		c.log('[User] Search dictionary has changed');
+		// @endif
+		this.searchDictionary = this.getConfFile('search-dictionary.json', this.createSearchDictionary.bind(this));
+
+		// Update accross all windows
+		for (var i = 0; i < Oryoki.windows.length; i++) {
+			Oryoki.windows[i].updateConfFiles();
+		}
+
+	}.bind(this));
+
 }
 
 User.prototype.onPreferencesChange = function() {

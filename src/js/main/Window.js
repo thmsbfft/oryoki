@@ -135,7 +135,20 @@ Window.prototype.setSize = function(width, height) {
 Window.prototype.onReady = function() {
 
 	this.browser.webContents.send('ready');
+	this.updateConfFiles();
+
 	if(this.url) this.load(this.url);
+
+}
+
+Window.prototype.updateConfFiles = function() {
+
+	// @if NODE_ENV='development'
+	c.log('[Window] Updating conf files');
+	// @endif
+
+	// Send conf files to render process
+	this.browser.webContents.send('update-search-dictionary', UserManager.user.searchDictionary);
 
 }
 
