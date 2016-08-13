@@ -59,6 +59,12 @@ function User(name, factory) {
 			Oryoki.windows[i].updateConfFiles();
 		}
 
+		if(Oryoki.focusedWindow) {
+			Oryoki.focusedWindow.browser.webContents.send('log-status', {
+				'body' : 'Dictionary updated'
+			});
+		}
+
 	}.bind(this));
 
 }

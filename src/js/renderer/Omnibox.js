@@ -2,13 +2,7 @@ function Omnibox(parameters) {
 
 	this.isVisible = undefined;
 
-	this.modes = {
-		'url' : 'Search',
-		'lucky' : 'Lucky'
-	};
-
-	this.modeIndex = 0;
-	this.mode = Object.keys(this.modes)[this.modeIndex];
+	this.searchDictionary = undefined;
 
 	this.el = document.getElementsByTagName('omnibox')[0];
 	this.htmlData = undefined;
@@ -18,8 +12,6 @@ function Omnibox(parameters) {
 	this.el.innerHTML = this.htmlData;
 	this.input = this.el.querySelectorAll('.input')[0];
 	this.overlay = this.el.querySelectorAll('.overlay')[0];
-
-	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
 
 	this.attachEvents();
 	
@@ -40,6 +32,15 @@ Omnibox.prototype.attachEvents = function() {
 		this.focus();
 		e.preventDefault();
 	}.bind(this));
+
+	ipcRenderer.on('update-search-dictionary', this.updateSearchDictionary.bind(this));
+
+}
+
+Omnibox.prototype.updateSearchDictionary = function(e, dictionary) {
+	
+	this.searchDictionary = dictionary;
+	console.log(this.searchDictionary.default);
 
 }
 
