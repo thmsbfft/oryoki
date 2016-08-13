@@ -1,12 +1,8 @@
 function UserManager() {
 
-	// Erase comments to validate JSON
-	var raw = fs.readFileSync(__dirname + '/src/data/factory.json', 'utf8');
-	var re = /\/\/.*/g; // Any line that starts with `//`
-	var stripped = raw.replace(re, '');
-
 	this.factory = {
-		'preferences' : JSON.parse(stripped)
+		'preferences' : this.getFactoryFile('factory.json'),
+		'searchDictionary' : this.getFactoryFile('search-dictionary.json')
 	}
 	
 	// We'll only use one user for now.
@@ -24,6 +20,17 @@ function UserManager() {
 		// @endif
 	  event.returnValue = this.user.paths[name];
 	}.bind(this));
+}
+
+UserManager.prototype.getFactoryFile = function(fileName) {
+
+	// Erase comments to validate JSON
+	var raw = fs.readFileSync(__dirname + '/src/data/' + fileName, 'utf8');
+	var re = /(^\/\/|^\t\/\/).*/gm; // Any line that starts with `//` or with a tab followed by `//`
+	var stripped = raw.replace(re, '');
+	c.log('Gettin ' + fileName + ' – ' + JSON.parse(stripped));
+	return JSON.parse(stripped);
+
 }
 
 UserManager.prototype.getPreferenceByName = function(name) {

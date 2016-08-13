@@ -59,7 +59,7 @@ function Window(parameters) {
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html' + '#' + this.id);
 
 	// @if NODE_ENV='development'
-	this.browser.webContents.openDevTools();
+	// this.browser.webContents.openDevTools();
 	// @endif
 }
 
