@@ -116,8 +116,6 @@ User.prototype.getConfFile = function(fileName, callback) {
 		var re = /(^\/\/|^\t\/\/).*/gm; // Any line that starts with `//` or with a tab followed by `//`
 		var stripped = raw.replace(re, '');
 
-		c.log(stripped);
-
 		return JSON.parse(stripped);	
 
 	}

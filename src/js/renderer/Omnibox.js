@@ -40,7 +40,7 @@ Omnibox.prototype.attachEvents = function() {
 Omnibox.prototype.updateSearchDictionary = function(e, dictionary) {
 
 	this.searchDictionary = dictionary;
-	console.log('New dic: ', this.searchDictionary);
+	// console.log('New dic: ', this.searchDictionary);
 
 }
 
@@ -107,12 +107,15 @@ Omnibox.prototype.submit = function() {
 
 	if (customSearch == null) {
 		// Use default
-		console.log(this.searchDictionary.default);
+		output = this.searchDictionary.default.replace('{query}', raw);
 	}
 	else {
 		// Use custom search
-		output = customSearch.url;
-		console.log(output);
+		var keyword = /(.)+? /i;
+		var query = raw.replace(keyword.exec(raw)[0], '');
+
+		output = customSearch.url.replace('{query}', query);
+		// console.log(output);
 	}
 
 	// if(this.mode == 'url') {
@@ -135,7 +138,7 @@ Omnibox.prototype.submit = function() {
 	// 	output = 'http://www.google.com/search?q=' + raw + '&btnI';
 	// }
 
-	// this.submitCallback(output);
+	this.submitCallback(output);
 
 }
 
@@ -147,7 +150,7 @@ Omnibox.prototype.getCustomSearch = function() {
 	if(raw.split(" ").length <= 1) return null;
 
 	// Get keyword
-	var re = /^.*[\ ]/; // match until first space character, including space
+	var re = /(.)+? /i; // match until first space character, including space
 	var res = re.exec(raw);
 	res = res[0].substring(0, res[0].length - 1); // erase space
 	

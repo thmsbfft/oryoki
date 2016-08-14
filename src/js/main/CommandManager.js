@@ -103,7 +103,7 @@ CommandManager.prototype.createMenus = function() {
 					type: 'separator'
 				},
 				{
-					label: 'Search dictionary...',
+					label: 'Search Dictionary...',
 					click: function() {
 						shell.openItem(UserManager.user.paths.conf + '/' + 'search-dictionary.json');
 					}
