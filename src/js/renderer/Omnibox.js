@@ -40,7 +40,6 @@ Omnibox.prototype.attachEvents = function() {
 Omnibox.prototype.updateSearchDictionary = function(e, dictionary) {
 
 	this.searchDictionary = dictionary;
-	// console.log('New dic: ', this.searchDictionary);
 
 }
 
@@ -71,6 +70,8 @@ Omnibox.prototype.onInputKeyUp = function(e) {
 	if(e.key == "Escape") {
 		if(!Browser.isFirstLoad) this.hide()
 	}
+
+	var keyword = this.getKeyword();
 
 }
 
@@ -137,6 +138,26 @@ Omnibox.prototype.submit = function() {
 
 }
 
+Omnibox.prototype.getKeyword = function() {
+
+	var raw = this.input.innerText;
+	var keyword = raw.split(" ")[0].trim();
+	
+	// Look for a match
+	var match = this.searchDictionary.custom.filter(function(search) {
+		return search.keyword == keyword
+	}.bind(this));
+
+	// Return the match
+	if(match.length == 0) {
+		return null;
+	}
+	else {
+		return match[0];
+	}
+
+}
+
 Omnibox.prototype.getCustomSearch = function() {
 
 	var raw = this.input.innerText;
@@ -161,19 +182,6 @@ Omnibox.prototype.getCustomSearch = function() {
 	else {
 		return match[0];
 	}
-
-}
-
-Omnibox.prototype.switchMode = function() {
-
-	this.input.value = '';
-	this.modeIndex++;
-	if(this.modeIndex >= Object.keys(this.modes).length) {
-		this.modeIndex = 0;
-	}
-	this.mode = Object.keys(this.modes)[this.modeIndex];
-
-	this.input.setAttribute('placeholder', this.modes[this.mode]); // Gets the nice name for mode
 
 }
 
