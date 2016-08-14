@@ -106,37 +106,32 @@ Omnibox.prototype.submit = function() {
 	var customSearch = this.getCustomSearch();
 
 	if (customSearch == null) {
-		// Use default
-		output = this.searchDictionary.default.replace('{query}', raw);
+
+		// Is this a domain?
+		if(domain.test(raw) || port.test(raw)) {
+			if (!raw.match(/^[a-zA-Z]+:\/\//))
+			{
+			    output = 'http://' + raw;
+			}
+			else {
+				output = raw;
+			}
+		}
+		else {
+			// Use default search engine
+			output = this.searchDictionary.default.replace('{query}', raw);
+		}
+
 	}
 	else {
+
 		// Use custom search
 		var keyword = /(.)+? /i;
 		var query = raw.replace(keyword.exec(raw)[0], '');
 
 		output = customSearch.url.replace('{query}', query);
-		// console.log(output);
-	}
 
-	// if(this.mode == 'url') {
-	// 	if(domain.test(raw) || port.test(raw)) {
-	// 		// This is a domain
-	// 		if (!raw.match(/^[a-zA-Z]+:\/\//))
-	// 		{
-	// 		    output = 'http://' + raw;
-	// 		}
-	// 		else {
-	// 			output = raw;
-	// 		}
-	// 	}
-	// 	else {
-	// 		// This is not a domain
-	// 		output = 'https://www.google.com/ncr?gws_rd=ssl#q=' + raw;
-	// 	}
-	// }
-	// else if(this.mode == 'lucky') {
-	// 	output = 'http://www.google.com/search?q=' + raw + '&btnI';
-	// }
+	}
 
 	this.submitCallback(output);
 
