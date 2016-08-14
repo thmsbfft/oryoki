@@ -70,8 +70,10 @@ Omnibox.prototype.onInputKeyUp = function(e) {
 	if(e.key == "Escape") {
 		if(!Browser.isFirstLoad) this.hide()
 	}
+	if(this.getKeyword() != null) {
+		// Highlight keyword
 
-	var keyword = this.getKeyword();
+	}
 
 }
 
@@ -104,7 +106,7 @@ Omnibox.prototype.submit = function() {
 	var domain = new RegExp(/[a-z]+(\.[a-z]+)+/ig);
 	var port = new RegExp(/(:[0-9]*)\w/g);
 
-	var customSearch = this.getCustomSearch();
+	var customSearch = this.getKeyword();
 
 	if (customSearch == null) {
 
@@ -146,33 +148,6 @@ Omnibox.prototype.getKeyword = function() {
 	// Look for a match
 	var match = this.searchDictionary.custom.filter(function(search) {
 		return search.keyword == keyword
-	}.bind(this));
-
-	// Return the match
-	if(match.length == 0) {
-		return null;
-	}
-	else {
-		return match[0];
-	}
-
-}
-
-Omnibox.prototype.getCustomSearch = function() {
-
-	var raw = this.input.innerText;
-	
-	// If there's only one word, return null
-	if(raw.split(" ").length <= 1) return null;
-
-	// Get keyword
-	var re = /(.)+? /i; // match until first space character, including space
-	var res = re.exec(raw);
-	res = res[0].substring(0, res[0].length - 1); // erase space
-	
-	// Look for a match
-	var match = this.searchDictionary.custom.filter(function(search) {
-		return search.keyword == res
 	}.bind(this));
 
 	// Return the match
