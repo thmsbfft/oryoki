@@ -28,14 +28,16 @@ omnibox {
 			position: relative;
 			border-radius: 2px;
 			transition: background-color 0.1s ease-out;
+			white-space: nowrap;
+			overflow-x: scroll;
+			&::-webkit-scrollbar {
+				display: none;
+			}
 			&.highlight {
 				background-color: #1F1F1F;
 			}
 			&::selection {
 				background-color: rgba(255, 255, 255, 0.1);
-			}
-			keyword {
-				color: #00EC91;
 			}
 		}
 	}
@@ -45,7 +47,6 @@ omnibox {
 		max-width: 485px;
 		margin: auto;
 		padding: 12px;
-		// width: calc(100% - 24px);
 		font-size: 18px;
 		background: #1A1A1A;
 		position: relative;
