@@ -11,11 +11,13 @@ function Omnibox(parameters) {
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'omnibox.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
 	this.input = this.el.querySelectorAll('.input')[0];
+	this.hint = this.el.querySelectorAll('.hint')[0];
 	this.overlay = this.el.querySelectorAll('.overlay')[0];
 
 	this.attachEvents();
 	
 	console.log('[Omnibox] Created Omnibox');
+	this.hideHint();
 	this.show();
 
 }
@@ -53,6 +55,11 @@ Omnibox.prototype.onInputKeyDown = function(e) {
 		addClass(this.input, 'highlight');
 		e.preventDefault();
 	}
+	if(e.keyCode == 32) {
+		// Space bar
+		// this.input.innerHTML += '<space></space>';
+		// e.preventDefault();
+	}
 
 }
 
@@ -70,8 +77,18 @@ Omnibox.prototype.onInputKeyUp = function(e) {
 	if(e.key == "Escape") {
 		if(!Browser.isFirstLoad) this.hide()
 	}
-	if(this.getKeyword() != null) {
-		// Highlight keyword
+
+	var customSearch = this.getCustomSearch();
+
+	if(customSearch != null) {
+
+		// Show hint
+		this.showHint(customSearch.hint);
+
+	}
+	else {
+
+		this.hideHint();
 
 	}
 
@@ -106,7 +123,7 @@ Omnibox.prototype.submit = function() {
 	var domain = new RegExp(/[a-z]+(\.[a-z]+)+/ig);
 	var port = new RegExp(/(:[0-9]*)\w/g);
 
-	var customSearch = this.getKeyword();
+	var customSearch = this.getCustomSearch();
 
 	if (customSearch == null) {
 
@@ -129,8 +146,10 @@ Omnibox.prototype.submit = function() {
 	else {
 
 		// Use custom search
-		var keyword = /(.)+? /i;
-		var query = raw.replace(keyword.exec(raw)[0], '');
+		var keyword = customSearch.keyword;
+		var query = raw.replace(keyword, '');
+
+		console.log('[OMNIBOX] Search URL:', customSearch.url);
 
 		output = customSearch.url.replace('{query}', query);
 
@@ -140,7 +159,7 @@ Omnibox.prototype.submit = function() {
 
 }
 
-Omnibox.prototype.getKeyword = function() {
+Omnibox.prototype.getCustomSearch = function() {
 
 	var raw = this.input.innerText;
 	var keyword = raw.split(" ")[0].trim();
@@ -164,7 +183,8 @@ Omnibox.prototype.show = function() {
 
 	this.isVisible = true;
 	if (Browser.view) {
-		this.input.value = Browser.view.webview.getAttribute('src').split('://')[1];
+		this.hideHint();
+		this.input.innerHTML = Browser.view.webview.getAttribute('src').split('://')[1];
 	}
 	removeClass(this.el, 'hide');
 	addClass(this.el, 'show');
@@ -180,6 +200,24 @@ Omnibox.prototype.hide = function() {
 	removeClass(this.el, 'show');
 	addClass(this.el, 'hide');
 	ipcRenderer.send('setOmniboxHide');
+
+}
+
+Omnibox.prototype.showHint = function(hint) {
+
+	this.hint.innerHTML = hint;
+
+	removeClass(this.hint, 'hide');
+	addClass(this.hint, 'show');
+
+}
+
+Omnibox.prototype.hideHint = function() {
+
+	this.hint.innerHTML = '';
+	
+	removeClass(this.hint, 'show');
+	addClass(this.hint, 'hide');
 
 }
 

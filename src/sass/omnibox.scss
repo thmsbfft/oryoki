@@ -34,6 +34,34 @@ omnibox {
 			&::selection {
 				background-color: rgba(255, 255, 255, 0.1);
 			}
+			keyword {
+				color: #00EC91;
+			}
+		}
+	}
+	.hint {
+		z-index: 98;
+		display: block;
+		max-width: 485px;
+		margin: auto;
+		padding: 12px;
+		// width: calc(100% - 24px);
+		font-size: 18px;
+		background: #1A1A1A;
+		position: relative;
+		border-radius: 0px 0px 2px 2px;
+		color: rgba(255, 255, 255, 0.2);
+		font-family: 'Roboto Light', sans-serif;
+		font-size: 13px;
+		letter-spacing: -0.21px;
+		-webkit-user-select: none;
+		user-select: none;
+		pointer-events: none;
+		&.hide {
+			display: none;
+		}
+		&.show {
+			display: block;
 		}
 	}
 	&.show {
