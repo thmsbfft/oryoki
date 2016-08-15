@@ -10,13 +10,37 @@
 		{
 			"keyword" : "wiki",
 			"url" : "https://en.wikipedia.org/w/index.php?search={query}",
-			"hint" : "Search on Wikipedia"
+			"hint" : "Search Wikipedia"
 		},
 
 		{
 			"keyword" : "tw",
 			"url" : "https://twitter.com/search?f=tweets&q={query}",
 			"hint" : "Search for Tweets"
+		},
+
+		{
+			"keyword" : "img",
+			"url" : "https://www.google.com/search?tbm=isch&q={query}",
+			"hint" : "Search Google Images"
+		},
+
+		{
+			"keyword" : "map",
+			"url" : "https://www.google.com/maps/search/{query}",
+			"hint" : "Search Google Maps"
+		},
+
+		{
+			"keyword" : "wf",
+			"url" : "https://www.wolframalpha.com/input/?i=query",
+			"hint" : "Ask Wolfram"
+		},
+
+		{
+			"keyword" : "so",
+			"url" : "http://stackoverflow.com/search?q={query}",
+			"hint" : "Search StackOverflow"
 		}
 
 	]
