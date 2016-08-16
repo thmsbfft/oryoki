@@ -117,7 +117,7 @@ Omnibox.prototype.onCopy = function(e) {
 
 Omnibox.prototype.submit = function() {
 
-	var raw = this.input.innerText;
+	var raw = this.input.value;
 	var output = null;
 
 	var domain = new RegExp(/[a-z]+(\.[a-z]+)+/ig);
@@ -161,7 +161,7 @@ Omnibox.prototype.submit = function() {
 
 Omnibox.prototype.getCustomSearch = function() {
 
-	var raw = this.input.innerText;
+	var raw = this.input.value;
 	var keyword = raw.split(" ")[0].trim();
 	
 	// Look for a match
