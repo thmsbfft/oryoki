@@ -35,6 +35,12 @@ Omnibox.prototype.attachEvents = function() {
 		e.preventDefault();
 	}.bind(this));
 
+	this.hint.addEventListener('mousedown', function(e) {
+		this.focus();
+		console.log('Hint mousedown');
+		e.preventDefault();
+	}.bind(this));
+
 	ipcRenderer.on('update-search-dictionary', this.updateSearchDictionary.bind(this));
 
 }
@@ -207,6 +213,8 @@ Omnibox.prototype.showHint = function(hint) {
 
 	this.hint.innerHTML = hint;
 
+	addClass(this.input, 'hintShown');
+
 	removeClass(this.hint, 'hide');
 	addClass(this.hint, 'show');
 
@@ -216,6 +224,8 @@ Omnibox.prototype.hideHint = function() {
 
 	this.hint.innerHTML = '';
 	
+	removeClass(this.input, 'hintShown');
+
 	removeClass(this.hint, 'show');
 	addClass(this.hint, 'hide');
 

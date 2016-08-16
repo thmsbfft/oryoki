@@ -39,6 +39,10 @@ omnibox {
 			&::selection {
 				background-color: rgba(255, 255, 255, 0.1);
 			}
+			&.hintShown {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+			}
 		}
 	}
 	.hint {
@@ -54,15 +58,15 @@ omnibox {
 		color: rgba(255, 255, 255, 0.2);
 		font-family: 'Roboto Light', sans-serif;
 		font-size: 13px;
-		letter-spacing: -0.21px;
+		letter-spacing: 0.2px;
 		-webkit-user-select: none;
-		user-select: none;
-		pointer-events: none;
+		cursor: default;
 		&.hide {
 			display: none;
 		}
 		&.show {
 			display: block;
+			// animation: fade-in 0.1s 1 ease-out;
 		}
 	}
 	&.show {
