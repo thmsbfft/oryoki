@@ -45,12 +45,11 @@ omnibox {
 			}
 		}
 	}
-	.hint {
+	.hints {
 		z-index: 98;
 		display: block;
 		max-width: 485px;
 		margin: auto;
-		padding: 12px;
 		font-size: 18px;
 		background: #1A1A1A;
 		position: relative;
@@ -67,6 +66,17 @@ omnibox {
 		&.show {
 			display: block;
 			// animation: fade-in 0.1s 1 ease-out;
+		}
+		hint {
+			padding: 12px;
+			display: block;
+			.keyword {
+				float: right;
+				color: rgba(255, 255, 255, 0.2);
+			}
+			.highlighted {
+				color: rgba(255, 255, 255, 0.4);
+			}
 		}
 	}
 	&.show {

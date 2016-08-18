@@ -11,13 +11,13 @@ function Omnibox(parameters) {
 	this.htmlData = fs.readFileSync(path.join(__dirname, '..', '..', 'src', 'html', 'omnibox.html'), 'utf8');
 	this.el.innerHTML = this.htmlData;
 	this.input = this.el.querySelectorAll('.input')[0];
-	this.hint = this.el.querySelectorAll('.hint')[0];
+	this.hints = this.el.querySelectorAll('.hints')[0];
 	this.overlay = this.el.querySelectorAll('.overlay')[0];
 
 	this.attachEvents();
 	
 	console.log('[Omnibox] Created Omnibox');
-	this.hideHint();
+	this.hideHints();
 	this.show();
 
 }
@@ -35,7 +35,7 @@ Omnibox.prototype.attachEvents = function() {
 		e.preventDefault();
 	}.bind(this));
 
-	this.hint.addEventListener('mousedown', function(e) {
+	this.hints.addEventListener('mousedown', function(e) {
 		this.focus();
 		console.log('Hint mousedown');
 		e.preventDefault();
@@ -88,13 +88,13 @@ Omnibox.prototype.onInputKeyUp = function(e) {
 
 	if(customSearch != null) {
 
-		// Show hint
-		this.showHint(customSearch.hint);
+		// Show hints
+		this.showHints(customSearch);
 
 	}
 	else {
 
-		this.hideHint();
+		this.hideHints();
 
 	}
 
@@ -131,7 +131,7 @@ Omnibox.prototype.submit = function() {
 
 	var customSearch = this.getCustomSearch();
 
-	if (customSearch == null) {
+	if (customSearch == null || customSearch[0].isComplete == undefined) {
 
 		// Is this a domain?
 		if(domain.test(raw) || port.test(raw)) {
@@ -149,15 +149,21 @@ Omnibox.prototype.submit = function() {
 		}
 
 	}
-	else {
+	else if(customSearch[0].isComplete) {
 
 		// Use custom search
-		var keyword = customSearch.keyword;
+		var keyword = customSearch[0].keyword;
 		var query = raw.replace(keyword, '');
 
-		console.log('[OMNIBOX] Search URL:', customSearch.url);
-
-		output = customSearch.url.replace('{query}', query);
+		if(query.trim().length == 0) {
+			// If custom search doesn't have a parameter,
+			// use default URL
+			output = this.searchDictionary.default.replace('{query}', raw);
+		}
+		else {
+			console.log('[OMNIBOX] Search URL:', customSearch[0].url);
+			output = customSearch[0].url.replace('{query}', query);
+		}
 
 	}
 
@@ -170,17 +176,33 @@ Omnibox.prototype.getCustomSearch = function() {
 	var raw = this.input.value;
 	var keyword = raw.split(" ")[0].trim();
 	
-	// Look for a match
-	var match = this.searchDictionary.custom.filter(function(search) {
+	// Empty omnibox doesn't count
+	if(keyword.trim().length == 0) return null;
+
+	// Look for a complete match
+	var completeMatch = this.searchDictionary.custom.filter(function(search) {
 		return search.keyword == keyword
 	}.bind(this));
 
-	// Return the match
-	if(match.length == 0) {
+	if (completeMatch.length > 0) {
+		console.log('Complete match:', completeMatch[0].keyword);
+		completeMatch[0].isComplete = true; // Flag the match as a complete match
+		return completeMatch;
+	}
+
+	// Look for potential matches
+	var potentialMatches = this.searchDictionary.custom.filter(function(search) {
+		return search.keyword.includes(keyword)
+	}.bind(this));
+
+	console.log('Potential matches:', potentialMatches.length);
+
+	if(potentialMatches.length == 0) {
+		// No matches
 		return null;
 	}
 	else {
-		return match[0];
+		return potentialMatches;
 	}
 
 }
@@ -189,7 +211,7 @@ Omnibox.prototype.show = function() {
 
 	this.isVisible = true;
 	if (Browser.view) {
-		this.hideHint();
+		this.hideHints();
 		this.input.innerHTML = Browser.view.webview.getAttribute('src').split('://')[1];
 	}
 	removeClass(this.el, 'hide');
@@ -209,25 +231,44 @@ Omnibox.prototype.hide = function() {
 
 }
 
-Omnibox.prototype.showHint = function(hint) {
+Omnibox.prototype.showHints = function(searchArray) {
 
-	this.hint.innerHTML = hint;
+	this.hints.innerHTML = '';
+
+	var raw = this.input.value;
+	var keyword = raw.split(" ")[0].trim();
+
+	for (var i = 0; i < searchArray.length; i++) {
+		
+		var hint = document.createElement('hint');
+		hint.innerHTML = searchArray[i].hint;
+
+		this.hints.appendChild(hint);
+
+		var keywordEl = '<span class="keyword">' + searchArray[i].keyword + '</span>';
+		hint.innerHTML += keywordEl;
+
+		if(searchArray[i].keyword == keyword) {
+			addClass(hint.getElementsByClassName('keyword')[0], 'highlighted');
+		}
+
+	};
 
 	addClass(this.input, 'hintShown');
 
-	removeClass(this.hint, 'hide');
-	addClass(this.hint, 'show');
+	removeClass(this.hints, 'hide');
+	addClass(this.hints, 'show');
 
 }
 
-Omnibox.prototype.hideHint = function() {
+Omnibox.prototype.hideHints = function() {
 
-	this.hint.innerHTML = '';
+	this.hints.innerHTML = '';
 	
 	removeClass(this.input, 'hintShown');
 
-	removeClass(this.hint, 'show');
-	addClass(this.hint, 'hide');
+	removeClass(this.hints, 'show');
+	addClass(this.hints, 'hide');
 
 }
 
