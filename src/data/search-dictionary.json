@@ -33,7 +33,7 @@
 
 		{
 			"keyword" : "wf",
-			"url" : "https://www.wolframalpha.com/input/?i=query",
+			"url" : "https://www.wolframalpha.com/input/?i={query}",
 			"hint" : "Ask Wolfram"
 		},
 
@@ -41,6 +41,12 @@
 			"keyword" : "so",
 			"url" : "http://stackoverflow.com/search?q={query}",
 			"hint" : "Search StackOverflow"
+		},
+
+		{
+			"keyword" : "docs",
+			"url" : "http://devdocs.io/#q={query}",
+			"hint" : "Search DevDocs"
 		}
 
 	]
