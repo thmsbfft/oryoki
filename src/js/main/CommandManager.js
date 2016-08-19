@@ -55,31 +55,46 @@ CommandManager.prototype.createMenus = function() {
 					type: 'separator'
 				},
 				{
-					label: 'Preferences',
+					label: 'Preferences...',
+					accelerator: 'CmdOrCtrl+,',
+					click: function() {
+						UserManager.openPreferencesFile();
+					}
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Search Dictionary...',
+					click: function() {
+						shell.openItem(UserManager.user.paths.conf + '/' + 'search-dictionary.json');
+					}
+				},
+				{
+					label: 'Browse all Data...',
+					click: function() {
+						shell.openItem(UserManager.user.paths.conf);
+					}
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Reset',
 					submenu: [
 						{
-							label: 'Open',
-							accelerator: 'CmdOrCtrl+,',
-							click: function() {
-								UserManager.openPreferencesFile();
-							}
-						},
-						{
 							type: 'separator'
 						},
 						{
-							label: 'Reset',
+							label: 'Preferences',
 							click: function() {
-								UserManager.resetUserPreferencesToFactory();
+								UserManager.reset('Preferences', 'oryoki-preferences.json', 'factory.json');
 							}
 						},
 						{
-							type: 'separator'
-						},
-						{
-							label: 'Browse data...',
+							label: 'Search Dictionary',
 							click: function() {
-								shell.openItem(UserManager.user.paths.conf);
+								UserManager.reset('Search dictionary', 'search-dictionary.json', 'search-dictionary.json');
 							}
 						}
 					]
@@ -97,15 +112,6 @@ CommandManager.prototype.createMenus = function() {
 					label: 'Clear Local Storage',
 					click: function() {
 						if(Oryoki) Oryoki.clearLocalStorage();
-					}
-				},
-				{
-					type: 'separator'
-				},
-				{
-					label: 'Search Dictionary...',
-					click: function() {
-						shell.openItem(UserManager.user.paths.conf + '/' + 'search-dictionary.json');
 					}
 				},
 				{

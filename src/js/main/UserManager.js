@@ -46,6 +46,19 @@ UserManager.prototype.getPreferenceByName = function(name) {
 	}
 }
 
+UserManager.prototype.reset = function(niceName, fileName, factoryName) {
+
+	fs.writeFile(this.user.paths.conf + '/' + fileName, fs.readFileSync(__dirname + '/src/data/' + factoryName, 'utf8'), function(err) {
+		// @if NODE_ENV='development'
+		if(err) c.log(err);
+		// @endif
+		Oryoki.focusedWindow.browser.webContents.send('log-status', {
+			'body' : niceName + ' reset'
+		});
+	});
+
+}
+
 UserManager.prototype.resetUserPreferencesToFactory = function() {
 	fs.writeFile(this.user.paths.conf + '/' + 'oryoki-preferences.json', fs.readFileSync(__dirname + '/src/data/factory.json', 'utf8'), function(err) {
 		// @if NODE_ENV='development'
