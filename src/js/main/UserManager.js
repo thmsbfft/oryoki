@@ -28,7 +28,11 @@ UserManager.prototype.getFactoryFile = function(fileName) {
 	var raw = fs.readFileSync(__dirname + '/src/data/' + fileName, 'utf8');
 	var re = /(^\/\/|^\t\/\/).*/gm; // Any line that starts with `//` or with a tab followed by `//`
 	var stripped = raw.replace(re, '');
-	c.log('Gettin ' + fileName + ' – ' + JSON.parse(stripped));
+
+	// @if NODE_ENV='development'
+	c.log('Getting ' + fileName + ' – ' + JSON.parse(stripped));
+	// @endif
+	
 	return JSON.parse(stripped);
 
 }
