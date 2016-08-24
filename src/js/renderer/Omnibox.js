@@ -162,7 +162,8 @@ Omnibox.prototype.submit = function() {
 		}
 		else {
 			console.log('[OMNIBOX] Search URL:', customSearch[0].url);
-			output = customSearch[0].url.replace('{query}', query);
+			output = customSearch[0].url.replace('{query}', query.trim());
+			console.log(output);
 		}
 
 	}
