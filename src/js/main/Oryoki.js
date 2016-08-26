@@ -12,7 +12,7 @@ function Oryoki() {
 	// @endif
 
 	this.versions = {
-		'oryoki' : '0.0.3',
+		'oryoki' : '0.0.4',
 		'chromeVersion' : process.versions.chrome,
 		'electronVersion' : process.versions.electron
 	}
