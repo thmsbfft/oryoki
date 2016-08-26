@@ -46,18 +46,10 @@ function User(name, factory) {
 
 	// Watch files for changes
 	fs.watchFile(this.paths.conf + '/' + 'oryoki-preferences.json', this.onPreferencesChange.bind(this));
-	this.onPreferencesChange();
 
 	fs.watchFile(this.paths.conf + '/' + 'search-dictionary.json', function() {
-		// @if NODE_ENV='development'
-		c.log('[User] Search dictionary has changed');
-		// @endif
-		this.searchDictionary = this.getConfFile('search-dictionary.json', this.createSearchDictionary.bind(this));
 
-		// Update accross all windows
-		for (var i = 0; i < Oryoki.windows.length; i++) {
-			Oryoki.windows[i].updateConfFiles();
-		}
+		this.onSearchDictionaryChange();
 
 		if(Oryoki.focusedWindow) {
 			Oryoki.focusedWindow.browser.webContents.send('log-status', {
@@ -66,6 +58,26 @@ function User(name, factory) {
 		}
 
 	}.bind(this));
+
+	// Init conf file
+	this.onPreferencesChange();
+	this.onSearchDictionaryChange();
+
+}
+
+User.prototype.onSearchDictionaryChange = function() {
+
+	// @if NODE_ENV='development'
+	c.log('[User] Search dictionary has changed');
+	// @endif
+	this.searchDictionary = this.getConfFile('search-dictionary.json', this.createSearchDictionary.bind(this));
+
+	// Update accross all windows
+	if(Oryoki.focusedWindow) {
+		for (var i = 0; i < Oryoki.windows.length; i++) {
+			Oryoki.windows[i].updateConfFiles();
+		}
+	}
 
 }
 
