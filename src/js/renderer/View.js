@@ -157,15 +157,16 @@ View.prototype.onDidFinishLoad = function() {
 }
 
 View.prototype.onDidFailLoad = function(e) {
-	
+
+	if(e.errorCode == -3) {
+		// Not sure what this is related to
+		// Ignore
+		return;
+	}
+
 	Browser.showOmnibox();
 
 	switch(e.errorCode) {
-
-		case -3:
-			// Not sure what this is related to
-			// Ignore
-			break;
 
 		case -105:
 			StatusManager.error({
