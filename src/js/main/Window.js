@@ -28,8 +28,8 @@ function Window(parameters) {
 	this.isFirstLoad = true;
 
 	this.browser = new BrowserWindow({
-	  width: UserManager.getPreferenceByName('default_window_width'),
-	  height: UserManager.getPreferenceByName('default_window_height'),
+	  width: parameters.width ? parameters.width : UserManager.getPreferenceByName('default_window_width'),
+	  height: parameters.height ? parameters.height : UserManager.getPreferenceByName('default_window_height'),
 	  frame: false,
 	  backgroundColor: '#141414',
 	  show: false,

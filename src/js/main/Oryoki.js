@@ -71,7 +71,9 @@ Oryoki.prototype.createWindow = function(e, url) {
 			'onFocus' : this.onFocusChange.bind(this),
 			'onClose' : this.onCloseWindow.bind(this),
 			'x' : this.focusedWindow.browser.getPosition()[0]+50,
-			'y' : this.focusedWindow.browser.getPosition()[1]+50
+			'y' : this.focusedWindow.browser.getPosition()[1]+50,
+			'width' : this.focusedWindow.browser.getBounds().width,
+			'height' : this.focusedWindow.browser.getBounds().height
 		});
 	}
 
