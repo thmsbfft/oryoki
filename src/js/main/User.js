@@ -89,6 +89,8 @@ User.prototype.onPreferencesChange = function() {
 
 	this.preferences = this.getConfFile('oryoki-preferences.json', this.createPreferences.bind(this));
 	
+	/* WEB PLUGINS */
+
 	if(this.getPreferenceByName('web_plugins_path') != "") {
 		// Path is set
 		this.paths.webPlugins = this.getPreferenceByName('web_plugins_path');
@@ -111,6 +113,12 @@ User.prototype.onPreferencesChange = function() {
 		else {
 			throw err;
 		}
+	}
+
+	/* PICTURE IN PICTURE */
+
+	if(Oryoki.focusedWindow) {
+		Oryoki.focusedWindow.browser.setFullScreenable(!this.getPreferenceByName('picture_in_picture'));
 	}
 
 }

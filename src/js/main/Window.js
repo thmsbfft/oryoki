@@ -42,7 +42,7 @@ function Window(parameters) {
 	  	"experimentalFeatures": true,
 	  	"experimentalCanvasFeatures": true
 	  },
-	  fullscreenable: false
+	  fullscreenable: !UserManager.getPreferenceByName("picture_in_picture")
 	});
 
 	this.camera = new Camera({
