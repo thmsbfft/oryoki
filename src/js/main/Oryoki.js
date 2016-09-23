@@ -142,7 +142,10 @@ Oryoki.prototype.minimizeWindow = function() {
 Oryoki.prototype.toggleFullScreen = function() {
 
 	if(this.windowCount > 0) {
+		// TODO: Add option whether fullscreen should be window or screen
+		this.focusedWindow.browser.setFullScreenable(true);
 		this.focusedWindow.browser.setFullScreen(!this.focusedWindow.browser.isFullScreen());
+		this.focusedWindow.browser.setFullScreenable(false);
 	}
 
 	CommandManager.toggleChecked('View', 'Fullscreen');

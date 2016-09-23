@@ -42,6 +42,7 @@ function Window(parameters) {
 	  	"experimentalFeatures": true,
 	  	"experimentalCanvasFeatures": true
 	  },
+	  fullscreenable: false
 	});
 
 	this.camera = new Camera({
