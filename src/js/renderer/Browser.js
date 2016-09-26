@@ -78,6 +78,19 @@ Browser.prototype.attachEvents = function() {
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
 
+	document.ondragover = document.ondrop = (e) => {
+	  
+	  e.preventDefault();
+	
+	}
+
+	document.body.ondrop = (e) => {
+
+	  ipcRenderer.send('open-file', this.id, e.dataTransfer.files[0].path);
+	  e.preventDefault();
+
+	}
+
 }
 
 Browser.prototype.resize = function() {

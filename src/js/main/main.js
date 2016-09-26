@@ -8,7 +8,7 @@ var Menu = require('electron').Menu;
 var MenuItem = require('electron').MenuItem;
 var app = electron.app;
 var Tray = electron.Tray;
-const {clipboard} = require('electron');
+const {clipboard, dialog} = require('electron');
 var electronLocalshortcut = require('electron-localshortcut');
 var BrowserWindow = electron.BrowserWindow;
 var path = require('path');
@@ -17,8 +17,12 @@ var fs = require('fs');
 var shell = require('electron').shell;
 var exec = require('child_process').exec;
 var execSync = require('child_process').execSync;
+
 var ffmpeg = require('fluent-ffmpeg');
 var gm = require('gm');
+const extract = require('png-chunks-extract');
+const encode = require('png-chunks-encode');
+const text = require('png-chunk-text');
 
 app.on('ready', function() {
 

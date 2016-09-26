@@ -145,6 +145,13 @@ CommandManager.prototype.createMenus = function() {
 			label: 'File',
 			submenu: [
 				{
+					label: 'Open...',
+					accelerator: 'CmdOrCtrl+O',
+					click: function() {
+						if(Oryoki) Oryoki.openFile();
+					}
+				},
+				{
 					label: 'New Window',
 					accelerator: 'CmdOrCtrl+N',
 					click: function() {

@@ -100,6 +100,10 @@ Window.prototype.attachEvents = function() {
 		}
 	}.bind(this));
 
+	ipcMain.on('open-file', function(event, id, inputPath) {
+		if(this.id == id) this.loadFile(inputPath);
+	}.bind(this));
+
 }
 
 Window.prototype.setSize = function(width, height) {
@@ -359,6 +363,18 @@ Window.prototype.load = function(url) {
 	});
 
 	this.browser.webContents.send('load', url);
+
+}
+
+Window.prototype.loadFile = function(path) {
+
+	// @if NODE_ENV='development'
+	c.log(path);
+	// @endif
+
+	// TODO
+	// – Determine if file should be open
+	// – If it is a PNG with data from us, create a window to load said URL
 
 }
 

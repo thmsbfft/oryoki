@@ -6,6 +6,14 @@ function Oryoki() {
 	  }
 	});
 
+	app.on('will-finish-launching', function() {
+		app.on('open-file', function(event, path) {
+			// @if NODE_ENV='development'
+			c.log('File dragged on app icon');
+			// @endif
+		}.bind(this));
+	}.bind(this));
+
 	// @if NODE_ENV='development'
 	c.log('[Oryoki] ✔');
 	c.log('[Oryoki] v.' + app.getVersion());
@@ -83,6 +91,27 @@ Oryoki.prototype.createWindow = function(e, url) {
 	// @if NODE_ENV='development'
 	c.log('[Oryoki] Currently', this.windowCount, 'windows open');
 	// @endif
+
+}
+
+Oryoki.prototype.openFile = function() {
+
+	dialog.showOpenDialog(
+		{
+			properties: ['openFile'] // Only one file at a time
+		}
+	, this.handleFile.bind(this));
+
+}
+
+Oryoki.prototype.handleFile = function(input) {
+
+	if(input == undefined) return;
+	var path = input[0];
+
+	// TODO
+	// – Determine if file should be open
+	// – If it is a PNG with data from us, create a window to load said URL
 
 }
 

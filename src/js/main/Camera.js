@@ -67,20 +67,37 @@ Camera.prototype.saveScreenshot = function(id, url) {
 			var time = hrs + '-' + min + '-' + sec;
 
 			if(hostname == null) {
+				// No URL
 				var name = 'oryoki-' + date + '-' + time;
+
+				fs.writeFile(app.getPath('downloads') + '/' + name + '.png', image.toPng(), function(err) {
+					if(err)
+						throw err;
+					this.browser.webContents.send('unfreeze-status');
+					this.browser.webContents.send('log-status', {
+						'body' : 'Screenshot saved'
+					});
+				}.bind(this));
+
 			}
 			else {
+				// URL
 				var name = 'o-' + hostname + '-' + date + '-' + time;
-			}
 
-			fs.writeFile(app.getPath('downloads') + '/' + name + '.png', image.toPng(), function(err) {
-				if(err)
-					throw err;
-				this.browser.webContents.send('unfreeze-status');
-				this.browser.webContents.send('log-status', {
-					'body' : 'Screenshot saved'
-				});
-			}.bind(this));
+				// Encode source url to PNG metadata
+				var buffer = image.toPng();
+				var chunks = extract(buffer);
+				chunks.splice(-1, 0, text.encode('src', url));
+
+				fs.writeFile(app.getPath('downloads') + '/' + name + '.png', new Buffer(encode(chunks)), function(err) {
+					if(err)
+						throw err;
+					this.browser.webContents.send('unfreeze-status');
+					this.browser.webContents.send('log-status', {
+						'body' : 'Screenshot saved'
+					});
+				}.bind(this));
+			}
 
 		}.bind(this));
 

@@ -28,6 +28,9 @@
     "gulp-run": "^1.7.1",
     "gulp-sass": "^2.3.2",
     "openurl": "^1.1.1",
+    "png-chunk-text": "^1.0.0",
+    "png-chunks-encode": "^1.0.0",
+    "png-chunks-extract": "^1.0.0",
     "preprocess": "^3.0.2"
   },
   "license": "MIT"
