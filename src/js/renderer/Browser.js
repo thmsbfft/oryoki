@@ -68,6 +68,13 @@ Browser.prototype.attachEvents = function() {
 	ipcRenderer.on('enableWebPlugins', this.enableWebPlugins.bind(this));
 	ipcRenderer.on('disableWebPlugins', this.disableWebPlugins.bind(this));
 
+	ipcRenderer.on('get-url', function(e) {
+
+		// Reply with url
+		ipcRenderer.send('take-screenshot', this.id, this.view.webview.src);
+
+	}.bind(this));
+
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
 

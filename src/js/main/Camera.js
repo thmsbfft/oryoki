@@ -41,34 +41,57 @@ Camera.prototype.attachEvents = function() {
 		this.copyScreenshot(id);
 	}.bind(this));
 
+	ipcMain.on('take-screenshot', function(event, id, url) {
+		this.saveScreenshot(id, url);
+	}.bind(this));
+
+}
+
+Camera.prototype.saveScreenshot = function(id, url) {
+
+	if(id == this.id) {
+
+		this.browser.capturePage(function(image) {
+
+			var href = url;
+			var hostname = URL.parse(href).hostname;
+
+			var day = pad(new Date().getDate());
+			var month = pad(new Date().getMonth() + 1);
+			var year = new Date().getFullYear();
+			var date = day + '-' + month + '-' + year;
+
+			var hrs = pad(new Date().getHours());
+			var min = pad(new Date().getMinutes());
+			var sec = pad(new Date().getSeconds());
+			var time = hrs + '-' + min + '-' + sec;
+
+			if(hostname == null) {
+				var name = 'oryoki-' + date + '-' + time;
+			}
+			else {
+				var name = 'o-' + hostname + '-' + date + '-' + time;
+			}
+
+			fs.writeFile(app.getPath('downloads') + '/' + name + '.png', image.toPng(), function(err) {
+				if(err)
+					throw err;
+				this.browser.webContents.send('unfreeze-status');
+				this.browser.webContents.send('log-status', {
+					'body' : 'Screenshot saved'
+				});
+			}.bind(this));
+
+		}.bind(this));
+
+	}
+
 }
 
 Camera.prototype.takeScreenshot = function() {
 
-	this.browser.capturePage(function(image) {
-
-		var day = pad(new Date().getDate());
-		var month = pad(new Date().getMonth() + 1);
-		var year = new Date().getFullYear();
-		var date = day + '-' + month + '-' + year;
-
-		var hrs = pad(new Date().getHours());
-		var min = pad(new Date().getMinutes());
-		var sec = pad(new Date().getSeconds());
-		var time = hrs + '-' + min + '-' + sec;
-
-		var name = 'oryoki-screenshot-' + date + '-' + time;
-
-		fs.writeFile(app.getPath('downloads') + '/' + name + '.png', image.toPng(), function(err) {
-			if(err)
-				throw err;
-			this.browser.webContents.send('unfreeze-status');
-			this.browser.webContents.send('log-status', {
-				'body' : 'Screenshot saved'
-			});
-		}.bind(this));
-
-	}.bind(this));
+	// Ask for the URL first
+	this.browser.webContents.send('get-url');
 
 }
 

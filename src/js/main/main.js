@@ -12,6 +12,7 @@ const {clipboard} = require('electron');
 var electronLocalshortcut = require('electron-localshortcut');
 var BrowserWindow = electron.BrowserWindow;
 var path = require('path');
+const URL = require('url');
 var fs = require('fs');
 var shell = require('electron').shell;
 var exec = require('child_process').exec;
