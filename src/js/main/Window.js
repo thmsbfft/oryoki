@@ -366,11 +366,67 @@ Window.prototype.load = function(url) {
 
 }
 
-Window.prototype.loadFile = function(path) {
+Window.prototype.loadFile = function(inputPath) {
 
 	// @if NODE_ENV='development'
-	c.log(path);
+	c.log(inputPath);
 	// @endif
+
+	// Check if file is PNG
+	if(path.extname(inputPath) !== '.png') {
+
+		// Abort!
+		this.browser.webContents.send('log-status', {
+			'body' : 'Can\'t open file',
+			'icon' : '⭕️'
+		});
+		return;
+
+	}
+
+	var buffer = fs.readFileSync(inputPath);
+	var chunks = extract(buffer);
+
+	// Extract all tEXt chunks
+	var textChunks = chunks.filter(function (chunk) {
+		return chunk.name === 'tEXt';
+	}).map(function (chunk) {
+		return text.decode(chunk.data);
+	});
+
+	// Look for the src keyword
+	var src = textChunks.filter(function (chunk) {
+		return chunk.keyword === 'src';
+	});
+
+	if(!src[0]) {
+
+		// Abort!
+		this.browser.webContents.send('log-status', {
+			'body' : 'Can\'t open file',
+			'icon' : '⭕️'
+		});
+		return;
+
+	}
+
+	// Check if the content is an url
+	if(validUrl.isUri(src[0].text)) {
+		
+		var url = src[0].text;
+		this.load(url);
+
+	}
+	else {
+
+		// Abort!
+		this.browser.webContents.send('log-status', {
+			'body' : 'Can\'t open file',
+			'icon' : '⭕️'
+		});
+		return;
+
+	}
 
 	// TODO
 	// – Determine if file should be open

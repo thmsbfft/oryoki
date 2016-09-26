@@ -23,6 +23,7 @@ var gm = require('gm');
 const extract = require('png-chunks-extract');
 const encode = require('png-chunks-encode');
 const text = require('png-chunk-text');
+const validUrl = require('valid-url');
 
 app.on('ready', function() {
 

@@ -98,7 +98,10 @@ Oryoki.prototype.openFile = function() {
 
 	dialog.showOpenDialog(
 		{
-			properties: ['openFile'] // Only one file at a time
+			properties: ['openFile'], // Only one file at a time
+			filters: [
+				{name: 'Images', extensions: ['png']}
+			]
 		}
 	, this.handleFile.bind(this));
 
@@ -109,9 +112,65 @@ Oryoki.prototype.handleFile = function(input) {
 	if(input == undefined) return;
 	var path = input[0];
 
-	// TODO
-	// – Determine if file should be open
-	// – If it is a PNG with data from us, create a window to load said URL
+	// @if NODE_ENV='development'
+	c.log(path);
+	// @endif
+
+	var buffer = fs.readFileSync(path);
+	var chunks = extract(buffer);
+
+	// Extract all tEXt chunks
+	var textChunks = chunks.filter(function (chunk) {
+		return chunk.name === 'tEXt';
+	}).map(function (chunk) {
+		return text.decode(chunk.data);
+	});
+
+	// Look for the src keyword
+	var src = textChunks.filter(function (chunk) {
+		return chunk.keyword === 'src';
+	});
+
+	if(!src[0]) {
+
+		// Abort!
+		if(this.focusedWindow) {
+			this.focusedWindow.browser.webContents.send('log-status', {
+				'body' : 'Can\'t open file',
+				'icon' : '⭕️'
+			});
+		}
+		return;
+
+	}
+
+	// Check if the content is an url
+	if(validUrl.isUri(src[0].text)) {
+		
+		var url = src[0].text;
+
+		if(this.focusedWindow && this.focusedWindow.isFirstLoad) {
+			// Loading in current window
+			this.focusedWindow.load(url);
+		}
+		else {
+			// Loading in new window
+			this.createWindow(null, [url]);
+		}
+
+	}
+	else {
+
+		// Abort!
+		if(this.focusedWindow) {
+			this.focusedWindow.browser.webContents.send('log-status', {
+				'body' : 'Can\'t open file',
+				'icon' : '⭕️'
+			});
+		}
+		return;
+
+	}
 
 }
 
