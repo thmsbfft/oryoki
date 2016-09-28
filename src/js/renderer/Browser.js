@@ -78,6 +78,9 @@ Browser.prototype.attachEvents = function() {
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
 
+	window.addEventListener('blur', this.onBlur.bind(this));
+	window.addEventListener('focus', this.onFocus.bind(this));
+
 	document.ondragover = document.ondrop = (e) => {
 	  
 	  e.preventDefault();
@@ -180,6 +183,18 @@ Browser.prototype.onPageTitleUpdated = function(newTitle) {
 
 Browser.prototype.onConsoleMessage = function(e) {
 	this.console.updateMessage(e);
+}
+
+Browser.prototype.onFocus = function() {
+	
+	this.handle.enable();
+
+}
+
+Browser.prototype.onBlur = function() {
+	
+	this.handle.disable();
+
 }
 
 Browser.prototype.hideHandle = function() {
