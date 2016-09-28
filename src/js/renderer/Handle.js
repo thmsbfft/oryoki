@@ -56,7 +56,6 @@ Handle.prototype.show = function() {
 
 Handle.prototype.disable = function() {
 
-	console.log('disabled');
 	this.el.classList.add('disabled');
 
 }

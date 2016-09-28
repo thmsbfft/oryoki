@@ -82,13 +82,15 @@ Browser.prototype.attachEvents = function() {
 	window.addEventListener('focus', this.onFocus.bind(this));
 
 	document.ondragover = document.ondrop = (e) => {
-	  
-	  e.preventDefault();
+	
+		console.log('Drop');	
+		e.preventDefault();
 	
 	}
 
 	document.body.ondrop = (e) => {
 
+		console.log('Drop');	
 	  ipcRenderer.send('open-file', this.id, e.dataTransfer.files[0].path);
 	  e.preventDefault();
 
@@ -113,6 +115,7 @@ Browser.prototype.onKeyDown = function(e) {
 
 	if(e.altKey && !e.shiftKey && !e.metaKey && !e.ctrlKey) {
 		if(ipcRenderer.sendSync('get-preference', 'use_alt_drag') && !ipcRenderer.sendSync('is-fullscreen', this.id)) {
+			console.log('drag');
 			addClass(this.dragOverlay, 'active');
 		}
 	}
