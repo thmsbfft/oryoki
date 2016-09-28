@@ -17,16 +17,16 @@ omnibox {
 			z-index: 98;
 			-webkit-app-region: no-drag;
 			width: calc(100% - 24px);
-			font-family: 'Roboto Light', sans-serif;
-			font-size: 18px;
-			color: rgba(255, 255, 255, 0.6);
-			background: #252525;
+			font-size: 22px;
+			letter-spacing: -0.5px;
+			color: rgba(255, 255, 255, 1);
+			background: #2b2b2b;
 			line-height: 21px;
 			outline: none;
 			border: none;
 			padding: 6px 12px;
 			position: relative;
-			border-radius: 2px;
+			border-radius: 1px;
 			transition: background-color 0.1s ease-out;
 			white-space: nowrap;
 			overflow-x: scroll;
@@ -50,14 +50,12 @@ omnibox {
 		display: block;
 		max-width: 485px;
 		margin: auto;
-		font-size: 18px;
+		font-size: 14px;
+		letter-spacing: -0.4px;
 		background: #1A1A1A;
 		position: relative;
 		border-radius: 0px 0px 2px 2px;
-		color: rgba(255, 255, 255, 0.2);
-		font-family: 'Roboto Light', sans-serif;
-		font-size: 13px;
-		letter-spacing: 0.2px;
+		color: rgba(255, 255, 255, 0.4);
 		-webkit-user-select: none;
 		cursor: default;
 		&.hide {
@@ -68,14 +66,15 @@ omnibox {
 			// animation: fade-in 0.1s 1 ease-out;
 		}
 		hint {
-			padding: 12px;
+			padding: 14px;
 			display: block;
 			.keyword {
 				float: right;
-				color: rgba(255, 255, 255, 0.2);
+				letter-spacing: -0.1px;
+				color: rgba(255, 255, 255, 0.4);
 			}
 			.highlighted {
-				color: rgba(255, 255, 255, 0.4);
+				color: rgba(255, 255, 255, 0.6);
 			}
 		}
 	}
