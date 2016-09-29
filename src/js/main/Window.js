@@ -216,11 +216,15 @@ Window.prototype.updateMenus = function() {
 	CommandManager.setCheckbox('Window', 'Window Helper', this.windowHelper && !this.browser.isFullScreen());
 	CommandManager.setCheckbox('View', 'Title Bar', this.handle);
 	CommandManager.setEnabled('View', 'Toggle Omnibox', !this.isFirstLoad);
+	CommandManager.setEnabled('View', 'Actual Size', !this.isFirstLoad);
+	CommandManager.setEnabled('View', 'Zoom In', !this.isFirstLoad);
+	CommandManager.setEnabled('View', 'Zoom Out', !this.isFirstLoad);
 	CommandManager.setCheckbox('Tools', 'Web Plugins', this.webPluginsEnabled);
 	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
 	CommandManager.setEnabled('Tools', 'Mini Console', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Toggle Devtools', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Web Plugins', !this.isFirstLoad);
+
 
 	if(this.browser) {
 		CommandManager.setCheckbox('View', 'Fullscreen', this.browser.isFullScreen());

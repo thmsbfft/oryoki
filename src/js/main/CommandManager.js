@@ -287,6 +287,36 @@ CommandManager.prototype.createMenus = function() {
 					type: 'separator'
 				},
 				{
+					label: 'Actual Size',
+					accelerator: 'CmdOrCtrl+0',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.browser.webContents.send('zoom-reset', Oryoki.focusedWindow.id);
+						}
+					}
+				},
+				{
+					label: 'Zoom In',
+					accelerator: 'CmdOrCtrl+Plus',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.browser.webContents.send('zoom-in', Oryoki.focusedWindow.id);
+						}
+					}
+				},
+				{
+					label: 'Zoom Out',
+					accelerator: 'CmdOrCtrl+-',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.browser.webContents.send('zoom-out', Oryoki.focusedWindow.id);
+						}
+					}
+				},
+				{
+					type: 'separator'
+				},
+				{
 					label: 'Downloads',
 					click: function() {
 						if(Oryoki) { Oryoki.goToDownloads() }
