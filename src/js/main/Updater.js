@@ -5,6 +5,8 @@ function Updater() {
 	// c.log('[Updater] v.' + app.getVersion());
 	// @endif
 
+	this.tmpDir = undefined;
+
 	this.latest = undefined;
 	this.feedURL = 'http://oryoki.io/latest.json';
 
@@ -62,7 +64,30 @@ Updater.prototype.downloadUpdate = function() {
 	c.log('[Updater] Downloading update');
 	// @endif
 
-	exec('cd ~/Desktop && curl -O ' + this.latest.url, function(error, stdout, stderr) {
+	if(Oryoki.focusedWindow) {
+		Oryoki.focusedWindow.browser.webContents.send('log-status', {
+			'body' : 'Downloading update...',
+			'icon' : '👀'
+		});
+	}
+
+	// Create a TMP folder
+	this.tmpDir = UserManager.user.paths.tmp + '/' + 'Update-' + this.latest.version;
+
+	try {
+		fs.statSync(this.tmpDir);
+	}
+	catch(err) {
+		if(err.code === 'ENOENT') {
+			fs.mkdirSync(this.tmpDir);
+		}
+		else {
+			throw err;
+		}
+	}
+
+	// Start downloading
+	exec('cd ' + '\'' + this.tmpDir + '\'' + ' && curl -O ' + this.latest.url, function(error, stdout, stderr) {
 		
 		if(error) {
 			throw error;
@@ -71,11 +96,55 @@ Updater.prototype.downloadUpdate = function() {
 		if(error == null) {
 
 			// @if NODE_ENV='development'
-			c.log('[Updater] Done downloading!');
+			c.log('[Updater] Done downloading');
 			// @endif
+
+			this.extractUpdate();
 
 		}
 	
+	}.bind(this));
+
+}
+
+Updater.prototype.extractUpdate = function() {
+
+	// Unzip archive
+	exec('cd ' + '\'' + this.tmpDir + '\'' + ' && unzip -qq Oryoki-' + this.latest.version, function(error, stdout, stderr) {
+
+		if(error) {
+			throw error;
+		}
+
+		if(error == null) {
+
+			// @if NODE_ENV='development'
+			c.log('[Updater] Done extracting');
+			// @endif
+
+			// exec('open ' + '\'' + this.tmpDir + '/Oryoki.app' + '\'');
+			// this.cleanUp();
+			
+		}
+
+	}.bind(this));
+
+}
+
+Updater.prototype.cleanUp = function() {
+
+	exec('rm -rf ' + '\'' + this.tmpDir + '\'', function(error, stdout, stderr) {
+
+		if(error) throw error;
+
+		if(error == null) {
+
+			// @if NODE_ENV='development'
+			c.log('[Updater] Done cleaning up');
+			// @endif
+
+		}
+
 	}.bind(this));
 
 }
