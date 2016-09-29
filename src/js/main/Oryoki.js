@@ -21,8 +21,8 @@ function Oryoki() {
 
 	this.versions = {
 		'oryoki' : '0.0.4',
-		'chromeVersion' : process.versions.chrome,
-		'electronVersion' : process.versions.electron
+		'chromium' : process.versions.chrome,
+		'electron' : process.versions.electron
 	}
 
 	this.windows = [];

@@ -225,7 +225,6 @@ Window.prototype.updateMenus = function() {
 	CommandManager.setEnabled('Tools', 'Toggle Devtools', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Web Plugins', !this.isFirstLoad);
 
-
 	if(this.browser) {
 		CommandManager.setCheckbox('View', 'Fullscreen', this.browser.isFullScreen());
 	}
