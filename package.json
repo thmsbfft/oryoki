@@ -32,6 +32,7 @@
     "png-chunks-encode": "^1.0.0",
     "png-chunks-extract": "^1.0.0",
     "preprocess": "^3.0.2",
+    "request": "^2.75.0",
     "valid-url": "^1.0.9"
   },
   "license": "MIT"
