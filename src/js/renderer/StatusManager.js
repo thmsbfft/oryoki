@@ -14,6 +14,10 @@ function StatusManager(parameters) {
 		this.log(props);
 	}.bind(this));
 
+	ipcRenderer.on('log-important', function(e, props) {
+		this.important(props);
+	}.bind(this));
+
 	ipcRenderer.on('error-status', function(e, props) {
 		this.error(props);
 	}.bind(this));
@@ -44,6 +48,22 @@ StatusManager.prototype.log = function(props) {
 
 	clearTimeout(this.visibilityTimer);
 	this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 1200);
+
+}
+
+StatusManager.prototype.important = function(props) {
+
+	if(props.icon) {
+		this.el.innerHTML = '<icon>' + props.icon + '</icon>' + props.body;
+	}
+	else {
+		this.el.innerHTML = props.body;
+	}
+
+	removeClass(this.el, 'fade-out');
+	addClass(this.el, 'fade-in');
+
+	this.freeze();
 
 }
 

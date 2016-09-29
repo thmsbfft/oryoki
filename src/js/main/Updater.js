@@ -10,11 +10,11 @@ function Updater() {
 	this.latest = undefined;
 	this.feedURL = 'http://oryoki.io/latest.json';
 
-	this.checkForUpdates();
+	this.checkForUpdate(false);
 
 }
 
-Updater.prototype.checkForUpdates = function() {
+Updater.prototype.checkForUpdate = function(alert) {
 	
 	// @if NODE_ENV='development'
 	c.log('[Updater] Checking for updates...');
@@ -23,7 +23,7 @@ Updater.prototype.checkForUpdates = function() {
 	request(this.feedURL, function(error, response, body) {
 		if(!error && response.statusCode == 200) {
 			this.latest = JSON.parse(body);
-			this.compareVersions();
+			this.compareVersions(alert);
 		}
 		if(error) {
 			// @if NODE_ENV='development'
@@ -34,7 +34,7 @@ Updater.prototype.checkForUpdates = function() {
 
 }
 
-Updater.prototype.compareVersions = function() {
+Updater.prototype.compareVersions = function(alert) {
 
 	var current = Oryoki.versions.oryoki.split('.');
 	var suspect = this.latest.version.split('.');
@@ -51,9 +51,27 @@ Updater.prototype.compareVersions = function() {
 
 			this.downloadUpdate();
 
-			break;
+			return;
 
 		}
+	}
+
+	// @if NODE_ENV='development'
+	c.log('[Updater] No update available');
+	// @endif
+
+	if(alert) {
+
+		dialog.showMessageBox(
+			{
+				type: 'info',
+				message: 'Ōryōki is up to date.',
+				detail: 'Version ' + Oryoki.versions.oryoki + ' is the latest version.',
+				buttons: ['OK'],
+				defaultId: 0
+			}
+		);
+
 	}
 
 }
@@ -64,8 +82,10 @@ Updater.prototype.downloadUpdate = function() {
 	c.log('[Updater] Downloading update');
 	// @endif
 
+	CommandManager.setEnabled(app.getName(), 'Check for Update', false);
+
 	if(Oryoki.focusedWindow) {
-		Oryoki.focusedWindow.browser.webContents.send('log-status', {
+		Oryoki.focusedWindow.browser.webContents.send('log-important', {
 			'body' : 'Downloading update...',
 			'icon' : '👀'
 		});
@@ -99,6 +119,13 @@ Updater.prototype.downloadUpdate = function() {
 			c.log('[Updater] Done downloading');
 			// @endif
 
+			if(Oryoki.focusedWindow) {
+				Oryoki.focusedWindow.browser.webContents.send('unfreeze-status');
+			}
+
+			// TODO move down to toggle back on when update is ready to install
+			CommandManager.setEnabled(app.getName(), 'Check for Update', true);
+
 			this.extractUpdate();
 
 		}
@@ -122,8 +149,9 @@ Updater.prototype.extractUpdate = function() {
 			c.log('[Updater] Done extracting');
 			// @endif
 
+			// TESTING
 			// exec('open ' + '\'' + this.tmpDir + '/Oryoki.app' + '\'');
-			// this.cleanUp();
+			this.cleanUp();
 			
 		}
 

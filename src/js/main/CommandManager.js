@@ -52,6 +52,12 @@ CommandManager.prototype.createMenus = function() {
 					enabled: false
 				},
 				{
+					label: 'Check for Update',
+					click: function() {
+						Updater.checkForUpdate(true);
+					}
+				},
+				{
 					type: 'separator'
 				},
 				{
