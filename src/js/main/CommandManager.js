@@ -1,7 +1,7 @@
 function CommandManager() {
 	this.register = {};
 	this.template = undefined;
-	this.menu = undefined;
+	this.menu = null;
 	// @if NODE_ENV='development'
 	c.log('[Command Manager] ✔');
 	// @endif
@@ -470,6 +470,14 @@ CommandManager.prototype.createMenus = function() {
 	];
 	this.menu = Menu.buildFromTemplate(this.template);
 	Menu.setApplicationMenu(this.menu);
+}
+
+CommandManager.prototype.refreshMenus = function() {
+
+	this.menu.clear();
+	this.menu = null;
+	this.createMenus();
+
 }
 
 CommandManager.prototype.toggleChecked = function(menuLabel, subMenuLabel) {

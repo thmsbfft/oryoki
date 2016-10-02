@@ -20,6 +20,8 @@ Updater.prototype.checkForUpdate = function(alert) {
 	c.log('[Updater] Checking for updates...');
 	// @endif
 
+	CommandManager.refreshMenus();
+
 	request(this.feedURL, function(error, response, body) {
 		if(!error && response.statusCode == 200) {
 			this.latest = JSON.parse(body);
