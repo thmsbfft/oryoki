@@ -38,7 +38,39 @@ CommandManager.prototype.unregisterAll = function(browserWindow) {
 }
 
 CommandManager.prototype.createMenus = function() {
+	
 	var name = app.getName();
+
+	// Special cases
+	var updater = ({
+		'downloading-update': {
+			label: "Downloading update...",
+			click: '',
+			enabled: false
+		},
+		'no-update': {
+			label: "Check for Update",
+			click: function() {
+					Updater.checkForUpdate(true);
+				},
+			enabled: true
+		},
+		'update-ready': {
+			label: "Restart and Install",
+			click: function() {
+					// Restart
+				},
+			enabled: true
+		},
+		undefined: {
+			label: "Check for Update",
+			click: function() {
+					Updater.checkForUpdate(true);
+				},
+			enabled: true
+		}
+	})[Updater.status];
+
 	this.template = [
 		{
 			label: name,
@@ -52,10 +84,9 @@ CommandManager.prototype.createMenus = function() {
 					enabled: false
 				},
 				{
-					label: 'Check for Update',
-					click: function() {
-						Updater.checkForUpdate(true);
-					}
+					label: updater.label,
+					click: updater.click,
+					enabled: updater.enabled
 				},
 				{
 					type: 'separator'

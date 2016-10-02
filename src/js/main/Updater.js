@@ -6,6 +6,7 @@ function Updater() {
 	// @endif
 
 	this.tmpDir = undefined;
+	this.status = 'no-update';
 
 	this.latest = undefined;
 	this.feedURL = 'http://oryoki.io/latest.json';
@@ -20,7 +21,6 @@ Updater.prototype.checkForUpdate = function(alert) {
 	c.log('[Updater] Checking for updates...');
 	// @endif
 
-	CommandManager.refreshMenus();
 
 	request(this.feedURL, function(error, response, body) {
 		if(!error && response.statusCode == 200) {
@@ -84,14 +84,17 @@ Updater.prototype.downloadUpdate = function() {
 	c.log('[Updater] Downloading update');
 	// @endif
 
-	CommandManager.setEnabled(app.getName(), 'Check for Update', false);
+	this.status = 'downloading-update';
+	// CommandManager.setEnabled(app.getName(), 'Check for Update', false);
 
-	if(Oryoki.focusedWindow) {
-		Oryoki.focusedWindow.browser.webContents.send('log-important', {
-			'body' : 'Downloading update...',
-			'icon' : '👀'
-		});
-	}
+	CommandManager.refreshMenus();
+
+	// if(Oryoki.focusedWindow) {
+	// 	Oryoki.focusedWindow.browser.webContents.send('log-important', {
+	// 		'body' : 'Downloading update...',
+	// 		'icon' : '👀'
+	// 	});
+	// }
 
 	// Create a TMP folder
 	this.tmpDir = UserManager.user.paths.tmp + '/' + 'Update-' + this.latest.version;
@@ -121,12 +124,11 @@ Updater.prototype.downloadUpdate = function() {
 			c.log('[Updater] Done downloading');
 			// @endif
 
+			this.isDownloading = false;
+
 			if(Oryoki.focusedWindow) {
 				Oryoki.focusedWindow.browser.webContents.send('unfreeze-status');
 			}
-
-			// TODO move down to toggle back on when update is ready to install
-			CommandManager.setEnabled(app.getName(), 'Check for Update', true);
 
 			this.extractUpdate();
 
@@ -150,6 +152,9 @@ Updater.prototype.extractUpdate = function() {
 			// @if NODE_ENV='development'
 			c.log('[Updater] Done extracting');
 			// @endif
+
+			this.status = 'update-ready';
+			CommandManager.refreshMenus();
 
 			// TESTING
 			// exec('open ' + '\'' + this.tmpDir + '/Oryoki.app' + '\'');
