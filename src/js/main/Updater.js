@@ -85,16 +85,15 @@ Updater.prototype.downloadUpdate = function() {
 	// @endif
 
 	this.status = 'downloading-update';
-	// CommandManager.setEnabled(app.getName(), 'Check for Update', false);
 
 	CommandManager.refreshMenus();
 
-	// if(Oryoki.focusedWindow) {
-	// 	Oryoki.focusedWindow.browser.webContents.send('log-important', {
-	// 		'body' : 'Downloading update...',
-	// 		'icon' : '👀'
-	// 	});
-	// }
+	if(Oryoki.focusedWindow) {
+		Oryoki.focusedWindow.browser.webContents.send('log-important', {
+			'body' : 'Downloading update...',
+			'icon' : '👀'
+		});
+	}
 
 	// Create a TMP folder
 	this.tmpDir = UserManager.user.paths.tmp + '/' + 'Update-' + this.latest.version;
@@ -158,11 +157,27 @@ Updater.prototype.extractUpdate = function() {
 
 			// TESTING
 			// exec('open ' + '\'' + this.tmpDir + '/Oryoki.app' + '\'');
-			this.cleanUp();
+			this.createUpdaterScript();
+			// this.cleanUp();
 			
 		}
 
 	}.bind(this));
+
+}
+
+Updater.prototype.createUpdaterScript = function() {
+
+	var targetPath = app.getAppPath();
+	var sourcePath = this.tmpDir + '/Oryoki.app';
+
+	var updaterScript = 'killall Oryoki\n';
+	updaterScript += 'mv ' + '\'' + sourcePath + '\'' + ' ' + '\'' + targetPath + '\'' + '\n';
+	updaterScript += 'open ' + targetPath;
+
+	fs.writeFileSync(this.tmpDir + '/' + this.latest.version + '-Updater.sh', updaterScript, 'utf8', function(err) {
+		if(err) throw err;
+	});
 
 }
 
@@ -186,6 +201,6 @@ Updater.prototype.cleanUp = function() {
 
 Updater.prototype.quitAndInstall = function() {
 	
-
+	// exec(updaterScript.sh);
 
 }

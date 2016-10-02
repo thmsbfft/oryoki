@@ -9,7 +9,6 @@ var MenuItem = require('electron').MenuItem;
 var app = electron.app;
 var Tray = electron.Tray;
 const {clipboard, dialog} = require('electron');
-var electronLocalshortcut = require('electron-localshortcut');
 var BrowserWindow = electron.BrowserWindow;
 var path = require('path');
 const URL = require('url');
@@ -28,8 +27,6 @@ const validUrl = require('valid-url');
 app.on('ready', function() {
 
 	electronScreen = electron.screen;
-
-	c.log(app.getVersion());
 
 	UserManager = new UserManager();
 	CommandManager = new CommandManager();
