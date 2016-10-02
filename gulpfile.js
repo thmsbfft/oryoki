@@ -39,7 +39,7 @@ gulp.task('console', function() {
 });
 
 gulp.task('start', function() {
-	return run('electron main.js').exec();
+	return run('electron .').exec();
 });
 
 gulp.task('restart', function() {

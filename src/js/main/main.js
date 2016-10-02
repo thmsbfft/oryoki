@@ -29,6 +29,8 @@ app.on('ready', function() {
 
 	electronScreen = electron.screen;
 
+	c.log(app.getVersion());
+
 	UserManager = new UserManager();
 	CommandManager = new CommandManager();
 	Oryoki = new Oryoki();

@@ -36,7 +36,7 @@ Updater.prototype.checkForUpdate = function(alert) {
 
 Updater.prototype.compareVersions = function(alert) {
 
-	var current = Oryoki.versions.oryoki.split('.');
+	var current = app.getVersion().split('.');
 	var suspect = this.latest.version.split('.');
 
 	for(var i=0; i < suspect.length; i++) {
