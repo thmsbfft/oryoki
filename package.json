@@ -10,23 +10,12 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "gulp build && electron-packager . Oryoki --overwrite --out=build --app-version=0.0.4 --platform=darwin --arch=x64 --icon=icon.icns --ignore=\"(node_modules/(electron-packager|electron-prebuilt))|(src/sass)|(src/js/main)|(node_modules/gulp-[a-z]+)|build|gulpfile|stdout.log\""
+    "build": "gulp build && electron-packager . Oryoki --overwrite --out=build --app-version=0.0.4 --platform=darwin --arch=x64 --icon=icon.icns --ignore=\"(src/sass)|(src/js/main)|build|gulpfile|doc|stdout.log\""
   },
-  "devDependencies": {
+  "dependencies" : {
     "electron-localshortcut": "^0.6.0",
-    "electron-packager": "^8.0.0",
-    "electron-prebuilt": "^1.4.1",
     "fluent-ffmpeg": "^2.0.1",
     "gm": "^1.22.0",
-    "gulp": "^3.9.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-copy": "0.0.2",
-    "gulp-exec": "^2.1.2",
-    "gulp-livereload": "^3.8.1",
-    "gulp-preprocess": "^2.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-run": "^1.7.1",
-    "gulp-sass": "^2.3.2",
     "openurl": "^1.1.1",
     "png-chunk-text": "^1.0.0",
     "png-chunks-encode": "^1.0.0",
@@ -35,5 +24,23 @@
     "request": "^2.75.0",
     "valid-url": "^1.0.9"
   },
-  "license": "MIT"
+  "devDependencies": {
+    "electron-packager": "^8.0.0",
+    "electron-prebuilt": "^1.4.1",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-copy": "0.0.2",
+    "gulp-exec": "^2.1.2",
+    "gulp-livereload": "^3.8.1",
+    "gulp-preprocess": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-run": "^1.7.1",
+    "gulp-sass": "^2.3.2"
+  },
+  "bugs": {
+    "url": "https://github.com/thmsbfft/oryoki/issues"
+  },
+  "homepage" : "http://oryoki.io",
+  "license": "MIT",
+  "author" : "Thomas Buffet"
 }
