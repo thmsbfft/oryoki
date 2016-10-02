@@ -155,9 +155,9 @@ Updater.prototype.extractUpdate = function() {
 			this.status = 'update-ready';
 			CommandManager.refreshMenus();
 
-			// TESTING
-			// exec('open ' + '\'' + this.tmpDir + '/Oryoki.app' + '\'');
 			this.createUpdaterScript();
+
+			// TESTING
 			// this.cleanUp();
 			
 		}
@@ -168,12 +168,19 @@ Updater.prototype.extractUpdate = function() {
 
 Updater.prototype.createUpdaterScript = function() {
 
-	var targetPath = app.getAppPath();
+	var targetPath = app.getAppPath().replace('/Contents/Resources/app', '');
 	var sourcePath = this.tmpDir + '/Oryoki.app';
 
+	// Quit current
 	var updaterScript = 'killall Oryoki\n';
+	// Remove current
+	updaterScript += 'rm -rf ' + '\'' + targetPath + '\'' + '\n';
+	// Move new
 	updaterScript += 'mv ' + '\'' + sourcePath + '\'' + ' ' + '\'' + targetPath + '\'' + '\n';
-	updaterScript += 'open ' + targetPath;
+	// Delete tmp
+	updaterScript += 'rm -rf ' + '\'' + this.tmpDir + '\'' + '\n';
+	// Open new
+	updaterScript += 'open ' + '\'' + targetPath + '\'';
 
 	fs.writeFileSync(this.tmpDir + '/' + this.latest.version + '-Updater.sh', updaterScript, 'utf8', function(err) {
 		if(err) throw err;
