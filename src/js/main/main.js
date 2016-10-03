@@ -15,6 +15,7 @@ const URL = require('url');
 var fs = require('fs');
 var shell = require('electron').shell;
 var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 var execSync = require('child_process').execSync;
 var request = require('request');
 var ffmpeg = require('fluent-ffmpeg');

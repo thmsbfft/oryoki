@@ -186,10 +186,10 @@ Updater.prototype.createUpdaterScript = function() {
 	updaterScript += 'rm -rf ' + '\'' + targetPath + '\'' + '\n';
 	// Move new
 	updaterScript += 'mv ' + '\'' + sourcePath + '\'' + ' ' + '\'' + targetPath + '\'' + '\n';
-	// Delete tmp
-	updaterScript += 'rm -rf ' + '\'' + this.tmpDir + '\'' + '\n';
 	// Open new
-	updaterScript += 'open ' + '\'' + targetPath + '\'';
+	updaterScript += 'open ' + '\'' + targetPath + '\'' + '\n';
+	// Delete tmp
+	updaterScript += 'rm -rf ' + '\'' + this.tmpDir + '\'';
 
 	fs.writeFile(this.tmpDir + '/' + this.latest.version + '-Updater.sh', updaterScript, 'utf8', function(err) {
 		
@@ -227,16 +227,15 @@ Updater.prototype.cleanUp = function() {
 Updater.prototype.quitAndInstall = function() {
 	
 	var updaterScriptPath = this.tmpDir + '/' + this.latest.version + '-Updater.sh';
-	updaterScriptPath = updaterScriptPath.replace(' ', '\\ ');
 
 	// @if NODE_ENV='development'
-	c.log('[Updater] > Quit and install');
-	c.log('bash ' + updaterScriptPath);
+	c.log('[Updater] Quit and install');
+	c.log('[Updater] > sh ' + updaterScriptPath);
 	return;
 	// @endif
 
-	exec('bash ' + updaterScriptPath, function(error, stdout, stderr) {
-		if(error) throw error;
+	spawn('sh', [updaterScriptPath], {
+		detached: true
 	});
 
 }
