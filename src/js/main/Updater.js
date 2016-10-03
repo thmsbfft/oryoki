@@ -11,6 +11,7 @@ function Updater() {
 	this.latest = undefined;
 	this.feedURL = 'http://oryoki.io/latest.json';
 
+	this.cleanUp();
 	this.checkForUpdate(false);
 
 }
@@ -190,7 +191,7 @@ Updater.prototype.createUpdaterScript = function() {
 	// Open new
 	updaterScript += 'open ' + '\'' + targetPath + '\'';
 
-	fs.writeFile('\'' + this.tmpDir + '/' + this.latest.version + '-Updater.sh' + '\'', updaterScript, 'utf8', function(err) {
+	fs.writeFile(this.tmpDir + '/' + this.latest.version + '-Updater.sh', updaterScript, 'utf8', function(err) {
 		
 		if(err) throw err;
 
@@ -201,13 +202,13 @@ Updater.prototype.createUpdaterScript = function() {
 		this.status = 'update-ready';
 		CommandManager.refreshMenus();
 
-	});
+	}.bind(this));
 
 }
 
 Updater.prototype.cleanUp = function() {
 
-	exec('cd ' + '\'' + this.tmpDir + '\'' + ' && rm -rf Update-*', function(error, stdout, stderr) {
+	exec('cd ' + '\'' + UserManager.user.paths.tmp + '\'' + ' && rm -rf Update-*', function(error, stdout, stderr) {
 
 		if(error) throw error;
 
@@ -227,12 +228,12 @@ Updater.prototype.quitAndInstall = function() {
 	
 	// @if NODE_ENV='development'
 	c.log('[Updater] > Quit and install');
+	c.log('bash ' + this.tmpDir + '/' + this.latest.version + '-Updater.sh');
+	return ;
 	// @endif
 
-	// @if NODE_ENV='production'
 	exec('bash ' + this.tmpDir + '/' + this.latest.version + '-Updater.sh', function(error, stdout, stderr) {
 		if(error) throw error;
 	});
-	// @endif
 
 }
