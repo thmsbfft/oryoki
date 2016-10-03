@@ -226,13 +226,16 @@ Updater.prototype.cleanUp = function() {
 
 Updater.prototype.quitAndInstall = function() {
 	
+	var updaterScriptPath = this.tmpDir + '/' + this.latest.version + '-Updater.sh';
+	updaterScriptPath = updaterScriptPath.replace(' ', '\\ ');
+
 	// @if NODE_ENV='development'
 	c.log('[Updater] > Quit and install');
-	c.log('bash ' + this.tmpDir + '/' + this.latest.version + '-Updater.sh');
-	return ;
+	c.log('bash ' + updaterScriptPath);
+	return;
 	// @endif
 
-	exec('bash ' + this.tmpDir + '/' + this.latest.version + '-Updater.sh', function(error, stdout, stderr) {
+	exec('bash ' + updaterScriptPath, function(error, stdout, stderr) {
 		if(error) throw error;
 	});
 

@@ -39,7 +39,7 @@ CommandManager.prototype.createMenus = function() {
 		'update-ready': {
 			label: "Restart and Install",
 			click: function() {
-					// Restart
+					Updater.quitAndInstall();
 				},
 			enabled: true
 		},
