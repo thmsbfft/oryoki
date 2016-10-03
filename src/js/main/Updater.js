@@ -21,7 +21,6 @@ Updater.prototype.checkForUpdate = function(alert) {
 	c.log('[Updater] Checking for updates...');
 	// @endif
 
-
 	request(this.feedURL, function(error, response, body) {
 		if(!error && response.statusCode == 200) {
 			this.latest = JSON.parse(body);
@@ -31,6 +30,21 @@ Updater.prototype.checkForUpdate = function(alert) {
 			// @if NODE_ENV='development'
 			c.log('[Updater] ' + error);
 			// @endif
+
+			if(alert) {
+
+				dialog.showMessageBox(
+					{
+						type: 'info',
+						message: 'Oops! There was a problem checking for update.',
+						detail: 'It seems like the Internet connection is offline.',
+						buttons: ['OK'],
+						defaultId: 0
+					}
+				);
+
+			}
+
 		}
 	}.bind(this));
 
@@ -152,13 +166,7 @@ Updater.prototype.extractUpdate = function() {
 			c.log('[Updater] Done extracting');
 			// @endif
 
-			this.status = 'update-ready';
-			CommandManager.refreshMenus();
-
 			this.createUpdaterScript();
-
-			// TESTING
-			// this.cleanUp();
 			
 		}
 
@@ -182,15 +190,24 @@ Updater.prototype.createUpdaterScript = function() {
 	// Open new
 	updaterScript += 'open ' + '\'' + targetPath + '\'';
 
-	fs.writeFileSync(this.tmpDir + '/' + this.latest.version + '-Updater.sh', updaterScript, 'utf8', function(err) {
+	fs.writeFile('\'' + this.tmpDir + '/' + this.latest.version + '-Updater.sh' + '\'', updaterScript, 'utf8', function(err) {
+		
 		if(err) throw err;
+
+		// @if NODE_ENV='development'
+		c.log('[Updater] Update ready');
+		// @endif
+
+		this.status = 'update-ready';
+		CommandManager.refreshMenus();
+
 	});
 
 }
 
 Updater.prototype.cleanUp = function() {
 
-	exec('rm -rf ' + '\'' + this.tmpDir + '\'', function(error, stdout, stderr) {
+	exec('cd ' + '\'' + this.tmpDir + '\'' + ' && rm -rf Update-*', function(error, stdout, stderr) {
 
 		if(error) throw error;
 
@@ -208,6 +225,14 @@ Updater.prototype.cleanUp = function() {
 
 Updater.prototype.quitAndInstall = function() {
 	
-	// exec(updaterScript.sh);
+	// @if NODE_ENV='development'
+	c.log('[Updater] > Quit and install');
+	// @endif
+
+	// @if NODE_ENV='production'
+	exec('bash ' + this.tmpDir + '/' + this.latest.version + '-Updater.sh', function(error, stdout, stderr) {
+		if(error) throw error;
+	});
+	// @endif
 
 }
