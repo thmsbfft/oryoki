@@ -180,16 +180,17 @@ Updater.prototype.createUpdaterScript = function() {
 	var targetPath = app.getAppPath().replace('/Contents/Resources/app', '');
 	var sourcePath = this.tmpDir + '/Oryoki.app';
 
+	var updaterScript = '#!/bin/sh\n';
 	// Quit current
-	var updaterScript = 'killall Oryoki\n';
+	updaterScript += 'killall Oryoki\n';
 	// Remove current
 	updaterScript += 'rm -rf ' + '\'' + targetPath + '\'' + '\n';
 	// Move new
 	updaterScript += 'mv ' + '\'' + sourcePath + '\'' + ' ' + '\'' + targetPath + '\'' + '\n';
+	// Chmod
+	updaterScript += 'chmod -R 777 ' + targetPath + '\n';
 	// Open new
 	updaterScript += 'open ' + '\'' + targetPath + '\'' + '\n';
-	// Delete tmp
-	updaterScript += 'rm -rf ' + '\'' + this.tmpDir + '\'';
 
 	fs.writeFile(this.tmpDir + '/' + this.latest.version + '-Updater.sh', updaterScript, 'utf8', function(err) {
 		
@@ -234,9 +235,11 @@ Updater.prototype.quitAndInstall = function() {
 	return;
 	// @endif
 
+	var log = fs.openSync(UserManager.user.paths.tmp + '/updater.log', 'w');
+
 	var updaterProcess = spawn('sh', [updaterScriptPath], {
 		detached: true,
-		stdio: ['ignore', 'ignore', 'ignore']
+		stdio: ['ignore', log, log]
 	}).unref();
 
 }
