@@ -234,8 +234,11 @@ Updater.prototype.quitAndInstall = function() {
 	return;
 	// @endif
 
-	spawn('sh', [updaterScriptPath], {
-		detached: true
+	var updaterProcess = spawn('sh', [updaterScriptPath], {
+		detached: true,
+		stdio: ['ignore', 'ignore', 'ignore']
 	});
+
+	updaterProcess.unref();
 
 }
