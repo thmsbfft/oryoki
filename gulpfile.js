@@ -13,6 +13,7 @@ var main = [
 	'src/js/main/UserManager.js',
 	'src/js/main/CommandManager.js',
 	'src/js/main/Camera.js',
+	'src/js/main/Notification.js',
 	'src/js/main/Window.js',
 	'src/js/main/Oryoki.js',
 	'src/js/main/Updater.js',

@@ -11,6 +11,11 @@ function Updater() {
 	this.latest = undefined;
 	this.feedURL = 'http://oryoki.io/latest.json';
 
+	new Notification('Update available!', {
+		body: 'Lorem ipsum',
+		silent: true
+	});
+
 	this.cleanUp();
 	this.checkForUpdate(false);
 
@@ -202,6 +207,16 @@ Updater.prototype.createUpdaterScript = function() {
 
 		this.status = 'update-ready';
 		CommandManager.refreshMenus();
+
+		if(Oryoki.focusedWindow) {
+			Oryoki.focusedWindow.browser.webContents.send('update-ready');
+			new Notification('Update available!', {
+				body: 'Lorem ipsum'
+			});
+		}
+		else {
+
+		}
 
 	}.bind(this));
 

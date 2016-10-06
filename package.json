@@ -12,7 +12,7 @@
     "start": "electron .",
     "build": "gulp build && electron-packager . Oryoki --overwrite --out=build --app-version=0.0.4 --platform=darwin --arch=x64 --icon=icon.icns --ignore=\"(src/sass)|(src/js/main)|build|gulpfile|doc|stdout.log\""
   },
-  "dependencies" : {
+  "dependencies": {
     "electron-localshortcut": "^0.6.0",
     "fluent-ffmpeg": "^2.0.1",
     "gm": "^1.22.0",
@@ -40,7 +40,7 @@
   "bugs": {
     "url": "https://github.com/thmsbfft/oryoki/issues"
   },
-  "homepage" : "http://oryoki.io",
+  "homepage": "http://oryoki.io",
   "license": "MIT",
-  "author" : "Thomas Buffet"
+  "author": "Thomas Buffet"
 }
