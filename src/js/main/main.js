@@ -31,6 +31,7 @@ app.on('ready', function() {
 
 	UserManager = new UserManager();
 	CommandManager = new CommandManager();
+	About = new About();
 	Oryoki = new Oryoki();
 	Updater = new Updater();
 

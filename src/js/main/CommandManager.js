@@ -58,7 +58,9 @@ CommandManager.prototype.createMenus = function() {
 			submenu: [
 				{
 					label: 'About ' + name,
-					role: 'about'
+					click: function() {
+						About.show();
+					}
 				},
 				{
 					label: 'Version ' + app.getVersion(),

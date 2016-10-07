@@ -34,6 +34,7 @@ function Oryoki() {
 	if(UserManager.getPreferenceByName("clear_caches_on_launch")) this.clearCaches();
 	if(UserManager.getPreferenceByName("override_download_path")) app.setPath('downloads', UserManager.getPreferenceByName("download_path"));
 	this.createWindow();
+	// About.show();
 
 }
 

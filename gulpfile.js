@@ -15,6 +15,7 @@ var main = [
 	'src/js/main/Camera.js',
 	'src/js/main/Notification.js',
 	'src/js/main/Window.js',
+	'src/js/main/About.js',
 	'src/js/main/Oryoki.js',
 	'src/js/main/Updater.js',
 	'src/js/main/main.js'

@@ -13,8 +13,6 @@
     'use strict';
     var ipcRenderer = require('electron').ipcRenderer;
 
-    console.log('Hey?');
-
     ipcRenderer.on('notify', function(e, title, props) {
 
       console.log(title);
