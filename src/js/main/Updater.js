@@ -11,11 +11,6 @@ function Updater() {
 	this.latest = undefined;
 	this.feedURL = 'http://oryoki.io/latest.json';
 
-	new Notification('Update available!', {
-		body: 'Lorem ipsum',
-		silent: true
-	});
-
 	this.cleanUp();
 	this.checkForUpdate(false);
 
@@ -108,13 +103,6 @@ Updater.prototype.downloadUpdate = function() {
 
 	CommandManager.refreshMenus();
 
-	if(Oryoki.focusedWindow) {
-		Oryoki.focusedWindow.browser.webContents.send('log-important', {
-			'body' : 'Downloading update...',
-			'icon' : '👀'
-		});
-	}
-
 	// Create a TMP folder
 	this.tmpDir = UserManager.user.paths.tmp + '/' + 'Update-' + this.latest.version;
 
@@ -144,10 +132,6 @@ Updater.prototype.downloadUpdate = function() {
 			// @endif
 
 			this.isDownloading = false;
-
-			if(Oryoki.focusedWindow) {
-				Oryoki.focusedWindow.browser.webContents.send('unfreeze-status');
-			}
 
 			this.extractUpdate();
 
@@ -209,14 +193,13 @@ Updater.prototype.createUpdaterScript = function() {
 		CommandManager.refreshMenus();
 
 		if(Oryoki.focusedWindow) {
-			Oryoki.focusedWindow.browser.webContents.send('update-ready');
-			new Notification('Update available!', {
-				body: 'Lorem ipsum'
-			});
+			Oryoki.focusedWindow.browser.webContents.send('update-ready', this.latest);
 		}
-		else {
 
-		}
+		new Notification('Update available!', {
+			body: 'Ōryōki ' + this.latest.version + ' is ready to install.',
+			silent: true
+		});
 
 	}.bind(this));
 
@@ -240,12 +223,12 @@ Updater.prototype.cleanUp = function() {
 
 }
 
-Updater.prototype.quitAndInstall = function() {
+Updater.prototype.restartAndInstall = function() {
 	
 	var updaterScriptPath = this.tmpDir + '/' + this.latest.version + '-Updater.sh';
 
 	// @if NODE_ENV='development'
-	c.log('[Updater] Quit and install');
+	c.log('[Updater] Restart and install');
 	c.log('[Updater] > sh ' + updaterScriptPath);
 	return;
 	// @endif

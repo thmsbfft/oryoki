@@ -25,7 +25,7 @@ CommandManager.prototype.createMenus = function() {
 	// Special cases
 	var updater = ({
 		'downloading-update': {
-			label: "Downloading update...",
+			label: "Downloading Update...",
 			click: '',
 			enabled: false
 		},
@@ -39,7 +39,7 @@ CommandManager.prototype.createMenus = function() {
 		'update-ready': {
 			label: "Restart and Install",
 			click: function() {
-					Updater.quitAndInstall();
+					Updater.restartAndInstall();
 				},
 			enabled: true
 		},

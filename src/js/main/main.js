@@ -24,7 +24,6 @@ const extract = require('png-chunks-extract');
 const encode = require('png-chunks-encode');
 const text = require('png-chunk-text');
 const validUrl = require('valid-url');
-const notifier = require('node-notifier');
 
 app.on('ready', function() {
 
