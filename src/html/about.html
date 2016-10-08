@@ -4,18 +4,39 @@
     <meta charset="UTF-8">
     <title>Ōryōki</title>
     <link rel="stylesheet" type="text/css" href="../css/bundle.css">
+    <script src="http://localhost:35729/livereload.js"></script>
   </head>
   <body class="about">
 
-    <h1>Ōryōki</h1>
-    <p>Version</p>
+    <handle>
+      <div class="button close"></div>
+<!--       <div class="button minimize"></div>
+      <div class="button fullscreen"></div> -->
+    </handle>
+
+    <main>
+
+      <img src="../media/icon.svg"/>
+      <h1>Ōryōki</h1>
+      <p class="version">Version</p>
+
+    </main>
 
     <script>
 
     'use strict';
     var ipcRenderer = require('electron').ipcRenderer;
 
-    console.log('> about');
+    var handleEl = document.getElementsByTagName('handle')[0];
+    var closeEl = handleEl.querySelectorAll('.button.close')[0];
+
+    closeEl.addEventListener('click', function() {
+      ipcRenderer.send('hide-about');
+    });
+
+    var versionEl = document.querySelectorAll('.version')[0];
+    versionEl.innerHTML = 'Version caca';
+
 
     </script>
 
