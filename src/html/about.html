@@ -10,8 +10,6 @@
 
     <handle>
       <div class="button close"></div>
-<!--       <div class="button minimize"></div>
-      <div class="button fullscreen"></div> -->
     </handle>
 
     <main>
@@ -34,9 +32,12 @@
       ipcRenderer.send('hide-about');
     });
 
+    ipcRenderer.on('show-about', function() {
+      console.log('> show');
+    });
+
     var versionEl = document.querySelectorAll('.version')[0];
     versionEl.innerHTML = 'Version caca';
-
 
     </script>
 

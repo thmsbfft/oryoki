@@ -8,7 +8,8 @@ function About() {
 		title: 'Ōryōki',
 		backgroundColor: '#141414',
 		frame: false,
-		resizable: false
+		resizable: false,
+		acceptFirstMouse: true
 	});
 	this.bw.loadURL('file://' + __dirname + '/src/html/about.html');
 
@@ -30,6 +31,7 @@ function About() {
 
 About.prototype.show = function() {
 	
+	this.bw.webContents.send('show-about');
 	this.bw.show();
 	this.bw.focus();
 
