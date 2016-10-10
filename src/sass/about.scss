@@ -1,5 +1,7 @@
 body.about {
 	
+	background-color: #333333;
+
 	main {
 		-webkit-app-region: drag;
 		width: 100%;
@@ -25,6 +27,15 @@ body.about {
 		p.version {
 			color: rgba(255, 255, 255, 0.70);
 			font-size: 13px;
+		}
+
+		p.author {
+			text-align: center;
+			position: absolute;
+			bottom: 20px;
+			width: 100%;
+			font-size: 13px;
+			color: rgba(255, 255, 255, 0.5);
 		}
 
 	}

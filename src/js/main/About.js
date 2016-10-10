@@ -6,7 +6,7 @@ function About() {
 		height: 450,
 		center: true,
 		title: 'Ōryōki',
-		backgroundColor: '#141414',
+		backgroundColor: '#333333',
 		frame: false,
 		resizable: false,
 		acceptFirstMouse: true
