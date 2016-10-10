@@ -3,7 +3,7 @@ function About() {
 	this.bw = new BrowserWindow({
 		show: false,
 		width: 350,
-		height: 450,
+		height: 400,
 		center: true,
 		title: 'Ōryōki',
 		backgroundColor: '#333333',
