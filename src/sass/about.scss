@@ -25,6 +25,7 @@ body.about {
 		}
 
 		h1 {
+			color: white;
 			font-size: 20px;
 			font-weight: 400;
 			margin-bottom: 6px;
@@ -52,6 +53,7 @@ body.about {
 				color: rgba(255, 255, 255, 0.7);
 				text-decoration: none;
 				outline: none;
+				cursor: default;
 
 				&:hover {
 					text-decoration: underline;
