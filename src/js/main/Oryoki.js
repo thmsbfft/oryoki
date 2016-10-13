@@ -52,6 +52,12 @@ Oryoki.prototype.createWindow = function(e, url) {
 	if(url) {
 		// _target = blank
 		var url = url[0];
+
+		if(this.focusedWindow.isFirstLoad) {
+			this.focusedWindow.load(url);
+			return;
+		}
+
 	}
 	else if(UserManager.getPreferenceByName("use_homepage")) {
 		// homepage

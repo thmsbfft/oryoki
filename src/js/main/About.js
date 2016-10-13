@@ -13,10 +13,12 @@ function About() {
 	});
 	this.bw.loadURL('file://' + __dirname + '/src/html/about.html');
 
-	this.bw.webContents.on('dom-ready', () => {
-		this.bw.webContents.openDevTools();
-		this.show();
-	});
+	// @if NODE_ENV='development'
+	// this.bw.webContents.on('dom-ready', () => {
+		// this.bw.webContents.openDevTools();
+		// this.show();
+	// });
+	// @endif
 
 	this.bw.on('close', function(e) {
 		e.preventDefault();

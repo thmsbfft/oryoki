@@ -12,8 +12,6 @@
       <div class="button close"></div>
     </handle>
 
-    <status><icon>✅</icon>️Up to date</status>
-
     <main>
 
       <img src="../media/icon.svg"/>
@@ -49,6 +47,7 @@
     notesLinkEl.addEventListener('click', function(e) {
       console.log(e.target.getAttribute('href'));
       ipcRenderer.send('newWindow', [e.target.getAttribute('href')]);
+      ipcRenderer.send('hide-about');
       e.preventDefault();
     });
 
