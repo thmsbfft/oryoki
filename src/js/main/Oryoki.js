@@ -6,6 +6,14 @@ function Oryoki() {
 	  }
 	});
 
+	app.on('will-finish-launching', function() {
+		app.on('open-file', function(event, path) {
+			// @if NODE_ENV='development'
+			c.log('File dragged on app icon');
+			// @endif
+		}.bind(this));
+	}.bind(this));
+
 	// @if NODE_ENV='development'
 	c.log('[Oryoki] ✔');
 	c.log('[Oryoki] v.' + app.getVersion());
@@ -13,8 +21,8 @@ function Oryoki() {
 
 	this.versions = {
 		'oryoki' : '0.0.4',
-		'chromeVersion' : process.versions.chrome,
-		'electronVersion' : process.versions.electron
+		'chromium' : process.versions.chrome,
+		'electron' : process.versions.electron
 	}
 
 	this.windows = [];
@@ -26,6 +34,7 @@ function Oryoki() {
 	if(UserManager.getPreferenceByName("clear_caches_on_launch")) this.clearCaches();
 	if(UserManager.getPreferenceByName("override_download_path")) app.setPath('downloads', UserManager.getPreferenceByName("download_path"));
 	this.createWindow();
+	// About.show();
 
 }
 
@@ -43,6 +52,12 @@ Oryoki.prototype.createWindow = function(e, url) {
 	if(url) {
 		// _target = blank
 		var url = url[0];
+
+		if(this.focusedWindow.isFirstLoad) {
+			this.focusedWindow.load(url);
+			return;
+		}
+
 	}
 	else if(UserManager.getPreferenceByName("use_homepage")) {
 		// homepage
@@ -71,7 +86,9 @@ Oryoki.prototype.createWindow = function(e, url) {
 			'onFocus' : this.onFocusChange.bind(this),
 			'onClose' : this.onCloseWindow.bind(this),
 			'x' : this.focusedWindow.browser.getPosition()[0]+50,
-			'y' : this.focusedWindow.browser.getPosition()[1]+50
+			'y' : this.focusedWindow.browser.getPosition()[1]+50,
+			'width' : this.focusedWindow.browser.getBounds().width,
+			'height' : this.focusedWindow.browser.getBounds().height
 		});
 	}
 
@@ -81,6 +98,86 @@ Oryoki.prototype.createWindow = function(e, url) {
 	// @if NODE_ENV='development'
 	c.log('[Oryoki] Currently', this.windowCount, 'windows open');
 	// @endif
+
+}
+
+Oryoki.prototype.openFile = function() {
+
+	dialog.showOpenDialog(
+		{
+			properties: ['openFile'], // Only one file at a time
+			filters: [
+				{name: 'Images', extensions: ['png']}
+			]
+		}
+	, this.handleFile.bind(this));
+
+}
+
+Oryoki.prototype.handleFile = function(input) {
+
+	if(input == undefined) return;
+	var path = input[0];
+
+	// @if NODE_ENV='development'
+	c.log(path);
+	// @endif
+
+	var buffer = fs.readFileSync(path);
+	var chunks = extract(buffer);
+
+	// Extract all tEXt chunks
+	var textChunks = chunks.filter(function (chunk) {
+		return chunk.name === 'tEXt';
+	}).map(function (chunk) {
+		return text.decode(chunk.data);
+	});
+
+	// Look for the src keyword
+	var src = textChunks.filter(function (chunk) {
+		return chunk.keyword === 'src';
+	});
+
+	if(!src[0]) {
+
+		// Abort!
+		if(this.focusedWindow) {
+			this.focusedWindow.browser.webContents.send('log-status', {
+				'body' : 'Can\'t open file',
+				'icon' : '⭕️'
+			});
+		}
+		return;
+
+	}
+
+	// Check if the content is an url
+	if(validUrl.isUri(src[0].text)) {
+		
+		var url = src[0].text;
+
+		if(this.focusedWindow && this.focusedWindow.isFirstLoad) {
+			// Loading in current window
+			this.focusedWindow.load(url);
+		}
+		else {
+			// Loading in new window
+			this.createWindow(null, [url]);
+		}
+
+	}
+	else {
+
+		// Abort!
+		if(this.focusedWindow) {
+			this.focusedWindow.browser.webContents.send('log-status', {
+				'body' : 'Can\'t open file',
+				'icon' : '⭕️'
+			});
+		}
+		return;
+
+	}
 
 }
 
@@ -140,7 +237,14 @@ Oryoki.prototype.minimizeWindow = function() {
 Oryoki.prototype.toggleFullScreen = function() {
 
 	if(this.windowCount > 0) {
-		this.focusedWindow.browser.setFullScreen(!this.focusedWindow.browser.isFullScreen());
+		if(UserManager.getPreferenceByName("picture_in_picture")) {
+			this.focusedWindow.browser.setFullScreenable(true);
+			this.focusedWindow.browser.setFullScreen(!this.focusedWindow.browser.isFullScreen());
+			this.focusedWindow.browser.setFullScreenable(false);
+		}
+		else {
+			this.focusedWindow.browser.setFullScreen(!this.focusedWindow.browser.isFullScreen());
+		}
 	}
 
 	CommandManager.toggleChecked('View', 'Fullscreen');
@@ -203,5 +307,15 @@ Oryoki.prototype.clearLocalStorage = function() {
 Oryoki.prototype.goToDownloads = function() {
 
 	shell.openItem(app.getPath('downloads'));
+
+}
+
+Oryoki.prototype.quit = function() {
+
+	// @if NODE_ENV='development'
+	c.log('[ORYOKI] Will quit');
+	// @endif
+
+	app.quit();
 
 }

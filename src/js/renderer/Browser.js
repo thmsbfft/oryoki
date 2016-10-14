@@ -68,8 +68,33 @@ Browser.prototype.attachEvents = function() {
 	ipcRenderer.on('enableWebPlugins', this.enableWebPlugins.bind(this));
 	ipcRenderer.on('disableWebPlugins', this.disableWebPlugins.bind(this));
 
+	ipcRenderer.on('get-url', function(e) {
+
+		// Reply with url
+		ipcRenderer.send('take-screenshot', this.id, this.view.webview.src);
+
+	}.bind(this));
+
 	window.addEventListener('keydown', this.onKeyDown.bind(this));
 	window.addEventListener('keyup', this.onKeyUp.bind(this));
+
+	window.addEventListener('blur', this.onBlur.bind(this));
+	window.addEventListener('focus', this.onFocus.bind(this));
+
+	document.ondragover = document.ondrop = (e) => {
+	
+		console.log('Drop');	
+		e.preventDefault();
+	
+	}
+
+	document.body.ondrop = (e) => {
+
+		console.log('Drop');	
+	  ipcRenderer.send('open-file', this.id, e.dataTransfer.files[0].path);
+	  e.preventDefault();
+
+	}
 
 }
 
@@ -160,6 +185,18 @@ Browser.prototype.onPageTitleUpdated = function(newTitle) {
 
 Browser.prototype.onConsoleMessage = function(e) {
 	this.console.updateMessage(e);
+}
+
+Browser.prototype.onFocus = function() {
+	
+	this.handle.enable();
+
+}
+
+Browser.prototype.onBlur = function() {
+	
+	this.handle.disable();
+
 }
 
 Browser.prototype.hideHandle = function() {

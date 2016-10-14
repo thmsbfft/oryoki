@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ōryōki</title>
+    <link rel="stylesheet" type="text/css" href="../css/bundle.css">
+    <script src="http://localhost:35729/livereload.js"></script>
+  </head>
+  <body class="about">
+
+    <handle>
+      <div class="button close"></div>
+    </handle>
+
+    <main>
+
+      <img src="../media/icon.svg"/>
+      <h1>Ōryōki</h1>
+      <p class="version">Version</p> – <p class="notes"><a href="">Release notes</a>
+      <p class="author">@thmsbfft, 2016</p>
+
+    </main>
+
+    <script>
+
+    'use strict';
+    var ipcRenderer = require('electron').ipcRenderer;
+    var app = require('electron').remote.app;
+
+    var handleEl = document.getElementsByTagName('handle')[0];
+    var closeEl = handleEl.querySelectorAll('.button.close')[0];
+
+    closeEl.addEventListener('click', function() {
+      ipcRenderer.send('hide-about');
+    });
+
+    ipcRenderer.on('show-about', function() {
+      console.log('> show');
+    });
+
+    var versionEl = document.querySelectorAll('.version')[0];
+    versionEl.innerHTML = 'Version ' + app.getVersion();
+
+    var notesLinkEl = document.querySelectorAll('.notes a')[0];
+    notesLinkEl.setAttribute('href', 'https://github.com/thmsbfft/oryoki/releases/tag/' + app.getVersion());
+
+    notesLinkEl.addEventListener('click', function(e) {
+      console.log(e.target.getAttribute('href'));
+      ipcRenderer.send('newWindow', [e.target.getAttribute('href')]);
+      ipcRenderer.send('hide-about');
+      e.preventDefault();
+    });
+
+    </script>
+
+  </body> 
+</html>

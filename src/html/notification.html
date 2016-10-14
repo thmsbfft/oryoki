@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Notification</title>
+  </head>
+  <body>
+
+    Notification!
+
+    <script>
+
+    'use strict';
+    var ipcRenderer = require('electron').ipcRenderer;
+
+    ipcRenderer.on('notify', function(e, title, props) {
+
+      console.log(title);
+      console.log(props);
+
+      new Notification(title, props);
+
+    });
+
+    </script>
+
+  </body> 
+</html>

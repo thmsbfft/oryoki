@@ -15,6 +15,9 @@
 	"use_homepage" : false,
 	"homepage_url" : "",
 
+	// Set to false to enable videos to play directly in fullscreen
+	"picture_in_picture" : true,
+
 	// Set to false to disable web plugins by default
 	"enable_web_plugins" : true,
 	

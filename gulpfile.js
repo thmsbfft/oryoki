@@ -13,8 +13,11 @@ var main = [
 	'src/js/main/UserManager.js',
 	'src/js/main/CommandManager.js',
 	'src/js/main/Camera.js',
+	'src/js/main/Notification.js',
 	'src/js/main/Window.js',
+	'src/js/main/About.js',
 	'src/js/main/Oryoki.js',
+	'src/js/main/Updater.js',
 	'src/js/main/main.js'
 ];
 
@@ -38,7 +41,7 @@ gulp.task('console', function() {
 });
 
 gulp.task('start', function() {
-	return run('electron main.js').exec();
+	return run('electron .').exec();
 });
 
 gulp.task('restart', function() {

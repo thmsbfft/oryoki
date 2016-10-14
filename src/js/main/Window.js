@@ -28,8 +28,8 @@ function Window(parameters) {
 	this.isFirstLoad = true;
 
 	this.browser = new BrowserWindow({
-	  width: UserManager.getPreferenceByName('default_window_width'),
-	  height: UserManager.getPreferenceByName('default_window_height'),
+	  width: parameters.width ? parameters.width : UserManager.getPreferenceByName('default_window_width'),
+	  height: parameters.height ? parameters.height : UserManager.getPreferenceByName('default_window_height'),
 	  frame: false,
 	  backgroundColor: '#141414',
 	  show: false,
@@ -42,6 +42,7 @@ function Window(parameters) {
 	  	"experimentalFeatures": true,
 	  	"experimentalCanvasFeatures": true
 	  },
+	  fullscreenable: !UserManager.getPreferenceByName("picture_in_picture")
 	});
 
 	this.camera = new Camera({
@@ -59,7 +60,7 @@ function Window(parameters) {
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html' + '#' + this.id);
 
 	// @if NODE_ENV='development'
-	this.browser.webContents.openDevTools();
+	// this.browser.webContents.openDevTools();
 	// @endif
 }
 
@@ -97,6 +98,10 @@ Window.prototype.attachEvents = function() {
 		if(this.id == id) {
 			this.browser.setTitle(newTitle);
 		}
+	}.bind(this));
+
+	ipcMain.on('open-file', function(event, id, inputPath) {
+		if(this.id == id) this.loadFile(inputPath);
 	}.bind(this));
 
 }
@@ -171,7 +176,6 @@ Window.prototype.onClosed = function() {
 	c.log('[Window] Closed');
 	// @endif
 	// this.camera.abortProcesses();
-	CommandManager.unregisterAll(this.browser);
 	this.browser = null;
 	this.onCloseCallback();
 
@@ -211,6 +215,9 @@ Window.prototype.updateMenus = function() {
 	CommandManager.setCheckbox('Window', 'Window Helper', this.windowHelper && !this.browser.isFullScreen());
 	CommandManager.setCheckbox('View', 'Title Bar', this.handle);
 	CommandManager.setEnabled('View', 'Toggle Omnibox', !this.isFirstLoad);
+	CommandManager.setEnabled('View', 'Actual Size', !this.isFirstLoad);
+	CommandManager.setEnabled('View', 'Zoom In', !this.isFirstLoad);
+	CommandManager.setEnabled('View', 'Zoom Out', !this.isFirstLoad);
 	CommandManager.setCheckbox('Tools', 'Web Plugins', this.webPluginsEnabled);
 	CommandManager.setCheckbox('Tools', 'Mini Console', this.console);
 	CommandManager.setEnabled('Tools', 'Mini Console', !this.isFirstLoad);
@@ -358,6 +365,74 @@ Window.prototype.load = function(url) {
 	});
 
 	this.browser.webContents.send('load', url);
+
+}
+
+Window.prototype.loadFile = function(inputPath) {
+
+	// @if NODE_ENV='development'
+	c.log(inputPath);
+	// @endif
+
+	// Check if file is PNG
+	if(path.extname(inputPath) !== '.png') {
+
+		// Abort!
+		this.browser.webContents.send('log-status', {
+			'body' : 'Can\'t open file',
+			'icon' : '⭕️'
+		});
+		return;
+
+	}
+
+	var buffer = fs.readFileSync(inputPath);
+	var chunks = extract(buffer);
+
+	// Extract all tEXt chunks
+	var textChunks = chunks.filter(function (chunk) {
+		return chunk.name === 'tEXt';
+	}).map(function (chunk) {
+		return text.decode(chunk.data);
+	});
+
+	// Look for the src keyword
+	var src = textChunks.filter(function (chunk) {
+		return chunk.keyword === 'src';
+	});
+
+	if(!src[0]) {
+
+		// Abort!
+		this.browser.webContents.send('log-status', {
+			'body' : 'Can\'t open file',
+			'icon' : '⭕️'
+		});
+		return;
+
+	}
+
+	// Check if the content is an url
+	if(validUrl.isUri(src[0].text)) {
+		
+		var url = src[0].text;
+		this.load(url);
+
+	}
+	else {
+
+		// Abort!
+		this.browser.webContents.send('log-status', {
+			'body' : 'Can\'t open file',
+			'icon' : '⭕️'
+		});
+		return;
+
+	}
+
+	// TODO
+	// – Determine if file should be open
+	// – If it is a PNG with data from us, create a window to load said URL
 
 }
 

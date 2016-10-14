@@ -14,6 +14,22 @@ function View(parameters) {
 
 	this.isFirstLoad = true;
 
+	this.zoomIndex = 6;
+	this.zoomIncrements = [
+		25/100,
+		33/100,
+		50/100,
+		67/100,
+		75/100,
+		90/100,
+		100/100,
+		110/100,
+		125/100,
+		150/100,
+		175/100,
+		200/100
+	];
+
 	this.isLoadingTimerRunning = false;
 	this.loadingTimerStart = undefined;
 	this.loadingTimerEnd = undefined;
@@ -60,6 +76,9 @@ View.prototype.attachEvents = function() {
 	ipcRenderer.on('goForward', this.goForward.bind(this));
 	ipcRenderer.on('recordingBegin', this.onRecordingBegin.bind(this));
 	ipcRenderer.on('recordingEnd', this.onRecordingEnd.bind(this));
+	ipcRenderer.on('zoom-reset', this.resetZoom.bind(this));
+	ipcRenderer.on('zoom-in', this.zoomIn.bind(this));
+	ipcRenderer.on('zoom-out', this.zoomOut.bind(this));
 
 	// Contextual Menu
 	this.el.addEventListener('contextmenu', this.openContextualMenu.bind(this));
@@ -71,7 +90,7 @@ View.prototype.attachEvents = function() {
 
 }
 
-View.prototype.load = function(input) {
+View.prototype.load = function(url) {
 
 	StatusManager.log({
 		'body' : '•••',
@@ -82,7 +101,7 @@ View.prototype.load = function(input) {
 	addClass(this.webview, 'show');
 	addClass(this.webview, 'loading');
 
-	this.webview.setAttribute('src', input);
+	this.webview.setAttribute('src', url);
 
 }
 
@@ -114,6 +133,7 @@ View.prototype.onLoadCommit = function(e) {
 	});
 
 	console.log('load-commit: ', e);
+
 	if(!this.isLoadingTimerRunning && e.isMainFrame) {
 		// Start the timer
 		this.isLoadingTimerRunning = true;
@@ -157,15 +177,16 @@ View.prototype.onDidFinishLoad = function() {
 }
 
 View.prototype.onDidFailLoad = function(e) {
-	
+
+	if(e.errorCode == -3) {
+		// Not sure what this is related to
+		// Ignore
+		return;
+	}
+
 	Browser.showOmnibox();
 
 	switch(e.errorCode) {
-
-		case -3:
-			// Not sure what this is related to
-			// Ignore
-			break;
 
 		case -105:
 			StatusManager.error({
@@ -239,6 +260,43 @@ View.prototype.goBack = function() {
 
 		this.webview.goBack();
 	}
+}
+
+View.prototype.zoomIn = function() {
+	
+	this.zoomIndex++;
+	if(this.zoomIndex >= this.zoomIncrements.length) this.zoomIndex = this.zoomIncrements.length - 1;
+
+	this.webview.setZoomFactor(this.zoomIncrements[this.zoomIndex]);
+
+	StatusManager.log({
+		'body' : Math.round(this.zoomIncrements[this.zoomIndex]*100) + '%'
+	});
+
+}
+
+View.prototype.zoomOut = function() {
+	
+	this.zoomIndex--;
+	if(this.zoomIndex < 0) this.zoomIndex = 0;
+
+	this.webview.setZoomFactor(this.zoomIncrements[this.zoomIndex]);
+
+	StatusManager.log({
+		'body' : Math.round(this.zoomIncrements[this.zoomIndex]*100) + '%'
+	});
+
+}
+
+View.prototype.resetZoom = function() {
+	
+	this.zoomIndex = 6;
+	this.webview.setZoomFactor(this.zoomIncrements[this.zoomIndex]);
+
+	StatusManager.log({
+		'body' : Math.round(this.zoomIncrements[this.zoomIndex]*100) + '%'
+	});
+
 }
 
 View.prototype.onRecordingBegin = function() {

@@ -1,23 +1,32 @@
 {
   "name": "oryoki",
-  "productName": "Oryoki",
   "version": "0.0.4",
-  "description": "",
+  "productName": "Oryoki",
+  "description": "A web browser with a thin interface.",
   "repository": {
     "type": "git",
     "url": "https://github.com/thmsbfft/oryoki.git"
   },
   "main": "main.js",
   "scripts": {
-    "start": "electron main.js",
-    "build": "gulp build && electron-packager . Oryoki --overwrite --out=build --app-version=0.0.4 --platform=darwin --arch=x64 --icon=icon.icns --ignore=\"(node_modules/(electron-packager|electron-prebuilt))|(src/sass)|(src/js/main)|(node_modules/gulp-[a-z]+)|build|gulpfile|stdout.log\""
+    "start": "electron .",
+    "build": "gulp build && electron-packager . Oryoki --overwrite --out=build --app-version=0.0.4 --platform=darwin --arch=x64 --icon=icon.icns --ignore=\"(src/sass)|(src/js/main)|build|gulpfile|doc|stdout.log\""
   },
-  "devDependencies": {
+  "dependencies": {
     "electron-localshortcut": "^0.6.0",
-    "electron-packager": "^7.0.4",
-    "electron-prebuilt": "^1.2.5",
     "fluent-ffmpeg": "^2.0.1",
     "gm": "^1.22.0",
+    "openurl": "^1.1.1",
+    "png-chunk-text": "^1.0.0",
+    "png-chunks-encode": "^1.0.0",
+    "png-chunks-extract": "^1.0.0",
+    "preprocess": "^3.0.2",
+    "request": "^2.75.0",
+    "valid-url": "^1.0.9"
+  },
+  "devDependencies": {
+    "electron-packager": "^8.0.0",
+    "electron-prebuilt": "^1.4.1",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-copy": "0.0.2",
@@ -26,9 +35,12 @@
     "gulp-preprocess": "^2.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-run": "^1.7.1",
-    "gulp-sass": "^2.3.2",
-    "openurl": "^1.1.1",
-    "preprocess": "^3.0.2"
+    "gulp-sass": "^2.3.2"
   },
-  "license": "MIT"
+  "bugs": {
+    "url": "https://github.com/thmsbfft/oryoki/issues"
+  },
+  "homepage": "http://oryoki.io",
+  "license": "MIT",
+  "author": "Thomas Buffet"
 }

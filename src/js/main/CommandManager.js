@@ -1,7 +1,7 @@
 function CommandManager() {
 	this.register = {};
 	this.template = undefined;
-	this.menu = undefined;
+	this.menu = null;
 	// @if NODE_ENV='development'
 	c.log('[Command Manager] ✔');
 	// @endif
@@ -18,38 +18,58 @@ function CommandManager() {
 	this.createMenus();
 }
 
-CommandManager.prototype.registerCommand = function(scope, browserWindow, command) {
-
-	if(scope == 'global') {
-		if(!this.register[command.id]) {
-			this.register[command.id] = command;
-			electronLocalshortcut.register(this.register[command.id].accelerator, this.register[command.id].callback);
-		}
-	}
-	else if (scope == 'local') {
-		this.register[command.id] = command;
-		electronLocalshortcut.register(browserWindow, this.register[command.id].accelerator, this.register[command.id].callback);
-	}
-
-}
-
-CommandManager.prototype.unregisterAll = function(browserWindow) {
-	electronLocalshortcut.unregisterAll(browserWindow);
-}
-
 CommandManager.prototype.createMenus = function() {
+	
 	var name = app.getName();
+
+	// Special cases
+	var updater = ({
+		'downloading-update': {
+			label: "Downloading Update...",
+			click: '',
+			enabled: false
+		},
+		'no-update': {
+			label: "Check for Update",
+			click: function() {
+					Updater.checkForUpdate(true);
+				},
+			enabled: true
+		},
+		'update-ready': {
+			label: "Restart and Install",
+			click: function() {
+					Updater.restartAndInstall();
+				},
+			enabled: true
+		},
+		undefined: {
+			label: "Check for Update",
+			click: function() {
+					Updater.checkForUpdate(true);
+				},
+			enabled: true
+		}
+	})[Updater.status];
+
 	this.template = [
 		{
 			label: name,
 			submenu: [
 				{
 					label: 'About ' + name,
-					role: 'about'
+					click: function() {
+						About.show();
+					}
 				},
 				{
 					label: 'Version ' + app.getVersion(),
 					enabled: false
+				},
+				{
+					label: updater.label,
+					click: updater.click,
+					enabled: updater.enabled
 				},
 				{
 					type: 'separator'
@@ -137,13 +157,20 @@ CommandManager.prototype.createMenus = function() {
 				{
 					label: 'Quit',
 					accelerator: 'CmdOrCtrl+Q',
-					click: function() { app.quit() }
+					click: function() { Oryoki.quit() }
 				}
 			]
 		},
 		{
 			label: 'File',
 			submenu: [
+				{
+					label: 'Open...',
+					accelerator: 'CmdOrCtrl+O',
+					click: function() {
+						if(Oryoki) Oryoki.openFile();
+					}
+				},
 				{
 					label: 'New Window',
 					accelerator: 'CmdOrCtrl+N',
@@ -273,6 +300,36 @@ CommandManager.prototype.createMenus = function() {
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.navigateForward();
+						}
+					}
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Actual Size',
+					accelerator: 'CmdOrCtrl+0',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.browser.webContents.send('zoom-reset', Oryoki.focusedWindow.id);
+						}
+					}
+				},
+				{
+					label: 'Zoom In',
+					accelerator: 'CmdOrCtrl+Plus',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.browser.webContents.send('zoom-in', Oryoki.focusedWindow.id);
+						}
+					}
+				},
+				{
+					label: 'Zoom Out',
+					accelerator: 'CmdOrCtrl+-',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.browser.webContents.send('zoom-out', Oryoki.focusedWindow.id);
 						}
 					}
 				},
@@ -427,6 +484,14 @@ CommandManager.prototype.createMenus = function() {
 	];
 	this.menu = Menu.buildFromTemplate(this.template);
 	Menu.setApplicationMenu(this.menu);
+}
+
+CommandManager.prototype.refreshMenus = function() {
+
+	this.menu.clear();
+	this.menu = null;
+	this.createMenus();
+
 }
 
 CommandManager.prototype.toggleChecked = function(menuLabel, subMenuLabel) {
