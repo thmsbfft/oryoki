@@ -157,7 +157,7 @@ CommandManager.prototype.createMenus = function() {
 				{
 					label: 'Quit',
 					accelerator: 'CmdOrCtrl+Q',
-					click: function() { app.quit() }
+					click: function() { Oryoki.quit() }
 				}
 			]
 		},

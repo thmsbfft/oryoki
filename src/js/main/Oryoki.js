@@ -309,3 +309,13 @@ Oryoki.prototype.goToDownloads = function() {
 	shell.openItem(app.getPath('downloads'));
 
 }
+
+Oryoki.prototype.quit = function() {
+
+	// @if NODE_ENV='development'
+	c.log('[ORYOKI] Will quit');
+	// @endif
+
+	app.quit();
+
+}
