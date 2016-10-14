@@ -2,7 +2,6 @@ function Updater() {
 	
 	// @if NODE_ENV='development'
 	c.log('[Updater] ✔');
-	// c.log('[Updater] v.' + app.getVersion());
 	// @endif
 
 	this.tmpDir = undefined;
@@ -119,10 +118,14 @@ Updater.prototype.downloadUpdate = function() {
 	}
 
 	// Start downloading
-	exec('cd ' + '\'' + this.tmpDir + '\'' + ' && curl -O ' + this.latest.url, function(error, stdout, stderr) {
+	var downloadProcess = exec('cd ' + '\'' + this.tmpDir + '\'' + ' && curl -O ' + this.latest.url, function(error, stdout, stderr) {
 		
 		if(error) {
-			throw error;
+			// @if NODE_ENV='development'
+			c.log('[Updater] Download failed. Err: ' + error.signal);
+			// @endif
+			this.cleanUp();
+			// throw error;
 		}
 
 		if(error == null) {
@@ -147,7 +150,10 @@ Updater.prototype.extractUpdate = function() {
 	exec('cd ' + '\'' + this.tmpDir + '\'' + ' && unzip -qq Oryoki-' + this.latest.version, function(error, stdout, stderr) {
 
 		if(error) {
-			throw error;
+			// @if NODE_ENV='development'
+			c.log('[Updater] Extracting failed. Err: ' + error.signal);
+			// @endif
+			this.cleanUp();
 		}
 
 		if(error == null) {
@@ -183,7 +189,12 @@ Updater.prototype.createUpdaterScript = function() {
 
 	fs.writeFile(this.tmpDir + '/' + this.latest.version + '-Updater.sh', updaterScript, 'utf8', function(err) {
 		
-		if(err) throw err;
+		if(err) {
+			// @if NODE_ENV='development'
+			c.log('[Updater] Couldn\'t create updater script. Err: ' + error.signal);
+			// @endif
+			this.cleanUp();
+		}
 
 		// @if NODE_ENV='development'
 		c.log('[Updater] Update ready');
