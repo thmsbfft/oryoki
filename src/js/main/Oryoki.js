@@ -53,9 +53,11 @@ Oryoki.prototype.createWindow = function(e, url) {
 		// _target = blank
 		var url = url[0];
 
-		if(this.focusedWindow.isFirstLoad) {
-			this.focusedWindow.load(url);
-			return;
+		if(this.focusedWindow) {
+			if(this.focusedWindow.isFirstLoad) {
+				this.focusedWindow.load(url);
+				return;
+			}
 		}
 
 	}
