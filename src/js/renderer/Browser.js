@@ -149,6 +149,7 @@ Browser.prototype.onSubmit = function(input) {
 
 	if(StatusManager.isFrozen) StatusManager.unFreeze();
 	this.view.load(input);
+	this.omnibox.hide();
 
 }
 
@@ -183,8 +184,6 @@ Browser.prototype.onDidFinishLoad = function() {
 		this.isFirstLoad = false;
 		ipcRenderer.send('onDidFinishFirstLoad', this.id);
 	}
-
-	this.omnibox.hide();
 
 }
 
