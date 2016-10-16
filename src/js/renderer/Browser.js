@@ -6,6 +6,7 @@ function Browser(parameters) {
 	this.isHandleDisplayed = ipcRenderer.sendSync('get-preference', 'show_title_bar');
 	this.webPluginsEnabled = ipcRenderer.sendSync('get-preference', 'enable_web_plugins');
 	this.frame = document.querySelectorAll('#frame')[0];
+	this.dragCount = 0;
 
 	this.view = new View({
 		'id' : this.id,
@@ -81,18 +82,26 @@ Browser.prototype.attachEvents = function() {
 	window.addEventListener('blur', this.onBlur.bind(this));
 	window.addEventListener('focus', this.onFocus.bind(this));
 
-	document.ondragover = document.ondrop = (e) => {
-	
-		console.log('Drop');	
+	this.omnibox.el.ondragover = (e) => {
+		e.preventDefault();
+	}
+
+	this.omnibox.el.ondragenter = (e) => {
+
 		e.preventDefault();
 	
 	}
 
-	document.body.ondrop = (e) => {
+	this.omnibox.el.ondragleave = (e) => {
 
-		console.log('Drop');	
-	  ipcRenderer.send('open-file', this.id, e.dataTransfer.files[0].path);
-	  e.preventDefault();
+		e.preventDefault();
+
+	}
+
+	this.omnibox.el.ondrop = (e) => {
+
+		ipcRenderer.send('open-file', this.id, e.dataTransfer.files[0].path);
+		e.preventDefault();
 
 	}
 
