@@ -49,6 +49,8 @@ Camera.prototype.attachEvents = function() {
 
 Camera.prototype.saveScreenshot = function(id, url) {
 
+	this.browser.webContents.send('hide-status');
+
 	if(id == this.id) {
 
 		this.browser.capturePage(function(image) {
@@ -73,6 +75,7 @@ Camera.prototype.saveScreenshot = function(id, url) {
 				fs.writeFile(app.getPath('downloads') + '/' + name + '.png', image.toPng(), function(err) {
 					if(err)
 						throw err;
+					this.browser.webContents.send('show-status');
 					this.browser.webContents.send('unfreeze-status');
 					this.browser.webContents.send('log-status', {
 						'body' : 'Screenshot saved'
@@ -92,6 +95,7 @@ Camera.prototype.saveScreenshot = function(id, url) {
 				fs.writeFile(app.getPath('downloads') + '/' + name + '.png', new Buffer(encode(chunks)), function(err) {
 					if(err)
 						throw err;
+					this.browser.webContents.send('show-status');
 					this.browser.webContents.send('unfreeze-status');
 					this.browser.webContents.send('log-status', {
 						'body' : 'Screenshot saved'
@@ -115,9 +119,13 @@ Camera.prototype.takeScreenshot = function() {
 Camera.prototype.copyScreenshot = function(id) {
 
 	if(id == this.id) {
+
+		this.browser.webContents.send('hide-status');
+
 		this.browser.capturePage(function(image) {
 
 			clipboard.writeImage(image);
+			this.browser.webContents.send('show-status');
 			this.browser.webContents.send('unfreeze-status');
 			this.browser.webContents.send('log-status', {
 				'body' : 'Screenshot copied to clipboard'
