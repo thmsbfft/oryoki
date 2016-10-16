@@ -161,6 +161,9 @@ Oryoki.prototype.handleFile = function(input) {
 		if(this.focusedWindow && this.focusedWindow.isFirstLoad) {
 			// Loading in current window
 			this.focusedWindow.load(url);
+			this.focusedWindow.browser.webContents.send('log-status', {
+				'body' : 'Loading ' + url,
+			});
 		}
 		else {
 			// Loading in new window

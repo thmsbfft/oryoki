@@ -417,6 +417,9 @@ Window.prototype.loadFile = function(inputPath) {
 		
 		var url = src[0].text;
 		this.load(url);
+		this.browser.webContents.send('log-status', {
+			'body' : 'Loading ' + url
+		});
 
 	}
 	else {
@@ -429,10 +432,6 @@ Window.prototype.loadFile = function(inputPath) {
 		return;
 
 	}
-
-	// TODO
-	// – Determine if file should be open
-	// – If it is a PNG with data from us, create a window to load said URL
 
 }
 
