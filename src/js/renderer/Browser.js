@@ -134,6 +134,11 @@ Browser.prototype.onDOMReady = function() {
 
 	console.log('[BROWSER] DOM Ready');
 
+	if(this.isFirstLoad) {
+		this.isFirstLoad = false;
+		ipcRenderer.send('onDidFinishFirstLoad', this.id);
+	}
+
 	if (this.webPluginsEnabled) {
 		var url = new URL(this.view.webview.src);
 		var host = url.host.replace('www.', '');
@@ -156,11 +161,6 @@ Browser.prototype.onDOMReady = function() {
 }
 
 Browser.prototype.onDidFinishLoad = function() {
-
-	if(this.isFirstLoad) {
-		this.isFirstLoad = false;
-		ipcRenderer.send('onDidFinishFirstLoad', this.id);
-	}
 
 }
 

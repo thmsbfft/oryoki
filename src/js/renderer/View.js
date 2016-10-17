@@ -214,7 +214,7 @@ View.prototype.onCrashed = function(e) {
 }
 
 View.prototype.onDidGetResponseDetails = function(e) {
-	// console.log('did-get-response-details', e.httpResponseCode, ' ', e.newURL);
+	console.log('did-get-response-details', e.httpResponseCode, ' ', e.newURL);
 }
 
 View.prototype.onNewWindow = function(e) {
