@@ -72,6 +72,11 @@ Camera.prototype.saveScreenshot = function(id, url) {
 				// No URL
 				var name = 'oryoki-' + date + '-' + time;
 
+				var path = UserManager.getPreferenceByName('screenshots_save_path');
+				if(path == "") path = app.getPath('downloads');
+				c.log(path);
+				// TODO check path and create if necessary, otherwise show warning
+
 				fs.writeFile(app.getPath('downloads') + '/' + name + '.png', image.toPng(), function(err) {
 					if(err)
 						throw err;

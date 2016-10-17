@@ -31,6 +31,10 @@
 	// Set to true to automatically clear caches
 	"clear_caches_on_launch" : false,
 	
+	// Set a path to save screenshots here
+	// If left blank, will save to downloads
+	"screenshots_save_path" : "",
+
 	// Set a custom download path (absolute) here
 	"override_download_path" : false,
 	"download_path" : "",
