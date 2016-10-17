@@ -13,6 +13,7 @@ function Omnibox(parameters) {
 	this.input = this.el.querySelectorAll('.input')[0];
 	this.hints = this.el.querySelectorAll('.hints')[0];
 	this.overlay = this.el.querySelectorAll('.overlay')[0];
+	this.dragCount = 0;
 
 	this.attachEvents();
 	
@@ -49,6 +50,8 @@ Omnibox.prototype.attachEvents = function() {
 
 	this.el.ondragenter = (e) => {
 
+		// console.log(e.dataTransfer.files[0].path);
+		this.dragCount++;
 		addClass(this.input, 'drop');
 		e.preventDefault();
 
@@ -56,7 +59,8 @@ Omnibox.prototype.attachEvents = function() {
 
 	this.el.ondragleave = (e) => {
 
-		removeClass(this.input, 'drop');
+		this.dragCount--;
+		if(this.dragCount === 0) removeClass(this.input, 'drop');
 		e.preventDefault();
 
 	}
@@ -64,6 +68,7 @@ Omnibox.prototype.attachEvents = function() {
 	this.el.ondrop = (e) => {
 
 		removeClass(this.input, 'drop');
+		this.dragCount = 0;
 		ipcRenderer.send('open-file', Browser.id, e.dataTransfer.files[0].path);
 		e.preventDefault();
 
