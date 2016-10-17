@@ -44,7 +44,7 @@ View.prototype.build = function() {
 	// Create Webview
 	this.webview = this.el.appendChild(document.createElement('webview'));
 	this.webview.className = 'webview';
-	addClass(this.webview, 'hide');
+	// addClass(this.webview, 'hide');
 
 	this.attachEvents();
 }
@@ -97,10 +97,7 @@ View.prototype.load = function(url) {
 		'type' : 'loading'
 	});
 
-	removeClass(this.webview, 'hide');
 	addClass(this.webview, 'show');
-	addClass(this.webview, 'loading');
-
 	this.webview.setAttribute('src', url);
 
 }
@@ -169,8 +166,7 @@ View.prototype.onPageTitleUpdated = function(e) {
 
 View.prototype.onDidFinishLoad = function() {
 
-	removeClass(this.webview, 'loading');
-	addClass(this.webview, 'loaded');
+	removeClass(this.webview, 'show');
 
 	this.onDidFinishLoadCallback();
 	

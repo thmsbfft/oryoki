@@ -36,6 +36,9 @@ omnibox {
 			&.highlight {
 				background-color: #1F1F1F;
 			}
+			&.drop {
+				background: green;
+			}
 			&::selection {
 				background-color: rgba(255, 255, 255, 0.1);
 			}

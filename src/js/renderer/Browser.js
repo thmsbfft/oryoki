@@ -82,29 +82,6 @@ Browser.prototype.attachEvents = function() {
 	window.addEventListener('blur', this.onBlur.bind(this));
 	window.addEventListener('focus', this.onFocus.bind(this));
 
-	this.omnibox.el.ondragover = (e) => {
-		e.preventDefault();
-	}
-
-	this.omnibox.el.ondragenter = (e) => {
-
-		e.preventDefault();
-	
-	}
-
-	this.omnibox.el.ondragleave = (e) => {
-
-		e.preventDefault();
-
-	}
-
-	this.omnibox.el.ondrop = (e) => {
-
-		ipcRenderer.send('open-file', this.id, e.dataTransfer.files[0].path);
-		e.preventDefault();
-
-	}
-
 }
 
 Browser.prototype.resize = function() {

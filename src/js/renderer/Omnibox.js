@@ -43,6 +43,32 @@ Omnibox.prototype.attachEvents = function() {
 
 	ipcRenderer.on('update-search-dictionary', this.updateSearchDictionary.bind(this));
 
+	this.el.ondragover = (e) => {
+		e.preventDefault();
+	}
+
+	this.el.ondragenter = (e) => {
+
+		addClass(this.input, 'drop');
+		e.preventDefault();
+
+	}
+
+	this.el.ondragleave = (e) => {
+
+		removeClass(this.input, 'drop');
+		e.preventDefault();
+
+	}
+
+	this.el.ondrop = (e) => {
+
+		removeClass(this.input, 'drop');
+		ipcRenderer.send('open-file', Browser.id, e.dataTransfer.files[0].path);
+		e.preventDefault();
+
+	}
+
 }
 
 Omnibox.prototype.updateSearchDictionary = function(e, dictionary) {
