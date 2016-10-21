@@ -32,9 +32,8 @@ function Oryoki() {
 
 	this.attachEvents();
 	if(UserManager.getPreferenceByName("clear_caches_on_launch")) this.clearCaches();
-	if(UserManager.getPreferenceByName("override_download_path")) app.setPath('downloads', UserManager.getPreferenceByName("download_path"));
+	
 	this.createWindow();
-	// About.show();
 
 }
 
@@ -61,7 +60,7 @@ Oryoki.prototype.createWindow = function(e, url) {
 		}
 
 	}
-	else if(UserManager.getPreferenceByName("use_homepage")) {
+	else if(UserManager.getPreferenceByName("homepage_url") !== "") {
 		// homepage
 		var url = UserManager.getPreferenceByName("homepage_url");
 	}
