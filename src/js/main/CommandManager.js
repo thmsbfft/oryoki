@@ -472,6 +472,12 @@ CommandManager.prototype.createMenus = function() {
 			role: 'help',
 			submenu: [
 				{
+					label: 'Documentation',
+					click: function() {
+						Oryoki.createWindow(null, ['http://oryoki.io']);
+					}
+				},
+				{
 					label: 'Feedback',
 					click: function() {
 						var osVersion = require('os').release();
