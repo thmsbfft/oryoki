@@ -498,26 +498,25 @@ CommandManager.prototype.createMenus = function() {
 
 	// Defined by user preferences
 	var windowSizes = UserManager.getPreferenceByName('window_sizes');
-	// c.log(windowSizes);
 	for(var template in windowSizes) {
 
 		var name = template;
 		var dimensions = windowSizes[template].split('x');
 		var index = parseInt(Object.keys(windowSizes).indexOf(template)) + 1;
 
-		c.log(name);
-		c.log(dimensions);
-		c.log(index);
-
 		// Window > Size
 		this.template[5].submenu[4].submenu.push(
 			{
 				label: name,
 				accelerator: 'CmdOrCtrl+' + index,
-				click: function() {
-					// Does not work
-					// if(Oryoki) Oryoki.focusedWindow.setSize(dimensions[0], dimensions[1]);
-				}
+				click: (function(w,h) {
+					if(Oryoki) {
+						Oryoki.focusedWindow.setSize(w, h);
+						Oryoki.focusedWindow.browser.webContents.send('log-status', {
+							'body' : w + 'x' + h
+						});
+					}
+				}).bind(this,dimensions[0],dimensions[1])
 			}
 		);
 
