@@ -457,6 +457,13 @@ CommandManager.prototype.createMenus = function() {
 					type: 'separator'
 				},
 				{
+					label: 'Size',
+					submenu: []
+				},
+				{
+					type: 'separator'
+				},
+				{
 					label: 'Float on Top',
 					type: 'checkbox',
 					click: function() {
@@ -488,6 +495,34 @@ CommandManager.prototype.createMenus = function() {
 			]
 		}
 	];
+
+	// Defined by user preferences
+	var windowSizes = UserManager.getPreferenceByName('window_sizes');
+	// c.log(windowSizes);
+	for(var template in windowSizes) {
+
+		var name = template;
+		var dimensions = windowSizes[template].split('x');
+		var index = parseInt(Object.keys(windowSizes).indexOf(template)) + 1;
+
+		c.log(name);
+		c.log(dimensions);
+		c.log(index);
+
+		// Window > Size
+		this.template[5].submenu[4].submenu.push(
+			{
+				label: name,
+				accelerator: 'CmdOrCtrl+' + index,
+				click: function() {
+					// Does not work
+					// if(Oryoki) Oryoki.focusedWindow.setSize(dimensions[0], dimensions[1]);
+				}
+			}
+		);
+
+	}
+
 	this.menu = Menu.buildFromTemplate(this.template);
 	Menu.setApplicationMenu(this.menu);
 }

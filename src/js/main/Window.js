@@ -108,6 +108,9 @@ Window.prototype.attachEvents = function() {
 
 Window.prototype.setSize = function(width, height) {
 
+	var width = parseInt(width);
+	var height = parseInt(height);
+
 	var currentScreen = electronScreen.getDisplayMatching(this.browser.getBounds());
 	var currentPosition = this.browser.getBounds();
 

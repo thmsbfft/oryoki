@@ -46,7 +46,9 @@ function User(name, factory) {
 
 	// Watch files for changes
 	fs.watchFile(this.paths.conf + '/' + 'oryoki-preferences.json', function() {
+
 		this.onPreferencesChange();
+		if(CommandManager) CommandManager.refreshMenus();
 
 		new Notification('Ready to go!', {
 			body: 'The preferences were updated.',

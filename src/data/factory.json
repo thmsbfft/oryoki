@@ -49,5 +49,12 @@
 	// mp4 | prores
 	// mp4 is quick and relatively dirty
 	// prores is slow and lossless
-	"video_recording_quality" : "mp4"
+	"video_recording_quality" : "mp4",
+
+	//
+	"window_sizes" : {
+		"Mini" : "800x600",
+		"Landscape" : "1280x800",
+		"Portrait" : "800x1280"
+	}
 }
