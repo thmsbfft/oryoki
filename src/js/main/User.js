@@ -45,17 +45,24 @@ function User(name, factory) {
 	this.searchDictionary = this.getConfFile('search-dictionary.json', this.createSearchDictionary.bind(this));
 
 	// Watch files for changes
-	fs.watchFile(this.paths.conf + '/' + 'oryoki-preferences.json', this.onPreferencesChange.bind(this));
+	fs.watchFile(this.paths.conf + '/' + 'oryoki-preferences.json', function() {
+		this.onPreferencesChange();
+
+		new Notification('Ready to go!', {
+			body: 'The preferences were updated.',
+			silent: true
+		});
+
+	}.bind(this));
 
 	fs.watchFile(this.paths.conf + '/' + 'search-dictionary.json', function() {
 
 		this.onSearchDictionaryChange();
 
-		if(Oryoki.focusedWindow) {
-			Oryoki.focusedWindow.browser.webContents.send('log-status', {
-				'body' : 'Dictionary updated'
-			});
-		}
+		new Notification('Ready to go!', {
+			body: 'The search dictionary was updated.',
+			silent: true
+		});
 
 	}.bind(this));
 
