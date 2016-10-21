@@ -69,11 +69,12 @@ StatusManager.prototype.important = function(props) {
 
 StatusManager.prototype.error = function(props) {
 
-	this.el.innerHTML = '<icon>' + '⚠️' + '</icon>' + props.body;
+	this.el.innerHTML = '<icon>' + '⭕️' + '</icon>' + props.body;
 	removeClass(this.el, 'fade-out');
 	addClass(this.el, 'fade-in');
 
-	this.freeze();
+	clearTimeout(this.visibilityTimer);
+	this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 5000);
 
 }
 
