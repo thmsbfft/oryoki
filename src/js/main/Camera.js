@@ -68,16 +68,32 @@ Camera.prototype.saveScreenshot = function(id, url) {
 			var sec = pad(new Date().getSeconds());
 			var time = hrs + '-' + min + '-' + sec;
 
+			// Check path
+			var path = UserManager.getPreferenceByName('screenshots_save_path');
+			c.log(path);
+			if(path == "") {
+				path = app.getPath('downloads');
+			}
+			else {
+				try {
+					fs.statSync(path);
+					c.log('Check');
+				}
+				catch(err) {
+					c.log(this.browser);
+					this.browser.webContents.send('show-status');
+					this.browser.webContents.send('error-status', {
+						'body' : 'Could not save to \'' + path + '\''
+					});
+					return;
+				}
+			}
+			
 			if(hostname == null) {
 				// No URL
 				var name = 'oryoki-' + date + '-' + time;
 
-				var path = UserManager.getPreferenceByName('screenshots_save_path');
-				if(path == "") path = app.getPath('downloads');
-				c.log(path);
-				// TODO check path and create if necessary, otherwise show warning
-
-				fs.writeFile(app.getPath('downloads') + '/' + name + '.png', image.toPng(), function(err) {
+				fs.writeFile(path + '/' + name + '.png', image.toPng(), function(err) {
 					if(err)
 						throw err;
 					this.browser.webContents.send('show-status');
@@ -97,7 +113,7 @@ Camera.prototype.saveScreenshot = function(id, url) {
 				var chunks = extract(buffer);
 				chunks.splice(-1, 0, text.encode('src', url));
 
-				fs.writeFile(app.getPath('downloads') + '/' + name + '.png', new Buffer(encode(chunks)), function(err) {
+				fs.writeFile(path + '/' + name + '.png', new Buffer(encode(chunks)), function(err) {
 					if(err)
 						throw err;
 					this.browser.webContents.send('show-status');
