@@ -498,13 +498,13 @@ CommandManager.prototype.createMenus = function() {
 
 	// Defined by user preferences
 	var windowSizes = UserManager.getPreferenceByName('window_sizes');
-	for(var template in windowSizes) {
+	for(var i in windowSizes) {
 
-		var name = template;
-		var dimensions = windowSizes[template].split('x');
-		var index = parseInt(Object.keys(windowSizes).indexOf(template)) + 1;
+		var name = windowSizes[i];
+		var dimensions = windowSizes[i].split('x');
+		var index = parseInt(Object.keys(windowSizes).indexOf(i)) + 1;
 
-		// Window > Size
+		// Menu: Window > Size
 		this.template[5].submenu[4].submenu.push(
 			{
 				label: name,

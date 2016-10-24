@@ -51,10 +51,11 @@
 	// prores is slow and lossless
 	"video_recording_quality" : "mp4",
 
-	//
-	"window_sizes" : {
-		"Mini" : "800x600",
-		"Landscape" : "1280x800",
-		"Portrait" : "800x1280"
-	}
+	// Customize Window > Size menu here
+	// `widthxheight`
+	"window_sizes" : [
+		"800x500",
+		"1280x800",
+		"1920x1080"
+	]
 }
