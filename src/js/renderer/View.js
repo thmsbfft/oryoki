@@ -218,8 +218,14 @@ View.prototype.onDidGetResponseDetails = function(e) {
 }
 
 View.prototype.onNewWindow = function(e) {
-	console.log('Requesting new window for: ', e.url);
-	ipcRenderer.send('newWindow', [e.url]);
+
+	if(ipcRenderer.sendSync('get-preference', 'follow_all_links')) {
+		ipcRenderer.send('newWindow', [e.url]);
+	}
+	else {
+		this.load(e.url);
+	}
+
 }
 
 View.prototype.onConsoleMessage = function(e) {
