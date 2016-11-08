@@ -436,6 +436,23 @@ CommandManager.prototype.createMenus = function() {
 			role: 'window',
 			submenu: [
 				{
+					label: 'Minimize',
+					accelerator: 'CmdOrCtrl+M',
+					role: 'minimize' // Also adds Minimize All
+				},
+				{
+					type: 'separator'
+				},
+				{
+					label: 'Float on Top',
+					type: 'checkbox',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.setAlwaysOnTopToggle();
+						}
+					}
+				},
+				{
 					label: 'Window Helper',
 					accelerator: 'CmdOrCtrl+Alt+M',
 					type: 'checkbox',
@@ -449,14 +466,6 @@ CommandManager.prototype.createMenus = function() {
 					type: 'separator'
 				},
 				{
-					label: 'Minimize',
-					accelerator: 'CmdOrCtrl+M',
-					role: 'minimize'
-				},
-				{
-					type: 'separator'
-				},
-				{
 					label: 'Size',
 					submenu: []
 				},
@@ -464,13 +473,20 @@ CommandManager.prototype.createMenus = function() {
 					type: 'separator'
 				},
 				{
-					label: 'Float on Top',
-					type: 'checkbox',
+					label: 'Cycle Through Windows',
+					accelerator: 'CmdOrCtrl+`',
 					click: function() {
-						if(Oryoki.focusedWindow) {
-							Oryoki.focusedWindow.setAlwaysOnTopToggle();
+						if(Oryoki) {
+							Oryoki.focusNextWindow();
 						}
 					}
+				},
+				{
+					label: 'Bring All to Front',
+					role: 'front'
+				},
+				{
+					type: 'separator'
 				}
 			]
 		},
@@ -498,6 +514,7 @@ CommandManager.prototype.createMenus = function() {
 
 	// Defined by user preferences
 	var windowSizes = UserManager.getPreferenceByName('window_sizes');
+c.log(this.template[5]);
 	for(var i in windowSizes) {
 
 		var name = windowSizes[i];
@@ -505,7 +522,7 @@ CommandManager.prototype.createMenus = function() {
 		var index = parseInt(Object.keys(windowSizes).indexOf(i)) + 1;
 
 		// Menu: Window > Size
-		this.template[5].submenu[4].submenu.push(
+		this.template[5].submenu[5].submenu.push(
 			{
 				label: name,
 				accelerator: 'CmdOrCtrl+' + index,
