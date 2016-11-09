@@ -453,6 +453,9 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
+					type: 'separator'
+				},
+				{
 					label: 'Window Helper',
 					accelerator: 'CmdOrCtrl+Alt+M',
 					type: 'checkbox',
@@ -463,9 +466,6 @@ CommandManager.prototype.createMenus = function() {
 					}
 				},
 				{
-					type: 'separator'
-				},
-				{
 					label: 'Size',
 					submenu: []
 				},
@@ -474,7 +474,8 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Cycle Through Windows',
-					accelerator: 'CmdOrCtrl+`',
+					accelerator: 'Ctrl+Tab',
+					// accelerator: 'CmdOrCtrl+`',
 					click: function() {
 						if(Oryoki) {
 							Oryoki.focusNextWindow();
@@ -514,7 +515,6 @@ CommandManager.prototype.createMenus = function() {
 
 	// Defined by user preferences
 	var windowSizes = UserManager.getPreferenceByName('window_sizes');
-c.log(this.template[5]);
 	for(var i in windowSizes) {
 
 		var name = windowSizes[i];

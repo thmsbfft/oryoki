@@ -60,7 +60,7 @@ function Window(parameters) {
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html' + '#' + this.id);
 
 	// @if NODE_ENV='development'
-	this.browser.webContents.openDevTools();
+	// this.browser.webContents.openDevTools();
 	// @endif
 }
 
@@ -157,6 +157,12 @@ Window.prototype.updateConfFiles = function() {
 
 	// Send conf files to render process
 	this.browser.webContents.send('update-search-dictionary', UserManager.user.searchDictionary);
+
+}
+
+Window.prototype.focus = function() {
+
+	this.browser.focus();
 
 }
 

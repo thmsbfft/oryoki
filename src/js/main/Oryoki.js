@@ -238,6 +238,23 @@ Oryoki.prototype.minimizeWindow = function() {
 
 }
 
+Oryoki.prototype.focusNextWindow = function() {
+
+	if(this.windowCount > 0) {
+
+		// Get index of next window
+		var index = this.windows.indexOf(this.focusedWindow) + 1;
+
+		if(index >= this.windows.length) {
+			index = 0;
+		}
+
+		this.windows[index].focus();
+
+	}	
+
+}
+
 Oryoki.prototype.toggleFullScreen = function() {
 
 	if(this.windowCount > 0) {
