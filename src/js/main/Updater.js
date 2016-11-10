@@ -185,7 +185,9 @@ Updater.prototype.createUpdaterScript = function() {
 	// Chmod
 	updaterScript += 'chmod -R 777 ' + targetPath + '\n';
 	// Open new
-	updaterScript += 'open ' + '\'' + targetPath + '\'' + '\n';
+	updaterScript += 'if [ "$1" = "restart" ]; then' + '\n';
+	updaterScript += '\topen ' + '\'' + targetPath + '\'' + '\n';
+	updaterScript += 'fi';
 
 	fs.writeFile(this.tmpDir + '/' + this.latest.version + '-Updater.sh', updaterScript, 'utf8', function(err) {
 		
@@ -234,6 +236,25 @@ Updater.prototype.cleanUp = function() {
 
 }
 
+Updater.prototype.quitAndInstall = function() {
+
+	var updaterScriptPath = this.tmpDir + '/' + this.latest.version + '-Updater.sh';
+
+	// @if NODE_ENV='development'
+	c.log('[Updater] Quit and install');
+	c.log('[Updater] > sh ' + updaterScriptPath);
+	return;
+	// @endif
+
+	var log = fs.openSync(UserManager.user.paths.tmp + '/updater.log', 'w');
+
+	var updaterProcess = spawn('sh', [updaterScriptPath], {
+		detached: true,
+		stdio: ['ignore', log, log]
+	}).unref();
+
+}
+
 Updater.prototype.restartAndInstall = function() {
 	
 	var updaterScriptPath = this.tmpDir + '/' + this.latest.version + '-Updater.sh';
@@ -246,7 +267,7 @@ Updater.prototype.restartAndInstall = function() {
 
 	var log = fs.openSync(UserManager.user.paths.tmp + '/updater.log', 'w');
 
-	var updaterProcess = spawn('sh', [updaterScriptPath], {
+	var updaterProcess = spawn('sh', [updaterScriptPath, 'restart'], {
 		detached: true,
 		stdio: ['ignore', log, log]
 	}).unref();

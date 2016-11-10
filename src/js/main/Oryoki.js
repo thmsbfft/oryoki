@@ -328,6 +328,18 @@ Oryoki.prototype.quit = function() {
 	c.log('[ORYOKI] Will quit');
 	// @endif
 
+	if(Updater.status == 'update-ready') {
+
+		// @if NODE_ENV='development'
+		c.log('[ORYOKI] Updating in background...');
+		// @endif
+
+		Updater.quitAndInstall();
+
+		return;
+
+	}
+
 	app.quit();
 
 }
