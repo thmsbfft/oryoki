@@ -16,6 +16,7 @@
 	border-bottom-left-radius: 6px;
 	opacity: 0;
 	transition: opacity 0.5s ease-out;
+	z-index: 99;
 
 	icon {
 		padding-right: 7px;
