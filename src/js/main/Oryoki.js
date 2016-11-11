@@ -336,9 +336,19 @@ Oryoki.prototype.quit = function() {
 
 		Updater.quitAndInstall();
 
-		return;
-
 	}
+
+	// @if NODE_ENV='development'
+	c.log('[Window] ---');
+	for (var i = 0; i < this.windows.length; i++) {
+		c.log('         ' + this.windows[i].id);
+	}
+	c.log('[Window] ---');
+	// @endif
+
+	// Close About
+	About.bw.removeAllListeners('close');
+	About.bw.close();
 
 	app.quit();
 
