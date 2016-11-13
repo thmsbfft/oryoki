@@ -57,7 +57,7 @@ Updater.prototype.compareVersions = function(alert) {
 
 	for(var i=0; i < suspect.length; i++) {
 		
-		// major.minor.revision
+		// major.minor.revision, single digits
 
 		if(parseInt(suspect[i]) > parseInt(current[i])) {
 
@@ -65,7 +65,18 @@ Updater.prototype.compareVersions = function(alert) {
 			c.log('[Updater] Available: ' + this.latest.version);
 			// @endif
 
-			this.downloadUpdate();
+			this.status = 'update-available';
+			CommandManager.refreshMenus();
+
+			if(UserManager.getPreferenceByName('download_updates_in_background')) this.downloadUpdate();
+			else {
+
+				new Notification('Update available!', {
+					body: 'Ōryōki ' + this.latest.version + ' is available.',
+					silent: true
+				});
+
+			}
 
 			return;
 
@@ -99,7 +110,6 @@ Updater.prototype.downloadUpdate = function() {
 	// @endif
 
 	this.status = 'downloading-update';
-
 	CommandManager.refreshMenus();
 
 	// Create a TMP folder
@@ -162,11 +172,54 @@ Updater.prototype.extractUpdate = function() {
 			c.log('[Updater] Done extracting');
 			// @endif
 
-			this.createUpdaterScript();
+			this.status = 'update-ready';
+			CommandManager.refreshMenus();
+			
+			// @if NODE_ENV='development'
+			// Do something to indicate update
+			// Can be below omnibox in lil tag thingy
+			// or notification
+			// @endif
+
+			if(Oryoki.focusedWindow) {
+				Oryoki.focusedWindow.browser.webContents.send('update-ready', this.latest);
+			}
+
+			new Notification('Update available!', {
+				body: 'Ōryōki ' + this.latest.version + ' is ready to be installed.',
+				silent: true
+			});
 			
 		}
 
 	}.bind(this));
+
+}
+
+Updater.prototype.revealUpdate = function() {
+
+	// @if NODE_ENV='development'
+	c.log('Revealing update!!');
+	// @endif
+
+	fs.rename(this.tmpDir + '/Oryoki.app', app.getPath('downloads') + '/Oryoki.app', function(err) {
+
+		if(err) {
+			// @if NODE_ENV='development'
+			c.log('[Updater] Error while moving update: ' + error.signal);
+			// @endif
+		}
+
+		// Reveal in Finder
+		execSync('open -R ' + app.getPath('downloads') + '/Oryoki.app', function(err) {
+			if(err) {
+				// @if NODE_ENV='development'
+				c.log('[Updater] Error while revealing update: ' + error.signal);
+				// @endif
+			}
+		});
+
+	});
 
 }
 
@@ -185,7 +238,7 @@ Updater.prototype.createUpdaterScript = function() {
 	// Chmod
 	updaterScript += 'chmod -R 777 ' + targetPath + '\n';
 	// Open new
-	updaterScript += 'if [ "$1" = "restart" ]; then' + '\n';
+	updaterScript += 'if [[ "$1" = "restart" ]]; then' + '\n';
 	updaterScript += '\topen ' + '\'' + targetPath + '\'' + '\n';
 	updaterScript += 'fi';
 
@@ -249,25 +302,6 @@ Updater.prototype.quitAndInstall = function() {
 	var log = fs.openSync(UserManager.user.paths.tmp + '/updater.log', 'w');
 
 	var updaterProcess = spawn('sh', [updaterScriptPath], {
-		detached: true,
-		stdio: ['ignore', log, log]
-	}).unref();
-
-}
-
-Updater.prototype.restartAndInstall = function() {
-	
-	var updaterScriptPath = this.tmpDir + '/' + this.latest.version + '-Updater.sh';
-
-	// @if NODE_ENV='development'
-	c.log('[Updater] Restart and install');
-	c.log('[Updater] > sh ' + updaterScriptPath);
-	return;
-	// @endif
-
-	var log = fs.openSync(UserManager.user.paths.tmp + '/updater.log', 'w');
-
-	var updaterProcess = spawn('sh', [updaterScriptPath, 'restart'], {
 		detached: true,
 		stdio: ['ignore', log, log]
 	}).unref();

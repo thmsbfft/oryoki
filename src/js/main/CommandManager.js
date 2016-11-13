@@ -24,6 +24,13 @@ CommandManager.prototype.createMenus = function() {
 
 	// Special cases
 	var updater = ({
+		'update-available' : {
+			label: "Download Update",
+			click: function() {
+				Updater.downloadUpdate();
+			},
+			enabled: true
+		},
 		'downloading-update': {
 			label: "Downloading Update...",
 			click: '',
@@ -37,9 +44,9 @@ CommandManager.prototype.createMenus = function() {
 			enabled: true
 		},
 		'update-ready': {
-			label: "Restart and Install",
+			label: "View update...",
 			click: function() {
-					Updater.restartAndInstall();
+					Updater.revealUpdate();
 				},
 			enabled: true
 		},

@@ -7,6 +7,8 @@
 {
 	"model_version" : "0.0.4",
 
+	"download_updates_in_background" : true,
+
 	// Set to false to hide the title bar by default
 	"show_title_bar" : true,
 
