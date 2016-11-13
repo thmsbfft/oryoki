@@ -15,12 +15,11 @@ function Oryoki() {
 	}.bind(this));
 
 	// @if NODE_ENV='development'
-	c.log('[Oryoki] ✔');
 	c.log('[Oryoki] v.' + app.getVersion());
 	// @endif
 
 	this.versions = {
-		'oryoki' : '0.0.4',
+		'oryoki' : app.getVersion(),
 		'chromium' : process.versions.chrome,
 		'electron' : process.versions.electron
 	}
@@ -322,11 +321,15 @@ Oryoki.prototype.goToDownloads = function() {
 
 }
 
-Oryoki.prototype.quit = function() {
+Oryoki.prototype.onBeforeQuit = function() {
 
 	// @if NODE_ENV='development'
 	c.log('[ORYOKI] Will quit');
 	// @endif
+
+	// Close About
+	About.bw.removeAllListeners('close');
+	About.bw.close();
 
 	if(Updater.status == 'update-ready') {
 
@@ -346,10 +349,11 @@ Oryoki.prototype.quit = function() {
 	c.log('[Window] ---');
 	// @endif
 
-	// Close About
-	About.bw.removeAllListeners('close');
-	About.bw.close();
+}
 
+Oryoki.prototype.quit = function() {
+
+	this.onBeforeQuit();
 	app.quit();
 
 }
