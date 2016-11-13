@@ -5,6 +5,8 @@
 //	Note: this file only accepts comments starting with `//`.
 //
 {
+	"model_version" : "0.0.4",
+
 	// Set to false to hide the title bar by default
 	"show_title_bar" : true,
 
