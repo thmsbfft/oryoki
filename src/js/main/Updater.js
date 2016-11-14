@@ -198,10 +198,6 @@ Updater.prototype.extractUpdate = function() {
 
 Updater.prototype.revealUpdate = function() {
 
-	// @if NODE_ENV='development'
-	c.log('Revealing update!!');
-	// @endif
-
 	fs.rename(this.tmpDir + '/Oryoki.app', app.getPath('downloads') + '/Oryoki.app', function(err) {
 
 		if(err) {
@@ -217,55 +213,8 @@ Updater.prototype.revealUpdate = function() {
 				c.log('[Updater] Error while revealing update: ' + error.signal);
 				// @endif
 			}
-		});
-
-	});
-
-}
-
-Updater.prototype.createUpdaterScript = function() {
-
-	var targetPath = app.getAppPath().replace('/Contents/Resources/app', '');
-	var sourcePath = this.tmpDir + '/Oryoki.app';
-
-	var updaterScript = '#!/bin/sh\n';
-	// Quit current
-	updaterScript += 'killall Oryoki\n';
-	// Remove current
-	updaterScript += 'rm -rf ' + '\'' + targetPath + '\'' + '\n';
-	// Move new
-	updaterScript += 'mv ' + '\'' + sourcePath + '\'' + ' ' + '\'' + targetPath + '\'' + '\n';
-	// Chmod
-	updaterScript += 'chmod -R 777 ' + targetPath + '\n';
-	// Open new
-	updaterScript += 'if [[ "$1" = "restart" ]]; then' + '\n';
-	updaterScript += '\topen ' + '\'' + targetPath + '\'' + '\n';
-	updaterScript += 'fi';
-
-	fs.writeFile(this.tmpDir + '/' + this.latest.version + '-Updater.sh', updaterScript, 'utf8', function(err) {
-		
-		if(err) {
-			// @if NODE_ENV='development'
-			c.log('[Updater] Couldn\'t create updater script. Err: ' + error.signal);
-			// @endif
 			this.cleanUp();
-		}
-
-		// @if NODE_ENV='development'
-		c.log('[Updater] Update ready');
-		// @endif
-
-		this.status = 'update-ready';
-		CommandManager.refreshMenus();
-
-		if(Oryoki.focusedWindow) {
-			Oryoki.focusedWindow.browser.webContents.send('update-ready', this.latest);
-		}
-
-		new Notification('Update available!', {
-			body: 'Ōryōki ' + this.latest.version + ' is ready to install.',
-			silent: true
-		});
+		}.bind(this));
 
 	}.bind(this));
 
@@ -286,24 +235,5 @@ Updater.prototype.cleanUp = function() {
 		}
 
 	}.bind(this));
-
-}
-
-Updater.prototype.quitAndInstall = function() {
-
-	var updaterScriptPath = this.tmpDir + '/' + this.latest.version + '-Updater.sh';
-
-	// @if NODE_ENV='development'
-	c.log('[Updater] Quit and install');
-	c.log('[Updater] > sh ' + updaterScriptPath);
-	return;
-	// @endif
-
-	var log = fs.openSync(UserManager.user.paths.tmp + '/updater.log', 'w');
-
-	var updaterProcess = spawn('sh', [updaterScriptPath], {
-		detached: true,
-		stdio: ['ignore', log, log]
-	}).unref();
 
 }
