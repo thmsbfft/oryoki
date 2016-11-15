@@ -20,6 +20,7 @@ function UserManager() {
 		// @endif
 	  event.returnValue = this.user.paths[name];
 	}.bind(this));
+
 }
 
 UserManager.prototype.getFactoryFile = function(fileName) {
