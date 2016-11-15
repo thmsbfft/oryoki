@@ -331,16 +331,6 @@ Oryoki.prototype.onBeforeQuit = function() {
 	About.bw.removeAllListeners('close');
 	About.bw.close();
 
-	if(Updater.status == 'update-ready') {
-
-		// @if NODE_ENV='development'
-		c.log('[ORYOKI] Updating in background...');
-		// @endif
-
-		Updater.quitAndInstall();
-
-	}
-
 	// @if NODE_ENV='development'
 	c.log('[Window] ---');
 	for (var i = 0; i < this.windows.length; i++) {

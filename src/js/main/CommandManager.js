@@ -44,9 +44,9 @@ CommandManager.prototype.createMenus = function() {
 			enabled: true
 		},
 		'update-ready': {
-			label: "View update...",
+			label: "Quit and Install",
 			click: function() {
-					Updater.revealUpdate();
+					Updater.quitAndInstall();
 				},
 			enabled: true
 		},

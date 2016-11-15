@@ -196,13 +196,17 @@ Updater.prototype.extractUpdate = function() {
 
 }
 
-Updater.prototype.revealUpdate = function() {
+Updater.prototype.quitAndInstall = function() {
 
+	// In case a previous version is still in downloads
+	execSync('rm -rf ' + '\"' + app.getPath('downloads') + '/Oryoki.app' + '\"');
+
+	// Move to downloads
 	fs.rename(this.tmpDir + '/Oryoki.app', app.getPath('downloads') + '/Oryoki.app', function(err) {
 
 		if(err) {
 			// @if NODE_ENV='development'
-			c.log('[Updater] Error while moving update: ' + error.signal);
+			c.log('[Updater] Error while moving update: ' + err);
 			// @endif
 		}
 
@@ -210,17 +214,21 @@ Updater.prototype.revealUpdate = function() {
 		execSync('open -R ' + app.getPath('downloads') + '/Oryoki.app', function(err) {
 			if(err) {
 				// @if NODE_ENV='development'
-				c.log('[Updater] Error while revealing update: ' + error.signal);
+				c.log('[Updater] Error while revealing update: ' + err);
 				// @endif
 			}
-			this.cleanUp();
 		}.bind(this));
+
+		this.cleanUp();
+		Oryoki.quit();
 
 	}.bind(this));
 
 }
 
 Updater.prototype.cleanUp = function() {
+
+	c.log('Cleaning up');
 
 	exec('cd ' + '\'' + UserManager.user.paths.tmp + '\'' + ' && rm -rf Update-*', function(error, stdout, stderr) {
 
