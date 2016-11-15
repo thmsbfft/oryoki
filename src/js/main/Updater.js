@@ -226,7 +226,7 @@ Updater.prototype.quitAndInstall = function() {
 
 Updater.prototype.cleanUp = function() {
 
-	c.log('Cleaning up');
+	c.log('[Updater] Cleaning up');
 
 	exec('cd ' + '\'' + UserManager.user.paths.tmp + '\'' + ' && rm -rf Update-*', function(error, stdout, stderr) {
 

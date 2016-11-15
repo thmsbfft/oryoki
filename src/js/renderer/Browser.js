@@ -172,7 +172,7 @@ Browser.prototype.onConsoleMessage = function(e) {
 	this.console.updateMessage(e);
 }
 
-Browser.prototype.onFocus = function() {
+Browser.prototype.onFocus = function(e) {
 	
 	this.handle.enable();
 

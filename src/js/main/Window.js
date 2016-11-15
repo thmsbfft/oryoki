@@ -52,10 +52,6 @@ function Window(parameters) {
 		onRecordingEnd: this.unlockDimensions.bind(this)
 	});
 
-	// @if NODE_ENV='development'
-	c.log('[Window] file://' + __dirname + '/src/html/index.html');
-	// @endif
-
 	this.attachEvents();
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html' + '#' + this.id);
 
@@ -144,6 +140,10 @@ Window.prototype.onReady = function() {
 
 	this.browser.webContents.send('ready');
 	this.updateConfFiles();
+
+	if(Updater.status == 'update-ready') {
+		this.browser.webContents.send('update-ready', Updater.latest);	
+	}
 
 	if(this.url) this.load(this.url);
 
