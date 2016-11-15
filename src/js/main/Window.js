@@ -56,7 +56,7 @@ function Window(parameters) {
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html' + '#' + this.id);
 
 	// @if NODE_ENV='development'
-	// this.browser.webContents.openDevTools();
+	this.browser.webContents.openDevTools();
 	// @endif
 }
 
@@ -294,7 +294,7 @@ Window.prototype.toggleHandle = function() {
 		else {
 			this.browser.setSize(
 				this.browser.getSize()[0],
-				this.browser.getSize()[1] - 22 // 22 being the handle's height :(
+				this.browser.getSize()[1] - 24 // 24 being the handle's height :(
 			);
 		}
 	}
@@ -317,7 +317,7 @@ Window.prototype.toggleHandle = function() {
 		else {
 			this.browser.setSize(
 				this.browser.getSize()[0],
-				this.browser.getSize()[1] + 22
+				this.browser.getSize()[1] + 24
 			);
 		}
 	}
