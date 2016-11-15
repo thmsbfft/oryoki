@@ -100,4 +100,35 @@ omnibox {
 		left: 0;
 		z-index: 88;
 	}
+	.updateClue {
+		background: #1A1A1A;
+		padding: 10px 14px;
+		margin-bottom: 10px;
+		font-size: 14px;
+		letter-spacing: -0.4px;
+		display: inline-block;
+		color: rgba(255, 255, 255, 0.4);
+		-webkit-user-select: none;
+		cursor: default;
+		border-bottom-right-radius: 10px;
+		border-bottom-left-radius: 10px;
+		transition: 0.3s color;
+		&::before {
+			content: '';
+			width: 5px;
+			height: 5px;
+			border-radius: 5px;
+			display: inline-block;
+			background: green;
+			margin-right: 8px;
+			position: relative;
+			top: -2px;
+		}
+		&:hover {
+			color: white;
+		}
+		&:active {
+			background-color: #1F1F1F;
+		}
+	}
 }

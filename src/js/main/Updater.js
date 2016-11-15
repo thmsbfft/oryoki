@@ -13,6 +13,8 @@ function Updater() {
 	this.cleanUp();
 	this.checkForUpdate(false);
 
+	ipcMain.on('quit-and-install', this.quitAndInstall.bind(this));
+
 }
 
 Updater.prototype.checkForUpdate = function(alert) {
@@ -174,15 +176,11 @@ Updater.prototype.extractUpdate = function() {
 
 			this.status = 'update-ready';
 			CommandManager.refreshMenus();
-			
-			// @if NODE_ENV='development'
-			// Do something to indicate update
-			// Can be below omnibox in lil tag thingy
-			// or notification
-			// @endif
 
 			if(Oryoki.focusedWindow) {
-				Oryoki.focusedWindow.browser.webContents.send('update-ready', this.latest);
+				for (var i = 0; i < Oryoki.windows.length; i++) {
+					Oryoki.windows[i].browser.webContents.send('update-ready', this.latest);
+				}
 			}
 
 			new Notification('Update available!', {

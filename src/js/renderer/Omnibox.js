@@ -43,6 +43,7 @@ Omnibox.prototype.attachEvents = function() {
 	}.bind(this));
 
 	ipcRenderer.on('update-search-dictionary', this.updateSearchDictionary.bind(this));
+	ipcRenderer.on('update-ready', this.onUpdateReady.bind(this));
 
 	this.el.ondragover = (e) => {
 		e.preventDefault();
@@ -301,6 +302,21 @@ Omnibox.prototype.hideHints = function() {
 
 	removeClass(this.hints, 'show');
 	addClass(this.hints, 'hide');
+
+}
+
+Omnibox.prototype.onUpdateReady = function(e, latest) {
+
+	this.updateClue = document.createElement('div');
+	this.updateClue.className = 'updateClue';
+
+	this.updateClue.innerHTML = "Update available (" + latest.version + ')';
+
+	this.updateClue.addEventListener('click', function() {
+		ipcRenderer.send('quit-and-install');
+	});
+
+	this.input.parentNode.insertBefore(this.updateClue, this.input.nextSibling);
 
 }
 
