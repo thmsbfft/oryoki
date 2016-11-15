@@ -177,7 +177,7 @@ Handle.prototype.openMenu = function(e) {
 
 	// Weird calc to get menu position right
 	var x = this.el.offsetWidth / 2 - 46;
-	var y = this.el.offsetHeight + 5;
+	var y = this.el.offsetHeight + 4;
 
 	menu.popup(remote.getCurrentWindow(), x, y);
 
