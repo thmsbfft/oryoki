@@ -180,6 +180,12 @@ View.prototype.onDidFailLoad = function(e) {
 		return;
 	}
 
+	if(e.errorCode == -501) {
+		// ERR_INSECURE_RESPONSE
+		console.log(e);
+		return;
+	}
+
 	Browser.showOmnibox();
 
 	switch(e.errorCode) {

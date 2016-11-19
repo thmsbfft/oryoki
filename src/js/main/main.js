@@ -25,6 +25,8 @@ const encode = require('png-chunks-encode');
 const text = require('png-chunk-text');
 const validUrl = require('valid-url');
 
+app.commandLine.appendSwitch('ignore-certificate-errors');
+
 app.on('ready', function() {
 
 	electronScreen = electron.screen;
