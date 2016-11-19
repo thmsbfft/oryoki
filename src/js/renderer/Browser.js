@@ -158,6 +158,8 @@ Browser.prototype.onDOMReady = function() {
 
 	this.handle.changeTitle(this.view.getTitle());
 
+	this.replaceCursor();
+
 }
 
 Browser.prototype.onDidFinishLoad = function() {
@@ -253,5 +255,26 @@ Browser.prototype.hideDragOverlay = function() {
 Browser.prototype.showDragOverlay = function() {
 
 	removeClass(this.dragOverlay, 'invisible');
+
+}
+
+Browser.prototype.replaceCursor = function() {
+
+	this.view.webview.insertCSS('* {cursor: none}');
+
+	this.style = document.createElement('style');
+	this.style.type = "text/css";
+	this.style.innerHTML = '* {cursor: none}'; // Doesn't really work
+	document.body.appendChild(this.style);
+
+	this.cursor = document.createElement('cursor');
+	document.body.appendChild(this.cursor);
+
+	window.addEventListener('mousemove', function(e) {
+		this.cursor.style.left = e.clientX - this.cursor.offsetWidth/2 + 'px';
+		this.cursor.style.top = e.clientY - this.cursor.offsetHeight/2 + 'px';
+	}.bind(this));
+
+	// TODO: Fade cursor off if not moving
 
 }
