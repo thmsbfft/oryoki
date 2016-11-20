@@ -358,18 +358,14 @@ CommandManager.prototype.createMenus = function() {
 					label: 'Save Screenshot',
 					accelerator: 'CmdOrCtrl+Shift+`',
 					click: function() {
-						if(Oryoki.focusedWindow) {
-							Oryoki.focusedWindow.camera.takeScreenshot();
-						}
+						Camera.takeScreenshot();
 					}
 				},
 				{
 					label: 'Copy Screenshot',
 					accelerator: 'CmdOrCtrl+Shift+C',
 					click: function() {
-						if(Oryoki.focusedWindow) {
-							Oryoki.focusedWindow.camera.copyScreenshot(Oryoki.focusedWindow.id);
-						}
+						Camera.copyScreenshot();
 					}
 				},
 				{
@@ -379,18 +375,14 @@ CommandManager.prototype.createMenus = function() {
 					label: 'Start Recording',
 					accelerator: 'CmdOrCtrl+Shift+P',
 					click: function() {
-						if(Oryoki.focusedWindow) {
-							Oryoki.focusedWindow.camera.startRecording();
-						}
+						Camera.startRecording();
 					}
 				},
 				{
 					label: 'Stop Recording',
 					accelerator: 'CmdOrCtrl+Alt+Shift+P',
 					click: function() {
-						if(Oryoki.focusedWindow) {
-							Oryoki.focusedWindow.camera.stopRecording();
-						}
+						Camera.stopRecording();
 					}
 				},
 				{

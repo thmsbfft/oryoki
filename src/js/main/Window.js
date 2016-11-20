@@ -45,13 +45,6 @@ function Window(parameters) {
 	  fullscreenable: !UserManager.getPreferenceByName("picture_in_picture")
 	});
 
-	this.camera = new Camera({
-		id: this.id,
-		browser: this.browser,
-		onRecordingBegin: this.lockDimensions.bind(this),
-		onRecordingEnd: this.unlockDimensions.bind(this)
-	});
-
 	this.attachEvents();
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html' + '#' + this.id);
 
@@ -184,7 +177,6 @@ Window.prototype.onClosed = function() {
 	// @if NODE_ENV='development'
 	c.log('[Window] Closed');
 	// @endif
-	// this.camera.abortProcesses();
 	this.browser = null;
 	this.onCloseCallback();
 

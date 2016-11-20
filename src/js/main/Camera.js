@@ -1,11 +1,15 @@
-function Camera(parameters) {
+function Camera() {
 
-	this.id = parameters.id;
+	// Shorthand to Oryoki.focusedWindow
+	// Oryoki keeps Camera in focus
+	this.browser = null;
 
-	// Camera uses the browserWindow
-	this.browser = parameters.browser;
-	this.onRecordingBeginCallback = parameters.onRecordingBegin;
-	this.onRecordingEndCallback = parameters.onRecordingEnd;
+	// TODO: 	Add Oryoki.getWindowById();
+	// 			Then have camera store window id when start recording
+	//			And release it when done recording
+	// 			.lockDimensions()
+	//			.unlockDimensions()
+	//			Oryoki: handle window close while recording (stop recording, encode what you have)
 
 	this.isRecording = false;
 	CommandManager.setEnabled('Tools', 'Stop Recording', false);
@@ -41,92 +45,89 @@ Camera.prototype.attachEvents = function() {
 		this.copyScreenshot(id);
 	}.bind(this));
 
-	ipcMain.on('take-screenshot', function(event, id, url) {
-		this.saveScreenshot(id, url);
+	ipcMain.on('take-screenshot', function(event, url) {
+		this.saveScreenshot(url);
 	}.bind(this));
 
 }
 
-Camera.prototype.saveScreenshot = function(id, url) {
+Camera.prototype.saveScreenshot = function(url) {
 
-	this.browser.webContents.send('hide-status');
+	this.browser.webContents.send('hide-status'); // BUG
 
-	if(id == this.id) {
+	this.browser.capturePage(function(image) {
 
-		this.browser.capturePage(function(image) {
+		var href = url;
+		var hostname = URL.parse(href).hostname;
 
-			var href = url;
-			var hostname = URL.parse(href).hostname;
+		var day = pad(new Date().getDate());
+		var month = pad(new Date().getMonth() + 1);
+		var year = new Date().getFullYear();
+		var date = day + '-' + month + '-' + year;
 
-			var day = pad(new Date().getDate());
-			var month = pad(new Date().getMonth() + 1);
-			var year = new Date().getFullYear();
-			var date = day + '-' + month + '-' + year;
+		var hrs = pad(new Date().getHours());
+		var min = pad(new Date().getMinutes());
+		var sec = pad(new Date().getSeconds());
+		var time = hrs + '-' + min + '-' + sec;
 
-			var hrs = pad(new Date().getHours());
-			var min = pad(new Date().getMinutes());
-			var sec = pad(new Date().getSeconds());
-			var time = hrs + '-' + min + '-' + sec;
-
-			// Check path
-			var path = UserManager.getPreferenceByName('screenshots_save_path');
-			c.log(path);
-			if(path == "") {
-				path = app.getPath('downloads');
+		// Check path
+		var path = UserManager.getPreferenceByName('screenshots_save_path');
+		c.log(path);
+		if(path == "") {
+			path = app.getPath('downloads');
+		}
+		else {
+			try {
+				fs.statSync(path);
+				c.log('Check');
 			}
-			else {
-				try {
-					fs.statSync(path);
-					c.log('Check');
-				}
-				catch(err) {
-					c.log(this.browser);
-					this.browser.webContents.send('show-status');
-					this.browser.webContents.send('error-status', {
-						'body' : 'Could not save to \'' + path + '\''
-					});
-					return;
-				}
+			catch(err) {
+				c.log(this.browser);
+				this.browser.webContents.send('show-status');
+				this.browser.webContents.send('error-status', {
+					'body' : 'Could not save to \'' + path + '\''
+				});
+				return;
 			}
-			
-			if(hostname == null) {
-				// No URL
-				var name = 'oryoki-' + date + '-' + time;
+		}
+		
+		if(hostname == null) {
+			// No URL
+			var name = 'oryoki-' + date + '-' + time;
 
-				fs.writeFile(path + '/' + name + '.png', image.toPng(), function(err) {
-					if(err)
-						throw err;
-					this.browser.webContents.send('show-status');
-					this.browser.webContents.send('unfreeze-status');
-					this.browser.webContents.send('log-status', {
-						'body' : 'Screenshot saved'
-					});
-				}.bind(this));
+			fs.writeFile(path + '/' + name + '.png', image.toPng(), function(err) {
+				if(err)
+					throw err;
+				this.browser.webContents.send('show-status');
+				this.browser.webContents.send('unfreeze-status');
+				this.browser.webContents.send('log-status', {
+					'body' : 'Screenshot saved'
+				});
+			}.bind(this));
 
-			}
-			else {
-				// URL
-				var name = 'o-' + hostname + '-' + date + '-' + time;
+		}
+		else {
+			// URL
+			var name = 'o-' + hostname + '-' + date + '-' + time;
 
-				// Encode source url to PNG metadata
-				var buffer = image.toPng();
-				var chunks = extract(buffer);
-				chunks.splice(-1, 0, text.encode('src', url));
+			// Encode source url to PNG metadata
+			var buffer = image.toPng();
+			var chunks = extract(buffer);
+			chunks.splice(-1, 0, text.encode('src', url));
 
-				fs.writeFile(path + '/' + name + '.png', new Buffer(encode(chunks)), function(err) {
-					if(err)
-						throw err;
-					this.browser.webContents.send('show-status');
-					this.browser.webContents.send('unfreeze-status');
-					this.browser.webContents.send('log-status', {
-						'body' : 'Screenshot saved'
-					});
-				}.bind(this));
-			}
+			fs.writeFile(path + '/' + name + '.png', new Buffer(encode(chunks)), function(err) {
+				if(err)
+					throw err;
+				this.browser.webContents.send('show-status');
+				this.browser.webContents.send('unfreeze-status');
+				this.browser.webContents.send('log-status', {
+					'body' : 'Screenshot saved'
+				});
+			}.bind(this));
+		}
 
-		}.bind(this));
+	}.bind(this));
 
-	}
 
 }
 
@@ -212,7 +213,6 @@ Camera.prototype.startRecording = function() {
 		CommandManager.setEnabled('Tools', 'Stop Recording', true);
 		this.browser.webContents.send('recordingBegin');
 		this.isRecording = true;
-		this.onRecordingBeginCallback();
 		if(UserManager.getPreferenceByName("hide_status_while_recording")) {
 			this.browser.webContents.send('hide-status');
 		}
@@ -333,7 +333,6 @@ Camera.prototype.stopRecording = function() {
 		this.hideTray();
 		this.isRecording = false;
 		this.browser.webContents.endFrameSubscription();
-		this.onRecordingEndCallback();
 		this.frameCount = 0;
 		if(UserManager.getPreferenceByName('hide_status_while_recording')) {
 			this.browser.webContents.send('show-status');

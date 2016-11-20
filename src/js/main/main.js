@@ -34,6 +34,7 @@ app.on('ready', function() {
 	UserManager = new UserManager();
 	CommandManager = new CommandManager();
 	About = new About();
+	Camera = new Camera();
 	Oryoki = new Oryoki();
 	Updater = new Updater();
 
