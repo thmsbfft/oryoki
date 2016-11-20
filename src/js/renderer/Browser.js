@@ -158,8 +158,6 @@ Browser.prototype.onDOMReady = function() {
 
 	this.handle.changeTitle(this.view.getTitle());
 
-	this.replaceCursor();
-
 }
 
 Browser.prototype.onDidFinishLoad = function() {
@@ -260,6 +258,8 @@ Browser.prototype.showDragOverlay = function() {
 
 Browser.prototype.replaceCursor = function() {
 
+	// Prototype for replacing cursor during video recording. See #30.
+
 	this.view.webview.insertCSS('* {cursor: none}');
 
 	this.style = document.createElement('style');
@@ -275,6 +275,8 @@ Browser.prototype.replaceCursor = function() {
 		this.cursor.style.top = e.clientY - this.cursor.offsetHeight/2 + 'px';
 	}.bind(this));
 
-	// TODO: Fade cursor off if not moving
+	// TODO: 	Need to work when you navigate between pages
+	//			Fade cursor off if not moving
+	//			Efficient way of toggling on/off
 
 }
