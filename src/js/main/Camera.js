@@ -216,6 +216,9 @@ Camera.prototype.startRecording = function() {
 		if(UserManager.getPreferenceByName("hide_status_while_recording")) {
 			this.browser.webContents.send('hide-status');
 		}
+
+		this.currentDisplay = electronScreen.getDisplayMatching(this.browser.getBounds());
+
 		this.browser.webContents.beginFrameSubscription(this.recordRaw.bind(this));
 	}
 	else {
@@ -231,7 +234,7 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 	if(this.isRecording) {
 		
 		// @if NODE_ENV='development'
-		c.log('[CAMERA] #'+this.frameCount);
+		// c.log('[CAMERA] #'+this.frameCount);
 		// @endif
 
 		/*
@@ -240,8 +243,8 @@ Camera.prototype.recordRaw = function(frameBuffer) {
 		*/
 
 		buffer = frameBuffer;
-		width = this.browser.getSize()[0];
-		height = this.browser.getSize()[1];
+		width = this.browser.getSize()[0] * this.currentDisplay.scaleFactor;
+		height = this.browser.getSize()[1] * this.currentDisplay.scaleFactor;
 		extraBytes = width%4;
 		rgbSize = height*(3*width+extraBytes);
 		headerInfoSize = 40;
