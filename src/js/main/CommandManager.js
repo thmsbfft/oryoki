@@ -344,6 +344,29 @@ CommandManager.prototype.createMenus = function() {
 					type: 'separator'
 				},
 				{
+					label: 'Invert',
+					type: 'checkbox',
+					accelerator: 'CmdOrCtrl+I',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.browser.webContents.send('toggle-filter', 'invert');
+						}
+					}
+				},
+				{
+					label: 'Grayscale',
+					type: 'checkbox',
+					accelerator: 'CmdOrCtrl+G',
+					click: function() {
+						if(Oryoki.focusedWindow) {
+							Oryoki.focusedWindow.browser.webContents.send('toggle-filter', 'grayscale');
+						}
+					}
+				},
+				{
+					type: 'separator'
+				},
+				{
 					label: 'Downloads',
 					click: function() {
 						if(Oryoki) { Oryoki.goToDownloads() }

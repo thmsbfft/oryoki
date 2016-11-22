@@ -83,6 +83,9 @@ View.prototype.attachEvents = function() {
 	// Contextual Menu
 	this.el.addEventListener('contextmenu', this.openContextualMenu.bind(this));
 
+	// Filters
+	ipcRenderer.on('toggle-filter', this.toggleFilter.bind(this));
+
 	// Devtools
 	// this.webview.addEventListener('devtools-opened', this.onDevToolsOpened.bind(this));
 	// this.webview.addEventListener('devtools-focused', this.onDevToolsFocused.bind(this));
@@ -303,6 +306,16 @@ View.prototype.resetZoom = function() {
 
 	StatusManager.log({
 		'body' : Math.round(this.zoomIncrements[this.zoomIndex]*100) + '%'
+	});
+
+}
+
+View.prototype.toggleFilter = function(e, filter) {
+
+	this.webview.classList.toggle(filter);
+
+	StatusManager.log({
+		'body' : filter.charAt(0).toUpperCase() + filter.substr(1).toLowerCase()
 	});
 
 }

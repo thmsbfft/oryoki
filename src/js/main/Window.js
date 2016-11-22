@@ -224,6 +224,8 @@ Window.prototype.updateMenus = function() {
 	CommandManager.setEnabled('Tools', 'Mini Console', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Toggle Devtools', !this.isFirstLoad);
 	CommandManager.setEnabled('Tools', 'Web Plugins', !this.isFirstLoad);
+	CommandManager.setEnabled('View', 'Invert', !this.isFirstLoad);
+	CommandManager.setEnabled('View', 'Grayscale', !this.isFirstLoad);
 
 	if(this.browser) {
 		CommandManager.setCheckbox('View', 'Fullscreen', this.browser.isFullScreen());

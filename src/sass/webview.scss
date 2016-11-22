@@ -2,12 +2,24 @@
 	height: 100%;
 	width: 100%;
 	background: white;
+	transition: 0.4s filter;
+	filter: grayscale(0%) invert(0%);
 
 	&.show {
 		animation: fade-in 0.15s ease-out;
 	}
 	&.hide {
 		opacity: 0
+	}
+
+	&.grayscale {
+		filter: grayscale(100%) invert(0%);
+	}
+	&.invert {
+		filter: grayscale(0%) invert(100%);
+	}
+	&.grayscale.invert {
+		filter: grayscale(100%) invert(100%);
 	}
 
 }
