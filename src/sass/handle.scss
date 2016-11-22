@@ -11,10 +11,10 @@ handle {
 		height: 1px;
 		background: rgba(33, 33, 33, 1);
 		display: inline-block;
-		position: absolute;
+		position: fixed;
 		top: 24px;
 		left: 0;
-		z-index: 99;
+		z-index: 88;
 	}
 
 	// &::after {
