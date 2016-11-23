@@ -6,6 +6,7 @@ function StatusManager(parameters) {
 	this.el = document.getElementsByTagName('status')[0];
 	this.history = [];
 	
+	this.isActive = false;
 	this.isVisible = false;
 	this.isFrozen = false;
 	this.visibilityTimer = null;
@@ -33,6 +34,9 @@ function StatusManager(parameters) {
 
 StatusManager.prototype.log = function(props) {
 
+	// Loading events have lower priority
+	if(props.type == 'loading' && this.isActive) return;
+
 	// Stop logging stuff if an error is displayed
 	if(this.isFrozen) return;
 
@@ -42,6 +46,8 @@ StatusManager.prototype.log = function(props) {
 	else {
 		this.el.innerHTML = props.body;
 	}
+
+	this.isActive = true;
 
 	removeClass(this.el, 'fade-out');
 	addClass(this.el, 'fade-in');
@@ -60,6 +66,8 @@ StatusManager.prototype.important = function(props) {
 		this.el.innerHTML = props.body;
 	}
 
+	this.isActive = true;
+
 	removeClass(this.el, 'fade-out');
 	addClass(this.el, 'fade-in');
 
@@ -72,6 +80,8 @@ StatusManager.prototype.error = function(props) {
 	this.el.innerHTML = '<icon>' + '⭕️' + '</icon>' + props.body;
 	removeClass(this.el, 'fade-out');
 	addClass(this.el, 'fade-in');
+
+	this.isActive = true;
 
 	clearTimeout(this.visibilityTimer);
 	this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 5000);
@@ -95,6 +105,7 @@ StatusManager.prototype.unFreeze = function() {
 StatusManager.prototype.fadeOut = function() {
 
 	this.el.className = 'fade-out';
+	this.isActive = false;
 
 }
 

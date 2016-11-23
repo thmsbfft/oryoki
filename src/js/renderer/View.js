@@ -132,7 +132,7 @@ View.prototype.onLoadCommit = function(e) {
 		'type' : 'loading'
 	});
 
-	console.log('load-commit: ', e);
+	// console.log('load-commit: ', e);
 
 	if(!this.isLoadingTimerRunning && e.isMainFrame) {
 		// Start the timer
@@ -144,9 +144,10 @@ View.prototype.onLoadCommit = function(e) {
 
 View.prototype.onDidFrameFinishLoad = function(e) {
 
-	console.log('FINISH', e.timeStamp);
+	
 	if(this.isLoadingTimerRunning && e.isMainFrame) {
 		// Stop the timer
+		console.log('[View] Finished loading: ', e.timeStamp);
 		this.isLoadingTimerRunning = false;
 		this.loadingTimerEnd = e.timeStamp;
 
@@ -177,7 +178,7 @@ View.prototype.onDidFinishLoad = function() {
 
 View.prototype.onDidFailLoad = function(e) {
 
-	if(e.errorCode == -3) {
+	if(e.errorCode == -3 || e.errorCode == 0) {
 		// Not sure what this is related to
 		// Ignore
 		return;
@@ -188,6 +189,8 @@ View.prototype.onDidFailLoad = function(e) {
 		console.log(e);
 		return;
 	}
+
+	console.log('[View] Load failed: ', e)
 
 	Browser.showOmnibox();
 
@@ -223,7 +226,7 @@ View.prototype.onCrashed = function(e) {
 }
 
 View.prototype.onDidGetResponseDetails = function(e) {
-	console.log('did-get-response-details', e.httpResponseCode, ' ', e.newURL);
+	// console.log('did-get-response-details', e.httpResponseCode, ' ', e.newURL);
 }
 
 View.prototype.onNewWindow = function(e) {
