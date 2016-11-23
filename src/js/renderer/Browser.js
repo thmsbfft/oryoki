@@ -72,7 +72,7 @@ Browser.prototype.attachEvents = function() {
 	ipcRenderer.on('get-url', function(e) {
 
 		// Reply with url
-		ipcRenderer.send('take-screenshot', this.view.webview.src);
+		ipcRenderer.send('take-screenshot', this.view.webview.src, this.view.webview.getTitle());
 
 	}.bind(this));
 

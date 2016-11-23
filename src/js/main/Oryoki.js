@@ -124,7 +124,7 @@ Oryoki.prototype.handleFile = function(input) {
 	var path = input[0];
 
 	// @if NODE_ENV='development'
-	c.log(path);
+	c.log('[Oryoki] Loading file: ' + path);
 	// @endif
 
 	var buffer = fs.readFileSync(path);
@@ -137,10 +137,31 @@ Oryoki.prototype.handleFile = function(input) {
 		return text.decode(chunk.data);
 	});
 
+	// @if NODE_ENV='development'
+	c.log('[Oryoki] Chunks: ' + textChunks);
+	// @endif
+
+	// @if NODE_ENV='development'
+	// c.log('[Window] Chunks: ' + JSON.stringify(textChunks));
+	// @endif
+
 	// Look for the src keyword
 	var src = textChunks.filter(function (chunk) {
 		return chunk.keyword === 'src';
 	});
+
+	// @if NODE_ENV='development'
+	// Oryoki also stores a 'title' keyword in PNGs.
+	// We don't use it yet.
+	// This is how to read it:
+	var title = textChunks.filter(function (chunk) {
+		return chunk.keyword === 'title';
+	});
+	if(title[0] && title[0].text) {
+		title = Buffer.from(title[0].text, 'base64').toString('utf8');
+		c.log('[Window] Title: ' + title);
+	} else { c.log('[Window] No title in PNG tEXt'); }
+	// @endif
 
 	if(!src[0]) {
 

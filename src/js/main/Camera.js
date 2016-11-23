@@ -45,13 +45,13 @@ Camera.prototype.attachEvents = function() {
 		this.copyScreenshot(id);
 	}.bind(this));
 
-	ipcMain.on('take-screenshot', function(event, url) {
-		this.saveScreenshot(url);
+	ipcMain.on('take-screenshot', function(event, url, title) {
+		this.saveScreenshot(url, title);
 	}.bind(this));
 
 }
 
-Camera.prototype.saveScreenshot = function(url) {
+Camera.prototype.saveScreenshot = function(url, title) {
 
 	this.browser.webContents.send('hide-status'); // BUG
 
@@ -113,6 +113,8 @@ Camera.prototype.saveScreenshot = function(url) {
 			// Encode source url to PNG metadata
 			var buffer = image.toPng();
 			var chunks = extract(buffer);
+
+			chunks.splice(-1, 0, text.encode('title', Buffer.from(title).toString('base64')));
 			chunks.splice(-1, 0, text.encode('src', url));
 
 			fs.writeFile(path + '/' + name + '.png', new Buffer(encode(chunks)), function(err) {
