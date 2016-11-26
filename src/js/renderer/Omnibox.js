@@ -319,17 +319,19 @@ Omnibox.prototype.onUpdateAvailable = function(e, latest) {
 
 	this.updateClue.innerHTML = "Update available (" + latest.version + ')';
 
-	this.updateClue.addEventListener('click', function() {
-		ipcRenderer.send('download-update');
-	});
+	this.updateClue.addEventListener('click', this.ipcSendDownloadUpdate);
+
+}
+
+Omnibox.prototype.ipcSendDownloadUpdate = function() {
+
+	ipcRenderer.send('download-update');
 
 }
 
 Omnibox.prototype.onUpdateDownload = function(e, latest) {
 
-	this.updateClue.removeEventListener('click', function() {
-		ipcRenderer.send('download-update');
-	});
+	this.updateClue.removeEventListener('click', this.ipcSendDownloadUpdate);
 
 	this.updateClue.className = 'updateClue downloading';
 	this.updateClue.innerHTML = 'Downloading...';
