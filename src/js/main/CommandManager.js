@@ -23,6 +23,7 @@ CommandManager.prototype.createMenus = function() {
 	var name = app.getName();
 
 	// Special cases
+	if(Updater.latest) var latestVersion = Updater.latest.version;
 	var updater = ({
 		'update-available' : {
 			label: "Download Update",
@@ -44,7 +45,7 @@ CommandManager.prototype.createMenus = function() {
 			enabled: true
 		},
 		'update-ready': {
-			label: "Quit and Install",
+			label: latestVersion ? "Update to " + latestVersion : "Quit and Install",
 			click: function() {
 					Updater.quitAndInstall();
 				},

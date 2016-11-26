@@ -334,7 +334,7 @@ Omnibox.prototype.onUpdateDownload = function(e, latest) {
 	this.updateClue.removeEventListener('click', this.ipcSendDownloadUpdate);
 
 	this.updateClue.className = 'updateClue downloading';
-	this.updateClue.innerHTML = 'Downloading...';
+	this.updateClue.innerHTML = 'Downloading';
 
 }
 
@@ -342,7 +342,7 @@ Omnibox.prototype.onUpdateReady = function(e, latest) {
 
 	this.updateClue.className = 'updateClue ready';
 
-	this.updateClue.innerHTML = "Update ready (" + latest.version + ')';
+	this.updateClue.innerHTML = "Update to " + latest.version;
 
 	this.updateClue.addEventListener('click', function() {
 		ipcRenderer.send('quit-and-install');
