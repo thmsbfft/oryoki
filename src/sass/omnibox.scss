@@ -130,5 +130,24 @@ omnibox {
 		&:active {
 			background-color: #1F1F1F;
 		}
+		display: none;
+		&.available {
+			display: inline-block;
+			&::before {
+				background: red;
+			}
+		}
+		&.downloading {
+			display: inline-block;
+			&::before {
+				background: orange;
+			}
+		}
+		&.ready {
+			display: inline-block;
+			&::before {
+				background: green;
+			}
+		}
 	}
 }

@@ -134,8 +134,8 @@ Window.prototype.onReady = function() {
 	this.browser.webContents.send('ready');
 	this.updateConfFiles();
 
-	if(Updater.status == 'update-ready') {
-		this.browser.webContents.send('update-ready', Updater.latest);	
+	if(Updater.status) {
+		this.browser.webContents.send(Updater.status, Updater.latest);	
 	}
 
 	if(this.url) this.load(this.url);

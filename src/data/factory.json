@@ -9,7 +9,7 @@
 	"model_version" : "0.0.4",
 
 	// Allows Oryoki to download updates in background
-	"download_updates_in_background" : true,
+	"download_updates_in_background" : false,
 
 	// Set to false to hide the title bar by default
 	"show_title_bar" : true,

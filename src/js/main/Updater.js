@@ -13,6 +13,7 @@ function Updater() {
 	this.cleanUp();
 	this.checkForUpdate(false);
 
+	ipcMain.on('download-update', this.downloadUpdate.bind(this));
 	ipcMain.on('quit-and-install', this.quitAndInstall.bind(this));
 
 }
@@ -78,6 +79,12 @@ Updater.prototype.compareVersions = function(alert) {
 					silent: true
 				});
 
+				if(Oryoki.focusedWindow) {
+					for (var i = 0; i < Oryoki.windows.length; i++) {
+						Oryoki.windows[i].browser.webContents.send('update-available', this.latest);
+					}
+				}
+
 			}
 
 			return;
@@ -113,6 +120,12 @@ Updater.prototype.downloadUpdate = function() {
 
 	this.status = 'downloading-update';
 	CommandManager.refreshMenus();
+
+	if(Oryoki.focusedWindow) {
+		for (var i = 0; i < Oryoki.windows.length; i++) {
+			Oryoki.windows[i].browser.webContents.send('downloading-update', this.latest);
+		}
+	}
 
 	// Create a TMP folder
 	this.tmpDir = UserManager.user.paths.tmp + '/' + 'Update-' + this.latest.version;

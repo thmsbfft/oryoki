@@ -13,6 +13,11 @@ function Omnibox(parameters) {
 	this.input = this.el.querySelectorAll('.input')[0];
 	this.hints = this.el.querySelectorAll('.hints')[0];
 	this.overlay = this.el.querySelectorAll('.overlay')[0];
+
+	this.updateClue = document.createElement('div');
+	this.updateClue.className = 'updateClue';
+	this.input.parentNode.insertBefore(this.updateClue, this.input.nextSibling);
+
 	this.dragCount = 0;
 
 	this.attachEvents();
@@ -43,7 +48,10 @@ Omnibox.prototype.attachEvents = function() {
 	}.bind(this));
 
 	ipcRenderer.on('update-search-dictionary', this.updateSearchDictionary.bind(this));
+
 	ipcRenderer.on('update-ready', this.onUpdateReady.bind(this));
+	ipcRenderer.on('downloading-update', this.onUpdateDownload.bind(this));
+	ipcRenderer.on('update-available', this.onUpdateAvailable.bind(this));
 
 	this.el.ondragover = (e) => {
 		e.preventDefault();
@@ -305,18 +313,38 @@ Omnibox.prototype.hideHints = function() {
 
 }
 
-Omnibox.prototype.onUpdateReady = function(e, latest) {
+Omnibox.prototype.onUpdateAvailable = function(e, latest) {
 
-	this.updateClue = document.createElement('div');
-	this.updateClue.className = 'updateClue';
+	this.updateClue.className = 'updateClue available';
 
 	this.updateClue.innerHTML = "Update available (" + latest.version + ')';
 
 	this.updateClue.addEventListener('click', function() {
-		ipcRenderer.send('quit-and-install');
+		ipcRenderer.send('download-update');
 	});
 
-	this.input.parentNode.insertBefore(this.updateClue, this.input.nextSibling);
+}
+
+Omnibox.prototype.onUpdateDownload = function(e, latest) {
+
+	this.updateClue.removeEventListener('click', function() {
+		ipcRenderer.send('download-update');
+	});
+
+	this.updateClue.className = 'updateClue downloading';
+	this.updateClue.innerHTML = 'Downloading...';
+
+}
+
+Omnibox.prototype.onUpdateReady = function(e, latest) {
+
+	this.updateClue.className = 'updateClue ready';
+
+	this.updateClue.innerHTML = "Update ready (" + latest.version + ')';
+
+	this.updateClue.addEventListener('click', function() {
+		ipcRenderer.send('quit-and-install');
+	});
 
 }
 
