@@ -72,17 +72,14 @@ Camera.prototype.saveScreenshot = function(url, title) {
 
 		// Check path
 		var path = UserManager.getPreferenceByName('screenshots_save_path');
-		c.log(path);
 		if(path == "") {
 			path = app.getPath('downloads');
 		}
 		else {
 			try {
 				fs.statSync(path);
-				c.log('Check');
 			}
 			catch(err) {
-				c.log(this.browser);
 				this.browser.webContents.send('show-status');
 				this.browser.webContents.send('error-status', {
 					'body' : 'Could not save to \'' + path + '\''
