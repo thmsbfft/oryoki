@@ -29,7 +29,7 @@ body.about {
 		p.version {
 			color: rgba(255, 255, 255, 0.7);
 			font-size: 13px;
-			line-height: 1.3;
+			line-height: 1.4;
 			display: inline;
 		}
 
@@ -64,16 +64,18 @@ body.about {
 	handle {
 		-webkit-app-region: drag;
 		background: transparent;
-		height: 22px;
+		height: 24px;
 		text-align: center;
 		z-index: 99;
 		position: absolute;
+
+		&::after { display: none }
 
 		.button {
 			position: absolute;
 			-webkit-app-region: no-drag;
 			user-select: none;
-			top: 5px;
+			top: 6px;
 			border-radius: 100%;
 			height: 12px;
 			width: 12px;
@@ -90,7 +92,7 @@ body.about {
 		}
 
 		.close {
-			left: 8px;
+			left: 9px;
 			background: #fc5b57;
 			border: none;
 			&:active {
