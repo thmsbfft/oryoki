@@ -4,8 +4,6 @@ function Handle(parameters) {
 	this.title = undefined;
 	this.htmlData = undefined;
 
-	console.log('[Handle] ☑️');
-
 	if(ipcRenderer.sendSync('get-preference', 'show_title_bar')) {
 		this.show();
 	}
@@ -39,6 +37,8 @@ Handle.prototype.attachEvents = function() {
 		ipcRenderer.send('fullscreenWindow');
 	});
 	this.title.addEventListener('mousedown', this.openMenu.bind(this));
+
+	console.log('[Handle] ☑️');
 
 }
 

@@ -16,13 +16,11 @@ function Browser(parameters) {
 		'onConsoleMessage' : this.onConsoleMessage.bind(this)
 	});
 
+	this.handle = new Handle();
+
 	this.omnibox = new Omnibox({
 		'mode' : 'url',
 		'onsubmit' : this.onSubmit.bind(this)
-	});
-
-	this.handle = new Handle({
-
 	});
 
 	this.console = new Console({
@@ -260,7 +258,7 @@ Browser.prototype.replaceCursor = function() {
 
 	// Prototype for replacing cursor during video recording. See #30.
 
-	this.view.webview.insertCSS('* {cursor: none}');
+	this.view.webview.insertCSS('* {cursor: none}'); // Works, it seems
 
 	this.style = document.createElement('style');
 	this.style.type = "text/css";

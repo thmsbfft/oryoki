@@ -5,7 +5,7 @@ handle {
 	height: 24px;
 	text-align: center;
 
-	&::after {
+	&.stroke::after {
 		content: ' ';
 		width: 100%;
 		height: 1px;
@@ -14,7 +14,7 @@ handle {
 		position: fixed;
 		top: 24px;
 		left: 0;
-		z-index: 88;
+		z-index: 98;
 	}
 
 	// &::after {
@@ -122,7 +122,9 @@ handle {
 	}
 	&.show {
 		display: block;
-		animation: fade-in 0.7s 1 ease-out;
+		.title {
+			animation: fade-in 0.7s 1 ease-out;
+		}
 	}
 	&:hover {
 		.minimize {

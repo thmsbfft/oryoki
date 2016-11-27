@@ -257,6 +257,9 @@ Omnibox.prototype.show = function() {
 	}
 	removeClass(this.el, 'hide');
 	addClass(this.el, 'show');
+
+	if(Browser.handle) Browser.handle.el.classList.remove('stroke');
+
 	this.focus();
 	this.selectAll();
 	ipcRenderer.send('setOmniboxShow');
@@ -268,6 +271,9 @@ Omnibox.prototype.hide = function() {
 	this.isVisible = false;
 	removeClass(this.el, 'show');
 	addClass(this.el, 'hide');
+
+	if(Browser.handle) Browser.handle.el.classList.add('stroke');
+
 	ipcRenderer.send('setOmniboxHide');
 
 }
