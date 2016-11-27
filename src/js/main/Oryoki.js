@@ -212,7 +212,9 @@ Oryoki.prototype.handleFile = function(input) {
 Oryoki.prototype.onFocusChange = function(w) {
 
 	this.focusedWindow = w;
+	
 	Camera.browser = this.focusedWindow.browser;
+	Camera.browserWindow = w;
 
 	// @if NODE_ENV='development'
 	c.log('[Oryoki] New focus:', this.focusedWindow.id);

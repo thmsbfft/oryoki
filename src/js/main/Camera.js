@@ -2,6 +2,7 @@ function Camera() {
 
 	// Shorthand to Oryoki.focusedWindow
 	// Oryoki keeps Camera in focus
+	this.browserWindow = null;
 	this.browser = null;
 
 	// TODO: 	Add Oryoki.getWindowById();
@@ -206,12 +207,17 @@ Camera.prototype.startRecording = function() {
 			}
 		}
 
+		this.browserWindow.lockDimensions();
+
 		app.dock.setBadge('R');
 		this.showTray();
+
 		CommandManager.setEnabled('Tools', 'Start Recording', false);
 		CommandManager.setEnabled('Tools', 'Stop Recording', true);
+
 		this.browser.webContents.send('recordingBegin');
 		this.isRecording = true;
+
 		if(UserManager.getPreferenceByName("hide_status_while_recording")) {
 			this.browser.webContents.send('hide-status');
 		}
@@ -325,6 +331,8 @@ Camera.prototype.stopRecording = function() {
 		// @if NODE_ENV='development'
 		c.log('[CAMERA] Finished recording!');
 		// @endif
+
+		this.browserWindow.unlockDimensions();
 
 		app.dock.setBadge('');
 		CommandManager.setEnabled('Tools', 'Start Recording', true);
