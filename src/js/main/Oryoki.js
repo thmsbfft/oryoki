@@ -280,6 +280,9 @@ Oryoki.prototype.toggleFullScreen = function() {
 		else {
 			this.focusedWindow.browser.setFullScreen(!this.focusedWindow.browser.isFullScreen());
 		}
+		if(this.focusedWindow.handle) {
+			this.focusedWindow.toggleHandle();
+		}
 	}
 
 	CommandManager.toggleChecked('View', 'Fullscreen');
