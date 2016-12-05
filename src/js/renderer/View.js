@@ -232,10 +232,10 @@ View.prototype.onDidGetResponseDetails = function(e) {
 View.prototype.onNewWindow = function(e) {
 
 	if(ipcRenderer.sendSync('get-preference', 'follow_all_links')) {
-		ipcRenderer.send('newWindow', [e.url]);
+		this.load(e.url);
 	}
 	else {
-		this.load(e.url);
+		ipcRenderer.send('newWindow', [e.url]);
 	}
 
 }
