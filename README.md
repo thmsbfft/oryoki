@@ -4,16 +4,19 @@
 
 Ōryōki [応量器] is an experimental web browser with a thin interface.
 
-![Oryoki](https://github.com/thmsbfft/oryoki/blob/master/oryoki.jpg?raw=true "Oryoki")
+![Oryoki](https://github.com/thmsbfft/oryoki/blob/master/oryoki.png?raw=true "Oryoki")
 
 ## Features
 
 ➡️ See [user manual](https://github.com/thmsbfft/oryoki/blob/master/USER-MANUAL.md) for a more complete run through.
 
 * Frameless browsing
+* Picture in picture
+* Search dictionary
 * Window dimension controller® 2016
-* Screen grab
+* Magic screenshots
 * Video recording (experimental)
+* Visual filters (invert, grayscale)
 * Devtools
 
 ## Status
@@ -25,11 +28,9 @@ Beta (very). Developped by [@thmsbfft](https://twitter.com/thmsbfft).
 These improvements are aimed at a more final release.
 
 * Refactoring / stability
-* Auto update
 * Bookmarks-ish
 * History
-* Omnibox command dictionary
-* A real mini console
+* A better mini console
 * Local server wizard
 * CSS themes
 
