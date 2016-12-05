@@ -6,7 +6,7 @@
 //
 {
 	// Do not touch!
-	"model_version" : "0.0.4",
+	"model_version" : "0.0.5",
 
 	// Allows Oryoki to download updates in background
 	"download_updates_in_background" : false,
