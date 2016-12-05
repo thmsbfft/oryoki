@@ -69,29 +69,30 @@ function User(name, factory) {
 	}.bind(this));
 
 	// @if NODE_ENV='development'
-	c.log('[User] Preference model v. ' + this.preferences['model_version']);
+	if(this.preferences) { c.log('[User] Preference model v. ' + this.preferences['model_version']); }
 	// @endif
 
-	if(this.preferences['model_version'] !== app.getVersion()) {
-		// @if NODE_ENV='development'
-		c.log('[User] Using a different model. Latest is ' + app.getVersion());
-		// @endif
+	if(this.preferences) {
+		if(this.preferences['model_version'] !== app.getVersion()) {
+			// @if NODE_ENV='development'
+			c.log('[User] Using a different model. Latest is ' + app.getVersion());
+			// @endif
 
-		dialog.showMessageBox(
-			{
-				type: 'info',
-				message: 'Preference model outdated.',
-				detail: 'Reset the preferences to use new features.',
-				buttons: ['Reset', 'Continue Anyway'],
-				defaultId: 0
-			},
-			function(buttonId) {
+			dialog.showMessageBox(
+				{
+					type: 'info',
+					message: 'Preference model outdated.',
+					detail: 'Reset the preferences to use new features.',
+					buttons: ['Reset', 'Continue Anyway'],
+					defaultId: 0
+				},
+				function(buttonId) {
 
-				if(buttonId == 0) UserManager.reset('Preferences', 'oryoki-preferences.json', 'factory.json');
+					if(buttonId == 0) UserManager.reset('Preferences', 'oryoki-preferences.json', 'factory.json');
 
-			}.bind(this)
-		);
-
+				}.bind(this)
+			);
+		}
 	}
 
 	// Init conf file
