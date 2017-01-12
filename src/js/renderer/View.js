@@ -175,6 +175,8 @@ View.prototype.onDidFinishLoad = function() {
 
 View.prototype.onDidFailLoad = function(e) {
 
+	console.log('[View] Load failed: ', e);
+
 	if(e.errorCode == -3 || e.errorCode == 0) {
 		// Not sure what this is related to
 		// Ignore
@@ -186,8 +188,6 @@ View.prototype.onDidFailLoad = function(e) {
 		console.log(e);
 		return;
 	}
-
-	console.log('[View] Load failed: ', e)
 
 	Browser.showOmnibox();
 
@@ -219,7 +219,7 @@ View.prototype.onDidFailLoad = function(e) {
 }
 
 View.prototype.onCrashed = function(e) {
-	console.log('did-fail-load: ', e);
+	console.log('[View] Crashed: ', e);
 }
 
 View.prototype.onDidGetResponseDetails = function(e) {
