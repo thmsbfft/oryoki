@@ -45,7 +45,15 @@ function Window(parameters) {
 	  fullscreenable: !UserManager.getPreferenceByName("picture_in_picture")
 	});
 
-	c.log(this.browser.webContents.session);
+	this.session = this.browser.webContents.session;
+	this.session.setPermissionRequestHandler(function(webContents, permission, callback) {
+		if(permission === 'notifications' || permission === 'fullscreen') {
+			callback(true);
+		}
+		else {
+			callback(false);
+		}
+	});
 
 	this.attachEvents();
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html' + '#' + this.id);
