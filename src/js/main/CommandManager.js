@@ -295,7 +295,7 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Navigate Back',
-					accelerator: 'CmdOrCtrl+Left',
+					accelerator: 'CmdOrCtrl+[',
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.navigateBack();
@@ -304,7 +304,7 @@ CommandManager.prototype.createMenus = function() {
 				},
 				{
 					label: 'Navigate Forward',
-					accelerator: 'CmdOrCtrl+Right',
+					accelerator: 'CmdOrCtrl+]',
 					click: function() {
 						if(Oryoki.focusedWindow) {
 							Oryoki.focusedWindow.navigateForward();
