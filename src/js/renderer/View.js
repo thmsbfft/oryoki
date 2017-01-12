@@ -143,7 +143,6 @@ View.prototype.onLoadCommit = function(e) {
 }
 
 View.prototype.onDidFrameFinishLoad = function(e) {
-
 	
 	if(this.isLoadingTimerRunning && e.isMainFrame) {
 		// Stop the timer
@@ -169,8 +168,6 @@ View.prototype.onPageTitleUpdated = function(e) {
 }
 
 View.prototype.onDidFinishLoad = function() {
-
-	removeClass(this.webview, 'show');
 
 	this.onDidFinishLoadCallback();
 	

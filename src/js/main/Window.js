@@ -45,11 +45,13 @@ function Window(parameters) {
 	  fullscreenable: !UserManager.getPreferenceByName("picture_in_picture")
 	});
 
+	c.log(this.browser.webContents.session);
+
 	this.attachEvents();
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html' + '#' + this.id);
 
 	// @if NODE_ENV='development'
-	// this.browser.webContents.openDevTools();
+	this.browser.webContents.openDevTools();
 	// @endif
 }
 
