@@ -44,9 +44,12 @@ View.prototype.build = function() {
 	// Create Webview
 	this.webview = this.el.appendChild(document.createElement('webview'));
 	this.webview.className = 'webview';
-	// addClass(this.webview, 'hide');
+
+	var webPreferences = '';
+	this.webview.setAttribute('webPreferences', webPreferences);
 
 	this.attachEvents();
+
 }
 
 View.prototype.attachEvents = function() {
