@@ -2,8 +2,14 @@
 //	The search dictionary defines custom web searches. Add yours here!
 //
 {
-	// Set a default search engine here
+	// Do not touch!
+	"model_version" : "0.0.5",
+	
+	// Set a default search engine here.
 	"default" : "https://www.google.com/search?q={query}",
+
+	// Direct search is triggered with ctrl + enter in the omnibox.
+	"direct" : "http://www.google.com/search?q={query}&btnI",
 
 	"custom" : [
 
