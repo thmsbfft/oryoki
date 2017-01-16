@@ -111,17 +111,30 @@ Omnibox.prototype.onInputKeyDown = function(e) {
 
 Omnibox.prototype.onInputKeyUp = function(e) {
 
-	if(e.keyCode == 9) {
-		// Tab
+	if(e.ctrlKey && e.keyCode == 13 && this.searchDictionary.direct) {
+
+		// Ctrl + Enter
+		var raw = this.input.value;
+		var url = this.searchDictionary.direct.replace('{query}', raw);
+		this.submitCallback(url);
+		e.preventDefault();
+		return;
+
 	}
+
 	if(e.keyCode == 13) {
+
 		// Enter
 		removeClass(this.input, 'highlight');
 		this.submit();
 		e.preventDefault();
+
 	}
+	
 	if(e.key == "Escape") {
-		if(!Browser.isFirstLoad) this.hide()
+	
+		if(!Browser.isFirstLoad) this.hide();
+	
 	}
 
 	var customSearch = this.getCustomSearch();
