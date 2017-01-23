@@ -90,7 +90,9 @@ Window.prototype.attachEvents = function() {
 	}.bind(this));
 
 	ipcMain.on('setWindowSize', function(e, width, height, windowId) {
-		if(this.id == windowId) this.setSize(width, height);
+		if(this.id == windowId) {
+			this.setSize(width, height);
+		}
 	}.bind(this));
 
 	ipcMain.on('updateMenuTitle', function(event, id, newTitle) {
@@ -125,6 +127,16 @@ Window.prototype.setSize = function(width, height) {
 	if(height > currentScreen.workArea.height) {
 		height = currentScreen.workArea.height;
 		y = currentScreen.workArea.y;
+	}
+
+	// If requested dimensions are inferior to minimum sizes,
+	// default to minimum
+	if(width < this.browser.minWidth) {
+		width = this.browser.minWidth;
+	}
+
+	if(height < this.browser.minHeight) {
+		height = this.browser.minHeight;
 	}
 
 	this.browser.setBounds({
