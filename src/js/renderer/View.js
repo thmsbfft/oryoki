@@ -45,7 +45,7 @@ View.prototype.build = function() {
 	this.webview = this.el.appendChild(document.createElement('webview'));
 	this.webview.className = 'webview';
 
-	var webPreferences = '';
+	var webPreferences = 'experimentalFeatures=yes, experimentalCanvasFeatures=yes';
 	this.webview.setAttribute('webPreferences', webPreferences);
 
 	this.attachEvents();
