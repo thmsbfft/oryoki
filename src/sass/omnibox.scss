@@ -161,3 +161,19 @@ omnibox {
 		}
 	}
 }
+
+@media (max-width: 485px) {
+
+	omnibox {
+
+		.box {
+			top: 4px;
+			width: calc(100% - 8px);
+			.input {
+				border-radius: 2px;
+			}
+		}
+
+	}
+
+}

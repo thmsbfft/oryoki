@@ -35,8 +35,8 @@ function Window(parameters) {
 	  show: false,
 	  x: parameters.x ? parameters.x : 890,
 	  y: parameters.y ? parameters.y : 660,
-	  minWidth: 600,
-	  minHeight: 350,
+	  minWidth: 200,
+	  minHeight: 200,
 	  darkTheme: true,
 	  webPreferences: {
 	  	"experimentalFeatures": true,
@@ -59,7 +59,7 @@ function Window(parameters) {
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html' + '#' + this.id);
 
 	// @if NODE_ENV='development'
-	// this.browser.webContents.openDevTools();
+	this.browser.webContents.openDevTools();
 	// @endif
 }
 
