@@ -1,4 +1,4 @@
-windowHelper {
+windowhelper {
 
 	position: fixed;
 	z-index: 99;
@@ -37,11 +37,11 @@ windowHelper {
 		text-align: center;
 
 		&.fourDigits {
-			width: 35px;
+			width: 34px;
 		}
 
 		&.leadingOne {
-			width: 32px;
+			width: 30px;
 		}
 
 		&:focus {
@@ -74,4 +74,22 @@ windowHelper {
 			-webkit-user-select: none;
 			user-select: none;
 	}
+}
+
+@media (-webkit-min-device-pixel-ratio: 2) { 
+    
+	windowhelper {
+
+		input {
+			&.fourDigits {
+				width: 34px;
+			}
+
+			&.leadingOne {
+				width: 33px;
+			}
+		}
+
+	}
+
 }
