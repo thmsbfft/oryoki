@@ -76,19 +76,29 @@ WindowHelper.prototype.updateWindowDimensions = function() {
 
 WindowHelper.prototype.updateUI = function() {
 
-	if(this.widthInput.value >= 1000) {
-		addClass(this.el.querySelectorAll('#width')[0], 'fourDigits');
+	if(this.widthInput.value <= 1000) {
+		this.el.querySelectorAll('#width')[0].className = '';
 	}
-	else {
-		removeClass(this.el.querySelectorAll('#width')[0], 'fourDigits');		
+
+	if(this.heightInput.value <= 1000) {
+		this.el.querySelectorAll('#height')[0].className = '';
+	}
+
+	if(this.widthInput.value >= 1000) {
+		this.el.querySelectorAll('#width')[0].className = 'leadingOne';
 	}
 
 	if(this.heightInput.value >= 1000) {
-		addClass(this.el.querySelectorAll('#height')[0], 'fourDigits');
+		this.el.querySelectorAll('#height')[0].className = 'leadingOne';
 	}
-	else {
-		removeClass(this.el.querySelectorAll('#height')[0], 'fourDigits');		
-	}	
+
+	if(this.widthInput.value >= 2000) {
+			this.el.querySelectorAll('#width')[0].className = 'fourDigits';
+	}
+
+	if(this.heightInput.value >= 2000) {
+		this.el.querySelectorAll('#height')[0].className = 'fourDigits';
+	}
 
 }
 
