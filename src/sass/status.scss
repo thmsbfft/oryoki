@@ -39,6 +39,10 @@
 		transition: opacity 1s ease-in;
 	}
 
+	i {
+		font-style: italic;
+	}
+
 	@media (-webkit-min-device-pixel-ratio: 2) { 
 	    icon {
 	    	padding-right: 5px;

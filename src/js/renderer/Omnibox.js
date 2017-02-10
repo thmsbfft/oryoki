@@ -118,7 +118,7 @@ Omnibox.prototype.onInputKeyUp = function(e) {
 		var url = this.searchDictionary.direct.replace('{query}', raw);
 		this.submitCallback(url);
 		StatusManager.log({
-			'body' : 'Looking for ' + raw,
+			'body' : 'Looking for <i>' + raw + '</i>',
 		});
 		e.preventDefault();
 		return;
