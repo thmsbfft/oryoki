@@ -87,7 +87,7 @@ Updater.prototype.compareVersions = function(alert) {
 
 			}
 
-			return;
+			break;
 
 		}
 	}

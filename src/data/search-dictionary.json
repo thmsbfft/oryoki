@@ -3,7 +3,7 @@
 //
 {
 	// Do not touch!
-	"model_version" : "0.0.5",
+	"model_version" : "0.1.0",
 	
 	// Set a default search engine here.
 	"default" : "https://www.google.com/search?q={query}",
