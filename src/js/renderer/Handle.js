@@ -141,7 +141,7 @@ Handle.prototype.openMenu = function(e) {
 			new MenuItem(
 				{
 					label: 'Back',
-					accelerator: 'Cmd+Left',
+					accelerator: 'Cmd+[',
 					enabled: Browser.view.webview.canGoBack(),
 					click: () => {
 						Browser.view.webview.goBack();
@@ -153,7 +153,7 @@ Handle.prototype.openMenu = function(e) {
 			new MenuItem(
 				{
 					label: 'Forward',
-					accelerator: 'Cmd+Right',
+					accelerator: 'Cmd+]',
 					enabled: Browser.view.webview.canGoForward(),
 					click: () => {
 						Browser.view.webview.goForward();
