@@ -84,6 +84,13 @@ Handle.prototype.getTitle = function() {
 
 }
 
+Handle.prototype.extractColor = function() {
+
+	console.log('Extracting color...');
+	console.log(ipcRenderer.sendSync('extract-color'));
+
+}
+
 Handle.prototype.openMenu = function(e) {
 
 	e.preventDefault();

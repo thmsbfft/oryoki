@@ -160,6 +160,8 @@ View.prototype.onDidFrameFinishLoad = function(e) {
 
 	}
 
+	Browser.handle.extractColor();
+
 }
 
 View.prototype.onPageTitleUpdated = function(e) {

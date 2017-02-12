@@ -59,7 +59,7 @@ function Window(parameters) {
 	this.browser.loadURL('file://' + __dirname + '/src/html/index.html' + '#' + this.id);
 
 	// @if NODE_ENV='development'
-	// this.browser.webContents.openDevTools();
+	this.browser.webContents.openDevTools();
 	// @endif
 }
 
@@ -103,6 +103,10 @@ Window.prototype.attachEvents = function() {
 
 	ipcMain.on('open-file', function(event, id, inputPath) {
 		if(this.id == id) this.loadFile(inputPath);
+	}.bind(this));
+
+	ipcMain.on('extract-color', function(event) {
+	  event.returnValue = this.extractColor();
 	}.bind(this));
 
 }
@@ -508,5 +512,41 @@ Window.prototype.lockDimensions = function() {
 Window.prototype.unlockDimensions = function() {
 
 	this.browser.setResizable(true);
+
+}
+
+Window.prototype.extractColor = function() {
+
+	var color = null;
+
+	this.browser.capturePage(function(image) {
+		
+		colors = image.toBitmap();
+
+		var r = 0;
+		var g = 0;
+		var b = 0;
+
+		for (var i = 0; i < colors.length; i++) {
+			if (i % 4 === 0) {
+				r += colors[i];
+				g += colors[i+1];
+				b += colors[i+2];
+			}
+		};
+
+		r = Math.round(r/(colors.length/4));
+		g = Math.round(g/(colors.length/4));
+		b = Math.round(b/(colors.length/4));
+
+		c.log("Median R: " + r);
+		c.log("Median G: " + g);
+		c.log("Median B: " + b);
+
+		color = [r, g, b];
+
+	}.bind(this));
+
+	return color;
 
 }
