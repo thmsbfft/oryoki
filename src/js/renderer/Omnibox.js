@@ -274,7 +274,9 @@ Omnibox.prototype.show = function() {
 	removeClass(this.el, 'hide');
 	addClass(this.el, 'show');
 
-	if(Browser.handle) Browser.handle.el.classList.remove('stroke');
+	if(Browser.handle) {
+		Browser.handle.el.classList.remove('stroke');
+	}
 
 	this.focus();
 	this.selectAll();

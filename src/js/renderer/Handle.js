@@ -86,9 +86,17 @@ Handle.prototype.getTitle = function() {
 
 Handle.prototype.extractColor = function() {
 
-	console.log('Extracting color...');
 	var luminosity = ipcRenderer.sendSync('extract-color', Browser.id)[2];
-	console.log(luminosity);
+	console.log('[Handle] Window luminosity: ' + luminosity);
+
+	if(luminosity > 0.60) {
+		this.el.classList.add('light');
+		StatusManager.el.classList.add('light');
+	}
+	else {
+		this.el.classList.remove('light');
+		StatusManager.el.classList.remove('light');
+	}
 
 }
 

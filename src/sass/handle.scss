@@ -1,9 +1,10 @@
 handle {
 	-webkit-app-region: drag;
-	// background: #0D0D0D;
-	background: transparent;
+	background: rgba(20, 20, 20, 0);
 	height: 24px;
+	width: 100%;
 	text-align: center;
+	transition: background 0.5s;
 
 	&.stroke::after {
 		content: ' ';
@@ -15,6 +16,7 @@ handle {
 		top: 24px;
 		left: 0;
 		z-index: 98;
+		transition: background 0.2s;
 	}
 
 	// &::after {
@@ -112,10 +114,12 @@ handle {
 	.minimize {
 		left: 29px;
 		background: rgba(255, 255, 255, 0.2);
+		transition: background 0.2s;
 	}
 	.fullscreen {
 		left: 49px;
 		background: rgba(255, 255, 255, 0.2);
+		transition: background 0.2s;
 	}
 	&.hide {
 		display: none;
@@ -126,7 +130,7 @@ handle {
 			animation: fade-in 0.7s 1 ease-out;
 		}
 	}
-	&:hover {
+	&:hover, &.light:hover {
 		.minimize {
 			background: #ffbb3c;
 			&:active {
@@ -150,4 +154,32 @@ handle {
 			opacity: 0.6;
 		}
 	}
+
+	&.light {
+		background: rgba(247, 247, 247, 1);
+
+		&.stroke::after {
+			background: rgba(33, 33, 33, 0.15);
+		}
+
+		.title {
+			color: hsla(0,0%,10%,1);
+		}
+
+		.minimize {
+			background: rgba(0, 0, 0, 0.15);
+		}
+
+		.fullscreen {
+			background: rgba(0, 0, 0, 0.15);
+		}
+
+		&.disabled {
+			.button {
+				background: rgba(0, 0, 0, 0.15);
+			}
+		}
+
+	}
+
 }

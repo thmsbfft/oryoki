@@ -104,7 +104,8 @@ StatusManager.prototype.unFreeze = function() {
 
 StatusManager.prototype.fadeOut = function() {
 
-	this.el.className = 'fade-out';
+	// this.el.className = 'fade-out';
+	this.el.classList.add('fade-out');
 	this.isActive = false;
 
 }

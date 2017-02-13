@@ -43,6 +43,11 @@
 		font-style: italic;
 	}
 
+	&.light {
+		background: rgba(40,40,40,0.1);
+		color: rgba(0, 0, 0, 0.8);
+	}
+
 	@media (-webkit-min-device-pixel-ratio: 2) { 
 	    icon {
 	    	padding-right: 5px;
