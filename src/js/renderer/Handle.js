@@ -87,7 +87,8 @@ Handle.prototype.getTitle = function() {
 Handle.prototype.extractColor = function() {
 
 	console.log('Extracting color...');
-	console.log(ipcRenderer.sendSync('extract-color'));
+	var luminosity = ipcRenderer.sendSync('extract-color', Browser.id)[2];
+	console.log(luminosity);
 
 }
 

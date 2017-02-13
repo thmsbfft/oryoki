@@ -105,8 +105,12 @@ Window.prototype.attachEvents = function() {
 		if(this.id == id) this.loadFile(inputPath);
 	}.bind(this));
 
-	ipcMain.on('extract-color', function(event) {
-	  event.returnValue = this.extractColor();
+	ipcMain.on('extract-color', function(event, id) {
+		if(this.id == id) {
+				this.browser.capturePage(function(image) {
+			  	event.returnValue = this.extractColor(image);
+				}.bind(this));
+		}
 	}.bind(this));
 
 }
@@ -515,38 +519,35 @@ Window.prototype.unlockDimensions = function() {
 
 }
 
-Window.prototype.extractColor = function() {
+Window.prototype.extractColor = function(image) {
 
 	var color = null;
 
-	this.browser.capturePage(function(image) {
-		
-		colors = image.toBitmap();
+	colors = image.resize({
+		width: 300,
+		quality: 'good'
+	}).toBitmap();
 
-		var r = 0;
-		var g = 0;
-		var b = 0;
+	var r = 0;
+	var g = 0;
+	var b = 0;
 
-		for (var i = 0; i < colors.length; i++) {
-			if (i % 4 === 0) {
-				r += colors[i];
-				g += colors[i+1];
-				b += colors[i+2];
-			}
-		};
+	for (var i = 0; i < colors.length; i++) {
+		if (i % 4 === 0) {
+			r += colors[i];
+			g += colors[i+1];
+			b += colors[i+2];
+		}
+	};
 
-		r = Math.round(r/(colors.length/4));
-		g = Math.round(g/(colors.length/4));
-		b = Math.round(b/(colors.length/4));
+	r = Math.round(r/(colors.length/4));
+	g = Math.round(g/(colors.length/4));
+	b = Math.round(b/(colors.length/4));
 
-		c.log("Median R: " + r);
-		c.log("Median G: " + g);
-		c.log("Median B: " + b);
+	color = [r, g, b];
 
-		color = [r, g, b];
+	hslColor = rgbToHsl(r, g, b);
 
-	}.bind(this));
-
-	return color;
+	return hslColor;
 
 }
