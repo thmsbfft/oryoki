@@ -44,13 +44,13 @@ Handle.prototype.attachEvents = function() {
 
 Handle.prototype.hide = function() {
 
-	this.el.className = 'hide';
+	this.el.classList.add('hide');
 
 }
 
 Handle.prototype.show = function() {
 
-	this.el.className = 'show';
+	this.el.classList.remove('hide');
 
 }
 

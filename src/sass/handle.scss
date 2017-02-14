@@ -5,6 +5,7 @@ handle {
 	width: 100%;
 	text-align: center;
 	transition: background 0.5s;
+	display: block;
 
 	&.stroke::after {
 		content: ' ';
@@ -123,12 +124,6 @@ handle {
 	}
 	&.hide {
 		display: none;
-	}
-	&.show {
-		display: block;
-		.title {
-			animation: fade-in 0.7s 1 ease-out;
-		}
 	}
 	&:hover, &.light:hover {
 		.minimize {
