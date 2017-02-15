@@ -275,7 +275,9 @@ Omnibox.prototype.show = function() {
 	addClass(this.el, 'show');
 
 	if(Browser.handle) {
+		// Restore handle to omnibox view
 		Browser.handle.el.classList.remove('stroke');
+		Browser.handle.el.classList.remove('light');
 	}
 
 	this.focus();
@@ -290,7 +292,10 @@ Omnibox.prototype.hide = function() {
 	removeClass(this.el, 'show');
 	addClass(this.el, 'hide');
 
-	if(Browser.handle) Browser.handle.el.classList.add('stroke');
+	if(Browser.handle) {
+		Browser.handle.el.classList.add('stroke');
+		Browser.handle.extractColor();
+	}
 
 	ipcRenderer.send('setOmniboxHide');
 

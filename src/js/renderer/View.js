@@ -154,8 +154,7 @@ View.prototype.onDidFrameFinishLoad = function(e) {
 		this.loadingTimerEnd = e.timeStamp;
 
 		StatusManager.log({
-			'body' : Math.round(this.loadingTimerEnd - this.loadingTimerStart) + ' ms',
-			'icon' : '⏲'
+			'body' : Math.round(this.loadingTimerEnd - this.loadingTimerStart) + ' ms'
 		});
 
 	}

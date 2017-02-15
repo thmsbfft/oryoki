@@ -4,7 +4,7 @@ handle {
 	height: 24px;
 	width: 100%;
 	text-align: center;
-	transition: background 0.5s;
+	transition: background 0.2s;
 	display: block;
 
 	&.stroke::after {
@@ -17,7 +17,7 @@ handle {
 		top: 24px;
 		left: 0;
 		z-index: 98;
-		transition: background 0.2s;
+		transition: background 0.1s;
 	}
 
 	// &::after {
@@ -60,8 +60,8 @@ handle {
 			height: 9px;
 			position: relative;
 			top: -1px;
-			content: '';
-			background: url(../media/arrow-down.svg);
+			content: '•';
+			// background: url(../media/arrow-down.svg);
 			display: inline-block;
 			margin-left: 4px;
 			opacity: 0.2;
@@ -180,6 +180,12 @@ handle {
 			}
 		}
 
+	}
+
+	@media (-webkit-min-device-pixel-ratio: 2) { 
+	    .button {
+
+	    }
 	}
 
 }
