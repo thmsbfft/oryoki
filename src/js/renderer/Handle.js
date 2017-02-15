@@ -36,6 +36,13 @@ Handle.prototype.attachEvents = function() {
 	this.fullscreenBtn.addEventListener('click', function() {
 		ipcRenderer.send('fullscreenWindow');
 	});
+	window.addEventListener('resize', function() {
+		this.onResize();
+	}.bind(this));
+
+	this.changeTitle('Ōryōki');
+	this.onResize();
+
 	this.title.addEventListener('mousedown', this.openMenu.bind(this));
 
 	console.log('[Handle] ☑️');
@@ -68,7 +75,8 @@ Handle.prototype.enable = function() {
 
 Handle.prototype.changeTitle = function(newTitle) {
 
-	this.el.setAttribute('title', newTitle);
+	this.title.setAttribute('title', newTitle);
+
 	if(newTitle.length > 60) {
 		newTitle = newTitle.substring(0, 60) + '...';
 	}
@@ -76,11 +84,36 @@ Handle.prototype.changeTitle = function(newTitle) {
 
 	ipcRenderer.send('updateMenuTitle', Browser.id, newTitle);
 
+	this.onResize();
+
 }
 
 Handle.prototype.getTitle = function() {
 
 	return this.title.innerText;
+
+}
+
+Handle.prototype.onResize = function() {
+
+	var width = window.innerWidth;
+	var ratio = Math.round(width * 0.05);
+	var title = this.title.getAttribute('title');
+
+	console.log(title.length);
+
+	if(this.title.innerText.length > ratio) {
+		title = title.substring(0, ratio) + '...';
+	}
+
+	// if(this.title.innerText.length > 20 && width < 450) {
+	// 	this.title.classList.add('align-left');
+	// }
+	// else {
+	// 	this.title.classList.remove('align-left');
+	// }
+
+	this.title.innerText = title;
 
 }
 

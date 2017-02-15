@@ -75,6 +75,11 @@ handle {
 		&:active {
 			background: rgba(255, 255, 255, 0.1);
 		}
+		&.align-left {
+			text-align: left;
+			position: absolute;
+			left: 60px;
+		}
 	}
 	.button {
 		position: absolute;
