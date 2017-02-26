@@ -173,6 +173,8 @@ View.prototype.onPageTitleUpdated = function(e) {
 
 View.prototype.onDidFinishLoad = function() {
 
+	console.log('[View] Did finish load');
+	Browser.handle.extractColor();
 	this.onDidFinishLoadCallback();
 	
 }
@@ -227,7 +229,7 @@ View.prototype.onCrashed = function(e) {
 }
 
 View.prototype.onDidGetResponseDetails = function(e) {
-	// console.log('did-get-response-details', e.httpResponseCode, ' ', e.newURL);
+	console.log('did-get-response-details', e.httpResponseCode, ' ', e.newURL);
 }
 
 View.prototype.onNewWindow = function(e) {
@@ -247,8 +249,11 @@ View.prototype.onConsoleMessage = function(e) {
 }
 
 View.prototype.onDOMReady = function() {
+
+	Browser.handle.extractColor();
 	this.canOpenDevTools = true;
 	this.onDOMReadyCallback();
+
 }
 
 View.prototype.getTitle = function() {
@@ -321,6 +326,18 @@ View.prototype.toggleFilter = function(e, filter) {
 	StatusManager.log({
 		'body' : filter.charAt(0).toUpperCase() + filter.substr(1).toLowerCase()
 	});
+
+	if(filter == 'invert') {
+		// Invert handle color theme as well
+		if(Browser.handle && Browser.handle.lightTheme) {
+			Browser.handle.el.classList.remove('light');
+			Browser.handle.lightTheme = false;
+		}
+		else {
+			Browser.handle.el.classList.add('light');
+			Browser.handle.lightTheme = true;
+		}
+	}
 
 }
 

@@ -4,6 +4,9 @@ function Handle(parameters) {
 	this.title = undefined;
 	this.htmlData = undefined;
 
+	this.lightTheme = false;
+	this.previousLuminositySample = 0;
+
 	if(ipcRenderer.sendSync('get-preference', 'show_title_bar')) {
 		this.show();
 	}
@@ -44,6 +47,8 @@ Handle.prototype.attachEvents = function() {
 	this.onResize();
 
 	this.title.addEventListener('mousedown', this.openMenu.bind(this));
+
+	// setInterval(this.extractColor.bind(this, true), 1000);
 
 	console.log('[Handle] ☑️');
 
@@ -100,8 +105,6 @@ Handle.prototype.onResize = function() {
 	var ratio = Math.round(width * 0.05);
 	var title = this.title.getAttribute('title');
 
-	console.log(title.length);
-
 	if(this.title.innerText.length > ratio) {
 		title = title.substring(0, ratio) + '...';
 	}
@@ -117,19 +120,31 @@ Handle.prototype.onResize = function() {
 
 }
 
-Handle.prototype.extractColor = function() {
+Handle.prototype.extractColor = function(continuous) {
 
 	var luminosity = ipcRenderer.sendSync('extract-color', Browser.id)[2];
-	console.log('[Handle] Window luminosity: ' + luminosity);
+
+	if(continuous) {
+		// In continuous mode, only big changes in luminosity trigger a color extraction
+		var luminosityDelta = Math.abs(luminosity - this.previousLuminositySample);
+		if(luminosityDelta < 0.50 && luminosityDelta != 0) {
+			this.previousLuminositySample = luminosity;
+			return;
+		}
+	}
 
 	if(luminosity > 0.60) {
+		this.lightTheme = true;
 		this.el.classList.add('light');
 		StatusManager.el.classList.add('light');
 	}
 	else {
+		this.lightTheme = false;
 		this.el.classList.remove('light');
 		StatusManager.el.classList.remove('light');
 	}
+
+	this.previousLuminositySample = luminosity;
 
 }
 

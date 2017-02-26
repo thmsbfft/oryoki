@@ -20,6 +20,10 @@ handle {
 		transition: background 0.1s;
 	}
 
+	// &.slow {
+	// 	transition: background 0.8s;
+	// }
+
 	// &::after {
 	// 	content: ' ';
 	// 	width: 100%;
@@ -61,7 +65,6 @@ handle {
 			position: relative;
 			top: -1px;
 			content: '•';
-			// background: url(../media/arrow-down.svg);
 			display: inline-block;
 			margin-left: 4px;
 			opacity: 0.2;
@@ -71,9 +74,6 @@ handle {
 			&::after {
 				opacity: 1;
 			}
-		}
-		&:active {
-			background: rgba(255, 255, 255, 0.1);
 		}
 		&.align-left {
 			text-align: left;

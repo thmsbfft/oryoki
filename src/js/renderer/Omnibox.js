@@ -292,12 +292,12 @@ Omnibox.prototype.hide = function() {
 	removeClass(this.el, 'show');
 	addClass(this.el, 'hide');
 
+	ipcRenderer.send('setOmniboxHide');
+
 	if(Browser.handle) {
 		Browser.handle.el.classList.add('stroke');
-		Browser.handle.extractColor();
+		if(Browser.handle.lightTheme) Browser.handle.el.classList.add('light');
 	}
-
-	ipcRenderer.send('setOmniboxHide');
 
 }
 
