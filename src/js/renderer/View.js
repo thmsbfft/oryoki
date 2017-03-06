@@ -159,8 +159,6 @@ View.prototype.onDidFrameFinishLoad = function(e) {
 
 	}
 
-	Browser.handle.extractColor();
-
 }
 
 View.prototype.onPageTitleUpdated = function(e) {
@@ -174,8 +172,8 @@ View.prototype.onPageTitleUpdated = function(e) {
 View.prototype.onDidFinishLoad = function() {
 
 	console.log('[View] Did finish load');
-	Browser.handle.extractColor();
 	this.onDidFinishLoadCallback();
+	Browser.handle.extractColor();
 	
 }
 
@@ -250,7 +248,6 @@ View.prototype.onConsoleMessage = function(e) {
 
 View.prototype.onDOMReady = function() {
 
-	Browser.handle.extractColor();
 	this.canOpenDevTools = true;
 	this.onDOMReadyCallback();
 

@@ -48,7 +48,7 @@ Handle.prototype.attachEvents = function() {
 
 	this.title.addEventListener('mousedown', this.openMenu.bind(this));
 
-	// setInterval(this.extractColor.bind(this, true), 1000);
+	// setInterval(this.extractColor.bind(this, true), 1000); // Continuous color extraction
 
 	console.log('[Handle] ☑️');
 
@@ -109,13 +109,6 @@ Handle.prototype.onResize = function() {
 		title = title.substring(0, ratio) + '...';
 	}
 
-	// if(this.title.innerText.length > 20 && width < 450) {
-	// 	this.title.classList.add('align-left');
-	// }
-	// else {
-	// 	this.title.classList.remove('align-left');
-	// }
-
 	this.title.innerText = title;
 
 }
@@ -123,6 +116,8 @@ Handle.prototype.onResize = function() {
 Handle.prototype.extractColor = function(continuous) {
 
 	var luminosity = ipcRenderer.sendSync('extract-color', Browser.id)[2];
+
+	console.log('[Handle] Lum: ' + luminosity);
 
 	if(continuous) {
 		// In continuous mode, only big changes in luminosity trigger a color extraction
@@ -133,7 +128,7 @@ Handle.prototype.extractColor = function(continuous) {
 		}
 	}
 
-	if(luminosity > 0.60) {
+	if(luminosity > 0.50) {
 		this.lightTheme = true;
 		this.el.classList.add('light');
 		StatusManager.el.classList.add('light');
