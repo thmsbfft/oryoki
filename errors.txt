@@ -1,0 +1,827 @@
+  /Users/thmsbfft/Sites/oryoki/src/js/main/About.js:2:17: 'BrowserWindow' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/About.js:13:31: 'path' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/About.js:27:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:15:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:18:24: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:24:5: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:28:7: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:41:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:45:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:55:20: 'URL' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:57:15: 'pad' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:58:17: 'pad' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:62:15: 'pad' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:63:15: 'pad' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:64:15: 'pad' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:68:16: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:69:14: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:70:14: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:73:9: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:87:7: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:97:11: 'name' is already defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:101:20: 'extract' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:103:28: 'text' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:104:28: 'text' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:106:7: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:106:48: 'new Buffer()' was deprecated since v6. Use 'Buffer.alloc()' or 'Buffer.from()' (use 'https://www.npmjs.com/package/safe-buffer' for '<4.5.0') instead.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:106:59: 'encode' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:127:5: 'clipboard' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:137:3: 'shell' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:137:18: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:144:7: 'execSync' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:153:9: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:153:68: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:163:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:168:7: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:172:9: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:180:5: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:183:5: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:184:5: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:189:9: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:193:27: 'electronScreen' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:198:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:214:5: 'buffer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:215:5: 'width' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:216:5: 'height' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:217:5: 'extraBytes' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:217:18: 'width' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:218:5: 'rgbSize' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:218:15: 'height' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:218:29: 'width' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:218:37: 'extraBytes' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:219:5: 'headerInfoSize' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:221:5: 'data' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:223:5: 'flag' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:224:5: 'reserved' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:225:5: 'offset' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:226:5: 'fileSize' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:226:16: 'rgbSize' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:226:26: 'offset' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:227:5: 'planes' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:228:5: 'bitPP' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:229:5: 'compress' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:230:5: 'hr' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:231:5: 'vr' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:232:5: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:233:5: 'importantColors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:235:22: 'new Buffer()' was deprecated since v6. Use 'Buffer.alloc()' or 'Buffer.from()' (use 'https://www.npmjs.com/package/safe-buffer' for '<4.5.0') instead.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:235:33: 'offset' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:235:42: 'rgbSize' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:236:5: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:237:22: 'flag' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:237:28: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:237:37: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:238:30: 'fileSize' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:238:40: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:238:46: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:239:30: 'reserved' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:239:40: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:239:46: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:240:30: 'offset' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:240:38: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:240:44: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:242:30: 'headerInfoSize' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:242:46: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:242:52: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:243:30: 'width' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:243:37: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:243:43: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:244:30: 'height' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:244:38: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:244:44: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:245:30: 'planes' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:245:38: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:245:44: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:246:30: 'bitPP' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:246:37: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:246:43: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:247:30: 'compress' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:247:40: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:247:46: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:248:30: 'rgbSize' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:248:39: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:248:45: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:249:30: 'hr' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:249:34: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:249:40: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:250:30: 'vr' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:250:34: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:250:40: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:251:30: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:251:38: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:251:44: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:252:30: 'importantColors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:252:47: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:252:53: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:255:24: 'width' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:255:32: 'extraBytes' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:257:18: 'height' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:258:27: 'width' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:259:17: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:260:25: 'buffer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:261:29: 'buffer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:262:29: 'buffer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:265:11: 'extraBytes' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:266:26: 'pos' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:266:47: 'width' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:267:53: 'extraBytes' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:275:9: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:275:65: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:276:7: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:277:16: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:277:72: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:278:7: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:288:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:293:5: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:294:5: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:295:5: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:300:9: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:305:15: 'pad' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:306:17: 'pad' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:310:15: 'pad' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:311:15: 'pad' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:312:15: 'pad' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:318:13: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:321:30: 'ffmpeg' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:333:13: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:333:13: Unreachable code.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:340:17: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:346:30: 'ffmpeg' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:358:13: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:358:13: Unreachable code.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:367:17: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:374:9: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:377:7: Expected a 'break' statement before 'default'.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:380:43: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:384:30: 'ffmpeg' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:395:13: Unreachable code.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:395:13: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:404:17: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:425:18: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:431:7: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:437:19: 'Tray' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:437:24: 'path' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:438:29: 'path' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Camera.js:440:21: 'Menu' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:6:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:10:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:14:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:22:14: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:25:7: 'Updater' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:25:43: 'Updater' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:30:9: 'Updater' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:42:9: 'Updater' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:49:9: 'Updater' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:56:9: 'Updater' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:60:6: 'Updater' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:69:13: 'About' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:73:31: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:88:13: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:97:13: 'shell' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:97:28: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:103:13: 'shell' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:103:28: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:118:17: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:124:17: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:135:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:135:25: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:141:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:141:25: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:167:32: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:178:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:178:25: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:185:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:185:25: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:244:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:245:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:253:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:254:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:265:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:266:19: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:267:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:276:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:277:19: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:278:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:290:36: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:290:44: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:299:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:300:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:308:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:309:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:320:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:321:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:321:75: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:329:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:330:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:330:72: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:338:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:339:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:339:73: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:351:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:352:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:361:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:362:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:372:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:372:27: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:384:13: 'Camera' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:391:13: 'Camera' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:401:13: 'Camera' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:408:13: 'Camera' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:419:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:420:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:428:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:429:19: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:430:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:443:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:444:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:451:13: 'shell' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:451:28: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:472:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:473:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:485:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:486:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:502:17: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:503:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:523:13: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:530:33: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:539:21: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:541:9: 'name' is already defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:551:15: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:552:13: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:553:13: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:562:15: 'Menu' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:563:3: 'Menu' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:576:3: Expected an assignment or function call and instead saw an expression.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:576:22: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:593:52: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/CommandManager.js:597:58: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Notification.js:5:17: 'BrowserWindow' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Notification.js:6:19: Use path.join() or path.resolve() instead of + to create paths.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:2:3: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:3:26: Expected '!==' and instead saw '!='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:4:7: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:8:3: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:9:5: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:11:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:17:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:17:25: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:21:15: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:31:7: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:37:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:38:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:39:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:40:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:46:9: 'url' is already defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:54:14: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:56:9: 'url' is already defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:56:15: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:60:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:63:27: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:65:27: 'Window' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:74:27: 'Window' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:89:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:92:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:95:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:100:3: 'dialog' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:111:13: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:115:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:118:16: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:119:16: 'extract' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:125:12: 'text' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:129:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:150:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:151:12: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:166:7: 'validUrl' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:193:3: 'Camera' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:194:3: 'Camera' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:197:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:209:27: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:212:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:214:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:216:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:240:9: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:252:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:261:7: 'errors' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:264:22: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:267:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:269:5: 'exec' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:286:20: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:288:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:290:3: 'exec' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:304:3: 'shell' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:304:18: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:309:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:313:3: 'About' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:314:3: 'About' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:317:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:319:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:321:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Oryoki.js:327:3: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:3:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:15:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:16:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:21:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:24:3: 'request' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:25:39: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:31:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:35:9: 'dialog' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:50:17: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:58:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:62:7: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:64:11: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:66:9: Do not use 'new' for side effects.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:66:13: 'Notification' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:71:13: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:72:20: 'i' is already defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:72:31: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:73:13: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:83:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:87:5: 'dialog' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:91:30: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:101:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:105:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:107:7: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:108:25: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:109:7: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:114:17: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:117:5: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:120:7: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:127:7: 'downloadProcess' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:127:25: 'exec' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:130:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:138:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:150:3: 'exec' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:153:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:160:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:164:7: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:166:11: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:167:29: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:168:11: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:172:7: Do not use 'new' for side effects.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:172:11: 'Notification' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:182:3: 'execSync' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:182:25: Unnecessary escape character: \".
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:182:31: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:182:75: Unnecessary escape character: \".
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:185:3: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:185:42: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:188:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:193:5: 'execSync' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:193:27: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:196:9: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:202:5: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:207:3: 'exec' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:207:23: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Updater.js:212:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:8:21: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:8:52: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:11:5: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:15:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:17:7: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:26:5: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:30:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:32:7: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:43:3: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:45:9: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:45:25: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:47:5: Do not use 'new' for side effects.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:47:9: 'Notification' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:53:3: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:56:5: Do not use 'new' for side effects.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:56:9: 'Notification' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:63:27: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:67:47: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:69:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:69:60: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:72:7: 'dialog' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:81:24: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:81:30: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:94:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:99:7: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:100:25: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:101:7: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:108:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:115:52: Expected '!==' and instead saw '!='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:124:5: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:128:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:130:7: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:138:7: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:139:5: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:145:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:150:15: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:157:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:162:7: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:172:3: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:172:71: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:172:87: Use path.join() or path.resolve() instead of + to create paths.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:176:3: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:176:70: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/User.js:176:86: Use path.join() or path.resolve() instead of + to create paths.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:8:19: 'User' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:11:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:16:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:18:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:26:13: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:26:29: Use path.join() or path.resolve() instead of + to create paths.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:31:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:50:3: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:50:55: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:50:71: Use path.join() or path.resolve() instead of + to create paths.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:52:14: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:54:5: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:61:3: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:61:72: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:61:88: Use path.join() or path.resolve() instead of + to create paths.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:63:14: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:65:5: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/UserManager.js:72:3: 'shell' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:3:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:8:3: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:9:3: 'app' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:13:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:21:17: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:22:28: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:29:22: 'BrowserWindow' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:30:50: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:31:53: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:44:22: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:50:7: Unexpected literal in error position of callback.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:52:7: Unexpected literal in error position of callback.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:57:24: Use path.join() or path.resolve() instead of + to create paths.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:73:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:74:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:76:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:77:18: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:83:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:84:17: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:89:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:90:17: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:95:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:96:17: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:101:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:102:17: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:105:3: 'ipcMain' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:106:17: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:115:7: 'width' is already defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:116:7: 'height' is already defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:118:23: 'electronScreen' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:119:7: 'currentPosition' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:160:7: 'Updater' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:161:35: 'Updater' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:161:51: 'Updater' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:169:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:173:61: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:191:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:204:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:210:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:216:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:221:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:222:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:223:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:224:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:225:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:226:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:227:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:228:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:229:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:230:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:231:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:232:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:233:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:234:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:237:5: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:251:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:260:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:270:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:276:27: 'electronScreen' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:291:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:297:11: 'currentScreen' is already defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:297:27: 'electronScreen' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:312:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:316:3: Expected an assignment or function call and instead saw an expression.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:316:21: Expected '!==' and instead saw '!='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:318:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:322:3: Expected an assignment or function call and instead saw an expression.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:322:16: Expected '!==' and instead saw '!='.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:324:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:329:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:356:3: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:356:37: 'path' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:360:7: 'path' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:369:16: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:370:16: 'extract' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:376:12: 'text' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:397:5: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:398:12: 'c' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:411:7: 'validUrl' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:441:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:449:7: 'color' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:451:3: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:460:23: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:462:12: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:463:12: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:464:12: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:468:23: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:469:23: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:470:23: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:474:3: 'hslColor' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:474:14: 'rgbToHsl' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/Window.js:476:10: 'hslColor' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/console.js:8:11: 'pad' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/console.js:9:11: 'pad' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/console.js:10:11: 'pad' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:5:5: 'electronScreen' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:6:5: 'ipcMain' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:7:5: 'Menu' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:8:5: 'MenuItem' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:10:5: 'Tray' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:11:8: 'clipboard' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:11:19: 'dialog' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:12:5: 'BrowserWindow' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:13:5: 'path' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:14:7: 'URL' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:15:5: 'fs' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:16:5: 'shell' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:17:5: 'exec' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:18:5: 'spawn' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:19:5: 'execSync' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:20:5: 'request' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:21:5: 'ffmpeg' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:22:5: 'gm' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:23:7: 'extract' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:24:7: 'encode' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:25:7: 'text' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:26:7: 'validUrl' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:33:3: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:33:21: 'UserManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:34:3: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:34:24: 'CommandManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:35:3: 'About' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:35:15: 'About' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:36:3: 'Camera' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:36:16: 'Camera' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:37:3: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:37:16: 'Oryoki' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:38:3: 'Updater' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/main.js:38:17: 'Updater' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/utils.js:1:10: 'pad' is defined but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/utils.js:3:10: 'rgbToHsl' is defined but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/utils.js:4:3: Expected an assignment or function call and instead saw an expression.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/utils.js:4:11: Unexpected use of comma operator.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/utils.js:5:3: Split initialized 'var' declarations into multiple statements.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/utils.js:6:3: Split initialized 'var' declarations into multiple statements.
+  /Users/thmsbfft/Sites/oryoki/src/js/main/utils.js:8:11: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:5:28: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:6:28: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:10:19: 'View' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:18:21: 'Handle' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:20:22: 'Omnibox' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:25:22: 'Console' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:34:27: 'WindowHelper' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:44:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:45:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:47:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:48:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:50:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:51:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:53:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:54:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:55:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:57:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:59:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:61:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:62:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:64:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:65:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:67:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:68:2: Unexpected tab character.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:69:5: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:91:9: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:91:68: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:92:7: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:94:5: Unexpected tab character.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:95:5: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:100:15: 'e' is already defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:101:17: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:102:2: Unexpected tab character.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:103:5: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:110:7: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:110:31: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:120:5: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:124:19: 'URL' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:126:28: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:127:22: 'path' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:131:5: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:214:7: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:214:31: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:223:3: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:224:3: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:228:3: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:232:2: Unexpected tab character.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:249:2: Unexpected tab character.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:250:2: Unexpected tab character.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Browser.js:251:2: Unexpected tab character.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Console.js:16:19: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Console.js:16:59: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Console.js:18:7: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Console.js:22:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Console.js:23:18: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Console.js:27:7: Expected an assignment or function call and instead saw an expression.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Console.js:27:22: Expected '!==' and instead saw '!='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Console.js:41:3: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:9:7: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:18:19: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:18:35: 'path' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:29:5: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:32:5: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:35:5: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:75:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:75:39: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:97:20: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:97:58: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:104:51: Expected '!==' and instead saw '!='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:113:5: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:117:5: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:126:18: 'Menu' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:128:9: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:131:19: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:133:11: 'clipboard' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:133:31: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:139:9: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:144:11: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:144:47: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:150:9: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:156:7: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:158:11: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:166:11: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:175:11: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:179:20: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:181:13: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:187:11: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:191:20: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:193:13: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:200:9: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:204:19: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:206:11: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Handle.js:216:14: 'remote' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:10:19: 'fs' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:10:35: 'path' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:47:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:49:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:50:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:51:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:60:5: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:66:31: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:71:5: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:73:5: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:73:35: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:83:17: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:86:17: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:88:5: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:91:17: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:99:30: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:104:5: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:111:17: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:113:5: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:118:13: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:119:10: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:137:28: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:137:79: Expected '!==' and instead saw '!='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:140:9: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:141:7: 'clipboard' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:141:27: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:142:18: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:157:58: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:174:29: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:193:29: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:197:27: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:213:31: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:223:7: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:225:28: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:227:3: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:228:3: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:230:7: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:232:5: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:233:5: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:238:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:243:3: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:244:3: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:246:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:248:7: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:249:5: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:250:9: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:250:36: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:269:32: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:270:7: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:274:3: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:276:3: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:277:3: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:283:3: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:285:3: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:286:3: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:298:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/Omnibox.js:314:5: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:13:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:17:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:21:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:25:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:29:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:30:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:35:18: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:48:3: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:49:3: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:64:3: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:65:3: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:72:3: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:73:3: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:101:3: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/StatusManager.js:108:3: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:74:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:75:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:76:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:77:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:78:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:79:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:80:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:86:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:95:3: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:100:3: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:105:7: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:105:31: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:120:3: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:141:5: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:150:3: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:156:3: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:162:19: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:162:40: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:168:19: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:174:3: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:178:7: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:185:7: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:192:7: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:210:7: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:213:5: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:233:5: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:243:5: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:257:3: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:268:3: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:277:3: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:285:3: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:289:14: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:291:9: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:291:27: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:292:7: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:293:7: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:295:7: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:296:7: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:302:3: 'addClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:307:3: 'removeClass' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:313:18: 'Menu' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:316:9: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:327:9: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:338:9: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:348:9: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:355:9: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:364:9: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:371:9: 'MenuItem' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/View.js:381:14: 'remote' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:20:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:21:18: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:26:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:27:18: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:32:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:33:18: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:37:7: Expected an assignment or function call and instead saw an expression.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:37:22: Expected '!==' and instead saw '!='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:41:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:42:18: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:111:13: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:113:9: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:113:36: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:114:5: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:118:29: Unexpected mix of '&&' and '||'.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:118:45: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:118:50: Unexpected mix of '&&' and '||'.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:118:63: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:123:23: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:140:17: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:140:51: Unexpected mix of '&&' and '||'.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:140:67: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:140:72: Unexpected mix of '&&' and '||'.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:140:85: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:140:103: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:140:122: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/WindowHelper.js:161:3: 'ipcRenderer' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/renderer.js:4:7: 'clipboard' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/renderer.js:5:7: 'Menu' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/renderer.js:6:7: 'MenuItem' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/renderer.js:8:5: 'fs' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/renderer.js:9:5: 'os' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/renderer.js:10:5: 'path' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/renderer.js:12:5: 'conf' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/renderer.js:19:3: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/renderer.js:19:17: 'Browser' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/renderer.js:20:3: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/renderer.js:20:23: 'StatusManager' is not defined.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/utils.js:1:10: 'addClass' is defined but never used.
+  /Users/thmsbfft/Sites/oryoki/src/js/renderer/utils.js:5:10: 'removeClass' is defined but never used.

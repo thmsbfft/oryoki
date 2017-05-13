@@ -1,19 +1,19 @@
 // @if NODE_ENV='development'
 
-var Console = require('console').Console;
-var fs = require('fs');
-var output = fs.createWriteStream('./stdout.log');
-var c = new Console(output);
+var Console = require('console').Console
+var fs = require('fs')
+var output = fs.createWriteStream('./stdout.log')
+var c = new Console(output)
 
-var hrs = pad(new Date().getHours());
-var min = pad(new Date().getMinutes());
-var sec = pad(new Date().getSeconds());
-var time = hrs + ':' + min + ':' + sec;
+var hrs = pad(new Date().getHours())
+var min = pad(new Date().getMinutes())
+var sec = pad(new Date().getSeconds())
+var time = hrs + ':' + min + ':' + sec
 
-c.log('');
-c.log('--------');
-c.log(time);
-c.log('--------');
-c.log('');
+c.log('')
+c.log('--------')
+c.log(time)
+c.log('--------')
+c.log('')
 
 // @endif

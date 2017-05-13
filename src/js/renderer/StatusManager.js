@@ -1,131 +1,111 @@
-function StatusManager(parameters) {
+function StatusManager (parameters) {
+  console.log('[StatusManager] ☑️')
 
-	console.log('[StatusManager] ☑️');
+  this.id = window.location.hash.substring(1)
+  this.el = document.getElementsByTagName('status')[0]
+  this.history = []
 
-	this.id = window.location.hash.substring(1);
-	this.el = document.getElementsByTagName('status')[0];
-	this.history = [];
-	
-	this.isActive = false;
-	this.isVisible = false;
-	this.isFrozen = false;
-	this.visibilityTimer = null;
+  this.isActive = false
+  this.isVisible = false
+  this.isFrozen = false
+  this.visibilityTimer = null
 
-	ipcRenderer.on('log-status', function(e, props) {
-		this.log(props);
-	}.bind(this));
+  ipcRenderer.on('log-status', function (e, props) {
+    this.log(props)
+  }.bind(this))
 
-	ipcRenderer.on('log-important', function(e, props) {
-		this.important(props);
-	}.bind(this));
+  ipcRenderer.on('log-important', function (e, props) {
+    this.important(props)
+  }.bind(this))
 
-	ipcRenderer.on('error-status', function(e, props) {
-		this.error(props);
-	}.bind(this));
+  ipcRenderer.on('error-status', function (e, props) {
+    this.error(props)
+  }.bind(this))
 
-	ipcRenderer.on('unfreeze-status', function(e, props) {
-		this.unFreeze();
-	}.bind(this));
+  ipcRenderer.on('unfreeze-status', function (e, props) {
+    this.unFreeze()
+  }.bind(this))
 
-	ipcRenderer.on('hide-status', this.hide.bind(this));
-	ipcRenderer.on('show-status', this.show.bind(this));
-
+  ipcRenderer.on('hide-status', this.hide.bind(this))
+  ipcRenderer.on('show-status', this.show.bind(this))
 }
 
-StatusManager.prototype.log = function(props) {
+StatusManager.prototype.log = function (props) {
+  // Loading events have lower priority
+  if (props.type == 'loading' && this.isActive) return
 
-	// Loading events have lower priority
-	if(props.type == 'loading' && this.isActive) return;
+  // Stop logging stuff if an error is displayed
+  if (this.isFrozen) return
 
-	// Stop logging stuff if an error is displayed
-	if(this.isFrozen) return;
+  if (props.icon) {
+    this.el.innerHTML = '<icon>' + props.icon + '</icon>' + props.body
+  } else {
+    this.el.innerHTML = props.body
+  }
 
-	if(props.icon) {
-		this.el.innerHTML = '<icon>' + props.icon + '</icon>' + props.body;
-	}
-	else {
-		this.el.innerHTML = props.body;
-	}
+  this.isActive = true
 
-	this.isActive = true;
+  removeClass(this.el, 'fade-out')
+  addClass(this.el, 'fade-in')
 
-	removeClass(this.el, 'fade-out');
-	addClass(this.el, 'fade-in');
-
-	clearTimeout(this.visibilityTimer);
-	this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 1200);
-
+  clearTimeout(this.visibilityTimer)
+  this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 1200)
 }
 
-StatusManager.prototype.important = function(props) {
+StatusManager.prototype.important = function (props) {
+  if (props.icon) {
+    this.el.innerHTML = '<icon>' + props.icon + '</icon>' + props.body
+  } else {
+    this.el.innerHTML = props.body
+  }
 
-	if(props.icon) {
-		this.el.innerHTML = '<icon>' + props.icon + '</icon>' + props.body;
-	}
-	else {
-		this.el.innerHTML = props.body;
-	}
+  this.isActive = true
 
-	this.isActive = true;
+  removeClass(this.el, 'fade-out')
+  addClass(this.el, 'fade-in')
 
-	removeClass(this.el, 'fade-out');
-	addClass(this.el, 'fade-in');
-
-	this.freeze();
-
+  this.freeze()
 }
 
-StatusManager.prototype.error = function(props) {
+StatusManager.prototype.error = function (props) {
+  this.el.innerHTML = '<icon>' + '⭕️' + '</icon>' + props.body
+  removeClass(this.el, 'fade-out')
+  addClass(this.el, 'fade-in')
 
-	this.el.innerHTML = '<icon>' + '⭕️' + '</icon>' + props.body;
-	removeClass(this.el, 'fade-out');
-	addClass(this.el, 'fade-in');
+  this.isActive = true
 
-	this.isActive = true;
-
-	clearTimeout(this.visibilityTimer);
-	this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 5000);
-
+  clearTimeout(this.visibilityTimer)
+  this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 5000)
 }
 
-StatusManager.prototype.freeze = function() {
-
-	clearTimeout(this.visibilityTimer);
-	this.isFrozen = true;
-
+StatusManager.prototype.freeze = function () {
+  clearTimeout(this.visibilityTimer)
+  this.isFrozen = true
 }
 
-StatusManager.prototype.unFreeze = function() {
-
-	this.isFrozen = false;
-	this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 1200);
-
+StatusManager.prototype.unFreeze = function () {
+  this.isFrozen = false
+  this.visibilityTimer = setTimeout(this.fadeOut.bind(this), 1200)
 }
 
-StatusManager.prototype.fadeOut = function() {
-
-	// this.el.className = 'fade-out';
-	this.el.classList.add('fade-out');
-	this.isActive = false;
-
+StatusManager.prototype.fadeOut = function () {
+  // this.el.className = 'fade-out';
+  this.el.classList.add('fade-out')
+  this.isActive = false
 }
 
-StatusManager.prototype.hide = function() {
+StatusManager.prototype.hide = function () {
+  this.el.innerHTML = ''
 
-	this.el.innerHTML = '';
+  this.isVisible = false
+  addClass(this.el, 'hide')
 
-	this.isVisible = false;
-	addClass(this.el, 'hide');
-
-	this.freeze();
-
+  this.freeze()
 }
 
-StatusManager.prototype.show = function() {
+StatusManager.prototype.show = function () {
+  this.isVisible = true
+  removeClass(this.el, 'hide')
 
-	this.isVisible = true;
-	removeClass(this.el, 'hide');
-
-	this.unFreeze();
-
+  this.unFreeze()
 }
