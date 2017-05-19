@@ -1,8 +1,8 @@
 'use strict';
+var c = require('./utils/console')
 var shell = require('electron').shell
 var ipcMain = require('electron').ipcMain
 var fs = require('fs')
-var c = require('./utils/console')
 
 var User = require('./User')
 

@@ -2,12 +2,14 @@
 process.env['PATH'] = '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin'
 
 // Packages
-var electron = require('electron')
-var app = electron.app
-var electronScreen
+const {app} = require('electron')
 
-// Base Classes
-var UserManager = require('./UserManager')
+// Oryoki
+const config = require('./config')
+
+
+
+// var CommandManager = require('./CommandManager')
 
 
 // var ipcMain = require('electron').ipcMain
@@ -34,9 +36,11 @@ var UserManager = require('./UserManager')
 app.commandLine.appendSwitch('ignore-certificate-errors')
 
 app.on('ready', function () {
-  electronScreen = electron.screen
+  const electronScreen = require('electron').screen
 
-  UserManager = new UserManager()
+  config.init()
+
+  // UserManager = new UserManager()
   // CommandManager = new CommandManager()
   // About = new About()
   // Camera = new Camera()
