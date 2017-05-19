@@ -2,6 +2,9 @@
 var shell = require('electron').shell
 var ipcMain = require('electron').ipcMain
 var fs = require('fs')
+var c = require('./utils/console')
+
+var User = require('./User')
 
 module.exports = class UserManager {
 
@@ -13,7 +16,7 @@ module.exports = class UserManager {
       'searchDictionary': this.getFactoryFile('search-dictionary.json')
     }
 
-    // We'll only have one user for now.
+    // We'll only have one user for now
     this.user = new User('Oryoki', this.factory)
 
     // Allow for renderer to get preferences
@@ -32,12 +35,12 @@ module.exports = class UserManager {
 
   getFactoryFile (fileName) {
     // Erase comments to validate JSON
-    var raw = fs.readFileSync(__dirname + '/app/data/' + fileName, 'utf8')
+    var raw = fs.readFileSync(__dirname + '/data/' + fileName, 'utf8')
     var re = /(^\/\/|^\t\/\/).*/gm // Any line that starts with `//` or with a tab followed by `//`
     var stripped = raw.replace(re, '')
 
     // @if NODE_ENV='development'
-    c.log('Getting ' + fileName + ' – ' + JSON.parse(stripped))
+    c.log('[UserManager] Getting ' + fileName)
     // @endif
 
     return JSON.parse(stripped)
@@ -55,19 +58,8 @@ module.exports = class UserManager {
     }
   }
 
-  reset (niceName, fileName, factoryName) {
-    fs.writeFile(this.user.paths.conf + '/' + fileName, fs.readFileSync(__dirname + '/app/data/' + factoryName, 'utf8'), function (err) {
-      // @if NODE_ENV='development'
-      if (err) c.log(err)
-      // @endif
-      Oryoki.focusedWindow.browser.webContents.send('log-status', {
-        'body': niceName + ' reset'
-      })
-    })
-  }
-
   resetUserPreferencesToFactory () {
-    fs.writeFile(this.user.paths.conf + '/' + 'oryoki-preferences.json', fs.readFileSync(__dirname + '/app/data/factory.json', 'utf8'), function (err) {
+    fs.writeFile(this.user.paths.conf + '/' + 'oryoki-preferences.json', fs.readFileSync(__dirname + '/data/factory.json', 'utf8'), function (err) {
       // @if NODE_ENV='development'
       if (err) c.log(err)
       // @endif

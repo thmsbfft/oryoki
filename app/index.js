@@ -1,13 +1,13 @@
 'use strict'
 process.env['PATH'] = '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin'
 
-// Electron
+// Packages
 var electron = require('electron')
 var app = electron.app
 var electronScreen
 
 // Base Classes
-var UserManager = require('./src/js/main/UserManager')
+var UserManager = require('./UserManager')
 
 
 // var ipcMain = require('electron').ipcMain

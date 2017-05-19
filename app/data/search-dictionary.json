@@ -1,0 +1,60 @@
+// 
+//	The search dictionary defines custom web searches. Add yours here!
+//
+{
+	// Do not touch!
+	"model_version" : "0.1.0",
+	
+	// Set a default search engine here.
+	"default" : "https://www.google.com/search?q={query}",
+
+	// Direct search is triggered with ctrl + enter in the omnibox.
+	"direct" : "http://www.google.com/search?q={query}&btnI",
+
+	"custom" : [
+
+		{
+			"keyword" : "wiki",
+			"url" : "https://en.wikipedia.org/w/index.php?search={query}",
+			"hint" : "Search Wikipedia"
+		},
+
+		{
+			"keyword" : "tw",
+			"url" : "https://twitter.com/search?f=tweets&q={query}",
+			"hint" : "Search for Tweets"
+		},
+
+		{
+			"keyword" : "img",
+			"url" : "https://www.google.com/search?tbm=isch&q={query}",
+			"hint" : "Search Google Images"
+		},
+
+		{
+			"keyword" : "map",
+			"url" : "https://www.google.com/maps/search/{query}",
+			"hint" : "Search Google Maps"
+		},
+
+		{
+			"keyword" : "wf",
+			"url" : "https://www.wolframalpha.com/input/?i={query}",
+			"hint" : "Ask Wolfram"
+		},
+
+		{
+			"keyword" : "so",
+			"url" : "http://stackoverflow.com/search?q={query}",
+			"hint" : "Search StackOverflow"
+		},
+
+		{
+			"keyword" : "docs",
+			"url" : "http://devdocs.io/#q={query}",
+			"hint" : "Search DevDocs"
+		}
+
+	]
+
+}
