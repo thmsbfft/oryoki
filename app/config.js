@@ -63,7 +63,7 @@ function getConfFile (fileName, callback) {
 
     if (e.code === 'ENOENT') {
       console.log('[config] Creating file: ' + fileName)
-      fs.writeFileSync(paths.conf + '/' + fileName, fs.readFileSync(__dirname + '/data/factory.json', 'utf8'))
+      fs.writeFileSync(paths.conf + '/' + fileName, fs.readFileSync(__dirname + '/data/oryoki-preferences.json', 'utf8'))
     } else {
       throw e
     }
@@ -117,14 +117,36 @@ function verify () {
         defaultId: 0
       },
       function (buttonId) {
-        if (buttonId == 0) reset('Preferences', 'oryoki-preferences.json', 'factory.json')
+        if (buttonId == 0) reset('Preferences', 'oryoki-preferences.json')
       }.bind(this)
     )
   }
 }
 
+reset = function (niceName, fileName) {
+  fs.writeFile(paths.conf + '/' + fileName, fs.readFileSync(__dirname + '/data/' + fileName, 'utf8'), function (e) {
+    if (e) console.log('[config] ' + e)
+    try {
+      Oryoki.focusedWindow.browser.webContents.send('log-status', {
+        'body': niceName + ' reset'
+      })
+    } catch(e) {
+      console.log('[config] ' + e)
+    }
+  })
+}
 
-
+getPreferenceByName = function (name) {
+  /*
+  Checks user for preference
+  If not defined, falls back to factory setting.
+  */
+  if (preferences[name] !== undefined) {
+    return preferences[name]
+  } else {
+    return factory.preferences[name]
+  }
+}
 
 
 
