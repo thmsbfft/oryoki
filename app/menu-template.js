@@ -31,7 +31,7 @@ module.exports = function () {
     'update-ready': {
       label: latestVersion ? 'Update to ' + latestVersion.version : 'Quit and Install',
       click: function () {
-        // Updater.quitAndInstall()
+        updater.quitAndInstall()
       },
       enabled: true
     }

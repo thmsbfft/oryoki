@@ -2,6 +2,7 @@ const fs = require('fs')
 const {app, dialog, ipcMain} = require('electron')
 const request = require('request')
 const exec = require('child_process').exec
+const execSync = require('child_process').execSync
 
 const menus = require('./menus')
 const config = require('./config')
@@ -13,7 +14,7 @@ var tmp = null
 var status = 'no-update'
 
 function init () {
-
+  cleanUp()
   checkForUpdate(false)
 }
 
@@ -117,7 +118,7 @@ function downloadUpdate () {
   var downloadProcess = exec('cd ' + '\'' + tmp + '\'' + ' && curl -O ' + latest.url, function (error, stdout, stderr) {
     if (error) {
       console.log('[updater] Download failed. Err: ' + error.signal)
-      this.cleanUp()
+      cleanUp()
     }
 
     if (error == null) {
@@ -129,6 +130,64 @@ function downloadUpdate () {
 
 function extractUpdate () {
   console.log('[updater] Extracting update...')
+  // Unzip archive
+  exec('cd ' + '\'' + tmp + '\'' + ' && unzip -qq Oryoki-' + latest.version, function (error, stdout, stderr) {
+    if (error) {
+      console.log('[updater] Extracting failed. Err: ' + error.signal)
+      cleanUp()
+    }
+
+    // if (error == null) {
+      console.log('[updater] Done extracting')
+
+      status = 'update-ready'
+      menus.refresh()
+
+      // if (Oryoki.focusedWindow) {
+      //   for (var i = 0; i < Oryoki.windows.length; i++) {
+      //     Oryoki.windows[i].browser.webContents.send('update-ready', this.latest)
+      //   }
+      // }
+
+      // new Notification('Update available!', {
+      //   body: 'Ōryōki ' + this.latest.version + ' is ready to be installed.',
+      //   silent: true
+      // })
+    // }
+  }.bind(this))
+}
+
+function quitAndInstall () {
+  // In case a previous version is still in downloads
+  execSync('rm -rf ' + '\"' + app.getPath('downloads') + '/Oryoki.app' + '\"')
+
+  // Move to downloads
+  fs.rename(tmp + '/Oryoki.app', app.getPath('downloads') + '/Oryoki.app', function (err) {
+    if (err) {
+      console.log('[updater] Error while moving update: ' + err)
+    }
+
+    // Reveal in Finder
+    execSync('open -R ' + app.getPath('downloads') + '/Oryoki.app', function (err) {
+      if (err) {
+        c.log('[updater] Error while revealing update: ' + err)
+      }
+    })
+
+    cleanUp()
+    // Oryoki.quit()
+  }.bind(this))
+}
+
+function cleanUp () {
+  // Cleans up temporary folder for the update
+  exec('cd ' + '\'' + config.getPaths().tmp + '\'' + ' && rm -rf Update-*', function (error, stdout, stderr) {
+    if (error) throw error
+
+    if (error == null) {
+      console.log('[updater] Done cleaning up')
+    }
+  })
 }
 
 function getStatus () {
@@ -143,6 +202,7 @@ module.exports = {
   init: init,
   checkForUpdate: checkForUpdate,
   downloadUpdate: downloadUpdate,
+  quitAndInstall: quitAndInstall,
   getStatus: getStatus,
   getLatest: getLatest
 }

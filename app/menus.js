@@ -8,14 +8,13 @@ function init () {
 }
 
 function createMenus () {
-  console.log('[menus] Creating menus...')
   template = require('./menu-template')()
   menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 }
 
 function refresh() {
-  console.log('[menus] Refreshing...')
+  console.log('[menus] 🔁')
   menu.clear()
   menu = null
   createMenus()
