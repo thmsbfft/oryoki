@@ -6,6 +6,8 @@ const {app} = require('electron')
 
 // Oryoki
 const config = require('./config')
+const updater = require('./updater')
+const menus = require('./menus')
 
 
 
@@ -36,9 +38,14 @@ const config = require('./config')
 app.commandLine.appendSwitch('ignore-certificate-errors')
 
 app.on('ready', function () {
+  console.log('[~~~~~~] ' + app.getName())
+  console.log('[~~~~~~] ' + app.getVersion())
+  
   const electronScreen = require('electron').screen
 
   config.init()
+  updater.init()
+  menus.init()
 
   // UserManager = new UserManager()
   // CommandManager = new CommandManager()

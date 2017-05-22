@@ -1,0 +1,16 @@
+{
+  "name": "oryoki",
+  "version": "0.1.0",
+  "productName": "Oryoki",
+  "description": "A web browser with a thin interface.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thmsbfft/oryoki.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thmsbfft/oryoki/issues"
+  },
+  "homepage": "http://oryoki.io",
+  "license": "MIT",
+  "author": "Thomas Buffet"
+}
