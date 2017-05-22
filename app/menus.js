@@ -4,20 +4,18 @@ var template = null
 var menu = null
 
 function init () {
-  console.log('[menus] hi!')
-
   createMenus()
 }
 
 function createMenus () {
   console.log('[menus] Creating menus...')
-  template = require('./menu-template')
+  template = require('./menu-template')()
   menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 }
 
 function refresh() {
-  console.log('[menus] -><-')
+  console.log('[menus] Refreshing...')
   menu.clear()
   menu = null
   createMenus()

@@ -1,13 +1,16 @@
+const fs = require('fs')
 const {app, dialog, ipcMain} = require('electron')
 const request = require('request')
+const exec = require('child_process').exec
 
 const menus = require('./menus')
-
-const tmp = null
-var status = 'no-update'
+const config = require('./config')
 
 const feed = 'http://oryoki.io/latest.json'
 var latest = null
+
+var tmp = null
+var status = 'no-update'
 
 function init () {
 
@@ -66,7 +69,7 @@ function compareVersions (alert) {
       //   }
       // }
 
-      break
+      return
     }
   }
 
@@ -85,17 +88,61 @@ function compareVersions (alert) {
   }
 }
 
-function getStatus() {
+function downloadUpdate () {
+  console.log('[updater] Downloading update')
+
+  status = 'downloading-update'
+  menus.refresh()
+
+  // if (Oryoki.focusedWindow) {
+  //   for (var i = 0; i < Oryoki.windows.length; i++) {
+  //     Oryoki.windows[i].browser.webContents.send('downloading-update', this.latest)
+  //   }
+  // }
+
+  // Create a tmp folder
+  tmp = config.getPaths().tmp + '/' + 'Update-' + latest.version
+
+  try {
+    fs.statSync(tmp)
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      fs.mkdirSync(tmp)
+    } else {
+      throw err
+    }
+  }
+
+  // Start downloading
+  var downloadProcess = exec('cd ' + '\'' + tmp + '\'' + ' && curl -O ' + latest.url, function (error, stdout, stderr) {
+    if (error) {
+      console.log('[updater] Download failed. Err: ' + error.signal)
+      this.cleanUp()
+    }
+
+    if (error == null) {
+      console.log('[updater] Done downloading')
+      extractUpdate()
+    }
+  }.bind(this))
+}
+
+function extractUpdate () {
+  console.log('[updater] Extracting update...')
+}
+
+function getStatus () {
   return status
 }
 
-function getLatest() {
+function getLatest () {
   return latest
 }
 
 module.exports = {
   init: init,
   checkForUpdate: checkForUpdate,
+  downloadUpdate: downloadUpdate,
   getStatus: getStatus,
   getLatest: getLatest
 }

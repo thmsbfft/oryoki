@@ -164,8 +164,13 @@ function getPreference (name) {
   }
 }
 
+function getPaths () {
+  return paths
+}
+
 module.exports = {
   init: init,
+  getPaths: getPaths,
   getPreference: getPreference,
   reset: reset
 }

@@ -12,7 +12,7 @@ module.exports = function () {
     'update-available': {
       label: 'Download Update',
       click: function () {
-        // Updater.downloadUpdate()
+        updater.downloadUpdate()
       },
       enabled: true
     },
@@ -61,4 +61,4 @@ module.exports = function () {
   ]
 
   return template
-}()
+}
