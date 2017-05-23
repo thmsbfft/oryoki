@@ -9,6 +9,7 @@ const config = require('./config')
 const updater = require('./updater')
 const menus = require('./menus')
 const about = require('./about')
+const notify = require('./notify')
 
 // var CommandManager = require('./CommandManager')
 
@@ -44,9 +45,9 @@ app.on('ready', function () {
 
   config.init()
   updater.init()
-  menus.init()
-
   about.init()
+  menus.init()
+  notify.init()
 
   // About = new About()
   // Camera = new Camera()

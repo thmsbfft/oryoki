@@ -4,7 +4,7 @@ const request = require('request')
 const exec = require('child_process').exec
 const execSync = require('child_process').execSync
 
-const Notification = require('./Notification')
+const notify = require('./notify')
 const menus = require('./menus')
 const config = require('./config')
 
@@ -59,7 +59,7 @@ function compareVersions (alert) {
 
       // if (UserManager.getPreferenceByName('download_updates_in_background')) this.downloadUpdate()
       // else {
-      new Notification('Update available!', {
+      notify.send('Update available!', {
         body: 'Ōryōki ' + this.latest.version + ' is available.',
         silent: true
       })
@@ -150,7 +150,7 @@ function extractUpdate () {
       //   }
       // }
 
-      new Notification('Update available!', {
+      notify.send('Update available!', {
         body: 'Ōryōki ' + this.latest.version + ' is ready to be installed.',
         silent: true
       })

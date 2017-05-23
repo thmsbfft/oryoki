@@ -1,0 +1,7 @@
+<script>
+  console.log('hey!')
+  require('electron').ipcRenderer.on('notification', function (e, title, props) {
+    console.log('hi!')
+    new Notification(title, props)
+  })
+</script>
