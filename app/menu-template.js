@@ -1,6 +1,8 @@
 const {app} = require('electron')
 const updater = require('./updater')
 
+const about = require('./about')
+
 module.exports = function () {
   var name = app.getName()
   var version = app.getVersion()
@@ -44,7 +46,7 @@ module.exports = function () {
         {
           label: 'About ' + name,
           click: function () {
-            // About.show()
+            about.show()
           }
         },
         {

@@ -8,7 +8,7 @@ const {app} = require('electron')
 const config = require('./config')
 const updater = require('./updater')
 const menus = require('./menus')
-
+const about = require('./about')
 
 // var CommandManager = require('./CommandManager')
 
@@ -46,8 +46,8 @@ app.on('ready', function () {
   updater.init()
   menus.init()
 
-  // UserManager = new UserManager()
-  // CommandManager = new CommandManager()
+  about.init()
+
   // About = new About()
   // Camera = new Camera()
   // Oryoki = new Oryoki()
