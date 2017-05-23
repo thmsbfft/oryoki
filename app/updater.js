@@ -4,6 +4,7 @@ const request = require('request')
 const exec = require('child_process').exec
 const execSync = require('child_process').execSync
 
+const Notification = require('./Notification')
 const menus = require('./menus')
 const config = require('./config')
 
@@ -58,10 +59,10 @@ function compareVersions (alert) {
 
       // if (UserManager.getPreferenceByName('download_updates_in_background')) this.downloadUpdate()
       // else {
-      //   new Notification('Update available!', {
-      //     body: 'Ōryōki ' + this.latest.version + ' is available.',
-      //     silent: true
-      //   })
+      new Notification('Update available!', {
+        body: 'Ōryōki ' + this.latest.version + ' is available.',
+        silent: true
+      })
 
       //   if (Oryoki.focusedWindow) {
       //     for (var i = 0; i < Oryoki.windows.length; i++) {
@@ -149,10 +150,10 @@ function extractUpdate () {
       //   }
       // }
 
-      // new Notification('Update available!', {
-      //   body: 'Ōryōki ' + this.latest.version + ' is ready to be installed.',
-      //   silent: true
-      // })
+      new Notification('Update available!', {
+        body: 'Ōryōki ' + this.latest.version + ' is ready to be installed.',
+        silent: true
+      })
     // }
   }.bind(this))
 }

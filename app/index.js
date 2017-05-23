@@ -10,7 +10,6 @@ const updater = require('./updater')
 const menus = require('./menus')
 
 
-
 // var CommandManager = require('./CommandManager')
 
 

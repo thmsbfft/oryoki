@@ -2,6 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const {app, dialog, ipcMain} = require('electron')
 
+const menus = require('./menus')
+
 var paths = {}
 var preferences = null
 var searchDictionary = null
@@ -86,11 +88,11 @@ function watch () {
     console.log('[config] Preferences have changed!')
     preferences = getConfFile('oryoki-preferences.json')
     try {
-      // CommandManager.refreshMenus()
-      // new Notification('Ready to go!', {
-      //   body: 'The preferences were updated.',
-      //   silent: true
-      // })
+      menus.refresh()
+      new Notification('Ready to go!', {
+        body: 'The preferences were updated.',
+        silent: true
+      })
     } catch (e) {
       console.log('[config] ' + e)
     }
