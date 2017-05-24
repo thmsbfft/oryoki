@@ -2,6 +2,7 @@ const {app} = require('electron')
 const updater = require('./updater')
 
 const about = require('./about')
+const windows = require('./windows')
 
 module.exports = function () {
   var name = app.getName()
@@ -59,7 +60,34 @@ module.exports = function () {
           enabled: updaterMenu.enabled
         },
       ]
-    }
+    },
+    {
+      label: 'File',
+      submenu: [
+        {
+          label: 'Open...',
+          accelerator: 'CmdOrCtrl+O',
+          click: function () {
+            // if (Oryoki) Oryoki.openFile()
+          }
+        },
+        {
+          label: 'New Window',
+          accelerator: 'CmdOrCtrl+N',
+          click: function () {
+            windows.create()
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Close Window',
+          accelerator: 'CmdOrCtrl+W',
+          role: 'close'
+        }
+      ]
+    },
   ]
 
   return template

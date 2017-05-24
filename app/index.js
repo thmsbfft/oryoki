@@ -10,6 +10,7 @@ const updater = require('./updater')
 const menus = require('./menus')
 const about = require('./about')
 const notify = require('./notify')
+const windows = require('./windows')
 
 // var CommandManager = require('./CommandManager')
 
@@ -49,7 +50,9 @@ app.on('ready', function () {
   menus.init()
   notify.init()
 
-  // About = new About()
+  windows.init()
+
+
   // Camera = new Camera()
   // Oryoki = new Oryoki()
   // Updater = new Updater()

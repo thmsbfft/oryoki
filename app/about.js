@@ -1,10 +1,10 @@
 const path = require('path')
-const {BrowserWindow, ipcMain} = require('electron')
+const {BrowserWindow, ipcMain, app} = require('electron')
 
-var bw = null
+let win;
 
 function init () {
-  bw = new BrowserWindow({
+  win = new BrowserWindow({
     show: false,
     width: 350,
     height: 400,
@@ -15,28 +15,37 @@ function init () {
     resizable: false,
     acceptFirstMouse: true
   })
-  bw.loadURL('file://' + path.join(__dirname, 'about.html'))
+  win.loadURL('file://' + path.join(__dirname, 'about.html'))
 
-  bw.on('close', function (e) {
+  win.on('close', function (e) {
     e.preventDefault()
-    this.hide()
+    hide()
   }.bind(this))
 
   ipcMain.on('hide-about', function () {
-    this.hide()
+    hide()
   }.bind(this))
+
+  app.on('before-quit', () => {
+    close()
+  })
 
   console.log('[about] ✔')
 }
 
 function show () {
-  bw.webContents.send('show-about')
-  bw.show()
-  bw.focus()
+  win.webContents.send('show-about')
+  win.show()
+  win.focus()
 }
 
 function hide () {
-  bw.hide()
+  win.hide()
+}
+
+function close() {
+  win.removeAllListeners('close')
+  win.close()
 }
 
 module.exports = {
