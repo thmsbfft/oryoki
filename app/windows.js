@@ -1,17 +1,24 @@
-const {app, ipcMain} = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron')
 
 const config = require('./config')
-const Window = require('./Window')
 
 let windows = []
 let index = 0
 let focused = null
 
 function init() {
+
   // ipcMain.on('new-window', )
   // ipcMain.on('close-window', )
   // ipcMain.on('minimize-window', )
   // ipcMain.on('fullscreen-window', )
+
+  app.on('activate', () => {
+    if (!windows.size) {
+      create()
+    }
+  })
+
   create()
 }
 
@@ -20,43 +27,57 @@ function create() {
 
   var width;
   var height;
+  var x;
+  var y;
 
-  if (windows.length === 0) {
+  // if (windows.length === 0) {
     width = config.getPreference('default_window_width')
     height = config.getPreference('default_window_height')
+    x = 0
+    y = 0
+  // }
+  // else {
+  //   width = this.focused.getBounds().width
+  //   height = this.focused.getBounds().height
+  //   x = this.focused.getPosition()[0] + 50
+  //   y = this.focused.getPosition()[1] + 50
+  // }
 
-    windows.push(new Window({
-      'id' : index,
-      'width' : width,
-      'height' : height
-    }))
-    windows[windows.length - 1].browser.center()
+  const browserOptions = {
+    x: x,
+    y: y,
+    width: width,
+    height: height,
+    frame: true,
+    backgroundColor: '#141414',
+    show: false,
+    minWidth: 200,
+    minHeight: 200,
+    darkTheme: true,
+    webPreferences: {
+      'experimentalFeatures': true,
+      'experimentalCanvasFeatures': true
+    },
+    fullscreenable: !config.getPreference('picture_in_picture')
   }
-  else {
-    width = this.focused.browser.getPosition()[0] + 50
-    height = this.focused.browser.getPosition()[1] + 50
 
-    windows.push(new Window({
-      'id' : index,
-      'width' : width,
-      'height' : height
-    }))
-  }
+  const win = new BrowserWindow(browserOptions)
+  windows.push(win)
+  windows[windows.length - 1].center()
 
-  windows.forEach(function (window) {
-    console.log('✘')
+  win.loadURL('file://' + __dirname + '/window.html' + '#' + win.id)
+
+  win.once('ready-to-show', () => {
+    win.show()
   })
-
-  index++
 }
 
-function onFocusChange(window) {
-  focused = window
-  console.log('[windows] Focus: ' + focused.id)
+function getFocusedWindow () {
+  return BrowserWindow.getFocusedWindow()
 }
 
 module.exports = {
   init: init,
   create: create,
-  onFocusChange: onFocusChange
+  getFocusedWindow: getFocusedWindow
 }
