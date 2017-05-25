@@ -2,8 +2,7 @@ const {app, BrowserWindow, ipcMain} = require('electron')
 
 const config = require('./config')
 
-let windows = []
-let index = 0
+const windows = new Set([])
 let focused = null
 
 function init() {
@@ -62,22 +61,26 @@ function create() {
   }
 
   const win = new BrowserWindow(browserOptions)
-  windows.push(win)
-  windows[windows.length - 1].center()
+  windows.add(win)
+  
+  win.center()
 
   win.loadURL('file://' + __dirname + '/window.html' + '#' + win.id)
+
+  win.on('focus', (e) => {
+    focused = e.sender
+  })
+
+  win.on('close', () => {
+    windows.delete(win)
+  })
 
   win.once('ready-to-show', () => {
     win.show()
   })
 }
 
-function getFocusedWindow () {
-  return BrowserWindow.getFocusedWindow()
-}
-
 module.exports = {
   init: init,
   create: create,
-  getFocusedWindow: getFocusedWindow
 }
