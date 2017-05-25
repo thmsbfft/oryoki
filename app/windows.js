@@ -82,4 +82,5 @@ function create() {
 module.exports = {
   init: init,
   create: create,
+  focused: focused
 }
