@@ -29,18 +29,18 @@ function create() {
   var x;
   var y;
 
-  // if (windows.length === 0) {
+  if (!windows.size) {
     width = config.getPreference('default_window_width')
     height = config.getPreference('default_window_height')
     x = 0
     y = 0
-  // }
-  // else {
-  //   width = this.focused.getBounds().width
-  //   height = this.focused.getBounds().height
-  //   x = this.focused.getPosition()[0] + 50
-  //   y = this.focused.getPosition()[1] + 50
-  // }
+  }
+  else {
+    width = focused.getBounds().width
+    height = focused.getBounds().height
+    x = focused.getPosition()[0] + 50
+    y = focused.getPosition()[1] + 50
+  }
 
   const browserOptions = {
     x: x,
@@ -61,10 +61,9 @@ function create() {
   }
 
   const win = new BrowserWindow(browserOptions)
+  if (!windows.size) win.center()
   windows.add(win)
   
-  win.center()
-
   win.loadURL('file://' + __dirname + '/window.html' + '#' + win.id)
 
   win.on('focus', (e) => {
