@@ -29,12 +29,7 @@
     "electron": "latest",
     "electron-packager": "latest",
     "gulp": "^3.9.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-copy": "0.0.2",
-    "gulp-exec": "^2.1.2",
     "gulp-livereload": "^3.8.1",
-    "gulp-preprocess": "^2.0.0",
-    "gulp-rename": "^1.2.2",
     "gulp-run": "^1.7.1",
     "gulp-sass": "^2.3.2"
   },

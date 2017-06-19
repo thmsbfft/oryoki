@@ -1,47 +1,15 @@
 var gulp = require('gulp')
-var concat = require('gulp-concat')
-var rename = require('gulp-rename')
-var preprocess = require('gulp-preprocess')
-var run = require('gulp-run')
 var sass = require('gulp-sass')
+var run = require('gulp-run')
 var livereload = require('gulp-livereload')
-
-var main = [
-  'src/js/main/utils.js',
-  'src/js/main/console.js',
-  'src/js/main/User.js',
-  'src/js/main/UserManager.js',
-  'src/js/main/CommandManager.js',
-  'src/js/main/Camera.js',
-  'src/js/main/Notification.js',
-  'src/js/main/Window.js',
-  'src/js/main/About.js',
-  'src/js/main/Oryoki.js',
-  'src/js/main/Updater.js',
-  'src/js/main/main.js'
-]
-
-var renderer = [
-  'src/js/renderer/utils.js',
-  'src/js/renderer/renderer.js',
-  'src/js/renderer/Status.js',
-  'src/js/renderer/StatusManager.js',
-  'src/js/renderer/Loader.js',
-  'src/js/renderer/Console.js',
-  'src/js/renderer/WindowHelper.js',
-  'src/js/renderer/View.js',
-  'src/js/renderer/Handle.js',
-  'src/js/renderer/Omnibox.js',
-  'src/js/renderer/Browser.js'
-]
 
 // ELECTRON
 gulp.task('console', function () {
   return run('ttab tail -f stdout.log').exec()
 })
 
-gulp.task('start', function () {
-  return run('electron .').exec()
+gulp.task('app', function () {
+  return run('electron app').exec()
 })
 
 gulp.task('restart', function () {
@@ -53,54 +21,15 @@ gulp.task('restart', function () {
 gulp.task('watch', function () {
   livereload.listen()
   // gulp.watch('src/html/**/*.html', ['html']);
-  gulp.watch('src/sass/**/*.scss', ['sass'])
-  gulp.watch('src/js/main/**/*.js', ['main', 'restart'])
-  gulp.watch('src/js/renderer/**/*.js', ['renderer'])
-})
-
-// ENV
-gulp.task('set-dev', function () {
-  process.env.NODE_ENV = 'development'
-})
-
-gulp.task('set-prod', function () {
-  process.env.NODE_ENV = 'production'
+  gulp.watch('app/sass/**/*.scss', ['sass'])
 })
 
 // TASKS
-gulp.task('html', function () {
-  livereload.reload()
-})
-
 gulp.task('sass', function () {
-  gulp.src('src/sass/bundle.scss')
+  gulp.src('app/sass/bundle.scss')
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('src/css'))
+    .pipe(gulp.dest('app/sass'))
     .pipe(livereload())
 })
 
-gulp.task('main', function () {
-  gulp.src(main)
-    .pipe(preprocess())
-    .pipe(concat('_main.js'))
-    .pipe(gulp.dest('src/js/main'))
-    .pipe(rename('main.js'))
-    .pipe(gulp.dest('.'))
-
-    // gulp.src('src/js/main/_main.js')
-})
-
-gulp.task('renderer', function () {
-  gulp.src(renderer)
-    .pipe(concat('_renderer.js'))
-    .pipe(gulp.dest('src/js/renderer'))
-
-  livereload.reload()
-})
-
-gulp.task('default', ['set-dev', 'sass', 'main', 'renderer', 'start', 'console', 'watch'])
-
-gulp.task('build', ['set-prod', 'sass', 'main', 'renderer'])
-
-// No need to open a new console when restarting the app
-gulp.task('reboot', ['sass', 'main', 'renderer', 'start', 'watch'])
+gulp.task('default', ['sass', 'app', 'watch'])

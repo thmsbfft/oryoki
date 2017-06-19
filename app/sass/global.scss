@@ -1,0 +1,20 @@
+body {
+	background-color: #141414;
+	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+	color: white;
+	overflow:hidden;
+	-webkit-font-smoothing: antialiased;
+}
+
+cursor {
+	z-index: 99;
+	position: fixed;
+	width: 10px;
+	height: 10px;
+	background: red;
+	border-radius: 10px;
+	pointer-events: none;
+	&.active {
+		background: blue;
+	}
+}

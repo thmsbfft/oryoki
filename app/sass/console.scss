@@ -1,0 +1,42 @@
+console {
+
+	position: fixed;
+	bottom: 0;
+	background: #252525;
+	width: calc(100% - 10px);
+	padding-left: 10px;
+	padding-top: 4px;
+	height: 19px;
+	font-family: 'Roboto Mono Regular', sans-serif;
+	font-size: 12px;
+	color: rgba(255, 255, 255, 0.6);
+	display: none;
+
+	&.show {
+		display: block;
+	}
+	&.hide {
+		display: none;
+	}
+
+	input {
+		-webkit-app-region: no-drag;
+		width: calc(100% - 36px - 55px);
+		color: rgba(255, 255, 255, 0.7);
+		background: #252525;
+		line-height: 11px;
+		letter-spacing: 0.5px;
+		outline: none;
+		border: none;
+		position: relative;
+		padding-right: 79px;
+		border-radius: 2px;
+		transition: background-color 0.1s ease-out;
+		&.highlight {
+			background-color: #1F1F1F;
+		}
+		&::selection {
+			background-color: rgba(255, 255, 255, 0.2);
+		}
+	}
+}

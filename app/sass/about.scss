@@ -1,0 +1,127 @@
+body.about {
+	
+	background-color: #333333;
+
+	main {
+		-webkit-app-region: drag;
+		width: 100%;
+		height: 90%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		text-align: center;
+		padding-top: 10%;
+		color: rgba(255, 255, 255, 0.7);
+
+		img {
+			width: 150px;
+			margin-bottom: 25px;
+			animation: fade-in 0.3s ease-out;
+		}
+
+		h1 {
+			color: white;
+			font-size: 20px;
+			font-weight: 400;
+			margin-bottom: 10px;
+		}
+
+		p.version {
+			color: rgba(255, 255, 255, 0.7);
+			font-size: 13px;
+			line-height: 1.4;
+			display: inline;
+		}
+
+		p.author {
+			text-align: center;
+			position: absolute;
+			bottom: 25px;
+			width: 100%;
+			font-size: 13px;
+			color: rgba(255, 255, 255, 0.7);
+		}
+
+		p.notes {
+			display: inline;
+			font-size: 13px;
+			a {
+				color: rgba(255, 255, 255, 0.7);
+				text-decoration: none;
+				outline: none;
+				cursor: default;
+
+				&:hover {
+					text-decoration: underline;
+				}
+
+			}
+
+		}
+
+	}
+
+	handle {
+		-webkit-app-region: drag;
+		background: transparent;
+		height: 24px;
+		text-align: center;
+		z-index: 99;
+		position: absolute;
+
+		&::after { display: none }
+
+		.button {
+			position: absolute;
+			-webkit-app-region: no-drag;
+			user-select: none;
+			top: 6px;
+			border-radius: 100%;
+			height: 12px;
+			width: 12px;
+			transition: background-color 0.1s;
+			-webkit-box-sizing: border-box;
+			background: transparent;
+			// background: rgba(255, 255, 255, 0.2);
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			&:hover {
+				&::after {
+					display: none;
+				}
+			}
+		}
+
+		.close {
+			left: 9px;
+			background: #fc5b57;
+			border: none;
+			&:active {
+				background: #CC443F;
+			}
+			&::after {
+				content: '';
+				display: block;
+				margin-left: 3px;
+				margin-top: 3px;
+				height: 6px;
+				width: 6px;
+				border-radius: 100%;
+				background: rgba(0,0,0,0);
+				transition: background-color 0.1s;
+			}
+			&:hover {
+				&::after {
+					display: block;
+					background: rgba(0,0,0,0.3);
+				}
+			}
+		}
+
+		&.disabled {
+			.button {
+				background: rgba(255, 255, 255, 0.2);
+			}
+		}
+	}
+	
+}

@@ -1,0 +1,645 @@
+@charset "UTF-8";
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after {
+  content: '';
+  content: none; }
+
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+@keyframes blink {
+  0% {
+    border-color: #00ec91; }
+  50% {
+    border-color: rgba(0, 236, 145, 0.6); } }
+
+@keyframes pulse {
+  0% {
+    opacity: 1; }
+  50% {
+    opacity: 0; } }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@keyframes fade-out {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+
+@keyframes appear {
+  0% {
+    box-shadow: inset 0 0 0 3px rgba(52, 130, 220, 0); }
+  100% {
+    box-shadow: inset 0 0 0 3px rgba(52, 130, 220, 0.7); } }
+
+@font-face {
+  font-family: 'Roboto Light';
+  src: url(../media/Roboto-Light.ttf); }
+
+@font-face {
+  font-family: 'Roboto Regular';
+  src: url(../media/Roboto-Regular.ttf); }
+
+@font-face {
+  font-family: 'Roboto Mono Regular';
+  src: url(../media/RobotoMono-Regular.ttf); }
+
+body {
+  background-color: #141414;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: white;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased; }
+
+cursor {
+  z-index: 99;
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: red;
+  border-radius: 10px;
+  pointer-events: none; }
+  cursor.active {
+    background: blue; }
+
+handle {
+  -webkit-app-region: drag;
+  background: rgba(20, 20, 20, 0);
+  height: 24px;
+  width: 100%;
+  text-align: center;
+  transition: background 0.2s;
+  display: block; }
+  handle.stroke::after {
+    content: ' ';
+    width: 100%;
+    height: 1px;
+    background: #212121;
+    display: inline-block;
+    position: fixed;
+    top: 24px;
+    left: 0;
+    z-index: 98;
+    transition: background 0.1s; }
+  handle .title {
+    margin-top: 0px;
+    padding: 0 8px;
+    padding-top: 4px;
+    padding-bottom: 6px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 14px;
+    letter-spacing: -0.5px;
+    display: inline-block;
+    -webkit-app-region: no-drag;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    background: transparent;
+    border-radius: 20px;
+    transition: background 0.1s; }
+    handle .title.selected {
+      background: rgba(255, 255, 255, 0.15); }
+      handle .title.selected::after {
+        opacity: 1; }
+    handle .title::after {
+      width: 9px;
+      height: 9px;
+      position: relative;
+      top: -1px;
+      content: '•';
+      display: inline-block;
+      margin-left: 4px;
+      opacity: 0.2;
+      transition: opacity 0.2s; }
+    handle .title:hover::after {
+      opacity: 1; }
+    handle .title.align-left {
+      text-align: left;
+      position: absolute;
+      left: 60px; }
+  handle .button {
+    position: absolute;
+    -webkit-app-region: no-drag;
+    user-select: none;
+    top: 6px;
+    border-radius: 100%;
+    height: 12px;
+    width: 12px;
+    transition: background-color 0.1s;
+    -webkit-box-sizing: border-box; }
+    handle .button::after {
+      content: '';
+      display: block;
+      margin-left: 3px;
+      margin-top: 3px;
+      height: 6px;
+      width: 6px;
+      border-radius: 100%;
+      background: transparent;
+      transition: background-color 0.1s; }
+    handle .button:hover::after {
+      background: rgba(0, 0, 0, 0.3); }
+  handle .close {
+    left: 9px;
+    background: #fc5b57; }
+    handle .close:active {
+      background: #CC443F; }
+  handle .minimize {
+    left: 29px;
+    background: rgba(255, 255, 255, 0.2);
+    transition: background 0.2s; }
+  handle .fullscreen {
+    left: 49px;
+    background: rgba(255, 255, 255, 0.2);
+    transition: background 0.2s; }
+  handle.hide {
+    display: none; }
+  handle:hover .minimize, handle.light:hover .minimize {
+    background: #ffbb3c; }
+    handle:hover .minimize:active, handle.light:hover .minimize:active {
+      background: #CC9631; }
+  handle:hover .fullscreen, handle.light:hover .fullscreen {
+    background: #35c849; }
+    handle:hover .fullscreen:active, handle.light:hover .fullscreen:active {
+      background: #269435; }
+  handle.disabled .button {
+    background: rgba(255, 255, 255, 0.2); }
+  handle.disabled .title {
+    opacity: 0.6; }
+  handle.light {
+    background: #f7f7f7; }
+    handle.light.stroke::after {
+      background: rgba(33, 33, 33, 0.15); }
+    handle.light .title {
+      color: #1a1a1a; }
+    handle.light .minimize {
+      background: rgba(0, 0, 0, 0.15); }
+    handle.light .fullscreen {
+      background: rgba(0, 0, 0, 0.15); }
+    handle.light.disabled .button {
+      background: rgba(0, 0, 0, 0.15); }
+
+#view {
+  width: 100%;
+  height: 100%; }
+  #view.recording::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    border-radius: 10px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    animation: pulse 0.8s infinite; }
+
+omnibox {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  -webkit-app-region: drag;
+  z-index: 98; }
+  omnibox .box {
+    z-index: 98;
+    max-width: 485px;
+    top: calc(50px);
+    position: relative;
+    margin: auto; }
+    omnibox .box ::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, 0.2); }
+    omnibox .box .input {
+      z-index: 98;
+      -webkit-app-region: no-drag;
+      width: calc(100% - 24px);
+      font-size: 22px;
+      letter-spacing: -0.5px;
+      color: white;
+      background: #2b2b2b;
+      line-height: 21px;
+      outline: none;
+      border: none;
+      padding: 6px 12px;
+      position: relative;
+      border-radius: 1px;
+      transition: background-color 0.1s ease-out;
+      box-shadow: 0px 0px 0px 2px transparent;
+      transition: box-shadow 0.1s ease-out;
+      white-space: nowrap;
+      overflow-x: scroll; }
+      omnibox .box .input::-webkit-scrollbar {
+        display: none; }
+      omnibox .box .input.highlight {
+        background-color: #1F1F1F; }
+      omnibox .box .input.drop {
+        box-shadow: 0px 0px 0px 2px rgba(53, 130, 220, 0.7); }
+      omnibox .box .input::selection {
+        background-color: rgba(255, 255, 255, 0.1); }
+      omnibox .box .input.hintShown {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0; }
+  omnibox .hints {
+    z-index: 98;
+    display: block;
+    max-width: 485px;
+    margin: auto;
+    font-size: 14px;
+    letter-spacing: -0.4px;
+    background: #1A1A1A;
+    position: relative;
+    border-radius: 0px 0px 2px 2px;
+    color: rgba(255, 255, 255, 0.4);
+    -webkit-user-select: none;
+    cursor: default; }
+    omnibox .hints.hide {
+      display: none; }
+    omnibox .hints.show {
+      display: block; }
+    omnibox .hints hint {
+      padding: 14px;
+      display: block; }
+      omnibox .hints hint .keyword {
+        float: right;
+        letter-spacing: -0.1px;
+        color: rgba(255, 255, 255, 0.4); }
+      omnibox .hints hint .highlighted {
+        color: rgba(255, 255, 255, 0.6); }
+  omnibox.show {
+    display: block; }
+  omnibox.hide {
+    display: none; }
+  omnibox .overlay {
+    width: 100%;
+    height: 100%;
+    background-color: #141414;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 88; }
+  omnibox .updateClue {
+    background: #1A1A1A;
+    padding: 7px 14px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    letter-spacing: -0.4px;
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.4);
+    -webkit-user-select: none;
+    cursor: default;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    transition: 0.3s color;
+    display: none; }
+    omnibox .updateClue::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 4px;
+      display: inline-block;
+      background: green;
+      margin-right: 8px;
+      position: relative;
+      top: -2px;
+      display: none; }
+    omnibox .updateClue:hover {
+      color: white; }
+    omnibox .updateClue:active {
+      background-color: #1F1F1F; }
+    omnibox .updateClue.available {
+      display: inline-block; }
+      omnibox .updateClue.available::before {
+        background: red; }
+    omnibox .updateClue.downloading {
+      display: inline-block; }
+      omnibox .updateClue.downloading:hover {
+        color: rgba(255, 255, 255, 0.4); }
+      omnibox .updateClue.downloading:active {
+        background: #1A1A1A; }
+      omnibox .updateClue.downloading::before {
+        background: rgba(255, 255, 255, 0.8);
+        display: inline-block;
+        animation: pulse 1s infinite; }
+    omnibox .updateClue.ready {
+      display: inline-block; }
+      omnibox .updateClue.ready::before {
+        background: green;
+        display: inline-block; }
+
+@media (max-width: 485px) {
+  omnibox .box {
+    top: 4px;
+    width: calc(100% - 8px); }
+    omnibox .box .input {
+      border-radius: 2px; } }
+
+status {
+  position: fixed;
+  top: 0;
+  right: 0;
+  text-align: right;
+  padding: 5px 8px;
+  font-size: 12.5px;
+  display: inline-block;
+  letter-spacing: -0.1px;
+  line-height: 14px;
+  text-rendering: optimizeLegibility;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(40, 40, 40, 0.7);
+  pointer-events: none;
+  border-bottom-left-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  z-index: 99; }
+  status icon {
+    padding-right: 7px;
+    position: relative;
+    top: 0.5px;
+    color: white; }
+  status.hide {
+    display: none; }
+  status.fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease-out; }
+  status.fade-out {
+    opacity: 0;
+    transition: opacity 1s ease-in; }
+  status i {
+    font-style: italic; }
+  status.light {
+    background: rgba(40, 40, 40, 0.1);
+    color: rgba(0, 0, 0, 0.8); }
+  @media (-webkit-min-device-pixel-ratio: 2) {
+    status icon {
+      padding-right: 5px; } }
+
+console {
+  position: fixed;
+  bottom: 0;
+  background: #252525;
+  width: calc(100% - 10px);
+  padding-left: 10px;
+  padding-top: 4px;
+  height: 19px;
+  font-family: 'Roboto Mono Regular', sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  display: none; }
+  console.show {
+    display: block; }
+  console.hide {
+    display: none; }
+  console input {
+    -webkit-app-region: no-drag;
+    width: calc(100% - 36px - 55px);
+    color: rgba(255, 255, 255, 0.7);
+    background: #252525;
+    line-height: 11px;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+    position: relative;
+    padding-right: 79px;
+    border-radius: 2px;
+    transition: background-color 0.1s ease-out; }
+    console input.highlight {
+      background-color: #1F1F1F; }
+    console input::selection {
+      background-color: rgba(255, 255, 255, 0.2); }
+
+windowhelper {
+  position: fixed;
+  z-index: 99;
+  bottom: 18px;
+  right: 18px;
+  background: #212121;
+  padding: 3px 7px;
+  border-radius: 2px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  display: none; }
+  windowhelper.show {
+    display: block; }
+  windowhelper.hide {
+    display: none; }
+  windowhelper::focus {
+    background: #262626; }
+  windowhelper input {
+    font-size: 13px;
+    letter-spacing: 0px;
+    color: rgba(255, 255, 255, 0.6);
+    background: transparent;
+    width: 26px;
+    display: inline-block;
+    line-height: 19px;
+    outline: none;
+    border: none;
+    padding: 0;
+    transition: background-color 0.1s ease-out;
+    text-align: center; }
+    windowhelper input.fourDigits {
+      width: 34px; }
+    windowhelper input.leadingOne {
+      width: 30px; }
+    windowhelper input:focus {
+      color: white;
+      background: transparent; }
+    windowhelper input::selection {
+      color: white;
+      background: transparent; }
+  windowhelper #width {
+    text-align: right; }
+  windowhelper #height {
+    text-align: left; }
+  windowhelper .separator {
+    color: rgba(255, 255, 255, 0.4);
+    display: inline-block;
+    width: 8px;
+    position: relative;
+    left: -0.5px;
+    text-align: center;
+    -webkit-user-select: none;
+    user-select: none; }
+
+@media (-webkit-min-device-pixel-ratio: 2) {
+  windowhelper input.fourDigits {
+    width: 34px; }
+  windowhelper input.leadingOne {
+    width: 33px; } }
+
+#dragOverlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background: transparent;
+  pointer-events: none;
+  display: none;
+  box-shadow: inset 0 0 0 3px rgba(52, 130, 220, 0);
+  -webkit-app-region: drag; }
+  #dragOverlay.active {
+    display: block;
+    pointer-events: all;
+    box-shadow: inset 0 0 0 3px rgba(52, 130, 220, 0);
+    animation: appear 0.1s ease-in;
+    animation-delay: 0.1s;
+    -webkit-animation-fill-mode: forwards; }
+  #dragOverlay.invisible {
+    opacity: 0; }
+
+.webview {
+  height: 100%;
+  width: 100%;
+  background: white;
+  transition: 0.4s filter;
+  filter: grayscale(0%) invert(0%); }
+  .webview.show {
+    animation: fade-in 0.15s ease-out; }
+  .webview.hide {
+    opacity: 0; }
+  .webview.grayscale {
+    filter: grayscale(100%) invert(0%); }
+  .webview.invert {
+    filter: grayscale(0%) invert(100%); }
+  .webview.grayscale.invert {
+    filter: grayscale(100%) invert(100%); }
+
+.homepage {
+  -webkit-app-region: drag;
+  height: 100%;
+  width: 100%;
+  position: fixed; }
+  .homepage .infos {
+    position: fixed;
+    bottom: 45px;
+    left: 50px; }
+  .homepage p {
+    margin-bottom: 0;
+    margin-top: 0;
+    font-family: 'Roboto Light', sans-serif;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.3);
+    line-height: 24px; }
+
+body.about {
+  background-color: #333333; }
+  body.about main {
+    -webkit-app-region: drag;
+    width: 100%;
+    height: 90%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    padding-top: 10%;
+    color: rgba(255, 255, 255, 0.7); }
+    body.about main img {
+      width: 150px;
+      margin-bottom: 25px;
+      animation: fade-in 0.3s ease-out; }
+    body.about main h1 {
+      color: white;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 10px; }
+    body.about main p.version {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 13px;
+      line-height: 1.4;
+      display: inline; }
+    body.about main p.author {
+      text-align: center;
+      position: absolute;
+      bottom: 25px;
+      width: 100%;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7); }
+    body.about main p.notes {
+      display: inline;
+      font-size: 13px; }
+      body.about main p.notes a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        outline: none;
+        cursor: default; }
+        body.about main p.notes a:hover {
+          text-decoration: underline; }
+  body.about handle {
+    -webkit-app-region: drag;
+    background: transparent;
+    height: 24px;
+    text-align: center;
+    z-index: 99;
+    position: absolute; }
+    body.about handle::after {
+      display: none; }
+    body.about handle .button {
+      position: absolute;
+      -webkit-app-region: no-drag;
+      user-select: none;
+      top: 6px;
+      border-radius: 100%;
+      height: 12px;
+      width: 12px;
+      transition: background-color 0.1s;
+      -webkit-box-sizing: border-box;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2); }
+      body.about handle .button:hover::after {
+        display: none; }
+    body.about handle .close {
+      left: 9px;
+      background: #fc5b57;
+      border: none; }
+      body.about handle .close:active {
+        background: #CC443F; }
+      body.about handle .close::after {
+        content: '';
+        display: block;
+        margin-left: 3px;
+        margin-top: 3px;
+        height: 6px;
+        width: 6px;
+        border-radius: 100%;
+        background: transparent;
+        transition: background-color 0.1s; }
+      body.about handle .close:hover::after {
+        display: block;
+        background: rgba(0, 0, 0, 0.3); }
+    body.about handle.disabled .button {
+      background: rgba(255, 255, 255, 0.2); }
