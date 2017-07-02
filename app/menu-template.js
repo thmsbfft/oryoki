@@ -153,6 +153,26 @@ module.exports = function () {
     ]
   }
 
+  const viewMenu = {
+    label: 'View',
+    submenu: [
+      {
+        label: 'Title Bar',
+        accelerator: 'CmdOrCtrl+/',
+        type: 'checkbox',
+        click: function () {
+        
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        role: 'togglefullscreen'
+      }
+    ]
+  }
+
   const windowMenu = {
     label: 'Window',
     role: 'window',
@@ -217,6 +237,7 @@ module.exports = function () {
   const template = [
     appMenu,
     fileMenu,
+    viewMenu,
     editMenu,
     windowMenu
   ]

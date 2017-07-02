@@ -3,7 +3,6 @@ const {app, BrowserWindow, ipcMain} = require('electron')
 const config = require('./config')
 
 const windows = new Set([])
-let focused = null
 
 function init() {
 
@@ -57,7 +56,7 @@ function create() {
       'experimentalFeatures': true,
       'experimentalCanvasFeatures': true
     },
-    fullscreenable: !config.getPreference('picture_in_picture')
+    // fullscreenable: !config.getPreference('picture_in_picture')
   }
 
   const win = new BrowserWindow(browserOptions)
@@ -77,10 +76,15 @@ function create() {
   win.once('ready-to-show', () => {
     win.show()
   })
+
+  win.webContents.on('dom-ready', () => {
+    win.webContents.send('ready')
+  })
+
+  win.webContents.openDevTools()
 }
 
 module.exports = {
   init: init,
-  create: create,
-  focused: focused
+  create: create
 }

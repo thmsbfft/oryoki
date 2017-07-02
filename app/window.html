@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
     <title>Ōryōki</title>
-    <link rel="stylesheet" type="text/css" href="../css/bundle.css">
-    <script src="../js/renderer/_renderer.js"></script>
+
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="sass/bundle.css">
+
+    <script src="browser.js"></script>
     <script src="http://localhost:35729/livereload.js"></script> 
   </head>
   <body>
     
     <div id="dragOverlay"></div>
-    <handle></handle>
+    <handle>
+      <div class="button close"></div>
+      <div class="button minimize"></div>
+      <div class="button fullscreen"></div>
+      <div class="title">Ōryōki</div>
+    </handle>
 
     <div id="frame">
 
