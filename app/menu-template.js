@@ -1,4 +1,4 @@
-const {app} = require('electron')
+const {app, BrowserWindow} = require('electron')
 const updater = require('./updater')
 
 const about = require('./about')
@@ -161,7 +161,7 @@ module.exports = function () {
         accelerator: 'CmdOrCtrl+/',
         type: 'checkbox',
         click: function () {
-        
+          BrowserWindow.getFocusedWindow().webContents.send('toggle-handle')
         }
       },
       {

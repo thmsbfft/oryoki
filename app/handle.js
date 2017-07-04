@@ -2,6 +2,7 @@ const {remote, ipcRenderer} = require('electron')
 const config = remote.require('./config')
 
 let el = undefined
+let titleEl = undefined
 
 var title = 'Ōryōki'
 var isShown = config.getPreference('show_title_bar')
@@ -9,23 +10,27 @@ var isDisabled = false
 
 function init () {
   el = document.querySelector('handle')
+  titleEl = el.querySelector('.title')
   
-  document.querySelector('.button.close').addEventListener('click', () => {
+  el.querySelector('.button.close').addEventListener('click', () => {
     remote.getCurrentWindow().close()
   })
 
-  document.querySelector('.button.minimize').addEventListener('click', () => {
+  el.querySelector('.button.minimize').addEventListener('click', () => {
     remote.getCurrentWindow().minimize()
   })
 
-  document.querySelector('.button.fullscreen').addEventListener('click', () => {
+  el.querySelector('.button.fullscreen').addEventListener('click', () => {
     remote.getCurrentWindow().setFullScreen(true)
     hide()
   })
 
+  ipcRenderer.on('toggle-handle', toggle)
+
   if(isShown) show()
   else hide()
   console.log('[handle] ✔')
+  updateTitle('Pouet')
 }
 
 function show () {
@@ -48,6 +53,11 @@ function hide () {
   isShown = false
 }
 
+function toggle () {
+  if(isShown) hide()
+  else show()
+}
+
 function disable () {
   el.classList.add('disabled')
   isDisabled = true
@@ -58,6 +68,16 @@ function enable () {
   isDisabled = false
 }
 
+function updateTitle (newTitle) {
+  titleEl.setAttribute('title', newTitle)
+  title = newTitle
+  titleEl.innerText = newTitle
+  // rpc.emit('update-title', newTitle)
+}
+
 module.exports = {
-  init: init
+  init: init,
+  show: show,
+  hide: hide,
+  updateTitle: updateTitle
 }

@@ -3,6 +3,7 @@ const {app, BrowserWindow, ipcMain} = require('electron')
 const config = require('./config')
 
 const windows = new Set([])
+let focused = undefined
 
 function init() {
 
