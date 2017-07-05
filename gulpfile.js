@@ -7,14 +7,14 @@ var livereload = require('gulp-livereload')
 gulp.task('watch', function () {
   livereload.listen()
   // gulp.watch('src/html/**/*.html', ['html']);
-  gulp.watch('app/sass/**/*.scss', ['sass'])
+  gulp.watch('lib/sass/**/*.scss', ['sass'])
 })
 
 // TASKS
 gulp.task('sass', function () {
-  gulp.src('app/sass/bundle.scss')
+  gulp.src('lib/sass/bundle.scss')
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('app/sass'))
+    .pipe(gulp.dest('lib/sass'))
     .pipe(livereload())
 })
 

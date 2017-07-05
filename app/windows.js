@@ -1,5 +1,6 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 
+const createRPC = require('./rpc')
 const config = require('./config')
 
 const windows = new Set([])
@@ -47,7 +48,7 @@ function create() {
     y: y,
     width: width,
     height: height,
-    frame: true,
+    frame: false,
     backgroundColor: '#141414',
     show: false,
     minWidth: 200,
@@ -76,10 +77,18 @@ function create() {
 
   win.once('ready-to-show', () => {
     win.show()
+    rpc.emit('test')
+
   })
 
-  win.webContents.on('dom-ready', () => {
-    win.webContents.send('ready')
+  // win.webContents.on('dom-ready', () => {
+  //   win.webContents.send('ready')
+  // })
+
+  const rpc = createRPC(win);
+
+  rpc.on('init', () => {
+    console.log('hey')
   })
 
   win.webContents.openDevTools()
