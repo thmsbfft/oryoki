@@ -1,7 +1,7 @@
 const path = require('path')
 const {BrowserWindow, ipcMain, app} = require('electron')
 
-let win;
+let win
 
 function init () {
   win = new BrowserWindow({
@@ -20,11 +20,11 @@ function init () {
   win.on('close', function (e) {
     e.preventDefault()
     hide()
-  }.bind(this))
+  })
 
   ipcMain.on('hide-about', function () {
     hide()
-  }.bind(this))
+  })
 
   app.on('before-quit', () => {
     close()
@@ -43,7 +43,7 @@ function hide () {
   win.hide()
 }
 
-function close() {
+function close () {
   win.removeAllListeners('close')
   win.close()
 }

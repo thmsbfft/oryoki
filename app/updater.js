@@ -41,7 +41,7 @@ function checkForUpdate (alert) {
         )
       }
     }
-  }.bind(this))
+  })
 }
 
 function compareVersions (alert) {
@@ -126,7 +126,7 @@ function downloadUpdate () {
       console.log('[updater] Done downloading')
       extractUpdate()
     }
-  }.bind(this))
+  })
 }
 
 function extractUpdate () {
@@ -139,10 +139,10 @@ function extractUpdate () {
     }
 
     // if (error == null) {
-      console.log('[updater] Done extracting')
+    console.log('[updater] Done extracting')
 
-      status = 'update-ready'
-      menus.refresh()
+    status = 'update-ready'
+    menus.refresh()
 
       // if (Oryoki.focusedWindow) {
       //   for (var i = 0; i < Oryoki.windows.length; i++) {
@@ -150,10 +150,10 @@ function extractUpdate () {
       //   }
       // }
 
-      notify.send('Update available!', {
-        body: 'Ōryōki ' + this.latest.version + ' is ready to be installed.',
-        silent: true
-      })
+    notify.send('Update available!', {
+      body: 'Ōryōki ' + this.latest.version + ' is ready to be installed.',
+      silent: true
+    })
     // }
   }.bind(this))
 }
@@ -177,7 +177,7 @@ function quitAndInstall () {
 
     cleanUp()
     // Oryoki.quit()
-  }.bind(this))
+  })
 }
 
 function cleanUp () {

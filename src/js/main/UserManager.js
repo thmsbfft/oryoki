@@ -1,10 +1,9 @@
-'use strict';
+'use strict'
 var shell = require('electron').shell
 var ipcMain = require('electron').ipcMain
 var fs = require('fs')
 
 module.exports = class UserManager {
-
   constructor () {
     console.log(__dirname)
 
@@ -80,5 +79,4 @@ module.exports = class UserManager {
   openPreferencesFile () {
     shell.openItem(this.user.paths.conf + '/' + 'oryoki-preferences.json')
   }
-
 }

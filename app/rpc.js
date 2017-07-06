@@ -1,60 +1,58 @@
 // from: https://github.com/zeit/hyper/blob/master/app/rpc.js
 
-const {EventEmitter} = require('events');
-const {ipcMain} = require('electron');
-const uuid = require('uuid');
+const {EventEmitter} = require('events')
+const {ipcMain} = require('electron')
+const uuid = require('uuid')
 
 class Server extends EventEmitter {
-
-  constructor(win) {
-    super();
-    this.win = win;
-    this.ipcListener = this.ipcListener.bind(this);
+  constructor (win) {
+    super()
+    this.win = win
+    this.ipcListener = this.ipcListener.bind(this)
 
     if (this.destroyed) {
-      return;
+      return
     }
 
-    const uid = uuid.v4();
-    this.id = uid;
+    const uid = uuid.v4()
+    this.id = uid
 
-    ipcMain.on(uid, this.ipcListener);
+    ipcMain.on(uid, this.ipcListener)
 
     // we intentionally subscribe to `on` instead of `once`
     // to support reloading the window and re-initializing
     // the channel
     this.wc.on('did-finish-load', () => {
-      this.wc.send('init', uid);
-    });
+      this.wc.send('init', uid)
+    })
     console.log('[rpc] ✔ ' + uid)
   }
 
-  get wc() {
-    return this.win.webContents;
+  get wc () {
+    return this.win.webContents
   }
 
-  ipcListener(event, {ev, data}) {
-    super.emit(ev, data);
+  ipcListener (event, {ev, data}) {
+    super.emit(ev, data)
   }
 
-  emit(ch, data) {
-    this.wc.send(this.id, {ch, data});
+  emit (ch, data) {
+    this.wc.send(this.id, {ch, data})
     console.log(ch, data)
   }
 
-  destroy() {
-    this.removeAllListeners();
-    this.wc.removeAllListeners();
+  destroy () {
+    this.removeAllListeners()
+    this.wc.removeAllListeners()
     if (this.id) {
-      ipcMain.removeListener(this.id, this.ipcListener);
+      ipcMain.removeListener(this.id, this.ipcListener)
     } else {
       // mark for `genUid` in constructor
-      this.destroyed = true;
+      this.destroyed = true
     }
   }
-
 }
 
 module.exports = win => {
-  return new Server(win);
-};
+  return new Server(win)
+}

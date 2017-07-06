@@ -54,12 +54,12 @@ function init () {
   // Allow for renderer to get preferences
   ipcMain.on('get-preference', function (event, name) {
     event.returnValue = getPreference(name)
-  }.bind(this))
+  })
 
   // Allow for renderer to get user paths
   ipcMain.on('get-user-path', function (event, name) {
     event.returnValue = paths[name]
-  }.bind(this))
+  })
 }
 
 function getConfFile (fileName, callback) {
@@ -106,7 +106,7 @@ function watch () {
       // for (var i = 0; i < Oryoki.windows.length; i++) {
       //   Oryoki.windows[i].updateConfFiles()
       // }
-    } catch(e) {
+    } catch (e) {
       console.log('[config] ' + e)
     }
 
@@ -135,20 +135,20 @@ function verify () {
       },
       function (buttonId) {
         if (buttonId == 0) reset('Preferences', 'oryoki-preferences.json')
-      }.bind(this)
+      }
     )
   }
 }
 
 function reset (niceName, fileName) {
-  fs.writeFile(path.join(paths.conf, fileName), fs.readFileSync(path.join(__dirname , 'data', fileName), 'utf8'), function (e) {
+  fs.writeFile(path.join(paths.conf, fileName), fs.readFileSync(path.join(__dirname, 'data', fileName), 'utf8'), function (e) {
     if (e) console.log('[config] ' + e)
     console.log('[config] ' + niceName + ' reset')
     try {
       Oryoki.focusedWindow.browser.webContents.send('log-status', {
         'body': niceName + ' reset'
       })
-    } catch(e) {
+    } catch (e) {
       console.log('[config] ' + e)
     }
   })

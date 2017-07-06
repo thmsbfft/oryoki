@@ -13,7 +13,7 @@ function createMenus () {
   Menu.setApplicationMenu(menu)
 }
 
-function refresh() {
+function refresh () {
   console.log('[menus] 🔁')
   menu.clear()
   menu = null

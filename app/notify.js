@@ -1,8 +1,8 @@
 const {BrowserWindow} = require('electron')
 
-let win;
-let ready;
-let buffer = [];
+let win
+let ready
+let buffer = []
 
 function init () {
   win = new BrowserWindow({show: false})
@@ -10,19 +10,18 @@ function init () {
   win.webContents.on('dom-ready', () => {
     ready = true
     buffer.forEach(([title, props]) => {
-      send(title, props);
+      send(title, props)
     })
     buffer = null
   })
 }
 
 function send (title, props) {
-  win.webContents.openDevTools();
-  if(ready) {
+  win.webContents.openDevTools()
+  if (ready) {
     console.log('send')
     win.webContents.send('notification', title, props)
-  }
-  else {
+  } else {
     console.log('storing')
     buffer.push([title, props])
   }

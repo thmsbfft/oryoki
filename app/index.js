@@ -14,7 +14,6 @@ const windows = require('./windows')
 
 // var CommandManager = require('./CommandManager')
 
-
 // var ipcMain = require('electron').ipcMain
 // var Menu = require('electron').Menu
 // var MenuItem = require('electron').MenuItem
@@ -41,7 +40,7 @@ app.commandLine.appendSwitch('ignore-certificate-errors')
 app.on('ready', function () {
   console.log('[~~~~~~] ' + app.getName())
   console.log('[~~~~~~] ' + app.getVersion())
-  
+
   const electronScreen = require('electron').screen
 
   config.init()
@@ -51,7 +50,6 @@ app.on('ready', function () {
   notify.init()
 
   windows.init()
-
 
   // Camera = new Camera()
   // Oryoki = new Oryoki()

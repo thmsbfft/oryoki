@@ -9,7 +9,6 @@ var electronScreen
 // Base Classes
 var UserManager = require('./src/js/main/UserManager')
 
-
 // var ipcMain = require('electron').ipcMain
 // var Menu = require('electron').Menu
 // var MenuItem = require('electron').MenuItem
