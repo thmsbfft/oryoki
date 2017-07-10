@@ -84,10 +84,8 @@ __webpack_require__(2)
 const rpc = __webpack_require__(7)
 const handle = __webpack_require__(8)
 
-// console.log(config.getPreference('use_alt_drag'))
-
-ipcRenderer.on('init', function (e, uid) {
-  console.log('[browser]', uid)
+rpc.on('ready', function (e, uid) {
+  console.log('[rpc] ✔', rpc.id)
   handle.init()
 })
 
@@ -703,7 +701,6 @@ class RPC {
         this.emitter.emit('ready')
       })
     }
-    console.log('rpc good good')
   }
 
   ipcListener (event, {ch, data}) {
@@ -723,6 +720,7 @@ class RPC {
       throw new Error('Not ready')
     }
     this.ipc.send(this.id, {ev, data})
+    console.log('[rpc]', ev, data)
   }
 
   removeListener (ev, fn) {
@@ -748,6 +746,7 @@ module.exports = new RPC()
 
 const {remote, ipcRenderer} = __webpack_require__(0)
 const config = remote.require('./config')
+const rpc = __webpack_require__(7)
 
 let el
 let titleEl
@@ -782,7 +781,6 @@ function init () {
   if (isShown) show()
   else hide()
   console.log('[handle] ✔')
-  updateTitle('Pouet')
 }
 
 function show () {
@@ -824,7 +822,7 @@ function updateTitle (newTitle) {
   titleEl.setAttribute('title', newTitle)
   title = newTitle
   titleEl.innerText = newTitle
-  // rpc.emit('update-title', newTitle)
+  remote.getCurrentWindow().setTitle(newTitle)
 }
 
 module.exports = {

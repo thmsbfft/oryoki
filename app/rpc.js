@@ -25,7 +25,6 @@ class Server extends EventEmitter {
     this.wc.on('did-finish-load', () => {
       this.wc.send('init', uid)
     })
-    console.log('[rpc] ✔ ' + uid)
   }
 
   get wc () {
@@ -34,11 +33,12 @@ class Server extends EventEmitter {
 
   ipcListener (event, {ev, data}) {
     super.emit(ev, data)
+    // console.log('[rpc]', ev, data)
   }
 
   emit (ch, data) {
     this.wc.send(this.id, {ch, data})
-    console.log(ch, data)
+    console.log('[rpc]', ch, data)
   }
 
   destroy () {
