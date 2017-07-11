@@ -37,13 +37,13 @@ handle {
 	// }
 
 	.title {
-		margin-top: 0px;
+		margin-top: 2px;
 		padding: 0 8px;
 		padding-top: 4px;
-		padding-bottom: 6px;
+		padding-bottom: 5px;
 		text-align: center;
 		font-size: 15px;
-		line-height: 14px;
+		line-height: 13px;
 		letter-spacing: -0.5px;
 		display: inline-block;
 		-webkit-app-region: no-drag;
@@ -51,7 +51,7 @@ handle {
 		user-select: none;
 		cursor: pointer;
 		background: transparent;
-		border-radius: 20px;
+		border-radius: 5px;
 		transition: background 0.1s;
 		&.selected {
 			background: rgba(255, 255, 255, 0.15);

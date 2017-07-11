@@ -60,44 +60,115 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = require("electron");
+// from: https://github.com/zeit/hyper/blob/master/lib/utils/rpc.js
+
+class RPC {
+  constructor () {
+    const electron = window.require('electron')
+    const EventEmitter = window.require('events')
+    this.emitter = new EventEmitter()
+    this.ipc = electron.ipcRenderer
+    this.ipcListener = this.ipcListener.bind(this)
+    if (window.__rpcId) {
+      setTimeout(() => {
+        this.id = window.__rpcId
+        this.ipc.on(this.id, this.ipcListener)
+        this.emitter.emit('ready')
+      }, 0)
+    } else {
+      this.ipc.on('init', (ev, uid) => {
+        // we cache so that if the object
+        // gets re-instantiated we don't
+        // wait for a `init` event
+        window.__rpcId = uid
+        this.id = uid
+        this.ipc.on(uid, this.ipcListener)
+        this.emitter.emit('ready')
+      })
+    }
+  }
+
+  ipcListener (event, {ch, data}) {
+    this.emitter.emit(ch, data)
+  }
+
+  on (ev, fn) {
+    this.emitter.on(ev, fn)
+  }
+
+  once (ev, fn) {
+    this.emitter.once(ev, fn)
+  }
+
+  emit (ev, data) {
+    if (!this.id) {
+      throw new Error('Not ready')
+    }
+    this.ipc.send(this.id, {ev, data})
+    console.log('[rpc]', ev, data)
+  }
+
+  removeListener (ev, fn) {
+    this.emitter.removeListener(ev, fn)
+  }
+
+  removeAllListeners () {
+    this.emitter.removeAllListeners()
+  }
+
+  destroy () {
+    this.removeAllListeners()
+    this.ipc.removeAllListeners()
+  }
+}
+
+module.exports = new RPC()
+
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-// Packages
-const {remote, ipcRenderer} = __webpack_require__(0)
-const config = remote.require('./config')
-
-// Styles
-__webpack_require__(2)
-
-// Oryoki
-const rpc = __webpack_require__(7)
-const handle = __webpack_require__(8)
-
-rpc.on('ready', function (e, uid) {
-  console.log('[rpc] ✔', rpc.id)
-  handle.init()
-})
-
+module.exports = require("electron");
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// Packages
+const {remote, ipcRenderer} = __webpack_require__(1)
+const config = remote.require('./config')
+
+// Styles
+__webpack_require__(3)
+
+// Oryoki
+const rpc = __webpack_require__(0)
+const handle = __webpack_require__(8)
+const omnibox = __webpack_require__(9)
+
+rpc.on('ready', function (e, uid) {
+  console.log('[rpc] ✔', rpc.id)
+  handle.init()
+  omnibox.init()
+})
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(3);
+var content = __webpack_require__(4);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -105,7 +176,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(5)(content, options);
+var update = __webpack_require__(6)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -122,21 +193,21 @@ if(false) {
 }
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(undefined);
+exports = module.exports = __webpack_require__(5)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after {\n  content: '';\n  content: none; }\n\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n@keyframes blink {\n  0% {\n    border-color: #00ec91; }\n  50% {\n    border-color: rgba(0, 236, 145, 0.6); } }\n\n@keyframes pulse {\n  0% {\n    opacity: 1; }\n  50% {\n    opacity: 0; } }\n\n@keyframes fade-in {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 1; } }\n\n@keyframes fade-out {\n  0% {\n    opacity: 1; }\n  100% {\n    opacity: 0; } }\n\n@keyframes appear {\n  0% {\n    box-shadow: inset 0 0 0 3px rgba(52, 130, 220, 0); }\n  100% {\n    box-shadow: inset 0 0 0 3px rgba(52, 130, 220, 0.7); } }\n\nbody {\n  background-color: #141414;\n  font-family: -apple-system, BlinkMacSystemFont, sans-serif;\n  color: white;\n  overflow: hidden;\n  -webkit-font-smoothing: antialiased; }\n\ncursor {\n  z-index: 99;\n  position: fixed;\n  width: 10px;\n  height: 10px;\n  background: red;\n  border-radius: 10px;\n  pointer-events: none; }\n  cursor.active {\n    background: blue; }\n\nhandle {\n  -webkit-app-region: drag;\n  background: rgba(20, 20, 20, 0);\n  height: 24px;\n  width: 100%;\n  text-align: center;\n  transition: background 0.2s;\n  display: block; }\n  handle.stroke::after {\n    content: ' ';\n    width: 100%;\n    height: 1px;\n    background: #212121;\n    display: inline-block;\n    position: fixed;\n    top: 24px;\n    left: 0;\n    z-index: 98;\n    transition: background 0.1s; }\n  handle .title {\n    margin-top: 0px;\n    padding: 0 8px;\n    padding-top: 4px;\n    padding-bottom: 6px;\n    text-align: center;\n    font-size: 15px;\n    line-height: 14px;\n    letter-spacing: -0.5px;\n    display: inline-block;\n    -webkit-app-region: no-drag;\n    -webkit-user-select: none;\n    user-select: none;\n    cursor: pointer;\n    background: transparent;\n    border-radius: 20px;\n    transition: background 0.1s; }\n    handle .title.selected {\n      background: rgba(255, 255, 255, 0.15); }\n      handle .title.selected::after {\n        opacity: 1; }\n    handle .title::after {\n      width: 9px;\n      height: 9px;\n      position: relative;\n      top: -1px;\n      content: '\\2022';\n      display: inline-block;\n      margin-left: 4px;\n      opacity: 0.2;\n      transition: opacity 0.2s; }\n    handle .title:hover::after {\n      opacity: 1; }\n    handle .title.align-left {\n      text-align: left;\n      position: absolute;\n      left: 60px; }\n  handle .button {\n    position: absolute;\n    -webkit-app-region: no-drag;\n    user-select: none;\n    top: 6px;\n    border-radius: 100%;\n    height: 12px;\n    width: 12px;\n    transition: background-color 0.1s;\n    -webkit-box-sizing: border-box; }\n    handle .button::after {\n      content: '';\n      display: block;\n      margin-left: 3px;\n      margin-top: 3px;\n      height: 6px;\n      width: 6px;\n      border-radius: 100%;\n      background: transparent;\n      transition: background-color 0.1s; }\n    handle .button:hover::after {\n      background: rgba(0, 0, 0, 0.3); }\n  handle .close {\n    left: 9px;\n    background: #fc5b57; }\n    handle .close:active {\n      background: #CC443F; }\n  handle .minimize {\n    left: 29px;\n    background: rgba(255, 255, 255, 0.2);\n    transition: background 0.2s; }\n  handle .fullscreen {\n    left: 49px;\n    background: rgba(255, 255, 255, 0.2);\n    transition: background 0.2s; }\n  handle.hide {\n    display: none; }\n  handle:hover .minimize, handle.light:hover .minimize {\n    background: #ffbb3c; }\n    handle:hover .minimize:active, handle.light:hover .minimize:active {\n      background: #CC9631; }\n  handle:hover .fullscreen, handle.light:hover .fullscreen {\n    background: #35c849; }\n    handle:hover .fullscreen:active, handle.light:hover .fullscreen:active {\n      background: #269435; }\n  handle.disabled .button {\n    background: rgba(255, 255, 255, 0.2); }\n  handle.disabled .title {\n    opacity: 0.6; }\n  handle.light {\n    background: #f7f7f7; }\n    handle.light.stroke::after {\n      background: rgba(33, 33, 33, 0.15); }\n    handle.light .title {\n      color: #1a1a1a; }\n    handle.light .minimize {\n      background: rgba(0, 0, 0, 0.15); }\n    handle.light .fullscreen {\n      background: rgba(0, 0, 0, 0.15); }\n    handle.light.disabled .button {\n      background: rgba(0, 0, 0, 0.15); }\n\n#view {\n  width: 100%;\n  height: 100%; }\n  #view.recording::before {\n    content: '';\n    width: 10px;\n    height: 10px;\n    background: transparent;\n    border-radius: 10px;\n    position: absolute;\n    top: 20px;\n    right: 20px;\n    animation: pulse 0.8s infinite; }\n\nomnibox {\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  -webkit-app-region: drag;\n  z-index: 98; }\n  omnibox .box {\n    z-index: 98;\n    max-width: 485px;\n    top: calc(50px);\n    position: relative;\n    margin: auto; }\n    omnibox .box ::-webkit-input-placeholder {\n      color: rgba(255, 255, 255, 0.2); }\n    omnibox .box .input {\n      z-index: 98;\n      -webkit-app-region: no-drag;\n      width: calc(100% - 24px);\n      font-size: 22px;\n      letter-spacing: -0.5px;\n      color: white;\n      background: #2b2b2b;\n      line-height: 21px;\n      outline: none;\n      border: none;\n      padding: 6px 12px;\n      position: relative;\n      border-radius: 1px;\n      transition: background-color 0.1s ease-out;\n      box-shadow: 0px 0px 0px 2px transparent;\n      transition: box-shadow 0.1s ease-out;\n      white-space: nowrap;\n      overflow-x: scroll; }\n      omnibox .box .input::-webkit-scrollbar {\n        display: none; }\n      omnibox .box .input.highlight {\n        background-color: #1F1F1F; }\n      omnibox .box .input.drop {\n        box-shadow: 0px 0px 0px 2px rgba(53, 130, 220, 0.7); }\n      omnibox .box .input::selection {\n        background-color: rgba(255, 255, 255, 0.1); }\n      omnibox .box .input.hintShown {\n        border-bottom-left-radius: 0;\n        border-bottom-right-radius: 0; }\n  omnibox .hints {\n    z-index: 98;\n    display: block;\n    max-width: 485px;\n    margin: auto;\n    font-size: 14px;\n    letter-spacing: -0.4px;\n    background: #1A1A1A;\n    position: relative;\n    border-radius: 0px 0px 2px 2px;\n    color: rgba(255, 255, 255, 0.4);\n    -webkit-user-select: none;\n    cursor: default; }\n    omnibox .hints.hide {\n      display: none; }\n    omnibox .hints.show {\n      display: block; }\n    omnibox .hints hint {\n      padding: 14px;\n      display: block; }\n      omnibox .hints hint .keyword {\n        float: right;\n        letter-spacing: -0.1px;\n        color: rgba(255, 255, 255, 0.4); }\n      omnibox .hints hint .highlighted {\n        color: rgba(255, 255, 255, 0.6); }\n  omnibox.show {\n    display: block; }\n  omnibox.hide {\n    display: none; }\n  omnibox .overlay {\n    width: 100%;\n    height: 100%;\n    background-color: #141414;\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 88; }\n  omnibox .updateClue {\n    background: #1A1A1A;\n    padding: 7px 14px;\n    margin-bottom: 10px;\n    font-size: 12px;\n    letter-spacing: -0.4px;\n    display: inline-block;\n    color: rgba(255, 255, 255, 0.4);\n    -webkit-user-select: none;\n    cursor: default;\n    border-bottom-right-radius: 10px;\n    border-bottom-left-radius: 10px;\n    transition: 0.3s color;\n    display: none; }\n    omnibox .updateClue::before {\n      content: '';\n      width: 4px;\n      height: 4px;\n      border-radius: 4px;\n      display: inline-block;\n      background: green;\n      margin-right: 8px;\n      position: relative;\n      top: -2px;\n      display: none; }\n    omnibox .updateClue:hover {\n      color: white; }\n    omnibox .updateClue:active {\n      background-color: #1F1F1F; }\n    omnibox .updateClue.available {\n      display: inline-block; }\n      omnibox .updateClue.available::before {\n        background: red; }\n    omnibox .updateClue.downloading {\n      display: inline-block; }\n      omnibox .updateClue.downloading:hover {\n        color: rgba(255, 255, 255, 0.4); }\n      omnibox .updateClue.downloading:active {\n        background: #1A1A1A; }\n      omnibox .updateClue.downloading::before {\n        background: rgba(255, 255, 255, 0.8);\n        display: inline-block;\n        animation: pulse 1s infinite; }\n    omnibox .updateClue.ready {\n      display: inline-block; }\n      omnibox .updateClue.ready::before {\n        background: green;\n        display: inline-block; }\n\n@media (max-width: 485px) {\n  omnibox .box {\n    top: 4px;\n    width: calc(100% - 8px); }\n    omnibox .box .input {\n      border-radius: 2px; } }\n\nstatus {\n  position: fixed;\n  top: 0;\n  right: 0;\n  text-align: right;\n  padding: 5px 8px;\n  font-size: 12.5px;\n  display: inline-block;\n  letter-spacing: -0.1px;\n  line-height: 14px;\n  text-rendering: optimizeLegibility;\n  color: rgba(255, 255, 255, 0.8);\n  background: rgba(40, 40, 40, 0.7);\n  pointer-events: none;\n  border-bottom-left-radius: 6px;\n  opacity: 0;\n  transition: opacity 0.5s ease-out;\n  z-index: 99; }\n  status icon {\n    padding-right: 7px;\n    position: relative;\n    top: 0.5px;\n    color: white; }\n  status.hide {\n    display: none; }\n  status.fade-in {\n    opacity: 1;\n    transition: opacity 0.5s ease-out; }\n  status.fade-out {\n    opacity: 0;\n    transition: opacity 1s ease-in; }\n  status i {\n    font-style: italic; }\n  status.light {\n    background: rgba(40, 40, 40, 0.1);\n    color: rgba(0, 0, 0, 0.8); }\n  @media (-webkit-min-device-pixel-ratio: 2) {\n    status icon {\n      padding-right: 5px; } }\n\nconsole {\n  position: fixed;\n  bottom: 0;\n  background: #252525;\n  width: calc(100% - 10px);\n  padding-left: 10px;\n  padding-top: 4px;\n  height: 19px;\n  font-family: 'Roboto Mono Regular', sans-serif;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.6);\n  display: none; }\n  console.show {\n    display: block; }\n  console.hide {\n    display: none; }\n  console input {\n    -webkit-app-region: no-drag;\n    width: calc(100% - 36px - 55px);\n    color: rgba(255, 255, 255, 0.7);\n    background: #252525;\n    line-height: 11px;\n    letter-spacing: 0.5px;\n    outline: none;\n    border: none;\n    position: relative;\n    padding-right: 79px;\n    border-radius: 2px;\n    transition: background-color 0.1s ease-out; }\n    console input.highlight {\n      background-color: #1F1F1F; }\n    console input::selection {\n      background-color: rgba(255, 255, 255, 0.2); }\n\nwindowhelper {\n  position: fixed;\n  z-index: 99;\n  bottom: 18px;\n  right: 18px;\n  background: #212121;\n  padding: 3px 7px;\n  border-radius: 2px;\n  text-align: center;\n  color: rgba(255, 255, 255, 0.6);\n  display: none; }\n  windowhelper.show {\n    display: block; }\n  windowhelper.hide {\n    display: none; }\n  windowhelper::focus {\n    background: #262626; }\n  windowhelper input {\n    font-size: 13px;\n    letter-spacing: 0px;\n    color: rgba(255, 255, 255, 0.6);\n    background: transparent;\n    width: 26px;\n    display: inline-block;\n    line-height: 19px;\n    outline: none;\n    border: none;\n    padding: 0;\n    transition: background-color 0.1s ease-out;\n    text-align: center; }\n    windowhelper input.fourDigits {\n      width: 34px; }\n    windowhelper input.leadingOne {\n      width: 30px; }\n    windowhelper input:focus {\n      color: white;\n      background: transparent; }\n    windowhelper input::selection {\n      color: white;\n      background: transparent; }\n  windowhelper #width {\n    text-align: right; }\n  windowhelper #height {\n    text-align: left; }\n  windowhelper .separator {\n    color: rgba(255, 255, 255, 0.4);\n    display: inline-block;\n    width: 8px;\n    position: relative;\n    left: -0.5px;\n    text-align: center;\n    -webkit-user-select: none;\n    user-select: none; }\n\n@media (-webkit-min-device-pixel-ratio: 2) {\n  windowhelper input.fourDigits {\n    width: 34px; }\n  windowhelper input.leadingOne {\n    width: 33px; } }\n\n#dragOverlay {\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  z-index: 999;\n  background: transparent;\n  pointer-events: none;\n  display: none;\n  box-shadow: inset 0 0 0 3px rgba(52, 130, 220, 0);\n  -webkit-app-region: drag; }\n  #dragOverlay.active {\n    display: block;\n    pointer-events: all;\n    box-shadow: inset 0 0 0 3px rgba(52, 130, 220, 0);\n    animation: appear 0.1s ease-in;\n    animation-delay: 0.1s;\n    -webkit-animation-fill-mode: forwards; }\n  #dragOverlay.invisible {\n    opacity: 0; }\n\n.webview {\n  height: 100%;\n  width: 100%;\n  background: white;\n  transition: 0.4s filter;\n  filter: grayscale(0%) invert(0%); }\n  .webview.show {\n    animation: fade-in 0.15s ease-out; }\n  .webview.hide {\n    opacity: 0; }\n  .webview.grayscale {\n    filter: grayscale(100%) invert(0%); }\n  .webview.invert {\n    filter: grayscale(0%) invert(100%); }\n  .webview.grayscale.invert {\n    filter: grayscale(100%) invert(100%); }\n\n.homepage {\n  -webkit-app-region: drag;\n  height: 100%;\n  width: 100%;\n  position: fixed; }\n  .homepage .infos {\n    position: fixed;\n    bottom: 45px;\n    left: 50px; }\n  .homepage p {\n    margin-bottom: 0;\n    margin-top: 0;\n    font-family: 'Roboto Light', sans-serif;\n    font-size: 18px;\n    color: rgba(255, 255, 255, 0.3);\n    line-height: 24px; }\n\nbody.about {\n  background-color: #333333; }\n  body.about main {\n    -webkit-app-region: drag;\n    width: 100%;\n    height: 90%;\n    position: absolute;\n    top: 0;\n    left: 0;\n    text-align: center;\n    padding-top: 10%;\n    color: rgba(255, 255, 255, 0.7); }\n    body.about main img {\n      width: 150px;\n      margin-bottom: 25px;\n      animation: fade-in 0.3s ease-out; }\n    body.about main h1 {\n      color: white;\n      font-size: 20px;\n      font-weight: 400;\n      margin-bottom: 10px; }\n    body.about main p.version {\n      color: rgba(255, 255, 255, 0.7);\n      font-size: 13px;\n      line-height: 1.4;\n      display: inline; }\n    body.about main p.author {\n      text-align: center;\n      position: absolute;\n      bottom: 25px;\n      width: 100%;\n      font-size: 13px;\n      color: rgba(255, 255, 255, 0.7); }\n    body.about main p.notes {\n      display: inline;\n      font-size: 13px; }\n      body.about main p.notes a {\n        color: rgba(255, 255, 255, 0.7);\n        text-decoration: none;\n        outline: none;\n        cursor: default; }\n        body.about main p.notes a:hover {\n          text-decoration: underline; }\n  body.about handle {\n    -webkit-app-region: drag;\n    background: transparent;\n    height: 24px;\n    text-align: center;\n    z-index: 99;\n    position: absolute; }\n    body.about handle::after {\n      display: none; }\n    body.about handle .button {\n      position: absolute;\n      -webkit-app-region: no-drag;\n      user-select: none;\n      top: 6px;\n      border-radius: 100%;\n      height: 12px;\n      width: 12px;\n      transition: background-color 0.1s;\n      -webkit-box-sizing: border-box;\n      background: transparent;\n      border: 1px solid rgba(255, 255, 255, 0.2); }\n      body.about handle .button:hover::after {\n        display: none; }\n    body.about handle .close {\n      left: 9px;\n      background: #fc5b57;\n      border: none; }\n      body.about handle .close:active {\n        background: #CC443F; }\n      body.about handle .close::after {\n        content: '';\n        display: block;\n        margin-left: 3px;\n        margin-top: 3px;\n        height: 6px;\n        width: 6px;\n        border-radius: 100%;\n        background: transparent;\n        transition: background-color 0.1s; }\n      body.about handle .close:hover::after {\n        display: block;\n        background: rgba(0, 0, 0, 0.3); }\n    body.about handle.disabled .button {\n      background: rgba(255, 255, 255, 0.2); }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\nhtml, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after {\n  content: '';\n  content: none; }\n\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n@keyframes blink {\n  0% {\n    border-color: #00ec91; }\n  50% {\n    border-color: rgba(0, 236, 145, 0.6); } }\n\n@keyframes pulse {\n  0% {\n    opacity: 1; }\n  50% {\n    opacity: 0; } }\n\n@keyframes fade-in {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 1; } }\n\n@keyframes fade-out {\n  0% {\n    opacity: 1; }\n  100% {\n    opacity: 0; } }\n\n@keyframes appear {\n  0% {\n    box-shadow: inset 0 0 0 3px rgba(52, 130, 220, 0); }\n  100% {\n    box-shadow: inset 0 0 0 3px rgba(52, 130, 220, 0.7); } }\n\nbody {\n  background-color: #141414;\n  font-family: -apple-system, BlinkMacSystemFont, sans-serif;\n  color: white;\n  overflow: hidden;\n  -webkit-font-smoothing: antialiased; }\n\ncursor {\n  z-index: 99;\n  position: fixed;\n  width: 10px;\n  height: 10px;\n  background: red;\n  border-radius: 10px;\n  pointer-events: none; }\n  cursor.active {\n    background: blue; }\n\nhandle {\n  -webkit-app-region: drag;\n  background: rgba(20, 20, 20, 0);\n  height: 24px;\n  width: 100%;\n  text-align: center;\n  transition: background 0.2s;\n  display: block; }\n  handle.stroke::after {\n    content: ' ';\n    width: 100%;\n    height: 1px;\n    background: #212121;\n    display: inline-block;\n    position: fixed;\n    top: 24px;\n    left: 0;\n    z-index: 98;\n    transition: background 0.1s; }\n  handle .title {\n    margin-top: 2px;\n    padding: 0 8px;\n    padding-top: 4px;\n    padding-bottom: 5px;\n    text-align: center;\n    font-size: 15px;\n    line-height: 13px;\n    letter-spacing: -0.5px;\n    display: inline-block;\n    -webkit-app-region: no-drag;\n    -webkit-user-select: none;\n    user-select: none;\n    cursor: pointer;\n    background: transparent;\n    border-radius: 5px;\n    transition: background 0.1s; }\n    handle .title.selected {\n      background: rgba(255, 255, 255, 0.15); }\n      handle .title.selected::after {\n        opacity: 1; }\n    handle .title::after {\n      width: 9px;\n      height: 9px;\n      position: relative;\n      top: -1px;\n      content: '\\2022';\n      display: inline-block;\n      margin-left: 4px;\n      opacity: 0.2;\n      transition: opacity 0.2s; }\n    handle .title:hover::after {\n      opacity: 1; }\n    handle .title.align-left {\n      text-align: left;\n      position: absolute;\n      left: 60px; }\n  handle .button {\n    position: absolute;\n    -webkit-app-region: no-drag;\n    user-select: none;\n    top: 6px;\n    border-radius: 100%;\n    height: 12px;\n    width: 12px;\n    transition: background-color 0.1s;\n    -webkit-box-sizing: border-box; }\n    handle .button::after {\n      content: '';\n      display: block;\n      margin-left: 3px;\n      margin-top: 3px;\n      height: 6px;\n      width: 6px;\n      border-radius: 100%;\n      background: transparent;\n      transition: background-color 0.1s; }\n    handle .button:hover::after {\n      background: rgba(0, 0, 0, 0.3); }\n  handle .close {\n    left: 9px;\n    background: #fc5b57; }\n    handle .close:active {\n      background: #CC443F; }\n  handle .minimize {\n    left: 29px;\n    background: rgba(255, 255, 255, 0.2);\n    transition: background 0.2s; }\n  handle .fullscreen {\n    left: 49px;\n    background: rgba(255, 255, 255, 0.2);\n    transition: background 0.2s; }\n  handle.hide {\n    display: none; }\n  handle:hover .minimize, handle.light:hover .minimize {\n    background: #ffbb3c; }\n    handle:hover .minimize:active, handle.light:hover .minimize:active {\n      background: #CC9631; }\n  handle:hover .fullscreen, handle.light:hover .fullscreen {\n    background: #35c849; }\n    handle:hover .fullscreen:active, handle.light:hover .fullscreen:active {\n      background: #269435; }\n  handle.disabled .button {\n    background: rgba(255, 255, 255, 0.2); }\n  handle.disabled .title {\n    opacity: 0.6; }\n  handle.light {\n    background: #f7f7f7; }\n    handle.light.stroke::after {\n      background: rgba(33, 33, 33, 0.15); }\n    handle.light .title {\n      color: #1a1a1a; }\n    handle.light .minimize {\n      background: rgba(0, 0, 0, 0.15); }\n    handle.light .fullscreen {\n      background: rgba(0, 0, 0, 0.15); }\n    handle.light.disabled .button {\n      background: rgba(0, 0, 0, 0.15); }\n\n#view {\n  width: 100%;\n  height: 100%; }\n  #view.recording::before {\n    content: '';\n    width: 10px;\n    height: 10px;\n    background: transparent;\n    border-radius: 10px;\n    position: absolute;\n    top: 20px;\n    right: 20px;\n    animation: pulse 0.8s infinite; }\n\nomnibox {\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  -webkit-app-region: drag;\n  z-index: 98; }\n  omnibox .box {\n    z-index: 98;\n    max-width: 485px;\n    top: calc(50px);\n    position: relative;\n    margin: auto; }\n    omnibox .box ::-webkit-input-placeholder {\n      color: rgba(255, 255, 255, 0.2); }\n    omnibox .box .input {\n      z-index: 98;\n      -webkit-app-region: no-drag;\n      width: calc(100% - 24px);\n      font-size: 22px;\n      letter-spacing: -0.5px;\n      color: white;\n      background: #2b2b2b;\n      line-height: 21px;\n      outline: none;\n      border: none;\n      padding: 6px 12px;\n      position: relative;\n      border-radius: 1px;\n      transition: background-color 0.1s ease-out;\n      box-shadow: 0px 0px 0px 2px transparent;\n      transition: box-shadow 0.1s ease-out;\n      white-space: nowrap;\n      overflow-x: scroll; }\n      omnibox .box .input::-webkit-scrollbar {\n        display: none; }\n      omnibox .box .input.highlight {\n        background-color: #1F1F1F; }\n      omnibox .box .input.drop {\n        box-shadow: 0px 0px 0px 2px rgba(53, 130, 220, 0.7); }\n      omnibox .box .input::selection {\n        background-color: rgba(255, 255, 255, 0.1); }\n      omnibox .box .input.hintShown {\n        border-bottom-left-radius: 0;\n        border-bottom-right-radius: 0; }\n  omnibox .hints {\n    z-index: 98;\n    display: block;\n    max-width: 485px;\n    margin: auto;\n    font-size: 14px;\n    letter-spacing: -0.4px;\n    background: #1A1A1A;\n    position: relative;\n    border-radius: 0px 0px 2px 2px;\n    color: rgba(255, 255, 255, 0.4);\n    -webkit-user-select: none;\n    cursor: default; }\n    omnibox .hints.hide {\n      display: none; }\n    omnibox .hints.show {\n      display: block; }\n    omnibox .hints hint {\n      padding: 14px;\n      display: block; }\n      omnibox .hints hint .keyword {\n        float: right;\n        letter-spacing: -0.1px;\n        color: rgba(255, 255, 255, 0.4); }\n      omnibox .hints hint .highlighted {\n        color: rgba(255, 255, 255, 0.6); }\n  omnibox.show {\n    display: block; }\n  omnibox.hide {\n    display: none; }\n  omnibox .overlay {\n    width: 100%;\n    height: 100%;\n    background-color: #141414;\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 88; }\n  omnibox .updateClue {\n    background: #1A1A1A;\n    padding: 7px 14px;\n    margin-bottom: 10px;\n    font-size: 12px;\n    letter-spacing: -0.4px;\n    display: inline-block;\n    color: rgba(255, 255, 255, 0.4);\n    -webkit-user-select: none;\n    cursor: default;\n    border-bottom-right-radius: 10px;\n    border-bottom-left-radius: 10px;\n    transition: 0.3s color;\n    display: none; }\n    omnibox .updateClue::before {\n      content: '';\n      width: 4px;\n      height: 4px;\n      border-radius: 4px;\n      display: inline-block;\n      background: green;\n      margin-right: 8px;\n      position: relative;\n      top: -2px;\n      display: none; }\n    omnibox .updateClue:hover {\n      color: white; }\n    omnibox .updateClue:active {\n      background-color: #1F1F1F; }\n    omnibox .updateClue.available {\n      display: inline-block; }\n      omnibox .updateClue.available::before {\n        background: red; }\n    omnibox .updateClue.downloading {\n      display: inline-block; }\n      omnibox .updateClue.downloading:hover {\n        color: rgba(255, 255, 255, 0.4); }\n      omnibox .updateClue.downloading:active {\n        background: #1A1A1A; }\n      omnibox .updateClue.downloading::before {\n        background: rgba(255, 255, 255, 0.8);\n        display: inline-block;\n        animation: pulse 1s infinite; }\n    omnibox .updateClue.ready {\n      display: inline-block; }\n      omnibox .updateClue.ready::before {\n        background: green;\n        display: inline-block; }\n\n@media (max-width: 485px) {\n  omnibox .box {\n    top: 4px;\n    width: calc(100% - 8px); }\n    omnibox .box .input {\n      border-radius: 2px; } }\n\nstatus {\n  position: fixed;\n  top: 0;\n  right: 0;\n  text-align: right;\n  padding: 5px 8px;\n  font-size: 12.5px;\n  display: inline-block;\n  letter-spacing: -0.1px;\n  line-height: 14px;\n  text-rendering: optimizeLegibility;\n  color: rgba(255, 255, 255, 0.8);\n  background: rgba(40, 40, 40, 0.7);\n  pointer-events: none;\n  border-bottom-left-radius: 6px;\n  opacity: 0;\n  transition: opacity 0.5s ease-out;\n  z-index: 99; }\n  status icon {\n    padding-right: 7px;\n    position: relative;\n    top: 0.5px;\n    color: white; }\n  status.hide {\n    display: none; }\n  status.fade-in {\n    opacity: 1;\n    transition: opacity 0.5s ease-out; }\n  status.fade-out {\n    opacity: 0;\n    transition: opacity 1s ease-in; }\n  status i {\n    font-style: italic; }\n  status.light {\n    background: rgba(40, 40, 40, 0.1);\n    color: rgba(0, 0, 0, 0.8); }\n  @media (-webkit-min-device-pixel-ratio: 2) {\n    status icon {\n      padding-right: 5px; } }\n\nconsole {\n  position: fixed;\n  bottom: 0;\n  background: #252525;\n  width: calc(100% - 10px);\n  padding-left: 10px;\n  padding-top: 4px;\n  height: 19px;\n  font-family: 'Roboto Mono Regular', sans-serif;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.6);\n  display: none; }\n  console.show {\n    display: block; }\n  console.hide {\n    display: none; }\n  console input {\n    -webkit-app-region: no-drag;\n    width: calc(100% - 36px - 55px);\n    color: rgba(255, 255, 255, 0.7);\n    background: #252525;\n    line-height: 11px;\n    letter-spacing: 0.5px;\n    outline: none;\n    border: none;\n    position: relative;\n    padding-right: 79px;\n    border-radius: 2px;\n    transition: background-color 0.1s ease-out; }\n    console input.highlight {\n      background-color: #1F1F1F; }\n    console input::selection {\n      background-color: rgba(255, 255, 255, 0.2); }\n\nwindowhelper {\n  position: fixed;\n  z-index: 99;\n  bottom: 18px;\n  right: 18px;\n  background: #212121;\n  padding: 3px 7px;\n  border-radius: 2px;\n  text-align: center;\n  color: rgba(255, 255, 255, 0.6);\n  display: none; }\n  windowhelper.show {\n    display: block; }\n  windowhelper.hide {\n    display: none; }\n  windowhelper::focus {\n    background: #262626; }\n  windowhelper input {\n    font-size: 13px;\n    letter-spacing: 0px;\n    color: rgba(255, 255, 255, 0.6);\n    background: transparent;\n    width: 26px;\n    display: inline-block;\n    line-height: 19px;\n    outline: none;\n    border: none;\n    padding: 0;\n    transition: background-color 0.1s ease-out;\n    text-align: center; }\n    windowhelper input.fourDigits {\n      width: 34px; }\n    windowhelper input.leadingOne {\n      width: 30px; }\n    windowhelper input:focus {\n      color: white;\n      background: transparent; }\n    windowhelper input::selection {\n      color: white;\n      background: transparent; }\n  windowhelper #width {\n    text-align: right; }\n  windowhelper #height {\n    text-align: left; }\n  windowhelper .separator {\n    color: rgba(255, 255, 255, 0.4);\n    display: inline-block;\n    width: 8px;\n    position: relative;\n    left: -0.5px;\n    text-align: center;\n    -webkit-user-select: none;\n    user-select: none; }\n\n@media (-webkit-min-device-pixel-ratio: 2) {\n  windowhelper input.fourDigits {\n    width: 34px; }\n  windowhelper input.leadingOne {\n    width: 33px; } }\n\n#dragOverlay {\n  position: fixed;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  z-index: 999;\n  background: transparent;\n  pointer-events: none;\n  display: none;\n  box-shadow: inset 0 0 0 3px rgba(52, 130, 220, 0);\n  -webkit-app-region: drag; }\n  #dragOverlay.active {\n    display: block;\n    pointer-events: all;\n    box-shadow: inset 0 0 0 3px rgba(52, 130, 220, 0);\n    animation: appear 0.1s ease-in;\n    animation-delay: 0.1s;\n    -webkit-animation-fill-mode: forwards; }\n  #dragOverlay.invisible {\n    opacity: 0; }\n\n.webview {\n  height: 100%;\n  width: 100%;\n  background: white;\n  transition: 0.4s filter;\n  filter: grayscale(0%) invert(0%); }\n  .webview.show {\n    animation: fade-in 0.15s ease-out; }\n  .webview.hide {\n    opacity: 0; }\n  .webview.grayscale {\n    filter: grayscale(100%) invert(0%); }\n  .webview.invert {\n    filter: grayscale(0%) invert(100%); }\n  .webview.grayscale.invert {\n    filter: grayscale(100%) invert(100%); }\n\n.homepage {\n  -webkit-app-region: drag;\n  height: 100%;\n  width: 100%;\n  position: fixed; }\n  .homepage .infos {\n    position: fixed;\n    bottom: 45px;\n    left: 50px; }\n  .homepage p {\n    margin-bottom: 0;\n    margin-top: 0;\n    font-family: 'Roboto Light', sans-serif;\n    font-size: 18px;\n    color: rgba(255, 255, 255, 0.3);\n    line-height: 24px; }\n\nbody.about {\n  background-color: #333333; }\n  body.about main {\n    -webkit-app-region: drag;\n    width: 100%;\n    height: 90%;\n    position: absolute;\n    top: 0;\n    left: 0;\n    text-align: center;\n    padding-top: 10%;\n    color: rgba(255, 255, 255, 0.7); }\n    body.about main img {\n      width: 150px;\n      margin-bottom: 25px;\n      animation: fade-in 0.3s ease-out; }\n    body.about main h1 {\n      color: white;\n      font-size: 20px;\n      font-weight: 400;\n      margin-bottom: 10px; }\n    body.about main p.version {\n      color: rgba(255, 255, 255, 0.7);\n      font-size: 13px;\n      line-height: 1.4;\n      display: inline; }\n    body.about main p.author {\n      text-align: center;\n      position: absolute;\n      bottom: 25px;\n      width: 100%;\n      font-size: 13px;\n      color: rgba(255, 255, 255, 0.7); }\n    body.about main p.notes {\n      display: inline;\n      font-size: 13px; }\n      body.about main p.notes a {\n        color: rgba(255, 255, 255, 0.7);\n        text-decoration: none;\n        outline: none;\n        cursor: default; }\n        body.about main p.notes a:hover {\n          text-decoration: underline; }\n  body.about handle {\n    -webkit-app-region: drag;\n    background: transparent;\n    height: 24px;\n    text-align: center;\n    z-index: 99;\n    position: absolute; }\n    body.about handle::after {\n      display: none; }\n    body.about handle .button {\n      position: absolute;\n      -webkit-app-region: no-drag;\n      user-select: none;\n      top: 6px;\n      border-radius: 100%;\n      height: 12px;\n      width: 12px;\n      transition: background-color 0.1s;\n      -webkit-box-sizing: border-box;\n      background: transparent;\n      border: 1px solid rgba(255, 255, 255, 0.2); }\n      body.about handle .button:hover::after {\n        display: none; }\n    body.about handle .close {\n      left: 9px;\n      background: #fc5b57;\n      border: none; }\n      body.about handle .close:active {\n        background: #CC443F; }\n      body.about handle .close::after {\n        content: '';\n        display: block;\n        margin-left: 3px;\n        margin-top: 3px;\n        height: 6px;\n        width: 6px;\n        border-radius: 100%;\n        background: transparent;\n        transition: background-color 0.1s; }\n      body.about handle .close:hover::after {\n        display: block;\n        background: rgba(0, 0, 0, 0.3); }\n    body.about handle.disabled .button {\n      background: rgba(255, 255, 255, 0.2); }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 /*
@@ -218,7 +289,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -264,7 +335,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(6);
+var	fixUrls = __webpack_require__(7);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -577,7 +648,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 
@@ -672,81 +743,16 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-// from: https://github.com/zeit/hyper/blob/master/lib/utils/rpc.js
-
-class RPC {
-  constructor () {
-    const electron = window.require('electron')
-    const EventEmitter = window.require('events')
-    this.emitter = new EventEmitter()
-    this.ipc = electron.ipcRenderer
-    this.ipcListener = this.ipcListener.bind(this)
-    if (window.__rpcId) {
-      setTimeout(() => {
-        this.id = window.__rpcId
-        this.ipc.on(this.id, this.ipcListener)
-        this.emitter.emit('ready')
-      }, 0)
-    } else {
-      this.ipc.on('init', (ev, uid) => {
-        // we cache so that if the object
-        // gets re-instantiated we don't
-        // wait for a `init` event
-        window.__rpcId = uid
-        this.id = uid
-        this.ipc.on(uid, this.ipcListener)
-        this.emitter.emit('ready')
-      })
-    }
-  }
-
-  ipcListener (event, {ch, data}) {
-    this.emitter.emit(ch, data)
-  }
-
-  on (ev, fn) {
-    this.emitter.on(ev, fn)
-  }
-
-  once (ev, fn) {
-    this.emitter.once(ev, fn)
-  }
-
-  emit (ev, data) {
-    if (!this.id) {
-      throw new Error('Not ready')
-    }
-    this.ipc.send(this.id, {ev, data})
-    console.log('[rpc]', ev, data)
-  }
-
-  removeListener (ev, fn) {
-    this.emitter.removeListener(ev, fn)
-  }
-
-  removeAllListeners () {
-    this.emitter.removeAllListeners()
-  }
-
-  destroy () {
-    this.removeAllListeners()
-    this.ipc.removeAllListeners()
-  }
-}
-
-module.exports = new RPC()
-
-
-/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const {remote, ipcRenderer} = __webpack_require__(0)
+const {remote, ipcRenderer} = __webpack_require__(1)
+const clipboard = remote.clipboard
+const Menu = remote.Menu
+const MenuItem = remote.MenuItem
+
 const config = remote.require('./config')
-const rpc = __webpack_require__(7)
+const rpc = __webpack_require__(0)
 
 let el
 let titleEl
@@ -758,6 +764,11 @@ var isDisabled = false
 function init () {
   el = document.querySelector('handle')
   titleEl = el.querySelector('.title')
+
+  titleEl.addEventListener('mousedown', openMenu)
+  // no way of telling when pop-up menu has been closed, so:
+  window.addEventListener('mouseup', unselectTitle)
+  window.addEventListener('mousemove', unselectTitle)
 
   el.querySelector('.button.close').addEventListener('click', () => {
     remote.getCurrentWindow().close()
@@ -773,10 +784,6 @@ function init () {
   })
 
   ipcRenderer.on('toggle-handle', toggle)
-
-  ipcRenderer.on('test', () => {
-    console.log('hello?')
-  })
 
   if (isShown) show()
   else hide()
@@ -825,6 +832,49 @@ function updateTitle (newTitle) {
   remote.getCurrentWindow().setTitle(newTitle)
 }
 
+function unselectTitle () {
+  titleEl.classList.remove('selected')
+}
+
+function openMenu () {
+  titleEl.classList.add('selected')
+
+  var menu = new Menu()
+  menu.append(
+    new MenuItem(
+      {
+        label: 'Copy URL',
+        click: function () {
+          console.log('Copied!')
+          unselectTitle()
+        }
+      }
+    )
+  )
+  menu.append(
+    new MenuItem(
+      {
+        label: 'Copy Screenshot',
+        accelerator: 'Cmd+Shift+C',
+        click: function () {
+          rpc.emit('copy-screenshot')
+        }
+      }
+    )
+  )
+  menu.append(
+    new MenuItem(
+      {
+        type: 'separator'
+      }
+    )
+  )
+  
+  menu.popup(remote.getCurrentWindow(), {
+    async: true
+  })
+}
+
 module.exports = {
   init: init,
   show: show,
@@ -832,6 +882,44 @@ module.exports = {
   updateTitle: updateTitle
 }
 
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const {remote, ipcRenderer} = __webpack_require__(1)
+
+const config = remote.require('./config')
+const rpc = __webpack_require__(0)
+
+// Elements
+let el
+let input
+let hints
+let overlay
+let updateHint
+
+// Data
+let searchDictionary
+
+// Utils
+var isShown = false
+var dragCount = 0
+
+function init () {
+  el = document.querySelector('omnibox')
+  input = el.querySelector('.input')
+  hints = el.querySelector('.hints')
+  overlay = el.querySelector('.overlay')
+  updateHint = el.querySelector('.updateHint')
+
+
+  console.log('[omnibox] ✔')
+}
+
+module.exports = {
+  init: init
+}
 
 /***/ })
 /******/ ]);
