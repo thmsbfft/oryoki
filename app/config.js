@@ -170,9 +170,14 @@ function getPaths () {
   return paths
 }
 
+function getSearchDictionary () {
+  return searchDictionary
+}
+
 module.exports = {
   init: init,
   getPaths: getPaths,
   getPreference: getPreference,
+  getSearchDictionary: getSearchDictionary,
   reset: reset
 }
