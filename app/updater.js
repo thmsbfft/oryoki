@@ -7,6 +7,7 @@ const execSync = require('child_process').execSync
 const notify = require('./notify')
 const menus = require('./menus')
 const config = require('./config')
+const {broadcast} = require('./windows')
 
 const feed = 'http://oryoki.io/latest.json'
 var latest = null
@@ -57,19 +58,12 @@ function compareVersions (alert) {
       status = 'update-available'
       menus.refresh()
 
-      // if (UserManager.getPreferenceByName('download_updates_in_background')) this.downloadUpdate()
-      // else {
       notify.send('Update available!', {
-        body: 'Ōryōki ' + this.latest.version + ' is available.',
+        body: 'Ōryōki ' + latest.version + ' is available.',
         silent: true
       })
 
-      //   if (Oryoki.focusedWindow) {
-      //     for (var i = 0; i < Oryoki.windows.length; i++) {
-      //       Oryoki.windows[i].browser.webContents.send('update-available', this.latest)
-      //     }
-      //   }
-      // }
+      broadcast(status)
 
       return
     }
@@ -96,11 +90,7 @@ function downloadUpdate () {
   status = 'downloading-update'
   menus.refresh()
 
-  // if (Oryoki.focusedWindow) {
-  //   for (var i = 0; i < Oryoki.windows.length; i++) {
-  //     Oryoki.windows[i].browser.webContents.send('downloading-update', this.latest)
-  //   }
-  // }
+  broadcast(status)
 
   // Create a tmp folder
   tmp = config.getPaths().tmp + '/' + 'Update-' + latest.version
@@ -136,25 +126,20 @@ function extractUpdate () {
     if (error) {
       console.log('[updater] Extracting failed. Err: ' + error.signal)
       cleanUp()
+      return
     }
 
-    // if (error == null) {
     console.log('[updater] Done extracting')
 
     status = 'update-ready'
     menus.refresh()
 
-      // if (Oryoki.focusedWindow) {
-      //   for (var i = 0; i < Oryoki.windows.length; i++) {
-      //     Oryoki.windows[i].browser.webContents.send('update-ready', this.latest)
-      //   }
-      // }
+    broadcast(status)
 
     notify.send('Update available!', {
-      body: 'Ōryōki ' + this.latest.version + ' is ready to be installed.',
+      body: 'Ōryōki ' + latest.version + ' is ready to be installed.',
       silent: true
     })
-    // }
   }.bind(this))
 }
 
@@ -191,12 +176,12 @@ function cleanUp () {
   })
 }
 
-function getStatus () {
-  return status
-}
-
 function getLatest () {
   return latest
+}
+
+function getStatus () {
+  return status
 }
 
 module.exports = {

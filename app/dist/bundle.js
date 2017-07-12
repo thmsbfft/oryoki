@@ -67,6 +67,12 @@
 /* 0 */
 /***/ (function(module, exports) {
 
+module.exports = require("electron");
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
 // from: https://github.com/zeit/hyper/blob/master/lib/utils/rpc.js
 
 class RPC {
@@ -133,24 +139,18 @@ module.exports = new RPC()
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = require("electron");
-
-/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Packages
-const {remote, ipcRenderer} = __webpack_require__(1)
+const {remote, ipcRenderer} = __webpack_require__(0)
 const config = remote.require('./config')
 
 // Styles
 __webpack_require__(3)
 
 // Oryoki
-const rpc = __webpack_require__(0)
+const rpc = __webpack_require__(1)
 const handle = __webpack_require__(8)
 const omnibox = __webpack_require__(9)
 
@@ -746,13 +746,13 @@ module.exports = function (css) {
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const {remote, ipcRenderer} = __webpack_require__(1)
+const {remote, ipcRenderer} = __webpack_require__(0)
 const clipboard = remote.clipboard
 const Menu = remote.Menu
 const MenuItem = remote.MenuItem
 
 const config = remote.require('./config')
-const rpc = __webpack_require__(0)
+const rpc = __webpack_require__(1)
 
 let el
 let titleEl
@@ -887,10 +887,11 @@ module.exports = {
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const {remote, ipcRenderer} = __webpack_require__(1)
+const {remote, ipcRenderer} = __webpack_require__(0)
 
 const config = remote.require('./config')
-const rpc = __webpack_require__(0)
+const updater = remote.require('./updater')
+const rpc = __webpack_require__(1)
 
 // Elements
 let el
@@ -921,6 +922,13 @@ function init () {
   overlay.addEventListener('mousedown', (e) => {
     focus()
     e.preventDefault()
+  })
+
+  // Check on updater
+  console.log(updater.getStatus())
+
+  ipcRenderer.on('update-available', () => {
+    console.log('Update available!')
   })
 
   show()

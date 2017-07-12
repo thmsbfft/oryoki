@@ -17,12 +17,9 @@ function init () {
 }
 
 function send (title, props) {
-  win.webContents.openDevTools()
   if (ready) {
-    console.log('send')
     win.webContents.send('notification', title, props)
   } else {
-    console.log('storing')
     buffer.push([title, props])
   }
 }

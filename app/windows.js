@@ -1,7 +1,7 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 
-const createRPC = require('./rpc')
 const config = require('./config')
+const createRPC = require('./rpc')
 
 const windows = new Set([])
 let focused
@@ -86,7 +86,14 @@ function create () {
   win.webContents.openDevTools()
 }
 
+function broadcast (data) {
+  for (let win of windows) {
+    win.webContents.send(data)
+  }
+}
+
 module.exports = {
   init: init,
-  create: create
+  create: create,
+  broadcast: broadcast
 }
