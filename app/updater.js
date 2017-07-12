@@ -63,7 +63,7 @@ function compareVersions (alert) {
         silent: true
       })
 
-      broadcast(status)
+      broadcast('updater-refresh')
 
       return
     }
@@ -90,7 +90,7 @@ function downloadUpdate () {
   status = 'downloading-update'
   menus.refresh()
 
-  broadcast(status)
+  broadcast('updater-refresh')
 
   // Create a tmp folder
   tmp = config.getPaths().tmp + '/' + 'Update-' + latest.version
@@ -134,7 +134,7 @@ function extractUpdate () {
     status = 'update-ready'
     menus.refresh()
 
-    broadcast(status)
+    broadcast('updater-refresh')
 
     notify.send('Update available!', {
       body: 'Ōryōki ' + latest.version + ' is ready to be installed.',
