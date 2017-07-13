@@ -893,10 +893,11 @@ const config = remote.require('./config')
 const updater = remote.require('./updater')
 const rpc = __webpack_require__(1)
 
+const hints = __webpack_require__(10)
+
 // Elements
 let el
 let input
-let hints
 let overlay
 let updateHint
 
@@ -910,7 +911,6 @@ var dragCount = 0
 function init () {
   el = document.querySelector('omnibox')
   input = el.querySelector('.input')
-  hints = el.querySelector('.hints')
   overlay = el.querySelector('.overlay')
   updateHint = el.querySelector('.updateHint')
 
@@ -928,6 +928,7 @@ function init () {
   refreshUpdaterStatus()
   ipcRenderer.on('updater-refresh', refreshUpdaterStatus)
 
+  hints.setup()
   show()
   console.log('[omnibox] ✔')
 }
@@ -950,9 +951,11 @@ function onKeyUp (e) {
   var customSearch = getCustomSearch()
 
   if (customSearch != null) {
-    showHints(customSearch)
+    input.classList.add('hintShown')
+    hints.show(input.value, customSearch)
   } else {
-    hideHints()
+    input.classList.remove('hintShown')
+    hints.hide()
   }
 }
 
@@ -1054,39 +1057,6 @@ function getCustomSearch () {
   }
 }
 
-function showHints (searchArray) {
-  hints.innerHTML = ''
-
-  var raw = input.value
-  var keyword = raw.split(' ')[0].trim()
-
-  for (var i = 0; i < searchArray.length; i++) {
-    var hint = document.createElement('hint')
-    hint.innerHTML = searchArray[i].hint
-
-    hints.appendChild(hint)
-
-    var keywordEl = '<span class="keyword">' + searchArray[i].keyword + '</span>'
-    hint.innerHTML += keywordEl
-
-    if (searchArray[i].keyword == keyword) {
-      hint.getElementsByClassName('keyword')[0].classList.add('highlighted')
-    }
-  }
-
-  input.classList.add('hintShown')
-
-  hints.classList.remove('hide')
-  hints.classList.add('show')
-}
-
-function hideHints () {
-  hints.innerHTML = ''
-  input.classList.remove('hintShown')
-  hints.classList.remove('show')
-  hints.classList.add('hide')
-}
-
 function refreshUpdaterStatus () {
   switch(updater.getStatus()) {
     case 'no-update':
@@ -1120,6 +1090,52 @@ function requestDownloadUpdate () {
 
 module.exports = {
   init: init
+}
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+let hints
+
+function setup () {
+  hints = document.querySelector('.hints')
+}
+
+function show (input, searchArray) {
+  hints.innerHTML = ''
+
+  var raw = input
+  var keyword = raw.split(' ')[0].trim()
+
+  for (var i = 0; i < searchArray.length; i++) {
+    var hint = document.createElement('hint')
+    hint.innerHTML = searchArray[i].hint
+
+    hints.appendChild(hint)
+
+    var keywordEl = '<span class="keyword">' + searchArray[i].keyword + '</span>'
+    hint.innerHTML += keywordEl
+
+    if (searchArray[i].keyword == keyword) {
+      hint.getElementsByClassName('keyword')[0].classList.add('highlighted')
+    }
+  }
+
+  hints.classList.remove('hide')
+  hints.classList.add('show')
+}
+
+function hide () {
+  hints.innerHTML = ''
+  hints.classList.remove('show')
+  hints.classList.add('hide')
+}
+
+module.exports = {
+  setup: setup,
+  show: show,
+  hide: hide
 }
 
 /***/ })
