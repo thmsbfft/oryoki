@@ -955,7 +955,7 @@ function onKeyUp (e) {
 
   if (customSearch != null) {
     input.classList.add('hintShown')
-    hints.show(input.value, customSearch)
+    hints.render(input.value, customSearch)
   } else {
     hints.hide()
   }
@@ -1099,14 +1099,11 @@ module.exports = {
 
 let hints = null
 let selected = null
-let length = 0
 
 let isShown = false
 
 function setup () {
   hints = document.querySelector('.hints')
-  window.addEventListener('keydown', onKeyDown)
-  window.addEventListener('keyup', onKeyUp)
 }
 
 function render (input, searchArray) {
@@ -1145,7 +1142,6 @@ function hide () {
 module.exports = {
   setup: setup,
   render: render,
-  select: select,
   hide: hide
 }
 
