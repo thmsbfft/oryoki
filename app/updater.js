@@ -161,7 +161,7 @@ function quitAndInstall () {
     })
 
     cleanUp()
-    app.quit()
+    // Oryoki.quit()
   })
 }
 
