@@ -149,11 +149,13 @@ __webpack_require__(3)
 const rpc = __webpack_require__(0)
 const handle = __webpack_require__(8)
 const omnibox = __webpack_require__(9)
+const dragoverlay = __webpack_require__(11)
 
 rpc.on('ready', function (e, uid) {
   console.log('[rpc] ✔', rpc.id)
   handle.init()
   omnibox.init()
+  dragoverlay.setup()
 })
 
 
@@ -1137,6 +1139,44 @@ module.exports = {
   setup: setup,
   render: render,
   hide: hide
+}
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const {remote, ipcRenderer} = __webpack_require__(1)
+const config = remote.require('./config')
+
+let overlay = null
+let isDragging = false
+
+function setup() {
+  overlay = document.querySelector('#dragOverlay')
+  window.addEventListener('keydown', onKeyDown)
+  window.addEventListener('keyup', onKeyUp)
+}
+
+function onKeyDown (e) {
+  if (e.altKey && !e.shiftKey && !e.metaKey && !e.ctrlKey) {
+    if (config.getPreference('use_alt_drag') && !remote.getCurrentWindow().isFullScreen()) {
+      overlay.classList.add('active')
+    }
+  } else if (e.shiftKey || e.metaKey || e.ctrlKey) {
+    overlay.classList.remove('active')
+  }
+}
+
+function onKeyUp (e) {
+  if (!e) var e = window.event
+  if (e.keyCode == 18) {
+    // ALT
+    overlay.classList.remove('active')
+  }
+}
+
+module.exports = {
+  setup: setup
 }
 
 /***/ })

@@ -26,6 +26,9 @@
     var ipcRenderer = require('electron').ipcRenderer;
     var app = require('electron').remote.app;
 
+    // Styles
+    require('./sass/bundle.scss')
+
     var handleEl = document.getElementsByTagName('handle')[0];
     var closeEl = handleEl.querySelectorAll('.button.close')[0];
 
