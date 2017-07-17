@@ -798,6 +798,7 @@ function show () {
     win.getSize()[1] + 24
   )
   isShown = true
+  window.dispatchEvent(new Event('resize'))
 }
 
 function hide () {
@@ -808,6 +809,7 @@ function hide () {
     win.getSize()[1] - 24
   )
   isShown = false
+  window.dispatchEvent(new Event('resize'))
 }
 
 function toggle () {
@@ -1012,7 +1014,7 @@ function submit () {
 }
 
 function show () {
-  isVisible = true
+  isShown = true
   el.classList.remove('hide')
 
   focus()
@@ -1020,13 +1022,13 @@ function show () {
 }
 
 function hide () {
-  isVisible = false
+  isShown = false
 
   el.classList.add('hide')
 }
 
 function toggle () {
-  if (isVisible) hide()
+  if (isShown) hide()
   else show()
 }
 
@@ -1211,6 +1213,7 @@ const rpc = __webpack_require__(0)
 
 let el = null
 let webview = null
+let frame = null
 
 // utils
 let isFirstLoad = true
@@ -1232,6 +1235,7 @@ const zoomIncrements = [
 
 function setup() {
   el = document.querySelector('#view')
+  frame = document.querySelector('#frame')
 
   webview = el.appendChild(document.createElement('webview'))
   webview.className = 'webview'
@@ -1251,12 +1255,19 @@ function attachEvents () {
   // webview.addEventListener('did-fail-load', onDidFailLoad)
   // webview.addEventListener('did-get-response-details', onDidGetResponseDetails)
   // webview.addEventListener('dom-ready', onDOMReady)
+
+  window.addEventListener('resize', resize)
 }
 
 function load (url) {
   webview.classList.add('show')
   webview.setAttribute('src', url)
   rpc.emit('load-request', url)
+}
+
+function resize () {
+  frame.style.width = window.innerWidth + 'px'
+  frame.style.height = (window.innerHeight - document.querySelector('handle').offsetHeight) + 'px'
 }
 
 function onLoadCommit (e) {
