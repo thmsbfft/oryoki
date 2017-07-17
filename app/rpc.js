@@ -37,6 +37,8 @@ class Server extends EventEmitter {
   }
 
   emit (ch, data) {
+    // we emit both on ipc and in the main process
+    super.emit(ch, data)
     this.wc.send(this.id, {ch, data})
     console.log('[rpc]', ch, data ? data : '')
   }

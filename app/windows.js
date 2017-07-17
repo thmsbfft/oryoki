@@ -65,7 +65,7 @@ function create () {
 
   const rpc = createRPC(win)
   win.rpc = rpc
-  
+
   win.loadURL('file://' + __dirname + '/window.html' + '#' + win.id)
 
   win.on('focus', (e) => {

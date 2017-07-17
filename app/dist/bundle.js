@@ -111,6 +111,8 @@ class RPC {
     if (!this.id) {
       throw new Error('Not ready')
     }
+    // we emit both on ipc and in the renderer process
+    this.emitter.emit(ev, data)
     this.ipc.send(this.id, {ev, data})
     console.log('[rpc]', ev, data)
   }
@@ -168,7 +170,7 @@ const zoomIncrements = [
   200 / 100
 ]
 
-function setup() {
+function init() {
   el = document.querySelector('#view')
   frame = document.querySelector('#frame')
 
@@ -195,9 +197,13 @@ function attachEvents () {
 }
 
 function load (url) {
+  rpc.emit('status:log', {
+    'body': '•••',
+    'type': 'loading'
+  })
+
   webview.classList.add('show')
   webview.setAttribute('src', url)
-  // rpc.emit('load-request', url)
 }
 
 function resize () {
@@ -207,11 +213,15 @@ function resize () {
 
 function onLoadCommit (e) {
   if (isFirstLoad) isFirstLoad = false
+  rpc.emit('status:log', {
+    'body': '•••',
+    'type': 'loading'
+  })
   console.log('[view]', 'load-commit', e)
 }
 
 module.exports = {
-  setup: setup,
+  init: init,
   load: load
 }
 
@@ -232,10 +242,11 @@ const dragoverlay = __webpack_require__(13)
 
 rpc.on('ready', function (e, uid) {
   console.log('[rpc] ✔', rpc.id)
+  status.init()
   handle.init()
   omnibox.init()
-  view.setup()
-  dragoverlay.setup()
+  view.init()
+  dragoverlay.init()
 })
 
 
@@ -1013,8 +1024,8 @@ function init () {
   refreshUpdaterStatus()
   ipcRenderer.on('updater-refresh', refreshUpdaterStatus)
 
-  // setup hints
-  hints.setup()
+  // init hints
+  hints.init()
 
   show()
   console.log('[omnibox] ✔')
@@ -1199,7 +1210,7 @@ module.exports = {
 let hints = null
 let isShown = false
 
-function setup () {
+function init () {
   hints = document.querySelector('.hints')
 }
 
@@ -1237,7 +1248,7 @@ function hide () {
 }
 
 module.exports = {
-  setup: setup,
+  init: init,
   render: render,
   hide: hide
 }
@@ -1257,13 +1268,12 @@ let isFrozen = false
 
 let visibilityTimer = null
 
-function setup() {
+function init() {
   el = document.querySelector('status')
 
   rpc.on('status:log', log)
   rpc.on('status:important', important)
   rpc.on('status:error', error)
-
   rpc.on('status:unfreeze', unFreeze)
 }
 
@@ -1321,8 +1331,10 @@ function freeze () {
 }
 
 function unFreeze () {
-  visibilityTimer = setTimeout(fadeOut, 1200)
-  isFrozen = false
+  if(isFrozen) {
+    visibilityTimer = setTimeout(fadeOut, 1200)
+    isFrozen = false
+  }
 }
 
 function fadeOut () {
@@ -1344,10 +1356,7 @@ function show () {
 }
 
 module.exports = {
-  setup: setup,
-  log: log,
-  important: important,
-  error: error
+  init: init
 }
 
 /***/ }),
@@ -1360,7 +1369,7 @@ const config = remote.require('./config')
 let overlay = null
 let isDragging = false
 
-function setup() {
+function init() {
   overlay = document.querySelector('#dragOverlay')
   window.addEventListener('keydown', onKeyDown)
   window.addEventListener('keyup', onKeyUp)
@@ -1385,7 +1394,7 @@ function onKeyUp (e) {
 }
 
 module.exports = {
-  setup: setup
+  init: init
 }
 
 /***/ })
