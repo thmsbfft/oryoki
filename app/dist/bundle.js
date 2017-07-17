@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -142,15 +142,93 @@ module.exports = require("electron");
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
+const {remote, ipcRenderer} = __webpack_require__(1)
+const config = remote.require('./config')
+const rpc = __webpack_require__(0)
+
+let el = null
+let webview = null
+let frame = null
+
+// utils
+let isFirstLoad = true
+let zoomIndex = 6
+const zoomIncrements = [
+  25 / 100,
+  33 / 100,
+  50 / 100,
+  67 / 100,
+  75 / 100,
+  90 / 100,
+  100 / 100,
+  110 / 100,
+  125 / 100,
+  150 / 100,
+  175 / 100,
+  200 / 100
+]
+
+function setup() {
+  el = document.querySelector('#view')
+  frame = document.querySelector('#frame')
+
+  webview = el.appendChild(document.createElement('webview'))
+  webview.className = 'webview'
+
+  var webPreferences = 'experimentalFeatures=yes, experimentalCanvasFeatures=yes'
+  webview.setAttribute('webPreferences', webPreferences)
+
+  console.log('[view] ✔')
+  attachEvents()
+}
+
+function attachEvents () {
+  // Loading Events
+  webview.addEventListener('load-commit', onLoadCommit)
+  // webview.addEventListener('did-frame-finish-load', onDidFrameFinishLoad)
+  // webview.addEventListener('did-finish-load', onDidFinishLoad)
+  // webview.addEventListener('did-fail-load', onDidFailLoad)
+  // webview.addEventListener('did-get-response-details', onDidGetResponseDetails)
+  // webview.addEventListener('dom-ready', onDOMReady)
+
+  window.addEventListener('resize', resize)
+}
+
+function load (url) {
+  webview.classList.add('show')
+  webview.setAttribute('src', url)
+  // rpc.emit('load-request', url)
+}
+
+function resize () {
+  frame.style.width = window.innerWidth + 'px'
+  frame.style.height = (window.innerHeight - document.querySelector('handle').offsetHeight) + 'px'
+}
+
+function onLoadCommit (e) {
+  if (isFirstLoad) isFirstLoad = false
+  console.log('[view]', 'load-commit', e)
+}
+
+module.exports = {
+  setup: setup,
+  load: load
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // Styles
-__webpack_require__(3)
+__webpack_require__(4)
 
 // Oryoki
 const rpc = __webpack_require__(0)
-const handle = __webpack_require__(8)
-const omnibox = __webpack_require__(9)
-const view = __webpack_require__(12)
-const dragoverlay = __webpack_require__(11)
+const handle = __webpack_require__(9)
+const omnibox = __webpack_require__(10)
+const view = __webpack_require__(2)
+const status = __webpack_require__(12)
+const dragoverlay = __webpack_require__(13)
 
 rpc.on('ready', function (e, uid) {
   console.log('[rpc] ✔', rpc.id)
@@ -162,13 +240,13 @@ rpc.on('ready', function (e, uid) {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(4);
+var content = __webpack_require__(5);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -176,7 +254,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(6)(content, options);
+var update = __webpack_require__(7)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -193,10 +271,10 @@ if(false) {
 }
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(undefined);
+exports = module.exports = __webpack_require__(6)(undefined);
 // imports
 
 
@@ -207,7 +285,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/* http://meyerweb.com/eric/tools/
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 /*
@@ -289,7 +367,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -335,7 +413,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(7);
+var	fixUrls = __webpack_require__(8);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -648,7 +726,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 
@@ -743,7 +821,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const {remote, ipcRenderer} = __webpack_require__(1)
@@ -886,7 +964,7 @@ module.exports = {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const {remote, ipcRenderer} = __webpack_require__(1)
@@ -895,19 +973,19 @@ const config = remote.require('./config')
 const updater = remote.require('./updater')
 const rpc = __webpack_require__(0)
 
-const hints = __webpack_require__(10)
-const view = __webpack_require__(12)
+const hints = __webpack_require__(11)
+const view = __webpack_require__(2)
 
-// Elements
+// elements
 let el
 let input
 let overlay
 let updateHint
 
-// Data
+// data
 let searchDictionary = config.getSearchDictionary()
 
-// Utils
+// utils
 var isShown = false
 var dragCount = 0
 
@@ -989,16 +1067,16 @@ function submit () {
         output = raw
       }
     } else {
-      // Use default search engine
+      // use default search engine
       output = searchDictionary.default.replace('{query}', raw)
     }
   } else if (customSearch[0].isComplete) {
-    // Use custom search
+    // use custom search
     var keyword = customSearch[0].keyword
     var query = raw.replace(keyword, '')
 
     if (query.trim().length == 0) {
-      // If custom search doesn't have a parameter,
+      // if custom search doesn't have a parameter,
       // use default URL
       output = searchDictionary.default.replace('{query}', raw)
     } else {
@@ -1007,7 +1085,6 @@ function submit () {
     }
   }
 
-  // this.submitCallback(output)
   console.log('[omnibox]  ⃯⃗→ ', output)
   view.load(output)
   hide()
@@ -1116,7 +1193,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 let hints = null
@@ -1166,7 +1243,115 @@ module.exports = {
 }
 
 /***/ }),
-/* 11 */
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const rpc = __webpack_require__(0)
+
+let el = null
+
+// utils
+let isShown = true
+let isActive = false
+let isFrozen = false
+
+let visibilityTimer = null
+
+function setup() {
+  el = document.querySelector('status')
+
+  rpc.on('status:log', log)
+  rpc.on('status:important', important)
+  rpc.on('status:error', error)
+
+  rpc.on('status:unfreeze', unFreeze)
+}
+
+function log (props) {
+  // loading events have lower priority
+  if (props.type == 'loading' && isActive) return
+
+  // stop logging stuff if an error is displayed
+  if (isFrozen) return
+
+  if (props.icon) {
+    el.innerHTML = '<icon>' + props.icon + '</icon>' + props.body
+  } else {
+    el.innerHTML = props.body
+  }
+
+  isActive = true
+
+  el.classList.remove('fade-out')
+  el.classList.add('fade-in')
+
+  clearTimeout(visibilityTimer)
+  visibilityTimer = setTimeout(fadeOut, 1200)
+}
+
+function important (props) {
+  if (props.icon) {
+    el.innerHTML = '<icon>' + props.icon + '</icon>' + props.body
+  } else {
+    el.innerHTML = props.body
+  }
+
+  isActive = true
+
+  el.classList.remove('fade-out')
+  el.classList.add('fade-in')
+
+  freeze()
+}
+
+function error () {
+  el.innerHTML = '<icon>' + '⭕️' + '</icon>' + props.body
+  el.classList.remove('fade-out')
+  el.classList.add('fade-in')
+
+  isActive = true
+
+  clearTimeout(visibilityTimer)
+  visibilityTimer = setTimeout(fadeOut, 5000)
+}
+
+function freeze () {
+  clearTimeout(visibilityTimer)
+  isFrozen = true
+}
+
+function unFreeze () {
+  visibilityTimer = setTimeout(fadeOut, 1200)
+  isFrozen = false
+}
+
+function fadeOut () {
+  el.classList.add('fade-out')
+  isActive = false
+}
+
+function hide () {
+  el.innerHTML = ''
+  isShown = false
+  el.classList.add('hide')
+  freeze()
+}
+
+function show () {
+  isShown = true
+  el.classList.remove('hide')
+  unFreeze()
+}
+
+module.exports = {
+  setup: setup,
+  log: log,
+  important: important,
+  error: error
+}
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const {remote, ipcRenderer} = __webpack_require__(1)
@@ -1201,83 +1386,6 @@ function onKeyUp (e) {
 
 module.exports = {
   setup: setup
-}
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const {remote, ipcRenderer} = __webpack_require__(1)
-const config = remote.require('./config')
-const rpc = __webpack_require__(0)
-
-let el = null
-let webview = null
-let frame = null
-
-// utils
-let isFirstLoad = true
-let zoomIndex = 6
-const zoomIncrements = [
-  25 / 100,
-  33 / 100,
-  50 / 100,
-  67 / 100,
-  75 / 100,
-  90 / 100,
-  100 / 100,
-  110 / 100,
-  125 / 100,
-  150 / 100,
-  175 / 100,
-  200 / 100
-]
-
-function setup() {
-  el = document.querySelector('#view')
-  frame = document.querySelector('#frame')
-
-  webview = el.appendChild(document.createElement('webview'))
-  webview.className = 'webview'
-
-  var webPreferences = 'experimentalFeatures=yes, experimentalCanvasFeatures=yes'
-  webview.setAttribute('webPreferences', webPreferences)
-
-  console.log('[view] ✔')
-  attachEvents()
-}
-
-function attachEvents () {
-  // Loading Events
-  webview.addEventListener('load-commit', onLoadCommit)
-  // webview.addEventListener('did-frame-finish-load', onDidFrameFinishLoad)
-  // webview.addEventListener('did-finish-load', onDidFinishLoad)
-  // webview.addEventListener('did-fail-load', onDidFailLoad)
-  // webview.addEventListener('did-get-response-details', onDidGetResponseDetails)
-  // webview.addEventListener('dom-ready', onDOMReady)
-
-  window.addEventListener('resize', resize)
-}
-
-function load (url) {
-  webview.classList.add('show')
-  webview.setAttribute('src', url)
-  rpc.emit('load-request', url)
-}
-
-function resize () {
-  frame.style.width = window.innerWidth + 'px'
-  frame.style.height = (window.innerHeight - document.querySelector('handle').offsetHeight) + 'px'
-}
-
-function onLoadCommit (e) {
-  if (isFirstLoad) isFirstLoad = false
-  console.log('[view]', 'load-commit', e)
-}
-
-module.exports = {
-  setup: setup,
-  load: load
 }
 
 /***/ })
