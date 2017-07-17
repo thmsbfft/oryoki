@@ -38,7 +38,7 @@ class Server extends EventEmitter {
 
   emit (ch, data) {
     this.wc.send(this.id, {ch, data})
-    console.log('[rpc]', ch, data)
+    console.log('[rpc]', ch, data ? data : '')
   }
 
   destroy () {

@@ -64,6 +64,7 @@ function create () {
   windows.add(win)
 
   const rpc = createRPC(win)
+  win.rpc = rpc
 
   win.loadURL('file://' + __dirname + '/window.html' + '#' + win.id)
 
@@ -78,10 +79,6 @@ function create () {
   win.once('ready-to-show', () => {
     win.show()
   })
-
-  // rpc.on('title-updated', (title) => {
-  //   console.log(title)
-  // })
 
   win.webContents.openDevTools()
 }

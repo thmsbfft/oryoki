@@ -160,8 +160,16 @@ module.exports = function () {
         label: 'Title Bar',
         accelerator: 'CmdOrCtrl+/',
         type: 'checkbox',
-        click: function () {
-          BrowserWindow.getFocusedWindow().webContents.send('toggle-handle')
+        click (i, win) {
+          win.rpc.emit('handle:toggle')
+        }
+      },
+      {
+        label: 'Toggle Omnibox',
+        accelerator: 'CmdOrCtrl+L',
+        type: 'checkbox',
+        click: function (i, win) {
+          win.rpc.emit('omnibox:toggle')
         }
       },
       {
