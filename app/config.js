@@ -1,7 +1,9 @@
 const fs = require('fs')
 const path = require('path')
-const {app, dialog, ipcMain} = require('electron')
+const exec = require('child_process').exec
+const {app, dialog, ipcMain, BrowserWindow, shell} = require('electron')
 
+const notify = require('./notify')
 const menus = require('./menus')
 
 var paths = {}
@@ -89,7 +91,7 @@ function watch () {
     preferences = getConfFile('oryoki-preferences.json')
     try {
       menus.refresh()
-      new Notification('Ready to go!', {
+      notify.send('Ready to go!', {
         body: 'The preferences were updated.',
         silent: true
       })
@@ -110,7 +112,7 @@ function watch () {
       console.log('[config] ' + e)
     }
 
-    new Notification('Ready to go!', {
+    notify.send('Ready to go!', {
       body: 'The search dictionary was updated.',
       silent: true
     })
@@ -145,13 +147,67 @@ function reset (niceName, fileName) {
     if (e) console.log('[config] ' + e)
     console.log('[config] ' + niceName + ' reset')
     try {
-      Oryoki.focusedWindow.browser.webContents.send('log-status', {
-        'body': niceName + ' reset'
+      win = BrowserWindow.getFocusedWindow()
+      win.rpc.emit('status:log', {
+        body: niceName + ' reset'
       })
     } catch (e) {
       console.log('[config] ' + e)
     }
   })
+}
+
+function clearCaches () {
+  const caches = [
+    'Cache',
+    'GPUCache'
+  ]
+
+  caches.forEach( (element) => {
+    let folderPath = paths.conf + '/' + element
+    folderPath = folderPath.replace(' ', '\\ ')
+    console.log('[config] Will delete:', folderPath)
+    exec('cd ' + folderPath + ' && rm *', function (error, stdout, stderr) {
+      if (error) {
+        // if folder is already clear, do nothing
+      }
+      try {
+        win = BrowserWindow.getFocusedWindow()
+        win.rpc.emit('status:log', {
+          body: 'Cleared caches'
+        })
+      } catch (e) {
+        console.log('[config] ' + e)
+      }
+    })
+  })
+}
+
+function clearLocalStorage () {
+  let folderPath = paths.conf.replace(' ', '\\ ') + '/Local\\ Storage'
+  console.log('[config] Will delete:', folderPath)
+  exec('cd ' + folderPath + ' && rm *', function (error, stdout, stderr) {
+    if(error) {
+        // if folder is already clear, do nothing
+    }
+    try {
+      win = BrowserWindow.getFocusedWindow()
+      win.rpc.emit('status:log', {
+        body: 'Cleared local storage'
+      })
+    } catch (e) {
+      console.log('[config] ' + e)
+    }
+  })
+}
+
+function openFile (fileName) {
+  console.log('[config] Opening', fileName)
+  shell.openItem(paths.conf + '/' + fileName)
+}
+
+function openPath () {
+  shell.openItem(paths.conf)
 }
 
 function getPreference (name) {
@@ -179,5 +235,9 @@ module.exports = {
   getPaths: getPaths,
   getPreference: getPreference,
   getSearchDictionary: getSearchDictionary,
-  reset: reset
+  openFile: openFile,
+  openPath: openPath,
+  reset: reset,
+  clearCaches: clearCaches,
+  clearLocalStorage: clearLocalStorage
 }
