@@ -8,7 +8,7 @@ function init () {
 }
 
 function createMenus () {
-  template = require('./menu-template')()
+  template = require('./menus/template')()
   menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 }
