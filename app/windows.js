@@ -4,7 +4,7 @@ const config = require('./config')
 const createRPC = require('./rpc')
 
 const windows = new Set([])
-let focused
+let focused = null
 
 function init () {
   // ipcMain.on('new-window', )
@@ -21,8 +21,15 @@ function init () {
   create()
 }
 
-function create () {
-  console.log('[window] Creating new window')
+function create (url) {
+  console.log('[windows] Creating new window')
+
+  if (url && focused !== null && focused.isFirstLoad) {
+    // if there is a focused window and nothing's loaded yet, load url
+    // here instead of creating a new window
+    focused.rpc.emit('view:load', url)
+    return
+  }
 
   var width
   var height
@@ -65,6 +72,7 @@ function create () {
 
   const rpc = createRPC(win)
   win.rpc = rpc
+  win.isFirstLoad = true
 
   win.loadURL('file://' + __dirname + '/window.html' + '#' + win.id)
 
@@ -76,8 +84,13 @@ function create () {
     windows.delete(win)
   })
 
+  rpc.on('view:first-load', (e) => {
+    win.isFirstLoad = false
+  })
+
   win.once('ready-to-show', () => {
     win.show()
+    if(url) win.rpc.emit('view:load', url)
   })
 
   win.webContents.openDevTools()

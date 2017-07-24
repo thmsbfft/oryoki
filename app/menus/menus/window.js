@@ -6,6 +6,9 @@ module.exports = function () {
         role: 'minimize' // Also adds Minimize All
       },
       {
+        role: 'zoom'
+      },
+      {
         type: 'separator'
       },
       {

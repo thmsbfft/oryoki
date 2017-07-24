@@ -3,6 +3,7 @@ const fileMenu = require('./menus/file')
 const editMenu = require('./menus/edit')
 const viewMenu = require('./menus/view')
 const windowMenu = require('./menus/window')
+const helpMenu = require('./menus/help')
 
 module.exports = function () {
   const template = [
@@ -10,7 +11,8 @@ module.exports = function () {
     fileMenu(),
     viewMenu(),
     editMenu(),
-    windowMenu()
+    windowMenu(),
+    helpMenu()
   ]
 
   return template

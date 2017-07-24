@@ -185,13 +185,16 @@ function init() {
 }
 
 function attachEvents () {
-  // Loading Events
+  // webview events
   webview.addEventListener('load-commit', onLoadCommit)
   // webview.addEventListener('did-frame-finish-load', onDidFrameFinishLoad)
   // webview.addEventListener('did-finish-load', onDidFinishLoad)
   // webview.addEventListener('did-fail-load', onDidFailLoad)
   // webview.addEventListener('did-get-response-details', onDidGetResponseDetails)
   // webview.addEventListener('dom-ready', onDOMReady)
+
+  // rpc events
+  rpc.on('view:load', load)
 
   window.addEventListener('resize', resize)
 }
@@ -201,6 +204,8 @@ function load (url) {
     'body': '•••',
     'type': 'loading'
   })
+
+  rpc.emit('omnibox:hide')
 
   webview.classList.add('show')
   webview.setAttribute('src', url)
@@ -212,7 +217,10 @@ function resize () {
 }
 
 function onLoadCommit (e) {
-  if (isFirstLoad) isFirstLoad = false
+  if (isFirstLoad) {
+    isFirstLoad = false
+    rpc.emit('view:first-load')
+  }
   rpc.emit('status:log', {
     'body': '•••',
     'type': 'loading'
@@ -1013,6 +1021,7 @@ function init () {
 
   // rpc
   rpc.on('omnibox:toggle', toggle)
+  rpc.on('omnibox:hide', hide)
 
   // always keep the omnibox in focus
   overlay.addEventListener('mousedown', (e) => {
