@@ -61,6 +61,7 @@ module.exports = function () {
 
   return {
     label: 'Window',
+    role: 'window',
     submenu
   }
 }

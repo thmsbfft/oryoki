@@ -187,6 +187,9 @@ function init() {
 function attachEvents () {
   // webview events
   webview.addEventListener('load-commit', onLoadCommit)
+  webview.addEventListener('page-title-updated', (e) => {
+    rpc.emit('view:title-updated', e.title)
+  })
   // webview.addEventListener('did-frame-finish-load', onDidFrameFinishLoad)
   // webview.addEventListener('did-finish-load', onDidFinishLoad)
   // webview.addEventListener('did-fail-load', onDidFailLoad)
@@ -881,6 +884,7 @@ function init () {
   })
 
   rpc.on('handle:toggle', toggle)
+  rpc.on('view:title-updated', updateTitle)
 
   if (isShown) show()
   else hide()

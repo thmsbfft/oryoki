@@ -88,6 +88,10 @@ function create (url) {
     win.isFirstLoad = false
   })
 
+  rpc.on('view:title-updated', (e) => {
+    win.setTitle(e)
+  })
+
   win.once('ready-to-show', () => {
     win.show()
     if(url) win.rpc.emit('view:load', url)
