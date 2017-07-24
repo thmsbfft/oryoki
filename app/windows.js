@@ -44,8 +44,8 @@ function create (url) {
   } else {
     width = focused.getBounds().width
     height = focused.getBounds().height
-    x = focused.getPosition()[0] + 50
-    y = focused.getPosition()[1] + 50
+    x = focused.getPosition()[0] + 60
+    y = focused.getPosition()[1] + 60
   }
 
   const browserOptions = {
@@ -82,6 +82,7 @@ function create (url) {
 
   win.on('close', () => {
     windows.delete(win)
+    rpc.destroy()
   })
 
   rpc.on('view:first-load', (e) => {
@@ -106,8 +107,20 @@ function broadcast (data) {
   }
 }
 
+function cycle () {
+  wins = Array.from(windows)
+  var focused = null
+  for (var i = 0; i < wins.length; i++) {
+    if (wins[i].isFocused()) focused = i
+  }
+  var next = focused + 1
+  if(next > wins.length - 1) next = 0
+  wins[next].focus()
+}
+
 module.exports = {
   init: init,
   create: create,
-  broadcast: broadcast
+  broadcast: broadcast,
+  cycle: cycle
 }

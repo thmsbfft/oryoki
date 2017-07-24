@@ -1,3 +1,5 @@
+const windows = require('./../../windows')
+
 module.exports = function () {
   const submenu = [
       {
@@ -27,10 +29,8 @@ module.exports = function () {
         label: 'Window Helper',
         accelerator: 'CmdOrCtrl+Alt+M',
         type: 'checkbox',
-        click: function () {
-          // if (windows.focused) {
-          //   Oryoki.focusedWindow.toggleWindowHelper()
-          // }
+        click () {
+          
         }
       },
       {
@@ -44,10 +44,8 @@ module.exports = function () {
         label: 'Cycle Through Windows',
         accelerator: 'Ctrl+Tab',
         // accelerator: 'CmdOrCtrl+`',
-        click: function () {
-          // if (Oryoki) {
-          //   Oryoki.focusNextWindow()
-          // }
+        click () {
+          windows.cycle()
         }
       },
       {
