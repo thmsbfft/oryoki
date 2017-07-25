@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const spawn = require('child_process').spawn
+const stream = require('stream')
 const exec = require('child_process').exec
 const execSync = require('child_process').execSync
 
@@ -10,7 +11,9 @@ const {app, Tray, Menu} = require('electron')
 let isRecording = false
 let tray = null
 let win = null
+
 let ffmpeg = null
+let imageStream = null
 
 function startRecording (window) {
   win = window // keep a reference for async operations, etc.
@@ -28,23 +31,48 @@ function startRecording (window) {
   win.setResizable(false)
   app.dock.setBadge('R')
 
+  // video size
+  const electronScreen = require('electron').screen
+  let currentDisplay = electronScreen.getDisplayMatching(win.getBounds())
+  let width = win.getSize()[0] * currentDisplay.scaleFactor
+  let height = win.getSize()[1] * currentDisplay.scaleFactor
+  let size = width + 'x' + height
+
   let args = [
+    // input
     '-y',
-    '-f', 'image2pipe',
-    '-r', '' + (+60),
+    '-f', 'rawvideo',           // no codec, just raw data
+    '-s', size,
+    '-framerate', 60,
+    '-pix_fmt', 'rgb32',        // that's what electron gives us
+    '-i', '-',
     '-vcodec', 'mjpeg',
-    '-i', '-'
+    '-q:v', '2',                // max out quality
+    // output
+    '-r', 30,                   // 30fps keeps the file size down
+    '-pix_fmt', 'yuvj420p'      // legacy (?) fmt to enable preview in macOS
+    '-vcodec', 'libx264',       // h264 codec
+    '-preset', 'slow',          // no compromise quality for speed
   ]
 
+  // output prores (change ext to .mov)
+  // '-framerate', 30,
+  // '-vcodec', 'prores_ks',
+  // '-pix_fmt', 'yuvj420p'
+
   // format
-  args.push('-f', 'matroska')
+  // args.push()
 
   // output
   args.push(app.getPath('downloads') + '/' + 'test.mp4')
 
+  imageStream = new stream.PassThrough()
+
   ffmpeg = spawn('ffmpeg', args)
   // ffmpeg.stdout.on('data', (data) => console.log('[camera]', data.toString()))
   // ffmpeg.stderr.on('data', (data) => console.log('[camera]', data.toString()))
+
+  imageStream.pipe(ffmpeg.stdin)
 
   isRecording = true
   win.rpc.emit('recorder:start')
@@ -55,20 +83,9 @@ function startRecording (window) {
 }
 
 function addFrame(frameBuffer) {
-  console.log(frameBuffer.length)
   if(!isRecording) return // avoid trail frames
   try {
-    win.capturePage( (image) => {
-      let jpeg = image.toJpeg(100)
-      try {
-        ffmpeg.stdin.write(jpeg, (err) => {
-          if (err) throw err
-          console.log('[camera] .')
-        })
-      } catch (err) {
-        console.log('[ffmpeg]', err)
-      }
-    })
+    imageStream.write(frameBuffer, 'utf8')
   }
   catch (err) {
     console.log('[camera]', err)
@@ -102,7 +119,7 @@ function showTray () {
 function stopRecording () {
   isRecording = false
   win.webContents.endFrameSubscription()
-  ffmpeg.stdin.end()
+  imageStream.end()
   // ffmpeg = null
   win.setResizable(false)
   hideTray()
