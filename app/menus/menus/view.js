@@ -1,4 +1,4 @@
-const {BrowserWindow} = require('electron')
+const {app, shell, BrowserWindow} = require('electron')
 
 module.exports = function () {
 
@@ -89,6 +89,34 @@ module.exports = function () {
         accelerator: 'CmdOrCtrl+-',
         click (i, win) {
           win.rpc.emit('view:zoom-out')
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Invert',
+        accelerator: 'CmdOrCtrl+I',
+        type: 'checkbox',
+        click (i, win) {
+          win.rpc.emit('view:filter', 'invert')
+        }
+      },
+      {
+        label: 'Grayscale',
+        accelerator: 'CmdOrCtrl+G',
+        type: 'checkbox',
+        click (i, win) {
+          win.rpc.emit('view:filter', 'grayscale')
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Downloads',
+        click () {
+          shell.openItem(app.getPath('downloads'))
         }
       }
   ]

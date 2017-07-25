@@ -206,6 +206,7 @@ function attachEvents () {
   rpc.on('view:zoom-in', zoomIn)
   rpc.on('view:zoom-out', zoomOut)
   rpc.on('view:reset-zoom', resetZoom)
+  rpc.on('view:filter', toggleFilter)
 
   window.addEventListener('resize', resize)
 }
@@ -280,6 +281,19 @@ function resetZoom () {
   rpc.emit('status:log', {
     body: Math.round(zoomIncrements[zoomIndex] * 100) + '%'
   })
+}
+
+function toggleFilter (filter) {
+  webview.classList.toggle(filter)
+
+  rpc.emit('status:log', {
+    body: filter.charAt(0).toUpperCase() + filter.substr(1).toLowerCase()
+  })
+
+  // if (filter == 'invert') {
+  //   // invert handle color them as well
+  //   rpc.emit('handle:toggle-light-theme')
+  // }
 }
 
 module.exports = {
@@ -911,6 +925,7 @@ let titleEl
 var title = 'Ōryōki'
 var isShown = config.getPreference('show_title_bar')
 var isDisabled = false
+let hasLightTheme = false
 
 function init () {
   el = document.querySelector('handle')
@@ -936,6 +951,7 @@ function init () {
 
   rpc.on('handle:toggle', toggle)
   rpc.on('view:title-updated', updateTitle)
+  rpc.on('handle:toggle-light-theme', toggleLightThem)
 
   if (isShown) show()
   else hide()
@@ -988,6 +1004,17 @@ function updateTitle (newTitle) {
 
 function unselectTitle () {
   titleEl.classList.remove('selected')
+}
+
+function toggleLightThem () {
+  if(hasLightTheme) {
+    el.classList.remove('light')
+    hasLightTheme = false
+  }
+  else {
+    el.classList.add('light')
+    hasLightTheme = true
+  }
 }
 
 function openMenu () {
