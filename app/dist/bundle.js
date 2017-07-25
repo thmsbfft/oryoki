@@ -207,6 +207,15 @@ function attachEvents () {
   rpc.on('view:zoom-out', zoomOut)
   rpc.on('view:reset-zoom', resetZoom)
   rpc.on('view:filter', toggleFilter)
+  rpc.on('camera:request-save-screenshot', () => {
+    rpc.emit('camera:save-screenshot', [webview.getURL(), webview.getTitle()])
+  })
+  rpc.on('recorder:start', () => {
+    el.classList.add('recording')
+  })
+  rpc.on('recorder:end', () => {
+    el.classList.remove('recording')
+  })
 
   window.addEventListener('resize', resize)
 }
@@ -1371,6 +1380,8 @@ function init() {
   rpc.on('status:important', important)
   rpc.on('status:error', error)
   rpc.on('status:unfreeze', unFreeze)
+  rpc.on('status:hide', hide)
+  rpc.on('status:show', show)
 }
 
 function log (props) {
@@ -1410,7 +1421,7 @@ function important (props) {
   freeze()
 }
 
-function error () {
+function error (props) {
   el.innerHTML = '<icon>' + '⭕️' + '</icon>' + props.body
   el.classList.remove('fade-out')
   el.classList.add('fade-in')

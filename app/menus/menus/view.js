@@ -73,6 +73,7 @@ module.exports = function () {
       {
         label: 'Actual Size',
         accelerator: 'CmdOrCtrl+0',
+        enabled: !isFirstLoad,
         click (i, win) {
           win.rpc.emit('view:reset-zoom')
         }
@@ -80,6 +81,7 @@ module.exports = function () {
       {
         label: 'Zoom In',
         accelerator: 'CmdOrCtrl+Plus',
+        enabled: !isFirstLoad,
         click (i, win) {
           win.rpc.emit('view:zoom-in')
         }
@@ -87,6 +89,7 @@ module.exports = function () {
       {
         label: 'Zoom Out',
         accelerator: 'CmdOrCtrl+-',
+        enabled: !isFirstLoad,
         click (i, win) {
           win.rpc.emit('view:zoom-out')
         }
@@ -97,6 +100,7 @@ module.exports = function () {
       {
         label: 'Invert',
         accelerator: 'CmdOrCtrl+I',
+        enabled: !isFirstLoad,
         type: 'checkbox',
         click (i, win) {
           win.rpc.emit('view:filter', 'invert')
@@ -105,6 +109,7 @@ module.exports = function () {
       {
         label: 'Grayscale',
         accelerator: 'CmdOrCtrl+G',
+        enabled: !isFirstLoad,
         type: 'checkbox',
         click (i, win) {
           win.rpc.emit('view:filter', 'grayscale')
