@@ -70,9 +70,27 @@ module.exports = function () {
       {
         type: 'separator'
       },
-      { role: 'resetzoom' },
-      { role: 'zoomin' },
-      { role: 'zoomout' }
+      {
+        label: 'Actual Size',
+        accelerator: 'CmdOrCtrl+0',
+        click (i, win) {
+          win.rpc.emit('view:reset-zoom')
+        }
+      },
+      {
+        label: 'Zoom In',
+        accelerator: 'CmdOrCtrl+Plus',
+        click (i, win) {
+          win.rpc.emit('view:zoom-in')
+        }
+      },
+      {
+        label: 'Zoom Out',
+        accelerator: 'CmdOrCtrl+-',
+        click (i, win) {
+          win.rpc.emit('view:zoom-out')
+        }
+      }
   ]
 
   return {

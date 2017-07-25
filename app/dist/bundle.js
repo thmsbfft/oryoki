@@ -203,6 +203,9 @@ function attachEvents () {
   rpc.on('view:hard-reload', reloadIgnoringCache)
   rpc.on('view:navigate-back', navigateBack)
   rpc.on('view:navigate-forward', navigateForward)
+  rpc.on('view:zoom-in', zoomIn)
+  rpc.on('view:zoom-out', zoomOut)
+  rpc.on('view:reset-zoom', resetZoom)
 
   window.addEventListener('resize', resize)
 }
@@ -251,6 +254,32 @@ function navigateBack () {
 
 function navigateForward () {
   if(webview.canGoForward()) webview.goForward()
+}
+
+function zoomIn () {
+  zoomIndex++
+  if(zoomIndex >= zoomIncrements.length) zoomIndex = zoomIncrements.length - 1
+  webview.setZoomFactor(zoomIncrements[zoomIndex])
+  rpc.emit('status:log', {
+    body: Math.round(zoomIncrements[zoomIndex] * 100) + '%'
+  })
+}
+
+function zoomOut () {
+  zoomIndex--
+  if(zoomIndex < 0) zoomIndex = 0
+  webview.setZoomFactor(zoomIncrements[zoomIndex])
+  rpc.emit('status:log', {
+    body: Math.round(zoomIncrements[zoomIndex] * 100) + '%'
+  })
+}
+
+function resetZoom () {
+  zoomIndex = 6
+  webview.setZoomFactor(zoomIncrements[zoomIndex])
+  rpc.emit('status:log', {
+    body: Math.round(zoomIncrements[zoomIndex] * 100) + '%'
+  })
 }
 
 module.exports = {
