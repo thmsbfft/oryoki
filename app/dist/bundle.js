@@ -145,6 +145,7 @@ module.exports = require("electron");
 /***/ (function(module, exports, __webpack_require__) {
 
 const {remote, ipcRenderer} = __webpack_require__(1)
+const menus = remote.require('./menus')
 const config = remote.require('./config')
 const rpc = __webpack_require__(0)
 
@@ -198,6 +199,10 @@ function attachEvents () {
 
   // rpc events
   rpc.on('view:load', load)
+  rpc.on('view:reload', reload)
+  rpc.on('view:hard-reload', reloadIgnoringCache)
+  rpc.on('view:navigate-back', navigateBack)
+  rpc.on('view:navigate-forward', navigateForward)
 
   window.addEventListener('resize', resize)
 }
@@ -223,12 +228,29 @@ function onLoadCommit (e) {
   if (isFirstLoad) {
     isFirstLoad = false
     rpc.emit('view:first-load')
+    menus.refresh()
   }
   rpc.emit('status:log', {
     'body': '•••',
     'type': 'loading'
   })
   console.log('[view]', 'load-commit', e)
+}
+
+function reload () {
+  webview.reload()
+}
+
+function reloadIgnoringCache () {
+  webview.reloadIgnoringCache()
+}
+
+function navigateBack () {
+  if(webview.canGoBack()) webview.goBack()
+}
+
+function navigateForward () {
+  if(webview.canGoForward()) webview.goForward()
 }
 
 module.exports = {

@@ -1,5 +1,6 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 
+const menus = require('./menus')
 const config = require('./config')
 const createRPC = require('./rpc')
 
@@ -7,10 +8,6 @@ const windows = new Set([])
 let focused = null
 
 function init () {
-  // ipcMain.on('new-window', )
-  // ipcMain.on('close-window', )
-  // ipcMain.on('minimize-window', )
-  // ipcMain.on('fullscreen-window', )
 
   app.on('activate', () => {
     if (!windows.size) {
@@ -78,9 +75,11 @@ function create (url) {
 
   win.on('focus', (e) => {
     focused = e.sender
+    menus.refresh()
   })
 
   win.on('close', () => {
+    console.log('closing window')
     windows.delete(win)
     rpc.destroy()
   })
