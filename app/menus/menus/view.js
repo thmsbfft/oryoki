@@ -1,10 +1,9 @@
 const {app, shell, BrowserWindow} = require('electron')
+const windows = require('./../../windows')
 
 module.exports = function () {
-
-  const win = BrowserWindow.getFocusedWindow()
-  var isFirstLoad = true
-  if (win !== null) isFirstLoad = win.isFirstLoad
+  let isFirstLoad = true
+  if(windows.getFocused() !== null) isFirstLoad = windows.getFocused().isFirstLoad
 
   const submenu = [
       {

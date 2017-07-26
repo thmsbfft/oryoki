@@ -117,9 +117,14 @@ function cycle () {
   wins[next].focus()
 }
 
+function getFocused () {
+  return focused
+}
+
 module.exports = {
   init: init,
   create: create,
   broadcast: broadcast,
-  cycle: cycle
+  cycle: cycle,
+  getFocused: getFocused
 }
