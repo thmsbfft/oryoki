@@ -191,6 +191,10 @@ function attachEvents () {
   webview.addEventListener('page-title-updated', (e) => {
     rpc.emit('view:title-updated', e.title)
   })
+  webview.addEventListener('update-target-url', (e) => {
+    if(e.url !== '') rpc.emit('status:url-hover', e.url)
+    if(e.url == '') rpc.emit('status:url-out')
+  })
   // webview.addEventListener('did-frame-finish-load', onDidFrameFinishLoad)
   // webview.addEventListener('did-finish-load', onDidFinishLoad)
   // webview.addEventListener('did-fail-load', onDidFailLoad)
@@ -1382,6 +1386,8 @@ function init() {
   rpc.on('status:unfreeze', unFreeze)
   rpc.on('status:hide', hide)
   rpc.on('status:show', show)
+  rpc.on('status:url-hover', onURLHover)
+  rpc.on('status:url-out', onURLOut)
 }
 
 function log (props) {
@@ -1430,6 +1436,22 @@ function error (props) {
 
   clearTimeout(visibilityTimer)
   visibilityTimer = setTimeout(fadeOut, 5000)
+}
+
+function onURLHover (url) {
+  if(url.length > 35) {
+    url = url.substring(0, 35) + '...'
+  }
+  console.log(url)
+  el.innerHTML = url
+  isActive = true
+  el.classList.remove('fade-out')
+  el.classList.add('fade-in')
+  clearTimeout(visibilityTimer)
+}
+
+function onURLOut () {
+  visibilityTimer = setTimeout(fadeOut, 100)
 }
 
 function freeze () {

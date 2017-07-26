@@ -22,8 +22,8 @@ function create (url) {
   console.log('[windows] Creating new window')
 
   if (url && focused !== null && focused.isFirstLoad) {
-    // if there is a focused window and nothing's loaded yet, load url
-    // here instead of creating a new window
+    // if there is a focused window and nothing's loaded yet,
+    // load url here instead of creating a new window
     focused.rpc.emit('view:load', url)
     return
   }
@@ -67,11 +67,15 @@ function create (url) {
   if (!windows.size) win.center()
   windows.add(win)
 
-  const rpc = createRPC(win)
+  let rpc = createRPC(win)
   win.rpc = rpc
   win.isFirstLoad = true
 
   win.loadURL('file://' + __dirname + '/window.html' + '#' + win.id)
+
+  win.webContents.on('destroyed', () => {
+    console.log('[window] webContents destroyed')
+  })
 
   win.on('focus', (e) => {
     focused = e.sender
@@ -79,9 +83,10 @@ function create (url) {
   })
 
   win.on('close', () => {
-    console.log('closing window')
+    console.log('[windows] Closing window')
     windows.delete(win)
     rpc.destroy()
+    rpc = null
   })
 
   rpc.on('view:first-load', (e) => {
