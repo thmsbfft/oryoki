@@ -114,7 +114,7 @@ class RPC {
     // we emit both on ipc and in the renderer process
     this.emitter.emit(ev, data)
     this.ipc.send(this.id, {ev, data})
-    console.log('[rpc]', ev, data)
+    console.log('[rpc]', ev, data ? data : '')
   }
 
   removeListener (ev, fn) {
@@ -325,6 +325,7 @@ __webpack_require__(4)
 const rpc = __webpack_require__(0)
 const handle = __webpack_require__(9)
 const omnibox = __webpack_require__(10)
+const windowhelper = __webpack_require__(14)
 const view = __webpack_require__(2)
 const status = __webpack_require__(12)
 const dragoverlay = __webpack_require__(13)
@@ -334,6 +335,7 @@ rpc.on('ready', function (e, uid) {
   status.init()
   handle.init()
   omnibox.init()
+  windowhelper.init()
   view.init()
   dragoverlay.init()
 })
@@ -1124,6 +1126,7 @@ function init () {
   // rpc
   rpc.on('omnibox:toggle', toggle)
   rpc.on('omnibox:hide', hide)
+  rpc.on('omnibox:focus', focus)
 
   // always keep the omnibox in focus
   overlay.addEventListener('mousedown', (e) => {
@@ -1531,6 +1534,169 @@ function onKeyUp (e) {
 
 module.exports = {
   init: init
+}
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const {remote} = __webpack_require__(1)
+const menus = remote.require('./menus')
+
+const rpc = __webpack_require__(0)
+
+let el = null
+let widthInput = null
+let heightInput = null
+
+let isShown = false
+
+function init () {
+  el = document.querySelector('windowhelper')
+  widthInput = el.querySelector('#width')
+  heightInput = el.querySelector('#height')
+
+  // rpc
+  rpc.on('windowhelper:toggle', toggle)
+
+  // events
+  window.addEventListener('resize', updateWindowDimensions)
+  widthInput.addEventListener('click', () => { widthInput.select() })
+  heightInput.addEventListener('click', () => { heightInput.select() })
+  el.addEventListener('keyup', onInputKeyUp)
+  el.addEventListener('keydown', onInputKeyDown)
+
+  updateWindowDimensions()
+  hide()
+  console.log('[windowhelper] ✔')
+}
+
+function updateWindowDimensions () {
+  widthInput.value = window.innerWidth
+  heightInput.value = window.innerHeight
+
+  updateUI()
+}
+
+function updateUI () {
+  if (widthInput.value <= 1000) {
+    el.querySelectorAll('#width')[0].className = ''
+  }
+
+  if (heightInput.value <= 1000) {
+    el.querySelectorAll('#height')[0].className = ''
+  }
+
+  if (widthInput.value >= 1000) {
+    el.querySelectorAll('#width')[0].className = 'leadingOne'
+  }
+
+  if (heightInput.value >= 1000) {
+    el.querySelectorAll('#height')[0].className = 'leadingOne'
+  }
+
+  if (widthInput.value >= 2000) {
+    el.querySelectorAll('#width')[0].className = 'fourDigits'
+  }
+
+  if (heightInput.value >= 2000) {
+    el.querySelectorAll('#height')[0].className = 'fourDigits'
+  }
+}
+
+function show () {
+  isShown = true
+  el.className = 'show'
+
+  widthInput.select()
+}
+
+function hide () {
+  isShown = false
+  el.className = 'hide'
+}
+
+function toggle () {
+  if (isShown) hide()
+  else show()
+}
+
+function onInputKeyUp (e) {
+  if(e.key == 'Escape') {
+    hide()
+    rpc.emit('omnibox:focus')
+    menus.refresh()
+  }
+
+  // ignore keys we dont have a use for
+  if (e.key.match(/[a-z]/i) && e.key.length == 1 || e.keyCode == 9) e.preventDefault()
+
+  switch (e.keyCode) {
+    case 9:
+      // tab
+      if (e.target.id == 'width') heightInput.select()
+      else widthInput.select()
+      break
+
+    case 13:
+      // enter
+      resizeWindow(
+        widthInput.value, heightInput.value
+      )
+      break
+  }
+
+  updateUI()
+}
+
+function onInputKeyDown (e) {
+  // ignore keys we dont have a use for
+  if (e.metaKey == false && e.key.match(/[a-z]/i) && e.key.length == 1 || e.keyCode == 9 || e.keyCode == 38 || e.keyCode == 40) e.preventDefault()
+
+  switch (e.keyCode) {
+    case 38:
+      // arrow Up
+      increment(e, 'up')
+      e.target.select()
+      break
+
+    case 40:
+      // arrow Down
+      increment(e, 'down')
+      e.target.select()
+      break
+  }
+
+  updateUI()
+}
+
+function resizeWindow (width, height) {
+  let win = remote.getCurrentWindow()
+  win.setSize(parseInt(width), parseInt(height))
+}
+
+function increment (e, direction) {
+  switch(direction) {
+    case 'up':
+      if (e.shiftKey) {
+        e.target.value = parseInt(e.target.value) + 10
+      } else {
+        e.target.value = parseInt(e.target.value) + 1
+      }
+      break
+
+    case 'down':
+      if (e.shiftKey) {
+        e.target.value = parseInt(e.target.value) - 10
+      } else {
+        e.target.value = parseInt(e.target.value) - 1
+      }
+      break
+  }
+}
+
+module.exports = {
+  init
 }
 
 /***/ })

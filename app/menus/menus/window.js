@@ -24,21 +24,19 @@ module.exports = function () {
         checked: isAlwaysOnTop,
         enabled: !(win == null),
         click: function (i, win) {
-          if (win) {
-            win.setAlwaysOnTop(!win.isAlwaysOnTop())
-          }
+          win.setAlwaysOnTop(!win.isAlwaysOnTop())
         }
       },
       {
         type: 'separator'
       },
       {
-        label: 'Window Helper',
+        label: 'Toggle Window Helper',
         accelerator: 'CmdOrCtrl+Alt+M',
         type: 'checkbox',
         enabled: !(win == null),
-        click () {
-          
+        click (i, win) {
+          win.rpc.emit('windowhelper:toggle')
         }
       },
       {
