@@ -8,8 +8,9 @@ const execSync = require('child_process').execSync
 const {pad, timestamp} = require('./utils')
 const {app, Tray, Menu} = require('electron')
 const config = require('./config')
+const menus = require('./menus')
 
-let isRecording = false
+let status = 'idle'
 let tray = null
 let win = null
 
@@ -90,22 +91,23 @@ function startRecording (window) {
   ffmpeg = spawn('ffmpeg', args)
   imageStream.pipe(ffmpeg.stdin)
 
-  isRecording = true
+  status = 'recording'
+  menus.refresh()
   win.rpc.emit('recorder:start')
   console.log(win.webContents.isOffscreen())
   win.webContents.beginFrameSubscription(addFrame)
 
   showTray()
-  console.log('[camera] Recording...')
+  console.log('[recorder] Recording...')
 }
 
 function addFrame(frameBuffer) {
-  if(!isRecording) return // avoid trail frames
+  if(status == 'idle') return // avoid trail frames
   try {
     imageStream.write(frameBuffer, 'utf8')
   }
   catch (err) {
-    console.log('[camera]', err)
+    console.log('[recorder]', err)
   }
 }
 
@@ -135,18 +137,21 @@ function showTray () {
 
 function stopRecording () {
   win.webContents.endFrameSubscription()
-  console.log('[camera] Recording stopped')
-  
-  // waiting for stream to consume all the data
+  console.log('[recorder] Recording stopped')
+
   imageStream.end()
+  status = 'waiting-for-stream' // waiting for stream to consume all the data
+  menus.refresh()
+  
   imageStream.on('end', () => {
-    isRecording = false
+    console.log('[recorder] Stream ended')
+    status = 'idle'
     ffmpeg = null
     win.rpc.emit('status:log', {
       'body': 'Finished recording',
       'icon': '✅'
     })
-    console.log('[camera] Stream ended')
+    menus.refresh()
   })
 
   win.setResizable(true)
@@ -163,7 +168,12 @@ function hideTray () {
   tray = null
 }
 
+function getStatus () {
+  return status
+}
+
 module.exports = {
   startRecording: startRecording,
-  stopRecording: stopRecording
+  stopRecording: stopRecording,
+  getStatus: getStatus
 }

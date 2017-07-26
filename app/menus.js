@@ -1,7 +1,7 @@
 const {app, ipcMain, Menu} = require('electron')
 
-var template = null
-var menu = null
+let template = null
+let menu = null
 
 function init () {
   createMenus()

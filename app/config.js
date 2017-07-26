@@ -124,8 +124,11 @@ function watch () {
 function verify () {
   console.log('[config] Preference model v. ' + preferences['model_version'])
 
-  if (preferences['model_version'] !== app.getVersion()) {
-    console.log('[config] Using a different model. Latest is ' + app.getVersion())
+  let modelVersion = parseInt(preferences['model_version'].split('.').join(''))
+  let appVersion = parseInt(app.getVersion().split('.').join(''))
+
+  if (modelVersion < appVersion) {
+    console.log('[config] Using an outdated model. Latest is ' + app.getVersion())
 
     dialog.showMessageBox(
       {
