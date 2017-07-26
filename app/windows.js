@@ -90,6 +90,11 @@ function create (url) {
     windows.delete(win)
     rpc.destroy()
     rpc = null
+
+    if (windows.size == 0) {
+      focused = null
+      menus.refresh()
+    }
   })
 
   rpc.on('view:first-load', (e) => {

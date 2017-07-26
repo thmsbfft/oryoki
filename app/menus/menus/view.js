@@ -17,6 +17,7 @@ module.exports = function () {
         accelerator: 'CmdOrCtrl+/',
         type: 'checkbox',
         checked: hasTitleBar,
+        enabled: !(win == null),
         click (i, win) {
           win.rpc.emit('handle:toggle')
         }

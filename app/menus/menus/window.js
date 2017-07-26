@@ -2,7 +2,7 @@ const windows = require('./../../windows')
 
 module.exports = function () {
   let win = windows.getFocused()
-  
+
   let isAlwaysOnTop = false
   if (win !== null) isAlwaysOnTop = win.isAlwaysOnTop()
 
@@ -22,6 +22,7 @@ module.exports = function () {
         label: 'Float on Top',
         type: 'checkbox',
         checked: isAlwaysOnTop,
+        enabled: !(win == null),
         click: function (i, win) {
           if (win) {
             win.setAlwaysOnTop(!win.isAlwaysOnTop())
@@ -35,6 +36,7 @@ module.exports = function () {
         label: 'Window Helper',
         accelerator: 'CmdOrCtrl+Alt+M',
         type: 'checkbox',
+        enabled: !(win == null),
         click () {
           
         }
@@ -49,7 +51,7 @@ module.exports = function () {
       {
         label: 'Cycle Through Windows',
         accelerator: 'Ctrl+Tab',
-        // accelerator: 'CmdOrCtrl+`',
+        enabled: !(win == null),
         click () {
           windows.cycle()
         }

@@ -1,13 +1,16 @@
+const windows = require('./../../windows')
 const camera = require('./../../camera')
 const recorder = require('./../../recorder')
 
 module.exports = function () {
+  let win = windows.getFocused()
   const recorderStatus = recorder.getStatus()
 
   const submenu = [
     {
       label: 'Save Screenshot',
       accelerator: 'CmdOrCtrl+`',
+      enabled: !(win == null),
       click (i, win) {
         camera.requestSaveScreenshot(win)
       }
@@ -15,6 +18,7 @@ module.exports = function () {
     {
       label: 'Copy Screenshot',
       accelerator: 'CmdOrCtrl+Shift+C',
+      enabled: !(win == null),
       click (i, win) {
         camera.copyScreenshot(win)
       }
@@ -24,7 +28,7 @@ module.exports = function () {
     },
     {
       label: 'Start Recording',
-      enabled: recorderStatus == 'idle',
+      enabled: recorderStatus == 'idle' && !(win == null),
       accelerator: 'CmdOrCtrl+Shift+P',
       click (i, win) {
         recorder.startRecording(win)
@@ -32,7 +36,7 @@ module.exports = function () {
     },
     {
       label: 'Stop Recording',
-      enabled: recorderStatus == 'recording',
+      enabled: recorderStatus == 'recording' && !(win == null),
       accelerator: 'CmdOrCtrl+Alt+Shift+P',
       click () {
         recorder.stopRecording()
