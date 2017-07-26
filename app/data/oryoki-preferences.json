@@ -6,7 +6,7 @@
 //
 {
 	// Do not touch!
-	"model_version" : "0.1.0",
+	"model_version" : "0.2.0",
 
 	// Allows Oryoki to download updates in background
 	"download_updates_in_background" : false,
@@ -50,15 +50,10 @@
 	// Hide the status bar when recording
 	"hide_status_while_recording" : true,
 
-	// async | sync
-	// async tries to display frames smoothly and record as many as possible
-	// sync records every frame but doesn't display all of them
-	"video_recording_mode" : "async",
-
-	// mp4 | prores
-	// mp4 is quick and relatively dirty
-	// prores is slow and lossless
-	"video_recording_quality" : "mp4",
+	// h264 | prores
+	// mp4 is light and lossy
+	// prores is big and lossless
+	"video_recording_codec" : "h264",
 
 	// Customize Window > Size menu here
 	// `widthxheight`

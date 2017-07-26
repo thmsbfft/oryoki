@@ -7,6 +7,7 @@ const execSync = require('child_process').execSync
 
 const {pad, timestamp} = require('./utils')
 const {app, Tray, Menu} = require('electron')
+const config = require('./config')
 
 let isRecording = false
 let tray = null
@@ -18,9 +19,19 @@ let imageStream = null
 function startRecording (window) {
   win = window // keep a reference for async operations, etc.
 
+  // check frame size for mp4 recording
+  if (config.getPreference('video_recording_codec') == 'h264') {
+    if (win.getSize()[0] % 2 !== 0 || win.getSize()[1] % 2 !== 0) {
+      win.rpc.emit('status:error', {
+        'body': 'Window dimensions must be even numbers'
+      })
+      return
+    }
+  }
+
   // check if ffmpeg is around
   try {
-    execSync('ffmpeg -h')
+    execSync('ffmpeg -h', 'ignore')
   } catch (err) {
     win.rpc.emit('status:error', {
       'body': 'Can\'t find ffmpeg'
@@ -30,6 +41,7 @@ function startRecording (window) {
 
   win.setResizable(false)
   app.dock.setBadge('R')
+  if(config.getPreference('hide_status_while_recording')) win.rpc.emit('status:hide')
 
   // video size
   const electronScreen = require('electron').screen
@@ -38,44 +50,49 @@ function startRecording (window) {
   let height = win.getSize()[1] * currentDisplay.scaleFactor
   let size = width + 'x' + height
 
+  // name
+  let name = 'o-recording-' + timestamp()
+
   let args = [
     // input
     '-y',
-    '-f', 'rawvideo',           // no codec, just raw data
+    '-f', 'rawvideo',             // no codec, just raw data
     '-s', size,
     '-framerate', 60,
-    '-pix_fmt', 'rgb32',        // that's what electron gives us
+    '-pix_fmt', 'rgb32',          // that's what electron gives us
     '-i', '-',
     '-vcodec', 'mjpeg',
-    '-q:v', '2',                // max out quality
+    '-q:v', '2',                  // max out quality
     // output
-    '-r', 30,                   // 30fps keeps the file size down
-    '-pix_fmt', 'yuvj420p'      // legacy (?) fmt to enable preview in macOS
-    '-vcodec', 'libx264',       // h264 codec
-    '-preset', 'slow',          // no compromise quality for speed
+    '-r', 30,                     // 30fps keeps the file size down
+    '-pix_fmt', 'yuvj420p'        // legacy (?) fmt to enable preview in macOS
   ]
 
-  // output prores (change ext to .mov)
-  // '-framerate', 30,
-  // '-vcodec', 'prores_ks',
-  // '-pix_fmt', 'yuvj420p'
-
-  // format
-  // args.push()
-
-  // output
-  args.push(app.getPath('downloads') + '/' + 'test.mp4')
+  // output format
+  switch(config.getPreference('video_recording_codec')) {
+    case 'h264':
+      args.push(
+        '-vcodec', 'libx264',     // h264 codec
+        '-preset', 'slow'         // don't compromise quality for speed
+      )
+      args.push(app.getPath('downloads') + '/' + name + '.mp4')
+      break
+    case 'prores':
+      args.push(
+        '-vcodec', 'prores_ks'    // prores codec
+      )
+      args.push(app.getPath('downloads') + '/' + name + '.mov')
+      break
+  }
 
   imageStream = new stream.PassThrough()
 
   ffmpeg = spawn('ffmpeg', args)
-  // ffmpeg.stdout.on('data', (data) => console.log('[camera]', data.toString()))
-  // ffmpeg.stderr.on('data', (data) => console.log('[camera]', data.toString()))
-
   imageStream.pipe(ffmpeg.stdin)
 
   isRecording = true
   win.rpc.emit('recorder:start')
+  console.log(win.webContents.isOffscreen())
   win.webContents.beginFrameSubscription(addFrame)
 
   showTray()
@@ -117,14 +134,28 @@ function showTray () {
 }
 
 function stopRecording () {
-  isRecording = false
   win.webContents.endFrameSubscription()
+  console.log('[camera] Recording stopped')
+  
+  // waiting for stream to consume all the data
   imageStream.end()
-  // ffmpeg = null
-  win.setResizable(false)
+  imageStream.on('end', () => {
+    isRecording = false
+    ffmpeg = null
+    win.rpc.emit('status:log', {
+      'body': 'Finished recording',
+      'icon': '✅'
+    })
+    console.log('[camera] Stream ended')
+  })
+
+  win.setResizable(true)
   hideTray()
   app.dock.setBadge('')
-  console.log('[camera] Recording stopped.')
+  win.rpc.emit('status:show')
+  win.rpc.emit('status:log', {
+    'body': 'Finishing up...'
+  })
 }
 
 function hideTray () {
