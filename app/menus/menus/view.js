@@ -1,15 +1,22 @@
 const {app, shell, BrowserWindow} = require('electron')
+const config = require('./../../config')
 const windows = require('./../../windows')
 
 module.exports = function () {
+  let win = windows.getFocused()
+
   let isFirstLoad = true
-  if(windows.getFocused() !== null) isFirstLoad = windows.getFocused().isFirstLoad
+  if(win !== null) isFirstLoad = win.isFirstLoad
+
+  let hasTitleBar = config.getPreference('show_title_bar')
+  if(win !== null) hasTitleBar = win.hasTitleBar
 
   const submenu = [
       {
         label: 'Title Bar',
         accelerator: 'CmdOrCtrl+/',
         type: 'checkbox',
+        checked: hasTitleBar,
         click (i, win) {
           win.rpc.emit('handle:toggle')
         }

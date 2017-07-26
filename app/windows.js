@@ -69,7 +69,9 @@ function create (url) {
 
   let rpc = createRPC(win)
   win.rpc = rpc
+
   win.isFirstLoad = true
+  win.hasTitleBar = config.getPreference('show_title_bar')
 
   win.loadURL('file://' + __dirname + '/window.html' + '#' + win.id)
 

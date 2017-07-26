@@ -929,6 +929,8 @@ const clipboard = remote.clipboard
 const Menu = remote.Menu
 const MenuItem = remote.MenuItem
 
+const menus = remote.require('./menus')
+
 const config = remote.require('./config')
 const rpc = __webpack_require__(0)
 
@@ -979,6 +981,8 @@ function show () {
     win.getSize()[1] + 24
   )
   isShown = true
+  win.hasTitleBar = true
+  menus.refresh()
   window.dispatchEvent(new Event('resize'))
 }
 
@@ -990,6 +994,8 @@ function hide () {
     win.getSize()[1] - 24
   )
   isShown = false
+  win.hasTitleBar = false
+  menus.refresh()
   window.dispatchEvent(new Event('resize'))
 }
 
@@ -1085,6 +1091,7 @@ const {remote, ipcRenderer} = __webpack_require__(1)
 
 const config = remote.require('./config')
 const updater = remote.require('./updater')
+const menus = remote.require('./menus')
 const rpc = __webpack_require__(0)
 
 const hints = __webpack_require__(11)
