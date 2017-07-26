@@ -1,6 +1,11 @@
 const windows = require('./../../windows')
 
 module.exports = function () {
+  let win = windows.getFocused()
+  
+  let isAlwaysOnTop = false
+  if (win !== null) isAlwaysOnTop = win.isAlwaysOnTop()
+
   const submenu = [
       {
         label: 'Minimize',
@@ -16,9 +21,10 @@ module.exports = function () {
       {
         label: 'Float on Top',
         type: 'checkbox',
-        click: function (item, win) {
+        checked: isAlwaysOnTop,
+        click: function (i, win) {
           if (win) {
-            // console.log(win.id)
+            win.setAlwaysOnTop(!win.isAlwaysOnTop())
           }
         }
       },

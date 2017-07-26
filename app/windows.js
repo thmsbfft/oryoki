@@ -70,6 +70,7 @@ function create (url) {
   let rpc = createRPC(win)
   win.rpc = rpc
 
+  // set a couple properties to be used in renderer process and menus
   win.isFirstLoad = true
   win.hasTitleBar = config.getPreference('show_title_bar')
 
