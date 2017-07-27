@@ -165,9 +165,6 @@ function resize (width, height) {
   }, true)
 
   focused.rpc.emit('windowhelper:update-dimensions')
-  focused.rpc.emit('status:log', {
-    'body': width + 'x' + height
-  })
 }
 
 function getFocused () {

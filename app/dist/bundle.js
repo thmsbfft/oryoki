@@ -1642,7 +1642,7 @@ function onInputKeyUp (e) {
 
     case 13:
       // enter
-      windows.resize(width, height)
+      windows.resize(widthInput.value, heightInput.value)
       break
   }
 

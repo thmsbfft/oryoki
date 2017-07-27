@@ -78,6 +78,9 @@ module.exports = function () {
         accelerator: 'CmdOrCtrl+' + index,
         click (i, win) {
           windows.resize(dimensions[0], dimensions[1])
+          win.rpc.emit('status:log', {
+            'body': dimensions[0] + 'x' + dimensions[1]
+          })
         }
       }
     )
