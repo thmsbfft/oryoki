@@ -23,13 +23,25 @@ function openFile () {
         {name: 'Images', extensions: ['png']}
       ]
     }
-  , handleFile)
+  , (input) => {
+    handleFile(input[0])
+  })
 }
 
-function handleFile (input) {
+function handleFile (input, target) {
   if(input == undefined) return
-  let path = input[0]
-  
+  let path = input
+
+  let win = windows.getFocused()
+
+  if(path.search('.png') == -1) {
+    win.rpc.emit('status:log', {
+      body: 'Can\'t open file',
+      icon: '⭕️'
+    })
+    return
+  }
+
   console.log('[file] Loading:', path)
 
   let buffer = fs.readFileSync(path)
@@ -57,8 +69,6 @@ function handleFile (input) {
   //   console.log('[file] Title: ' + title)
   // } else { console.log('[file] No title in PNG tEXt') }
 
-  let win = windows.getFocused()
-
   if(!src[0]) {
     // abort!
     if(win !== null) {
@@ -73,7 +83,7 @@ function handleFile (input) {
   // check if content is url
   if (validUrl.isUri(src[0].text)) {
     let url = src[0].text
-    windows.create(url)
+    windows.create(url, target)
   } else {
     // abort!
     if(win !== null) {
@@ -88,5 +98,6 @@ function handleFile (input) {
 
 module.exports = {
   init: init,
-  openFile: openFile
+  openFile: openFile,
+  handleFile: handleFile
 }

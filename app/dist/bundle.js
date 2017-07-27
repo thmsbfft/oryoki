@@ -966,6 +966,14 @@ function init () {
     hide()
   })
 
+  el.ondragover = (e) => {
+    e.preventDefault()
+  }
+
+  el.ondrop = (e) => {
+    e.preventDefault()
+  }
+
   rpc.on('handle:toggle', toggle)
   rpc.on('view:title-updated', updateTitle)
   rpc.on('handle:toggle-light-theme', toggleLightThem)
@@ -1094,6 +1102,7 @@ const {remote, ipcRenderer} = __webpack_require__(1)
 const config = remote.require('./config')
 const updater = remote.require('./updater')
 const menus = remote.require('./menus')
+const fileHandler = remote.require('./fileHandler')
 const rpc = __webpack_require__(0)
 
 const hints = __webpack_require__(11)
@@ -1109,8 +1118,8 @@ let updateHint
 let searchDictionary = config.getSearchDictionary()
 
 // utils
-var isShown = false
-var dragCount = 0
+let isShown = false
+let dragCount = 0
 
 function init () {
   // elements
@@ -1140,6 +1149,31 @@ function init () {
 
   // init hints
   hints.init()
+
+  // drag&drop
+  el.ondragover = (e) => {
+    e.preventDefault()
+  }
+
+  el.ondragenter = (e) => {
+    console.log(e.dataTransfer.files[0].path);
+    dragCount++
+    input.classList.add('drop')
+    e.preventDefault()
+  }
+
+  el.ondragleave = (e) => {
+    dragCount--
+    if (dragCount === 0) input.classList.remove('drop')
+    e.preventDefault()
+  }
+
+  el.ondrop = (e) => {
+    input.classList.remove('drop')
+    dragCount = 0
+    fileHandler.handleFile(e.dataTransfer.files[0].path, '_self')
+    e.preventDefault()
+  }
 
   show()
   console.log('[omnibox] ✔')

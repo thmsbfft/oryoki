@@ -17,11 +17,12 @@ function init () {
   create()
 }
 
-function create (url) {
+function create (url, target) {
   console.log('[windows] Creating new window')
 
-  if (url && focused !== null && focused.isFirstLoad) {
+  if ((url && focused !== null && focused.isFirstLoad) || target == '_self') {
     // if there is a focused window and nothing's loaded yet,
+    // or target has been set (to '_self'),
     // load url here instead of creating a new window
     focused.rpc.emit('view:load', url)
     return
