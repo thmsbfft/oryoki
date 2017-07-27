@@ -1542,6 +1542,7 @@ module.exports = {
 
 const {remote} = __webpack_require__(1)
 const menus = remote.require('./menus')
+const windows = remote.require('./windows')
 
 const rpc = __webpack_require__(0)
 
@@ -1558,6 +1559,7 @@ function init () {
 
   // rpc
   rpc.on('windowhelper:toggle', toggle)
+  rpc.on('windowhelper:update-dimensions', updateWindowDimensions)
 
   // events
   window.addEventListener('resize', updateWindowDimensions)
@@ -1640,9 +1642,7 @@ function onInputKeyUp (e) {
 
     case 13:
       // enter
-      resizeWindow(
-        widthInput.value, heightInput.value
-      )
+      windows.resize(width, height)
       break
   }
 
@@ -1668,11 +1668,6 @@ function onInputKeyDown (e) {
   }
 
   updateUI()
-}
-
-function resizeWindow (width, height) {
-  let win = remote.getCurrentWindow()
-  win.setSize(parseInt(width), parseInt(height))
 }
 
 function increment (e, direction) {

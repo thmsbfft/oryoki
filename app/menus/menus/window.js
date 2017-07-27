@@ -1,3 +1,4 @@
+const config = require('./../../config')
 const windows = require('./../../windows')
 
 module.exports = function () {
@@ -62,6 +63,25 @@ module.exports = function () {
         type: 'separator'
       }
   ]
+
+  // defined by user preferences
+  let windowSizes = config.getPreference('window_sizes')
+  for (var i in windowSizes) {
+    let name = windowSizes[i]
+    let dimensions = windowSizes[i].split('x')
+    let index = parseInt(Object.keys(windowSizes).indexOf(i)) + 1
+
+    // menu: Window > Size
+    submenu[6].submenu.push(
+      {
+        label: name,
+        accelerator: 'CmdOrCtrl+' + index,
+        click (i, win) {
+          windows.resize(dimensions[0], dimensions[1])
+        }
+      }
+    )
+  }
 
   return {
     label: 'Window',

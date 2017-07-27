@@ -1,5 +1,4 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
-
 const menus = require('./menus')
 const config = require('./config')
 const createRPC = require('./rpc')
@@ -28,10 +27,10 @@ function create (url) {
     return
   }
 
-  var width
-  var height
-  var x
-  var y
+  let width
+  let height
+  let x
+  let y
 
   if (!windows.size) {
     width = config.getPreference('default_window_width')
@@ -130,6 +129,47 @@ function cycle () {
   wins[next].focus()
 }
 
+function resize (width, height) {
+  width = parseInt(width)
+  height = parseInt(height)
+
+  const electronScreen = require('electron').screen
+  let currentScreen = electronScreen.getDisplayMatching(focused.getBounds())
+  let x = focused.getBounds().x
+  let y = focused.getBounds().y
+
+  // if requested dimensions are supperior to current screen,
+  // default to work area size
+  if (width > currentScreen.workArea.width) {
+    width = currentScreen.workArea.width
+    x = currentScreen.workArea.x
+  }
+  if (height > currentScreen.workArea.height) {
+    height = currentScreen.workArea.height
+    y = currentScreen.workArea.y
+  }
+
+  if (width < focused.minWidth) {
+    width = focused.minWidth
+  }
+
+  if (height < focused.minHeight) {
+    height = focused.minHeight
+  }
+
+  focused.setBounds({
+    x: x,
+    y: y,
+    width: width,
+    height: height
+  }, true)
+
+  focused.rpc.emit('windowhelper:update-dimensions')
+  focused.rpc.emit('status:log', {
+    'body': width + 'x' + height
+  })
+}
+
 function getFocused () {
   return focused
 }
@@ -139,5 +179,6 @@ module.exports = {
   create: create,
   broadcast: broadcast,
   cycle: cycle,
-  getFocused: getFocused
+  getFocused: getFocused,
+  resize: resize
 }
