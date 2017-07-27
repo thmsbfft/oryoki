@@ -325,10 +325,10 @@ __webpack_require__(4)
 const rpc = __webpack_require__(0)
 const handle = __webpack_require__(9)
 const omnibox = __webpack_require__(10)
-const windowhelper = __webpack_require__(14)
+const windowhelper = __webpack_require__(12)
 const view = __webpack_require__(2)
-const status = __webpack_require__(12)
-const dragoverlay = __webpack_require__(13)
+const status = __webpack_require__(13)
+const dragoverlay = __webpack_require__(14)
 
 rpc.on('ready', function (e, uid) {
   console.log('[rpc] ✔', rpc.id)
@@ -1376,170 +1376,6 @@ module.exports = {
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const rpc = __webpack_require__(0)
-
-let el = null
-
-// utils
-let isShown = true
-let isActive = false
-let isFrozen = false
-
-let visibilityTimer = null
-
-function init() {
-  el = document.querySelector('status')
-
-  rpc.on('status:log', log)
-  rpc.on('status:important', important)
-  rpc.on('status:error', error)
-  rpc.on('status:unfreeze', unFreeze)
-  rpc.on('status:hide', hide)
-  rpc.on('status:show', show)
-  rpc.on('status:url-hover', onURLHover)
-  rpc.on('status:url-out', onURLOut)
-}
-
-function log (props) {
-  // loading events have lower priority
-  if (props.type == 'loading' && isActive) return
-
-  // stop logging stuff if an error is displayed
-  if (isFrozen) return
-
-  if (props.icon) {
-    el.innerHTML = '<icon>' + props.icon + '</icon>' + props.body
-  } else {
-    el.innerHTML = props.body
-  }
-
-  isActive = true
-
-  el.classList.remove('fade-out')
-  el.classList.add('fade-in')
-
-  clearTimeout(visibilityTimer)
-  visibilityTimer = setTimeout(fadeOut, 1200)
-}
-
-function important (props) {
-  if (props.icon) {
-    el.innerHTML = '<icon>' + props.icon + '</icon>' + props.body
-  } else {
-    el.innerHTML = props.body
-  }
-
-  isActive = true
-
-  el.classList.remove('fade-out')
-  el.classList.add('fade-in')
-
-  freeze()
-}
-
-function error (props) {
-  el.innerHTML = '<icon>' + '⭕️' + '</icon>' + props.body
-  el.classList.remove('fade-out')
-  el.classList.add('fade-in')
-
-  isActive = true
-
-  clearTimeout(visibilityTimer)
-  visibilityTimer = setTimeout(fadeOut, 5000)
-}
-
-function onURLHover (url) {
-  if(url.length > 35) {
-    url = url.substring(0, 35) + '...'
-  }
-  console.log(url)
-  el.innerHTML = url
-  isActive = true
-  el.classList.remove('fade-out')
-  el.classList.add('fade-in')
-  clearTimeout(visibilityTimer)
-}
-
-function onURLOut () {
-  visibilityTimer = setTimeout(fadeOut, 100)
-}
-
-function freeze () {
-  clearTimeout(visibilityTimer)
-  isFrozen = true
-}
-
-function unFreeze () {
-  if(isFrozen) {
-    visibilityTimer = setTimeout(fadeOut, 1200)
-    isFrozen = false
-  }
-}
-
-function fadeOut () {
-  el.classList.add('fade-out')
-  isActive = false
-}
-
-function hide () {
-  el.innerHTML = ''
-  isShown = false
-  el.classList.add('hide')
-  freeze()
-}
-
-function show () {
-  isShown = true
-  el.classList.remove('hide')
-  unFreeze()
-}
-
-module.exports = {
-  init: init
-}
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const {remote, ipcRenderer} = __webpack_require__(1)
-const config = remote.require('./config')
-
-let overlay = null
-let isDragging = false
-
-function init() {
-  overlay = document.querySelector('#dragOverlay')
-  window.addEventListener('keydown', onKeyDown)
-  window.addEventListener('keyup', onKeyUp)
-}
-
-function onKeyDown (e) {
-  if (e.altKey && !e.shiftKey && !e.metaKey && !e.ctrlKey) {
-    if (config.getPreference('use_alt_drag') && !remote.getCurrentWindow().isFullScreen()) {
-      overlay.classList.add('active')
-    }
-  } else if (e.shiftKey || e.metaKey || e.ctrlKey) {
-    overlay.classList.remove('active')
-  }
-}
-
-function onKeyUp (e) {
-  if (!e) var e = window.event
-  if (e.keyCode == 18) {
-    // ALT
-    overlay.classList.remove('active')
-  }
-}
-
-module.exports = {
-  init: init
-}
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
 const {remote} = __webpack_require__(1)
 const menus = remote.require('./menus')
 const windows = remote.require('./windows')
@@ -1692,6 +1528,170 @@ function increment (e, direction) {
 
 module.exports = {
   init
+}
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const rpc = __webpack_require__(0)
+
+let el = null
+
+// utils
+let isShown = true
+let isActive = false
+let isFrozen = false
+
+let visibilityTimer = null
+
+function init() {
+  el = document.querySelector('status')
+
+  rpc.on('status:log', log)
+  rpc.on('status:important', important)
+  rpc.on('status:error', error)
+  rpc.on('status:unfreeze', unFreeze)
+  rpc.on('status:hide', hide)
+  rpc.on('status:show', show)
+  rpc.on('status:url-hover', onURLHover)
+  rpc.on('status:url-out', onURLOut)
+}
+
+function log (props) {
+  // loading events have lower priority
+  if (props.type == 'loading' && isActive) return
+
+  // stop logging stuff if an error is displayed
+  if (isFrozen) return
+
+  if (props.icon) {
+    el.innerHTML = '<icon>' + props.icon + '</icon>' + props.body
+  } else {
+    el.innerHTML = props.body
+  }
+
+  isActive = true
+
+  el.classList.remove('fade-out')
+  el.classList.add('fade-in')
+
+  clearTimeout(visibilityTimer)
+  visibilityTimer = setTimeout(fadeOut, 1200)
+}
+
+function important (props) {
+  if (props.icon) {
+    el.innerHTML = '<icon>' + props.icon + '</icon>' + props.body
+  } else {
+    el.innerHTML = props.body
+  }
+
+  isActive = true
+
+  el.classList.remove('fade-out')
+  el.classList.add('fade-in')
+
+  freeze()
+}
+
+function error (props) {
+  el.innerHTML = '<icon>' + '⭕️' + '</icon>' + props.body
+  el.classList.remove('fade-out')
+  el.classList.add('fade-in')
+
+  isActive = true
+
+  clearTimeout(visibilityTimer)
+  visibilityTimer = setTimeout(fadeOut, 5000)
+}
+
+function onURLHover (url) {
+  if(url.length > 35) {
+    url = url.substring(0, 35) + '...'
+  }
+  console.log(url)
+  el.innerHTML = url
+  isActive = true
+  el.classList.remove('fade-out')
+  el.classList.add('fade-in')
+  clearTimeout(visibilityTimer)
+}
+
+function onURLOut () {
+  visibilityTimer = setTimeout(fadeOut, 100)
+}
+
+function freeze () {
+  clearTimeout(visibilityTimer)
+  isFrozen = true
+}
+
+function unFreeze () {
+  if(isFrozen) {
+    visibilityTimer = setTimeout(fadeOut, 1200)
+    isFrozen = false
+  }
+}
+
+function fadeOut () {
+  el.classList.add('fade-out')
+  isActive = false
+}
+
+function hide () {
+  el.innerHTML = ''
+  isShown = false
+  el.classList.add('hide')
+  freeze()
+}
+
+function show () {
+  isShown = true
+  el.classList.remove('hide')
+  unFreeze()
+}
+
+module.exports = {
+  init: init
+}
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const {remote, ipcRenderer} = __webpack_require__(1)
+const config = remote.require('./config')
+
+let overlay = null
+let isDragging = false
+
+function init() {
+  overlay = document.querySelector('#dragOverlay')
+  window.addEventListener('keydown', onKeyDown)
+  window.addEventListener('keyup', onKeyUp)
+}
+
+function onKeyDown (e) {
+  if (e.altKey && !e.shiftKey && !e.metaKey && !e.ctrlKey) {
+    if (config.getPreference('use_alt_drag') && !remote.getCurrentWindow().isFullScreen()) {
+      overlay.classList.add('active')
+    }
+  } else if (e.shiftKey || e.metaKey || e.ctrlKey) {
+    overlay.classList.remove('active')
+  }
+}
+
+function onKeyUp (e) {
+  if (!e) var e = window.event
+  if (e.keyCode == 18) {
+    // ALT
+    overlay.classList.remove('active')
+  }
+}
+
+module.exports = {
+  init: init
 }
 
 /***/ })

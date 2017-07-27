@@ -7,6 +7,7 @@ const {app} = require('electron')
 // Oryoki
 const config = require('./config')
 const updater = require('./updater')
+const fileHandler = require('./fileHandler')
 const menus = require('./menus')
 const about = require('./about')
 const notify = require('./notify')
@@ -46,14 +47,10 @@ app.on('ready', function () {
 
   config.init()
   updater.init()
+  fileHandler.init()
   about.init()
   menus.init()
   notify.init()
   camera.init()
-
   windows.init()
-
-  // Camera = new Camera()
-  // Oryoki = new Oryoki()
-  // Updater = new Updater()
 })

@@ -1,3 +1,4 @@
+const fileHandler = require('./../../fileHandler')
 const windows = require('./../../windows')
 
 module.exports = function () {
@@ -6,7 +7,7 @@ module.exports = function () {
       label: 'Open...',
       accelerator: 'CmdOrCtrl+O',
       click: function () {
-        // if (Oryoki) Oryoki.openFile()
+        fileHandler.openFile()
       }
     },
     {
