@@ -211,6 +211,11 @@ function attachEvents () {
   rpc.on('view:zoom-out', zoomOut)
   rpc.on('view:reset-zoom', resetZoom)
   rpc.on('view:filter', toggleFilter)
+  rpc.on('view:toggle-devtools', () => {
+    console.log(webview)
+    if(webview.isDevToolsOpened()) webview.closeDevTools()
+    else webview.openDevTools()
+  })
   rpc.on('camera:request-save-screenshot', () => {
     rpc.emit('camera:save-screenshot', [webview.getURL(), webview.getTitle()])
   })
@@ -1067,7 +1072,8 @@ function openMenu () {
         label: 'Copy Screenshot',
         accelerator: 'Cmd+Shift+C',
         click: function () {
-          rpc.emit('copy-screenshot')
+          unselectTitle()
+          remote.require('./camera').copyScreenshot()
         }
       }
     )

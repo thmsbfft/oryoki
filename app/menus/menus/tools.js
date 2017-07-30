@@ -6,6 +6,9 @@ module.exports = function () {
   let win = windows.getFocused()
   const recorderStatus = recorder.getStatus()
 
+  let isFirstLoad = true
+  if(win !== null) isFirstLoad = win.isFirstLoad
+
   const submenu = [
     {
       label: 'Save Screenshot',
@@ -40,6 +43,17 @@ module.exports = function () {
       accelerator: 'CmdOrCtrl+Alt+Shift+P',
       click () {
         recorder.stopRecording()
+      }
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Toggle Devtools',
+      enabled: !isFirstLoad,
+      accelerator: 'CmdOrCtrl+Alt+I',
+      click (i, win) {
+        win.rpc.emit('view:toggle-devtools')
       }
     }
   ]

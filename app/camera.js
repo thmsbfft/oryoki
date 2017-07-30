@@ -90,6 +90,8 @@ function saveScreenshot (data) {
 }
 
 function copyScreenshot (win) {
+  if(!win) win = BrowserWindow.getFocusedWindow()
+
   win.rpc.emit('status:hide')
 
   setTimeout( () => {
