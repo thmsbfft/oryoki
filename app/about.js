@@ -1,5 +1,6 @@
 const path = require('path')
 const {BrowserWindow, ipcMain, app} = require('electron')
+const createRPC = require('./rpc')
 
 let win
 
@@ -15,7 +16,13 @@ function init () {
     resizable: false,
     acceptFirstMouse: true
   })
+
+  let rpc = createRPC(win)
+  win.rpc = rpc
+  
   win.loadURL('file://' + path.join(__dirname, 'about.html'))
+
+  rpc.on('about:hide', hide)
 
   win.on('close', function (e) {
     e.preventDefault()

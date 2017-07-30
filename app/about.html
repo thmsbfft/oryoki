@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Ōryōki</title>
+    <script src="./dist/about.js"></script>
   </head>
   <body class="about">
 
@@ -19,41 +20,6 @@
       <p class="author">@thmsbfft, 2016</p>
 
     </main>
-
-    <script>
-
-    'use strict';
-    var ipcRenderer = require('electron').ipcRenderer;
-    var app = require('electron').remote.app;
-
-    // Styles
-    require('./sass/bundle.scss')
-
-    var handleEl = document.getElementsByTagName('handle')[0];
-    var closeEl = handleEl.querySelectorAll('.button.close')[0];
-
-    closeEl.addEventListener('click', function() {
-      ipcRenderer.send('hide-about');
-    });
-
-    ipcRenderer.on('show-about', function() {
-      console.log('> show');
-    });
-
-    var versionEl = document.querySelectorAll('.version')[0];
-    versionEl.innerHTML = 'Version ' + app.getVersion();
-
-    var notesLinkEl = document.querySelectorAll('.notes a')[0];
-    notesLinkEl.setAttribute('href', 'https://github.com/thmsbfft/oryoki/releases/tag/' + app.getVersion());
-
-    notesLinkEl.addEventListener('click', function(e) {
-      console.log(e.target.getAttribute('href'));
-      ipcRenderer.send('newWindow', [e.target.getAttribute('href')]);
-      ipcRenderer.send('hide-about');
-      e.preventDefault();
-    });
-
-    </script>
 
   </body> 
 </html>

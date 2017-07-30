@@ -74,7 +74,7 @@ function create (url, target) {
   win.isFirstLoad = true
   win.hasTitleBar = config.getPreference('show_title_bar')
 
-  win.loadURL('file://' + __dirname + '/window.html' + '#' + win.id)
+  win.loadURL('file://' + __dirname + '/window.html')
 
   win.webContents.on('destroyed', () => {
     console.log('[window] webContents destroyed')
