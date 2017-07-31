@@ -164,7 +164,19 @@ handle {
 
 body.light {
 	handle {
-		background: hsla(0, 0%, 95%, 1);
+		background: #f7f7f7;
+
+		&::after {
+			content: ' ';
+			width: 100%;
+			height: 1px;
+			background: rgba(33, 33, 33, 0.15);
+			display: inline-block;
+			position: absolute;
+			top: 24px;
+			left: 0;
+			z-index: 999;
+		}
 
 		&.stroke::after {
 			background: rgba(33, 33, 33, 0.15);

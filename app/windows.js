@@ -115,7 +115,7 @@ function create (url, target) {
 
 function broadcast (data) {
   for (let win of windows) {
-    win.webContents.send(data)
+    win.rpc.emit(data)
   }
 }
 

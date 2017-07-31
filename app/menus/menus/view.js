@@ -105,6 +105,17 @@ module.exports = function () {
         type: 'separator'
       },
       {
+        label: 'Night Mode',
+        type: 'checkbox',
+        checked: true,
+        click () {
+          windows.broadcast('theme:toggle')
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
         label: 'Invert',
         accelerator: 'CmdOrCtrl+I',
         enabled: !isFirstLoad,

@@ -100,7 +100,7 @@ function copyScreenshot (win) {
       win.rpc.emit('status:show')
       win.rpc.emit('status:unfreeze')
       win.rpc.emit('status:log', {
-        body: 'Screenschot copied to clipboard'
+        body: 'Screenshot copied to clipboard'
       })
     })
   }, 200)
