@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -144,216 +144,10 @@ module.exports = require("electron");
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const {remote, ipcRenderer} = __webpack_require__(1)
-const menus = remote.require('./menus')
-const config = remote.require('./config')
-const rpc = __webpack_require__(0)
-
-let el = null
-let webview = null
-let frame = null
-
-// utils
-let isFirstLoad = true
-let zoomIndex = 6
-const zoomIncrements = [
-  25 / 100,
-  33 / 100,
-  50 / 100,
-  67 / 100,
-  75 / 100,
-  90 / 100,
-  100 / 100,
-  110 / 100,
-  125 / 100,
-  150 / 100,
-  175 / 100,
-  200 / 100
-]
-
-function init() {
-  el = document.querySelector('#view')
-  frame = document.querySelector('#frame')
-
-  webview = el.appendChild(document.createElement('webview'))
-  webview.className = 'webview'
-
-  var webPreferences = 'experimentalFeatures=yes, experimentalCanvasFeatures=yes'
-  webview.setAttribute('webPreferences', webPreferences)
-
-  console.log('[view] ✔')
-  attachEvents()
-}
-
-function attachEvents () {
-  // webview events
-  webview.addEventListener('load-commit', onLoadCommit)
-  webview.addEventListener('page-title-updated', (e) => {
-    rpc.emit('view:title-updated', e.title)
-  })
-  webview.addEventListener('update-target-url', (e) => {
-    if(e.url !== '') rpc.emit('status:url-hover', e.url)
-    if(e.url == '') rpc.emit('status:url-out')
-  })
-  // webview.addEventListener('did-frame-finish-load', onDidFrameFinishLoad)
-  // webview.addEventListener('did-finish-load', onDidFinishLoad)
-  // webview.addEventListener('did-fail-load', onDidFailLoad)
-  // webview.addEventListener('did-get-response-details', onDidGetResponseDetails)
-  // webview.addEventListener('dom-ready', onDOMReady)
-
-  // rpc events
-  rpc.on('view:load', load)
-  rpc.on('view:reload', reload)
-  rpc.on('view:hard-reload', reloadIgnoringCache)
-  rpc.on('view:navigate-back', navigateBack)
-  rpc.on('view:navigate-forward', navigateForward)
-  rpc.on('view:zoom-in', zoomIn)
-  rpc.on('view:zoom-out', zoomOut)
-  rpc.on('view:reset-zoom', resetZoom)
-  rpc.on('view:filter', toggleFilter)
-  rpc.on('view:toggle-devtools', () => {
-    console.log(webview)
-    if(webview.isDevToolsOpened()) webview.closeDevTools()
-    else webview.openDevTools()
-  })
-  rpc.on('camera:request-save-screenshot', () => {
-    rpc.emit('camera:save-screenshot', [webview.getURL(), webview.getTitle()])
-  })
-  rpc.on('recorder:start', () => {
-    el.classList.add('recording')
-  })
-  rpc.on('recorder:end', () => {
-    el.classList.remove('recording')
-  })
-
-  window.addEventListener('resize', resize)
-}
-
-function load (url) {
-  rpc.emit('status:log', {
-    'body': '•••',
-    'type': 'loading'
-  })
-
-  rpc.emit('omnibox:hide')
-
-  webview.classList.add('show')
-  webview.setAttribute('src', url)
-}
-
-function resize () {
-  frame.style.width = window.innerWidth + 'px'
-  frame.style.height = (window.innerHeight - document.querySelector('handle').offsetHeight) + 'px'
-}
-
-function onLoadCommit (e) {
-  if (isFirstLoad) {
-    isFirstLoad = false
-    rpc.emit('view:first-load')
-    menus.refresh()
-  }
-  rpc.emit('status:log', {
-    'body': '•••',
-    'type': 'loading'
-  })
-  console.log('[view]', 'load-commit', e)
-}
-
-function reload () {
-  webview.reload()
-}
-
-function reloadIgnoringCache () {
-  webview.reloadIgnoringCache()
-}
-
-function navigateBack () {
-  if(webview.canGoBack()) webview.goBack()
-}
-
-function navigateForward () {
-  if(webview.canGoForward()) webview.goForward()
-}
-
-function zoomIn () {
-  zoomIndex++
-  if(zoomIndex >= zoomIncrements.length) zoomIndex = zoomIncrements.length - 1
-  webview.setZoomFactor(zoomIncrements[zoomIndex])
-  rpc.emit('status:log', {
-    body: Math.round(zoomIncrements[zoomIndex] * 100) + '%'
-  })
-}
-
-function zoomOut () {
-  zoomIndex--
-  if(zoomIndex < 0) zoomIndex = 0
-  webview.setZoomFactor(zoomIncrements[zoomIndex])
-  rpc.emit('status:log', {
-    body: Math.round(zoomIncrements[zoomIndex] * 100) + '%'
-  })
-}
-
-function resetZoom () {
-  zoomIndex = 6
-  webview.setZoomFactor(zoomIncrements[zoomIndex])
-  rpc.emit('status:log', {
-    body: Math.round(zoomIncrements[zoomIndex] * 100) + '%'
-  })
-}
-
-function toggleFilter (filter) {
-  webview.classList.toggle(filter)
-
-  rpc.emit('status:log', {
-    body: filter.charAt(0).toUpperCase() + filter.substr(1).toLowerCase()
-  })
-
-  // if (filter == 'invert') {
-  //   // invert handle color them as well
-  //   rpc.emit('handle:toggle-light-theme')
-  // }
-}
-
-module.exports = {
-  init: init,
-  load: load
-}
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// styles
-__webpack_require__(4)
-
-// oryoki
-const rpc = __webpack_require__(0)
-const handle = __webpack_require__(9)
-const omnibox = __webpack_require__(10)
-const windowhelper = __webpack_require__(12)
-const view = __webpack_require__(2)
-const status = __webpack_require__(13)
-const dragoverlay = __webpack_require__(14)
-
-rpc.on('ready', function (e, uid) {
-  console.log('[rpc] ✔', rpc.id)
-  status.init()
-  handle.init()
-  omnibox.init()
-  windowhelper.init()
-  view.init()
-  dragoverlay.init()
-})
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(5);
+var content = __webpack_require__(3);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -361,7 +155,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(7)(content, options);
+var update = __webpack_require__(5)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -378,10 +172,10 @@ if(false) {
 }
 
 /***/ }),
-/* 5 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(6)(undefined);
+exports = module.exports = __webpack_require__(4)(undefined);
 // imports
 
 
@@ -392,7 +186,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/* http://meyerweb.com/eric/tools/
 
 
 /***/ }),
-/* 6 */
+/* 4 */
 /***/ (function(module, exports) {
 
 /*
@@ -474,7 +268,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 7 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -520,7 +314,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(8);
+var	fixUrls = __webpack_require__(6);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -833,7 +627,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 8 */
+/* 6 */
 /***/ (function(module, exports) {
 
 
@@ -925,6 +719,213 @@ module.exports = function (css) {
 	// send back the fixed css
 	return fixedCss;
 };
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const {remote, ipcRenderer} = __webpack_require__(1)
+const menus = remote.require('./menus')
+const config = remote.require('./config')
+const rpc = __webpack_require__(0)
+
+let el = null
+let webview = null
+let frame = null
+
+// utils
+let isFirstLoad = true
+let zoomIndex = 6
+const zoomIncrements = [
+  25 / 100,
+  33 / 100,
+  50 / 100,
+  67 / 100,
+  75 / 100,
+  90 / 100,
+  100 / 100,
+  110 / 100,
+  125 / 100,
+  150 / 100,
+  175 / 100,
+  200 / 100
+]
+
+function init() {
+  el = document.querySelector('#view')
+  frame = document.querySelector('#frame')
+
+  webview = el.appendChild(document.createElement('webview'))
+  webview.className = 'webview'
+
+  var webPreferences = 'experimentalFeatures=yes, experimentalCanvasFeatures=yes'
+  webview.setAttribute('webPreferences', webPreferences)
+
+  console.log('[view] ✔')
+  attachEvents()
+}
+
+function attachEvents () {
+  // webview events
+  webview.addEventListener('contextmenu', __webpack_require__(12).open)
+  webview.addEventListener('load-commit', onLoadCommit)
+  webview.addEventListener('page-title-updated', (e) => {
+    rpc.emit('view:title-updated', e.title)
+  })
+  webview.addEventListener('update-target-url', (e) => {
+    if(e.url !== '') rpc.emit('status:url-hover', e.url)
+    if(e.url == '') rpc.emit('status:url-out')
+  })
+  // webview.addEventListener('did-frame-finish-load', onDidFrameFinishLoad)
+  // webview.addEventListener('did-finish-load', onDidFinishLoad)
+  // webview.addEventListener('did-fail-load', onDidFailLoad)
+  // webview.addEventListener('did-get-response-details', onDidGetResponseDetails)
+  // webview.addEventListener('dom-ready', onDOMReady)
+
+  // rpc events
+  rpc.on('view:load', load)
+  rpc.on('view:reload', reload)
+  rpc.on('view:hard-reload', reloadIgnoringCache)
+  rpc.on('view:navigate-back', navigateBack)
+  rpc.on('view:navigate-forward', navigateForward)
+  rpc.on('view:zoom-in', zoomIn)
+  rpc.on('view:zoom-out', zoomOut)
+  rpc.on('view:reset-zoom', resetZoom)
+  rpc.on('view:filter', toggleFilter)
+  rpc.on('view:toggle-devtools', () => {
+    console.log(webview)
+    if(webview.isDevToolsOpened()) webview.closeDevTools()
+    else webview.openDevTools()
+  })
+  rpc.on('camera:request-save-screenshot', () => {
+    rpc.emit('camera:save-screenshot', [webview.getURL(), webview.getTitle()])
+  })
+  rpc.on('recorder:start', () => {
+    el.classList.add('recording')
+  })
+  rpc.on('recorder:end', () => {
+    el.classList.remove('recording')
+  })
+
+  window.addEventListener('resize', resize)
+}
+
+function load (url) {
+  rpc.emit('status:log', {
+    'body': '•••',
+    'type': 'loading'
+  })
+
+  rpc.emit('omnibox:hide')
+
+  webview.classList.add('show')
+  webview.setAttribute('src', url)
+}
+
+function resize () {
+  frame.style.width = window.innerWidth + 'px'
+  frame.style.height = (window.innerHeight - document.querySelector('handle').offsetHeight) + 'px'
+}
+
+function onLoadCommit (e) {
+  if (isFirstLoad) {
+    isFirstLoad = false
+    rpc.emit('view:first-load')
+    menus.refresh()
+  }
+  rpc.emit('status:log', {
+    'body': '•••',
+    'type': 'loading'
+  })
+  console.log('[view]', 'load-commit', e)
+}
+
+function reload () {
+  webview.reload()
+}
+
+function reloadIgnoringCache () {
+  webview.reloadIgnoringCache()
+}
+
+function navigateBack () {
+  if(webview.canGoBack()) webview.goBack()
+}
+
+function navigateForward () {
+  if(webview.canGoForward()) webview.goForward()
+}
+
+function zoomIn () {
+  zoomIndex++
+  if(zoomIndex >= zoomIncrements.length) zoomIndex = zoomIncrements.length - 1
+  webview.setZoomFactor(zoomIncrements[zoomIndex])
+  rpc.emit('status:log', {
+    body: Math.round(zoomIncrements[zoomIndex] * 100) + '%'
+  })
+}
+
+function zoomOut () {
+  zoomIndex--
+  if(zoomIndex < 0) zoomIndex = 0
+  webview.setZoomFactor(zoomIncrements[zoomIndex])
+  rpc.emit('status:log', {
+    body: Math.round(zoomIncrements[zoomIndex] * 100) + '%'
+  })
+}
+
+function resetZoom () {
+  zoomIndex = 6
+  webview.setZoomFactor(zoomIncrements[zoomIndex])
+  rpc.emit('status:log', {
+    body: Math.round(zoomIncrements[zoomIndex] * 100) + '%'
+  })
+}
+
+function toggleFilter (filter) {
+  webview.classList.toggle(filter)
+
+  rpc.emit('status:log', {
+    body: filter.charAt(0).toUpperCase() + filter.substr(1).toLowerCase()
+  })
+
+  // if (filter == 'invert') {
+  //   // invert handle color them as well
+  //   rpc.emit('handle:toggle-light-theme')
+  // }
+}
+
+module.exports = {
+  init: init,
+  load: load
+}
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// styles
+__webpack_require__(2)
+
+// oryoki
+const rpc = __webpack_require__(0)
+const handle = __webpack_require__(9)
+const omnibox = __webpack_require__(10)
+const windowhelper = __webpack_require__(13)
+const view = __webpack_require__(7)
+const status = __webpack_require__(14)
+const dragoverlay = __webpack_require__(15)
+
+rpc.on('ready', function (e, uid) {
+  console.log('[rpc] ✔', rpc.id)
+  status.init()
+  handle.init()
+  omnibox.init()
+  windowhelper.init()
+  view.init()
+  dragoverlay.init()
+})
 
 
 /***/ }),
@@ -1112,7 +1113,7 @@ const fileHandler = remote.require('./fileHandler')
 const rpc = __webpack_require__(0)
 
 const hints = __webpack_require__(11)
-const view = __webpack_require__(2)
+const view = __webpack_require__(7)
 
 // elements
 let el
@@ -1417,6 +1418,67 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 const {remote} = __webpack_require__(1)
+const clipboard = remote.clipboard
+const Menu = remote.Menu
+const MenuItem = remote.MenuItem
+
+function open (e) {
+  e.preventDefault()
+  const webview = e.target
+
+  const template = [
+    {
+      label: 'Back',
+      enabled: webview.canGoBack(),
+      click () {
+        webview.goBack()
+      }
+    },
+    {
+      label: 'Forward',
+      enabled: webview.canGoForward(),
+      click () {
+        webview.goForward()
+      }
+    },
+    {
+      label: 'Reload',
+      click () {
+        webview.reload()
+      }
+    },
+    {
+      type: 'separator'
+    },
+    {
+      role: 'copy'
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Inspect Element',
+      click () {
+        webview.inspectElement(e.x, e.y)
+      }
+    }
+  ]
+
+  let menu = Menu.buildFromTemplate(template)
+  menu.popup(remote.getCurrentWindow(), {
+    async: true
+  })
+}
+
+module.exports = {
+  open: open
+}
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const {remote} = __webpack_require__(1)
 const menus = remote.require('./menus')
 const windows = remote.require('./windows')
 
@@ -1571,7 +1633,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const rpc = __webpack_require__(0)
@@ -1697,7 +1759,7 @@ module.exports = {
 }
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const {remote, ipcRenderer} = __webpack_require__(1)
