@@ -154,8 +154,17 @@ handle {
 		}
 	}
 
-	&.light {
-		background: rgba(247, 247, 247, 1);
+	@media (-webkit-min-device-pixel-ratio: 2) { 
+	    .button {
+
+	    }
+	}
+
+}
+
+body.light {
+	handle {
+		background: hsla(0, 0%, 95%, 1);
 
 		&.stroke::after {
 			background: rgba(33, 33, 33, 0.15);
@@ -163,6 +172,14 @@ handle {
 
 		.title {
 			color: hsla(0,0%,10%,1);
+			&.selected {
+				color: white;
+				// background: rgba(0, 0, 0, 0.10);
+				background: rgba(52,130,220,1);
+				&::after {
+					opacity: 1;
+				}
+			}
 		}
 
 		.minimize {
@@ -178,13 +195,5 @@ handle {
 				background: rgba(0, 0, 0, 0.15);
 			}
 		}
-
 	}
-
-	@media (-webkit-min-device-pixel-ratio: 2) { 
-	    .button {
-
-	    }
-	}
-
 }

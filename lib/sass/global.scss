@@ -6,6 +6,10 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
+body.light {
+	background: hsla(0, 0%, 92%, 1);
+}
+
 cursor {
 	z-index: 99;
 	position: fixed;
