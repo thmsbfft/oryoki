@@ -11,6 +11,10 @@ module.exports = function () {
   let hasTitleBar = config.getPreference('show_title_bar')
   if(win !== null) hasTitleBar = win.hasTitleBar
 
+  let darkTheme = true
+  if(win !== null) darkTheme = win.darkTheme
+  console.log('Menus', darkTheme)
+
   const submenu = [
       {
         label: 'Title Bar',
@@ -107,7 +111,7 @@ module.exports = function () {
       {
         label: 'Night Mode',
         type: 'checkbox',
-        checked: true,
+        checked: darkTheme,
         click () {
           win.rpc.emit('theme:toggle')
         }

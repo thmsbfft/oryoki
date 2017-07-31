@@ -72,13 +72,10 @@ function create (url, target) {
 
   // set a couple properties to be used in renderer process and menus
   win.isFirstLoad = true
+  win.darkTheme = true
   win.hasTitleBar = config.getPreference('show_title_bar')
 
   win.loadURL('file://' + __dirname + '/window.html')
-
-  win.webContents.on('destroyed', () => {
-    console.log('[window] webContents destroyed')
-  })
 
   win.on('focus', (e) => {
     focused = e.sender
@@ -95,6 +92,11 @@ function create (url, target) {
       focused = null
       menus.refresh()
     }
+  })
+
+  rpc.on('theme:updated', (e) => {
+    win.darkTheme = e
+    menus.refresh()
   })
 
   rpc.on('view:first-load', (e) => {
