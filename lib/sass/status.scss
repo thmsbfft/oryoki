@@ -11,7 +11,7 @@
 	line-height: 14px;
 	text-rendering: optimizeLegibility;
 	color: rgba(255, 255, 255, 0.8);
-	background: rgba(40,40,40,0.7);
+	background: rgba(20,20,20,0.7);
 	pointer-events: none;
 	border-bottom-left-radius: 6px;
 	opacity: 0;
@@ -41,11 +41,6 @@
 
 	i {
 		font-style: italic;
-	}
-
-	&.light {
-		background: rgba(40,40,40,0.1);
-		color: rgba(0, 0, 0, 0.8);
 	}
 
 	@media (-webkit-min-device-pixel-ratio: 2) { 

@@ -175,7 +175,7 @@ body.light {
 			position: absolute;
 			top: 24px;
 			left: 0;
-			z-index: 999;
+			z-index: 99;
 		}
 
 		&.stroke::after {
@@ -186,6 +186,7 @@ body.light {
 			color: hsla(0,0%,10%,1);
 			&.selected {
 				color: white;
+				z-index: 999;
 				// background: rgba(0, 0, 0, 0.10);
 				background: rgba(52,130,220,1);
 				&::after {

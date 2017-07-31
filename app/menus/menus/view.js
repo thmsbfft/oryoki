@@ -109,7 +109,7 @@ module.exports = function () {
         type: 'checkbox',
         checked: true,
         click () {
-          windows.broadcast('theme:toggle')
+          win.rpc.emit('theme:toggle')
         }
       },
       {

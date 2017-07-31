@@ -5,7 +5,8 @@ const webpack = require('webpack')
 module.exports = {
   entry: {
     bundle: './lib/index.js',
-    about: './lib/pages/about.js'
+    about: './lib/pages/about.js',
+    preload: './lib/utils/webview-preload.js'
   },
   output: {
     path: path.join(__dirname, 'app', 'dist'),
