@@ -7,4 +7,4 @@ stdout.log
 src/js/main/_main.js
 src/js/renderer/_renderer.js
 src/css/
-app/dist/bundle.js
+/app/dist/*.js
