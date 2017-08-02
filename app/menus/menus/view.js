@@ -13,7 +13,6 @@ module.exports = function () {
 
   let darkTheme = true
   if(win !== null) darkTheme = win.darkTheme
-  console.log('Menus', darkTheme)
 
   const submenu = [
       {
