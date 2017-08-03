@@ -15,14 +15,10 @@
     "test": "standard --fix"
   },
   "dependencies": {
-    "electron-localshortcut": "^0.6.0",
-    "fluent-ffmpeg": "^2.0.1",
     "gm": "^1.22.0",
-    "openurl": "^1.1.1",
     "png-chunk-text": "^1.0.0",
     "png-chunks-encode": "^1.0.0",
     "png-chunks-extract": "^1.0.0",
-    "preprocess": "^3.0.2",
     "request": "^2.75.0",
     "valid-url": "^1.0.9"
   },
