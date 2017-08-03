@@ -25,7 +25,7 @@ module.exports = function () {
       enabled: false
     },
     'no-update': {
-      label: 'Check for Update',
+      label: 'Check for Updates...',
       click: function () {
         updater.checkForUpdate(true)
       },
