@@ -9,6 +9,7 @@ const {pad, timestamp} = require('./utils')
 const {app, Tray, Menu} = require('electron')
 const config = require('./config')
 const menus = require('./menus')
+const notify = require('./notify')
 
 let status = 'idle'
 let tray = null
@@ -147,10 +148,16 @@ function stopRecording () {
     console.log('[recorder] Stream ended')
     status = 'idle'
     ffmpeg = null
-    win.rpc.emit('status:log', {
-      'body': 'Finished recording',
-      'icon': '✅'
-    })
+    try {
+      win.rpc.emit('status:log', {
+        'body': 'Finished recording',
+        'icon': '✅'
+      })
+    } catch (err) {
+      notify.send('Recording saved successfuly.', {
+        body: '→ ' + app.getPath('downloads')
+      })
+    }
     menus.refresh()
   })
 
