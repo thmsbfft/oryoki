@@ -82,6 +82,9 @@ handle {
 			margin: 0;
 			text-align: left;
 			padding-left: 4px;
+			&::after {
+				display: none;
+			}
 			// position: absolute;
 			// left: 60px;
 		}
