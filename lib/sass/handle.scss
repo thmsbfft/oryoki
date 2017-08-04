@@ -4,8 +4,7 @@ handle {
 	height: 24px;
 	width: 100%;
 	text-align: center;
-	// transition: background 0.2s;
-	display: block;
+	display: flex;
 
 	&.stroke::after {
 		content: ' ';
@@ -20,23 +19,27 @@ handle {
 		transition: background 0.1s;
 	}
 
-	// &.slow {
-	// 	transition: background 0.8s;
-	// }
+	.buttons {
+		flex: 0 0 0;
+		display: flex;
+		margin-left: 8px;
+		z-index: 99;
+	}
 
-	// &::after {
-	// 	content: ' ';
-	// 	width: 100%;
-	// 	height: 1px;
-	// 	backdrop-filter: invert(100%) grayscale(100%) brightness(30%);
-	// 	display: inline-block;
-	// 	position: absolute;
-	// 	top: 24px;
-	// 	left: 0;
-	// 	z-index: 999;
-	// }
+	.titlewrapper {
+		position: absolute;
+		width: 100%;
+		&.align-left {
+			position: relative;
+			flex: 1 0 0;
+			width: auto;
+			text-align: left;
+		}
+	}
 
 	.title {
+		display: block;
+		margin: auto;
 		padding: 0 8px;
 		padding-top: 4px;
 		padding-bottom: 5px;
@@ -52,6 +55,7 @@ handle {
 		background: transparent;
 		border-radius: 5px;
 		transition: background 0.1s;
+		white-space: nowrap;
 		&.selected {
 			background: rgba(255, 255, 255, 0.15);
 			&::after {
@@ -75,21 +79,27 @@ handle {
 			}
 		}
 		&.align-left {
+			margin: 0;
 			text-align: left;
-			position: absolute;
-			left: 60px;
+			padding-left: 4px;
+			// position: absolute;
+			// left: 60px;
 		}
 	}
 	.button {
-		position: absolute;
 		-webkit-app-region: no-drag;
 		user-select: none;
-		top: 6px;
+		margin-top: 6px;
+		margin-right: 8px;
 		border-radius: 100%;
 		height: 12px;
 		width: 12px;
 		transition: background-color 0.1s;
 		-webkit-box-sizing: border-box;
+
+		&:last-child {
+			margin-right: 4px;
+		}
 
 		&::after {
 			content: '';
@@ -110,19 +120,16 @@ handle {
 		}
 	}
 	.close {
-		left: 9px;
 		background: #fc5b57;
 		&:active {
 			background: #CC443F;
 		}
 	}
 	.minimize {
-		left: 29px;
 		background: rgba(255, 255, 255, 0.2);
 		transition: background 0.2s;
 	}
 	.fullscreen {
-		left: 49px;
 		background: rgba(255, 255, 255, 0.2);
 		transition: background 0.2s;
 	}
