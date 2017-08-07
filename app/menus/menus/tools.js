@@ -9,6 +9,12 @@ module.exports = function () {
   let isFirstLoad = true
   if(win !== null) isFirstLoad = win.isFirstLoad
 
+  let hasConsole = false
+  if(win !== null) {
+    hasConsole = win.hasConsole
+    console.log(win.hasConsole)
+  }
+
   const submenu = [
     {
       label: 'Save Screenshot',
@@ -47,6 +53,16 @@ module.exports = function () {
     },
     {
       type: 'separator'
+    },
+    {
+      label: 'Mini Console',
+      accelerator: 'CmdOrCtrl+Alt+C',
+      type: 'checkbox',
+      checked: hasConsole,
+      enabled: !isFirstLoad,
+      click (i, win) {
+        win.rpc.emit('console:toggle')
+      }
     },
     {
       label: 'Toggle Devtools',

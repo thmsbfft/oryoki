@@ -74,6 +74,7 @@ function create (url, target) {
   win.isFirstLoad = true
   win.darkTheme = true
   win.hasTitleBar = config.getPreference('show_title_bar')
+  win.hasConsole = false
 
   win.loadURL('file://' + __dirname + '/window.html')
 
