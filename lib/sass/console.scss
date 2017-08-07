@@ -1,5 +1,14 @@
 console {
 
+	drag {
+		height: 6px;
+		top: -3px;
+		position: absolute;
+		background-color: transparent;
+		width: 100%;
+		cursor: ns-resize;
+	}
+
 	position: fixed;
 	bottom: 0;
 	// z-index: 99;
