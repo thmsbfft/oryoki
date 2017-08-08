@@ -18,7 +18,7 @@ module.exports = function () {
   const submenu = [
     {
       label: 'Save Screenshot',
-      accelerator: 'CmdOrCtrl+`',
+      accelerator: 'CmdOrCtrl+~',
       enabled: !(win == null),
       click (i, win) {
         camera.requestSaveScreenshot(win)
