@@ -48,7 +48,7 @@ handle {
 		line-height: 15px;
 		letter-spacing: -0.5px;
 		display: inline-block;
-		-webkit-app-region: no-drag;
+		// -webkit-app-region: no-drag;
 		-webkit-user-select: none;
 		user-select: none;
 		background: transparent;
@@ -84,8 +84,6 @@ handle {
 			&::after {
 				display: none;
 			}
-			// position: absolute;
-			// left: 60px;
 		}
 	}
 	.button {
@@ -138,7 +136,7 @@ handle {
 	&.hide {
 		display: none;
 	}
-	&:hover, &.light:hover {
+	&:hover {
 		.minimize {
 			background: #ffbb3c;
 			&:active {
@@ -210,6 +208,21 @@ body.light {
 
 		.fullscreen {
 			background: rgba(0, 0, 0, 0.15);
+		}
+
+		&:hover {
+			.minimize {
+				background: #ffbb3c;
+				&:active {
+					background: #CC9631;
+				}
+			}
+			.fullscreen {
+				background: #35c849;
+				&:active {
+					background: #269435;
+				}
+			}
 		}
 
 		&.disabled {
