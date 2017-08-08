@@ -21,6 +21,7 @@ module.exports = function () {
       accelerator: 'CmdOrCtrl+~',
       enabled: !(win == null),
       click (i, win) {
+        if(win == null) win = windows.getFocused()
         camera.requestSaveScreenshot(win)
       }
     },
@@ -29,7 +30,8 @@ module.exports = function () {
       accelerator: 'CmdOrCtrl+Shift+C',
       enabled: !(win == null),
       click (i, win) {
-        camera.copyScreenshot(win)
+        if(win == null) win = windows.getFocused()
+        if(win !== null) camera.copyScreenshot(win)
       }
     },
     {
@@ -40,6 +42,7 @@ module.exports = function () {
       enabled: recorderStatus == 'idle' && !(win == null),
       accelerator: 'CmdOrCtrl+Shift+P',
       click (i, win) {
+        if(win == null) win = windows.getFocused()
         recorder.startRecording(win)
       }
     },
@@ -61,6 +64,7 @@ module.exports = function () {
       checked: hasConsole,
       enabled: !isFirstLoad,
       click (i, win) {
+        if(win == null) win = windows.getFocused()
         win.rpc.emit('console:toggle')
       }
     },
@@ -69,6 +73,7 @@ module.exports = function () {
       enabled: !isFirstLoad,
       accelerator: 'CmdOrCtrl+Alt+I',
       click (i, win) {
+        if(win == null) win = windows.getFocused()
         win.rpc.emit('view:toggle-devtools')
       }
     }

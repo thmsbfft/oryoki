@@ -25,6 +25,7 @@ module.exports = function () {
         checked: isAlwaysOnTop,
         enabled: !(win == null),
         click: function (i, win) {
+          if(win == null) win = windows.getFocused()
           win.setAlwaysOnTop(!win.isAlwaysOnTop())
         }
       },
@@ -37,6 +38,7 @@ module.exports = function () {
         type: 'checkbox',
         enabled: !(win == null),
         click (i, win) {
+          if(win == null) win = windows.getFocused()
           win.rpc.emit('windowhelper:toggle')
         }
       },

@@ -22,6 +22,7 @@ module.exports = function () {
         checked: hasTitleBar,
         enabled: !(win == null),
         click (i, win) {
+          if(win == null) win = windows.getFocused()
           win.rpc.emit('handle:toggle')
         }
       },
@@ -30,6 +31,7 @@ module.exports = function () {
         accelerator: 'CmdOrCtrl+L',
         enabled: !isFirstLoad,
         click: function (i, win) {
+          if(win == null) win = windows.getFocused()
           win.rpc.emit('omnibox:toggle')
         }
       },
@@ -47,6 +49,7 @@ module.exports = function () {
         accelerator: 'CmdOrCtrl+R',
         enabled: !isFirstLoad,
         click (i, win) {
+          if(win == null) win = windows.getFocused()
           win.rpc.emit('view:reload')
         }
       },
@@ -55,6 +58,7 @@ module.exports = function () {
         accelerator: 'CmdOrCtrl+Shift+R',
         enabled: !isFirstLoad,
         click (i, win) {
+          if(win == null) win = windows.getFocused()
           win.rpc.emit('view:hard-reload')
         }
       },
@@ -66,6 +70,7 @@ module.exports = function () {
         accelerator: 'CmdOrCtrl+[',
         enabled: !isFirstLoad,
         click (i, win) {
+          if(win == null) win = windows.getFocused()
           win.rpc.emit('view:navigate-back')
         }
       },
@@ -74,6 +79,7 @@ module.exports = function () {
         accelerator: 'CmdOrCtrl+]',
         enabled: !isFirstLoad,
         click (i, win) {
+          if(win == null) win = windows.getFocused()
           win.rpc.emit('view:navigate-forward')
         }
       },
@@ -85,6 +91,7 @@ module.exports = function () {
         accelerator: 'CmdOrCtrl+0',
         enabled: !isFirstLoad,
         click (i, win) {
+          if(win == null) win = windows.getFocused()
           win.rpc.emit('view:reset-zoom')
         }
       },
@@ -93,6 +100,7 @@ module.exports = function () {
         accelerator: 'CmdOrCtrl+Plus',
         enabled: !isFirstLoad,
         click (i, win) {
+          if(win == null) win = windows.getFocused()
           win.rpc.emit('view:zoom-in')
         }
       },
@@ -101,6 +109,7 @@ module.exports = function () {
         accelerator: 'CmdOrCtrl+-',
         enabled: !isFirstLoad,
         click (i, win) {
+          if(win == null) win = windows.getFocused()
           win.rpc.emit('view:zoom-out')
         }
       },
@@ -112,6 +121,7 @@ module.exports = function () {
         type: 'checkbox',
         checked: darkTheme,
         click () {
+          if(win == null) win = windows.getFocused()
           win.rpc.emit('theme:toggle')
         }
       },
@@ -124,6 +134,7 @@ module.exports = function () {
         enabled: !isFirstLoad,
         type: 'checkbox',
         click (i, win) {
+          if(win == null) win = windows.getFocused()
           win.rpc.emit('view:filter', 'invert')
         }
       },
@@ -133,6 +144,7 @@ module.exports = function () {
         enabled: !isFirstLoad,
         type: 'checkbox',
         click (i, win) {
+          if(win == null) win = windows.getFocused()
           win.rpc.emit('view:filter', 'grayscale')
         }
       },
