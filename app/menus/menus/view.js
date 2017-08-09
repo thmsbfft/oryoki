@@ -127,6 +127,7 @@ module.exports = function () {
     },
     {
       label: 'Night Mode',
+      accelerator: 'Ctrl+Cmd+N',
       type: 'checkbox',
       checked: darkTheme,
       click () {
