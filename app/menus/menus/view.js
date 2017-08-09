@@ -14,6 +14,9 @@ module.exports = function () {
   let darkTheme = true
   if (win !== null) darkTheme = win.darkTheme
 
+  let isFullScreen = false
+  if (win !== null) isFullScreen = win.isFullScreen()
+
   const submenu = [
     {
       label: 'Title Bar',
@@ -39,7 +42,13 @@ module.exports = function () {
       type: 'separator'
     },
     {
-      role: 'togglefullscreen'
+      label: 'Full Screen',
+      accelerator: 'Cmd+Ctrl+F',
+      type: 'checkbox',
+      checked: isFullScreen,
+      click (i, win) {
+        windows.toggleFullScreen()
+      }
     },
     {
       type: 'separator'

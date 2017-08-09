@@ -59,8 +59,8 @@ function create (url, target) {
     webPreferences: {
       'experimentalFeatures': true,
       'experimentalCanvasFeatures': true
-    }
-    // fullscreenable: !config.getPreference('picture_in_picture')
+    },
+    fullscreenable: !config.getPreference('picture_in_picture')
   }
 
   const win = new BrowserWindow(browserOptions)
@@ -133,6 +133,21 @@ function cycle () {
   wins[next].focus()
 }
 
+function toggleFullScreen () {
+  focused.rpc.emit('handle:hide')
+
+  // highjack native fullscreen to enable picture in picture
+  if (config.getPreference('picture_in_picture')) {
+    focused.setFullScreenable(true)
+    focused.setFullScreen(!focused.isFullScreen())
+    focused.setFullScreenable(false)
+  } else {
+    focused.setFullScreen(!focused.isFullScreen())
+  }
+
+  menus.refresh()
+}
+
 function resize (width, height) {
   width = parseInt(width)
   height = parseInt(height)
@@ -180,6 +195,7 @@ module.exports = {
   create,
   broadcast,
   cycle,
+  toggleFullScreen,
   getFocused,
   resize
 }
