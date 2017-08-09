@@ -56,7 +56,7 @@ function close () {
 }
 
 module.exports = {
-  init: init,
-  show: show,
-  hide: hide
+  init,
+  show,
+  hide
 }

@@ -185,10 +185,10 @@ function getStatus () {
 }
 
 module.exports = {
-  init: init,
-  checkForUpdate: checkForUpdate,
-  downloadUpdate: downloadUpdate,
-  quitAndInstall: quitAndInstall,
-  getStatus: getStatus,
-  getLatest: getLatest
+  init,
+  checkForUpdate,
+  downloadUpdate,
+  quitAndInstall,
+  getStatus,
+  getLatest
 }

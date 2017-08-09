@@ -180,7 +180,7 @@ function getStatus () {
 }
 
 module.exports = {
-  startRecording: startRecording,
-  stopRecording: stopRecording,
-  getStatus: getStatus
+  startRecording,
+  stopRecording,
+  getStatus
 }

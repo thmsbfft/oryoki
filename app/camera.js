@@ -107,7 +107,7 @@ function copyScreenshot (win) {
 }
 
 module.exports = {
-  init: init,
-  requestSaveScreenshot: requestSaveScreenshot,
-  copyScreenshot: copyScreenshot,
+  init,
+  requestSaveScreenshot,
+  copyScreenshot
 }

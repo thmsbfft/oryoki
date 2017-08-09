@@ -176,10 +176,10 @@ function getFocused () {
 }
 
 module.exports = {
-  init: init,
-  create: create,
-  broadcast: broadcast,
-  cycle: cycle,
-  getFocused: getFocused,
-  resize: resize
+  init,
+  create,
+  broadcast,
+  cycle,
+  getFocused,
+  resize
 }

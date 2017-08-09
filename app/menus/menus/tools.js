@@ -10,10 +10,7 @@ module.exports = function () {
   if(win !== null) isFirstLoad = win.isFirstLoad
 
   let hasConsole = false
-  if(win !== null) {
-    hasConsole = win.hasConsole
-    console.log(win.hasConsole)
-  }
+  if(win !== null) hasConsole = win.hasConsole
 
   const submenu = [
     {

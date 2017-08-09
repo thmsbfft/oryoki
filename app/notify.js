@@ -25,6 +25,6 @@ function send (title, props) {
 }
 
 module.exports = {
-  init: init,
-  send: send
+  init,
+  send
 }

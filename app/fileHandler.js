@@ -97,7 +97,7 @@ function handleFile (input, target) {
 }
 
 module.exports = {
-  init: init,
-  openFile: openFile,
-  handleFile: handleFile
+  init,
+  openFile,
+  handleFile
 }

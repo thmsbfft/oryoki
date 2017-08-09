@@ -35,7 +35,7 @@ function setCheckbox (menuLabel, subMenuLabel, value) {
 }
 
 module.exports = {
-  init: init,
-  refresh: refresh,
-  setCheckbox: setCheckbox
+  init,
+  refresh,
+  setCheckbox
 }

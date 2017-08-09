@@ -234,13 +234,13 @@ function getSearchDictionary () {
 }
 
 module.exports = {
-  init: init,
-  getPaths: getPaths,
-  getPreference: getPreference,
-  getSearchDictionary: getSearchDictionary,
-  openFile: openFile,
-  openPath: openPath,
-  reset: reset,
-  clearCaches: clearCaches,
-  clearLocalStorage: clearLocalStorage
+  init,
+  getPaths,
+  getPreference,
+  getSearchDictionary,
+  openFile,
+  openPath,
+  reset,
+  clearCaches,
+  clearLocalStorage
 }
