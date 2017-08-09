@@ -1,7 +1,5 @@
 const path = require('path')
 
-const webpack = require('webpack')
-
 module.exports = {
   entry: {
     bundle: './lib/index.js',

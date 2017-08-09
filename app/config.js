@@ -5,7 +5,7 @@ const {app, dialog, ipcMain, BrowserWindow, shell} = require('electron')
 
 const notify = require('./notify')
 const menus = require('./menus')
-const windows = require('./windows')
+// const windows = require('./windows')
 
 var paths = {}
 var preferences = null
@@ -105,11 +105,9 @@ function watch () {
     console.log('[config] Search dictionary has changed!')
     searchDictionary = getConfFile('search-dictionary.json')
     // Update accross all windows
-    try {
-      windows.broadcast('config:search-dictionary-updated')
-    } catch (e) {
-      console.log('[config] ' + e)
-    }
+    BrowserWindow.getAllWindows().forEach((win) => {
+      try { win.rpc.emit('config:search-dictionary-updated') } catch(err) {} 
+    })
 
     notify.send('Ready to go!', {
       body: 'The search dictionary was updated.',

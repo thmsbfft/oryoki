@@ -1,7 +1,0 @@
-  /Users/thmsbfft/Sites/oryoki/lib/utils/webview-preload.js:2:3: 'backgroundColor' is not defined.
-  /Users/thmsbfft/Sites/oryoki/lib/utils/webview-preload.js:3:3: 'backgroundColor' is not defined.
-  /Users/thmsbfft/Sites/oryoki/lib/utils/webview-preload.js:3:21: 'backgroundColor' is not defined.
-  /Users/thmsbfft/Sites/oryoki/lib/utils/webview-preload.js:3:47: 'backgroundColor' is not defined.
-  /Users/thmsbfft/Sites/oryoki/lib/utils/webview-preload.js:3:85: 'backgroundColor' is not defined.
-  /Users/thmsbfft/Sites/oryoki/lib/utils/webview-preload.js:6:22: 'backgroundColor' is not defined.
-  /Users/thmsbfft/Sites/oryoki/webpack.config.js:3:7: 'webpack' is assigned a value but never used.
