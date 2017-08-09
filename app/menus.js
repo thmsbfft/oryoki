@@ -1,4 +1,4 @@
-const {app, ipcMain, Menu} = require('electron')
+const {Menu} = require('electron')
 
 let template = null
 let menu = null
@@ -21,11 +21,11 @@ function refresh () {
 }
 
 function getMenuByLabel (menuLabel) {
-  return menu.items.filter(item => item.label == menuLabel)
+  return menu.items.filter(item => item.label === menuLabel)
 }
 
 function getSubMenuByLabel (menu, subMenuLabel) {
-  return menu[0].submenu.items.filter(item => item.label == subMenuLabel)
+  return menu[0].submenu.items.filter(item => item.label === subMenuLabel)
 }
 
 function setCheckbox (menuLabel, subMenuLabel, value) {

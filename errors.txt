@@ -1,0 +1,44 @@
+  /Users/thmsbfft/Sites/oryoki/lib/components/status.js:6:5: 'isShown' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/lib/components/status.js:27:18: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/components/theme.js:26:9: 'color' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/lib/components/theme.js:28:5: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/components/theme.js:37:25: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/components/theme.js:39:14: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/components/theme.js:40:14: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/components/theme.js:41:14: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/components/theme.js:45:25: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/components/theme.js:46:25: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/components/theme.js:47:25: 'colors' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/components/theme.js:51:5: 'hslColor' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/components/theme.js:53:18: 'hslColor' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/components/view.js:1:16: 'ipcRenderer' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/lib/components/view.js:9:5: 'webviewData' is assigned a value but never used.
+  /Users/thmsbfft/Sites/oryoki/lib/components/view.js:54:15: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/components/view.js:187:14: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:85:13: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:92:29: Unexpected mix of '&&' and '||'.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:92:45: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:92:50: Unexpected mix of '&&' and '||'.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:92:63: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:97:23: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:103:28: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:104:29: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:115:17: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:115:51: Unexpected mix of '&&' and '||'.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:115:67: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:115:72: Unexpected mix of '&&' and '||'.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:115:85: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:115:103: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/components/windowhelper.js:115:122: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/utils/color.js:2:3: Expected an assignment or function call and instead saw an expression.
+  /Users/thmsbfft/Sites/oryoki/lib/utils/color.js:2:11: Unexpected use of comma operator.
+  /Users/thmsbfft/Sites/oryoki/lib/utils/color.js:3:3: Split initialized 'var' declarations into multiple statements.
+  /Users/thmsbfft/Sites/oryoki/lib/utils/color.js:4:3: Split initialized 'var' declarations into multiple statements.
+  /Users/thmsbfft/Sites/oryoki/lib/utils/color.js:6:11: Expected '===' and instead saw '=='.
+  /Users/thmsbfft/Sites/oryoki/lib/utils/webview-preload.js:2:3: 'backgroundColor' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/utils/webview-preload.js:3:3: 'backgroundColor' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/utils/webview-preload.js:3:21: 'backgroundColor' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/utils/webview-preload.js:3:47: 'backgroundColor' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/utils/webview-preload.js:3:85: 'backgroundColor' is not defined.
+  /Users/thmsbfft/Sites/oryoki/lib/utils/webview-preload.js:6:22: 'backgroundColor' is not defined.
+  /Users/thmsbfft/Sites/oryoki/webpack.config.js:3:7: 'webpack' is assigned a value but never used.

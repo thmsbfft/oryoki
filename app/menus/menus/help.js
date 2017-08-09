@@ -2,7 +2,7 @@ const os = require('os')
 const {app} = require('electron')
 const windows = require('./../../windows')
 
-module.exports = function() {
+module.exports = function () {
   const submenu = [
     {
       label: 'Documentation',
@@ -18,7 +18,7 @@ module.exports = function() {
         body += 'Electron ' + process.versions.electron + '\n'
         body += process.platform + ' ' + process.arch + ' ' + os.release()
 
-        windows.create('https://github.com/thmsbfft/oryoki/issues/new?body='+encodeURIComponent(body))
+        windows.create('https://github.com/thmsbfft/oryoki/issues/new?body=' + encodeURIComponent(body))
       }
     }
   ]

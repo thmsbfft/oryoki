@@ -1,4 +1,5 @@
-const {app, BrowserWindow, ipcMain} = require('electron')
+const path = require('path')
+const {app, BrowserWindow} = require('electron')
 const menus = require('./menus')
 const config = require('./config')
 const createRPC = require('./rpc')
@@ -7,7 +8,6 @@ const windows = new Set([])
 let focused = null
 
 function init () {
-
   app.on('activate', () => {
     if (!windows.size) {
       create()
@@ -20,7 +20,7 @@ function init () {
 function create (url, target) {
   console.log('[windows] Creating new window')
 
-  if ((url && focused !== null && focused.isFirstLoad) || target == '_self') {
+  if ((url && focused !== null && focused.isFirstLoad) || target === '_self') {
     // if there is a focused window and nothing's loaded yet,
     // or target has been set (to '_self'),
     // load url here instead of creating a new window
@@ -76,7 +76,7 @@ function create (url, target) {
   win.hasTitleBar = config.getPreference('show_title_bar')
   win.hasConsole = false
 
-  win.loadURL('file://' + __dirname + '/window.html')
+  win.loadURL(path.join('file://', __dirname, '/window.html'))
 
   win.on('focus', (e) => {
     focused = e.sender
@@ -89,7 +89,7 @@ function create (url, target) {
     rpc.destroy()
     rpc = null
 
-    if (windows.size == 0) {
+    if (windows.size === 0) {
       focused = null
       menus.refresh()
     }
@@ -110,7 +110,7 @@ function create (url, target) {
 
   win.once('ready-to-show', () => {
     win.show()
-    if(url) win.rpc.emit('view:load', url)
+    if (url) win.rpc.emit('view:load', url)
   })
 
   win.webContents.openDevTools()
@@ -123,13 +123,13 @@ function broadcast (data) {
 }
 
 function cycle () {
-  wins = Array.from(windows)
+  let wins = Array.from(windows)
   var focused = null
   for (var i = 0; i < wins.length; i++) {
     if (wins[i].isFocused()) focused = i
   }
   var next = focused + 1
-  if(next > wins.length - 1) next = 0
+  if (next > wins.length - 1) next = 0
   wins[next].focus()
 }
 

@@ -3,7 +3,6 @@ const {app, dialog} = require('electron')
 const windows = require('./windows')
 
 const extract = require('png-chunks-extract')
-const encode = require('png-chunks-encode')
 const text = require('png-chunk-text')
 const validUrl = require('valid-url')
 
@@ -29,12 +28,12 @@ function openFile () {
 }
 
 function handleFile (input, target) {
-  if(input == undefined) return
+  if (input === undefined) return
   let path = input
 
   let win = windows.getFocused()
 
-  if(path.search('.png') == -1) {
+  if (path.search('.png') === -1) {
     win.rpc.emit('status:log', {
       body: 'Can\'t open file',
       icon: '⭕️'
@@ -69,9 +68,9 @@ function handleFile (input, target) {
   //   console.log('[file] Title: ' + title)
   // } else { console.log('[file] No title in PNG tEXt') }
 
-  if(!src[0]) {
+  if (!src[0]) {
     // abort!
-    if(win !== null) {
+    if (win !== null) {
       win.rpc.emit('status:log', {
         body: 'Can\'t open file',
         icon: '⭕️'
@@ -86,13 +85,12 @@ function handleFile (input, target) {
     windows.create(url, target)
   } else {
     // abort!
-    if(win !== null) {
+    if (win !== null) {
       win.rpc.emit('status:log', {
         body: 'Can\'t open file',
         icon: '⭕️'
       })
     }
-    return
   }
 }
 

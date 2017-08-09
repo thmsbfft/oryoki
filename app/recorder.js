@@ -1,11 +1,9 @@
-const fs = require('fs')
 const path = require('path')
 const spawn = require('child_process').spawn
 const stream = require('stream')
-const exec = require('child_process').exec
 const execSync = require('child_process').execSync
 
-const {pad, timestamp} = require('./utils')
+const {timestamp} = require('./utils')
 const {app, Tray, Menu} = require('electron')
 const config = require('./config')
 const menus = require('./menus')
@@ -22,7 +20,7 @@ function startRecording (window) {
   win = window // keep a reference for async operations, etc.
 
   // check frame size for mp4 recording
-  if (config.getPreference('video_recording_codec') == 'h264') {
+  if (config.getPreference('video_recording_codec') === 'h264') {
     if (win.getSize()[0] % 2 !== 0 || win.getSize()[1] % 2 !== 0) {
       win.rpc.emit('status:error', {
         'body': 'Window dimensions must be even numbers'
@@ -43,7 +41,7 @@ function startRecording (window) {
 
   win.setResizable(false)
   app.dock.setBadge('R')
-  if(config.getPreference('hide_status_while_recording')) win.rpc.emit('status:hide')
+  if (config.getPreference('hide_status_while_recording')) win.rpc.emit('status:hide')
 
   // video size
   const electronScreen = require('electron').screen
@@ -71,7 +69,7 @@ function startRecording (window) {
   ]
 
   // output format
-  switch(config.getPreference('video_recording_codec')) {
+  switch (config.getPreference('video_recording_codec')) {
     case 'h264':
       args.push(
         '-vcodec', 'libx264',     // h264 codec
@@ -102,12 +100,11 @@ function startRecording (window) {
   console.log('[recorder] Recording...')
 }
 
-function addFrame(frameBuffer) {
-  if(status == 'idle') return // avoid trail frames
+function addFrame (frameBuffer) {
+  if (status === 'idle') return // avoid trail frames
   try {
     imageStream.write(frameBuffer, 'utf8')
-  }
-  catch (err) {
+  } catch (err) {
     console.log('[recorder]', err)
   }
 }
@@ -143,7 +140,7 @@ function stopRecording () {
   imageStream.end()
   status = 'waiting-for-stream' // waiting for stream to consume all the data
   menus.refresh()
-  
+
   imageStream.on('end', () => {
     console.log('[recorder] Stream ended')
     status = 'idle'

@@ -20,8 +20,6 @@ app.on('ready', function () {
   console.log('[~~~~~~] ' + app.getName())
   console.log('[~~~~~~] ' + app.getVersion())
 
-  const {electronScreen} = require('electron')
-
   config.init()
   updater.init()
   fileHandler.init()

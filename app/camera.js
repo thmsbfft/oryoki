@@ -1,21 +1,16 @@
 const fs = require('fs')
-const path = require('path')
-const exec = require('child_process').exec
-const execSync = require('child_process').execSync
 const URL = require('url')
 
 const extract = require('png-chunks-extract')
 const encode = require('png-chunks-encode')
 const text = require('png-chunk-text')
-const validUrl = require('valid-url')
 
-const {pad, timestamp} = require('./utils')
+const {timestamp} = require('./utils')
 const {app, BrowserWindow, clipboard} = require('electron')
 
 const config = require('./config')
 
 function init () {
-
   console.log('[camera] ✔')
 }
 
@@ -26,11 +21,11 @@ function requestSaveScreenshot (win) {
 }
 
 function saveScreenshot (data) {
-  win = BrowserWindow.getFocusedWindow()
+  const win = BrowserWindow.getFocusedWindow()
   win.rpc.emit('status:hide')
 
-  setTimeout( () => {
-    win.capturePage( (image) => {
+  setTimeout(() => {
+    win.capturePage((image) => {
       let url = data[0]
       let title = data[1]
       let hostname = URL.parse(url).hostname
@@ -38,7 +33,7 @@ function saveScreenshot (data) {
 
       // check path
       let path = config.getPreference('screenshots_save_path')
-      if (path == '') {
+      if (path === '') {
         path = app.getPath('downloads')
       } else {
         try {
@@ -62,8 +57,7 @@ function saveScreenshot (data) {
             body: 'Screenshot saved'
           })
         })
-      }
-      else {
+      } else {
         // url is here
         let name = 'o-' + hostname + '-' + stamp
 
@@ -74,7 +68,7 @@ function saveScreenshot (data) {
         chunks.splice(-1, 0, text.encode('title', Buffer.from(title).toString('base64')))
         chunks.splice(-1, 0, text.encode('src', url))
 
-        fs.writeFile(path + '/' + name + '.png', new Buffer(encode(chunks)), (err) => {
+        fs.writeFile(path + '/' + name + '.png', Buffer.from(encode(chunks)), (err) => {
           if (err) throw err
           win.rpc.emit('status:show')
           win.rpc.emit('status:unfreeze')
@@ -90,12 +84,12 @@ function saveScreenshot (data) {
 }
 
 function copyScreenshot (win) {
-  if(!win) win = BrowserWindow.getFocusedWindow()
+  if (!win) win = BrowserWindow.getFocusedWindow()
 
   win.rpc.emit('status:hide')
 
-  setTimeout( () => {
-    win.capturePage( (image) => {
+  setTimeout(() => {
+    win.capturePage((image) => {
       clipboard.writeImage(image)
       win.rpc.emit('status:show')
       win.rpc.emit('status:unfreeze')

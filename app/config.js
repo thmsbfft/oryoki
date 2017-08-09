@@ -5,6 +5,7 @@ const {app, dialog, ipcMain, BrowserWindow, shell} = require('electron')
 
 const notify = require('./notify')
 const menus = require('./menus')
+const windows = require('./windows')
 
 var paths = {}
 var preferences = null
@@ -105,9 +106,7 @@ function watch () {
     searchDictionary = getConfFile('search-dictionary.json')
     // Update accross all windows
     try {
-      // for (var i = 0; i < Oryoki.windows.length; i++) {
-      //   Oryoki.windows[i].updateConfFiles()
-      // }
+      windows.broadcast('config:search-dictionary-updated')
     } catch (e) {
       console.log('[config] ' + e)
     }
@@ -139,7 +138,7 @@ function verify () {
         defaultId: 0
       },
       function (buttonId) {
-        if (buttonId == 0) reset('Preferences', 'oryoki-preferences.json')
+        if (buttonId === 0) reset('Preferences', 'oryoki-preferences.json')
       }
     )
   }
@@ -150,7 +149,7 @@ function reset (niceName, fileName) {
     if (e) console.log('[config] ' + e)
     console.log('[config] ' + niceName + ' reset')
     try {
-      win = BrowserWindow.getFocusedWindow()
+      const win = BrowserWindow.getFocusedWindow()
       win.rpc.emit('status:log', {
         body: niceName + ' reset'
       })
@@ -166,7 +165,7 @@ function clearCaches () {
     'GPUCache'
   ]
 
-  caches.forEach( (element) => {
+  caches.forEach((element) => {
     let folderPath = paths.conf + '/' + element
     folderPath = folderPath.replace(' ', '\\ ')
     console.log('[config] Will delete:', folderPath)
@@ -175,7 +174,7 @@ function clearCaches () {
         // if folder is already clear, do nothing
       }
       try {
-        win = BrowserWindow.getFocusedWindow()
+        const win = BrowserWindow.getFocusedWindow()
         win.rpc.emit('status:log', {
           body: 'Cleared caches'
         })
@@ -190,11 +189,11 @@ function clearLocalStorage () {
   let folderPath = paths.conf.replace(' ', '\\ ') + '/Local\\ Storage'
   console.log('[config] Will delete:', folderPath)
   exec('cd ' + folderPath + ' && rm *', function (error, stdout, stderr) {
-    if(error) {
+    if (error) {
         // if folder is already clear, do nothing
     }
     try {
-      win = BrowserWindow.getFocusedWindow()
+      const win = BrowserWindow.getFocusedWindow()
       win.rpc.emit('status:log', {
         body: 'Cleared local storage'
       })

@@ -1,3 +1,4 @@
+const path = require('path')
 const {BrowserWindow} = require('electron')
 
 let win
@@ -6,7 +7,7 @@ let buffer = []
 
 function init () {
   win = new BrowserWindow({show: false})
-  win.loadURL('file://' + __dirname + '/notify.html')
+  win.loadURL(path.join('file://', __dirname, '/notify.html'))
   win.webContents.on('dom-ready', () => {
     ready = true
     buffer.forEach(([title, props]) => {

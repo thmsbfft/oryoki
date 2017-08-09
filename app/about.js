@@ -19,7 +19,7 @@ function init () {
 
   let rpc = createRPC(win)
   win.rpc = rpc
-  
+
   win.loadURL('file://' + path.join(__dirname, 'about.html'))
 
   rpc.on('about:hide', hide)

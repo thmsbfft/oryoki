@@ -7,10 +7,10 @@ module.exports = function () {
   const recorderStatus = recorder.getStatus()
 
   let isFirstLoad = true
-  if(win !== null) isFirstLoad = win.isFirstLoad
+  if (win !== null) isFirstLoad = win.isFirstLoad
 
   let hasConsole = false
-  if(win !== null) hasConsole = win.hasConsole
+  if (win !== null) hasConsole = win.hasConsole
 
   const submenu = [
     {
@@ -18,7 +18,7 @@ module.exports = function () {
       accelerator: 'CmdOrCtrl+~',
       enabled: !(win == null),
       click (i, win) {
-        if(win == null) win = windows.getFocused()
+        if (win == null) win = windows.getFocused()
         camera.requestSaveScreenshot(win)
       }
     },
@@ -27,8 +27,8 @@ module.exports = function () {
       accelerator: 'CmdOrCtrl+Shift+C',
       enabled: !(win == null),
       click (i, win) {
-        if(win == null) win = windows.getFocused()
-        if(win !== null) camera.copyScreenshot(win)
+        if (win == null) win = windows.getFocused()
+        if (win !== null) camera.copyScreenshot(win)
       }
     },
     {
@@ -36,16 +36,16 @@ module.exports = function () {
     },
     {
       label: 'Start Recording',
-      enabled: recorderStatus == 'idle' && !(win == null),
+      enabled: recorderStatus === 'idle' && !(win == null),
       accelerator: 'CmdOrCtrl+Shift+P',
       click (i, win) {
-        if(win == null) win = windows.getFocused()
+        if (win == null) win = windows.getFocused()
         recorder.startRecording(win)
       }
     },
     {
       label: 'Stop Recording',
-      enabled: recorderStatus == 'recording' && !(win == null),
+      enabled: recorderStatus === 'recording' && !(win == null),
       accelerator: 'CmdOrCtrl+Alt+Shift+P',
       click () {
         recorder.stopRecording()
@@ -61,7 +61,7 @@ module.exports = function () {
       checked: hasConsole,
       enabled: !isFirstLoad,
       click (i, win) {
-        if(win == null) win = windows.getFocused()
+        if (win == null) win = windows.getFocused()
         win.rpc.emit('console:toggle')
       }
     },
@@ -70,7 +70,7 @@ module.exports = function () {
       enabled: !isFirstLoad,
       accelerator: 'CmdOrCtrl+Alt+I',
       click (i, win) {
-        if(win == null) win = windows.getFocused()
+        if (win == null) win = windows.getFocused()
         win.rpc.emit('view:toggle-devtools')
       }
     }

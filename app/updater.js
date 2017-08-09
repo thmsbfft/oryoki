@@ -1,5 +1,5 @@
 const fs = require('fs')
-const {app, dialog, ipcMain} = require('electron')
+const {app, dialog} = require('electron')
 const request = require('request')
 const exec = require('child_process').exec
 const execSync = require('child_process').execSync
@@ -23,7 +23,7 @@ function init () {
 function checkForUpdate (alert) {
   console.log('[updater] Checking for update...')
   request(feed, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+    if (!error && response.statusCode === 200) {
       latest = JSON.parse(body)
       compareVersions(alert)
     }
@@ -106,7 +106,7 @@ function downloadUpdate () {
   }
 
   // Start downloading
-  var downloadProcess = exec('cd ' + '\'' + tmp + '\'' + ' && curl -O ' + latest.url, function (error, stdout, stderr) {
+  exec('cd ' + '\'' + tmp + '\'' + ' && curl -O ' + latest.url, function (error, stdout, stderr) {
     if (error) {
       console.log('[updater] Download failed. Err: ' + error.signal)
       cleanUp()
@@ -140,12 +140,12 @@ function extractUpdate () {
       body: 'Ōryōki ' + latest.version + ' is ready to be installed.',
       silent: true
     })
-  }.bind(this))
+  })
 }
 
 function quitAndInstall () {
   // In case a previous version is still in downloads
-  execSync('rm -rf ' + '\"' + app.getPath('downloads') + '/Oryoki.app' + '\"')
+  execSync('rm -rf ' + '"' + app.getPath('downloads') + '/Oryoki.app' + '"')
 
   // Move to downloads
   fs.rename(tmp + '/Oryoki.app', app.getPath('downloads') + '/Oryoki.app', function (err) {
@@ -156,7 +156,7 @@ function quitAndInstall () {
     // Reveal in Finder
     execSync('open -R ' + app.getPath('downloads') + '/Oryoki.app', function (err) {
       if (err) {
-        c.log('[updater] Error while revealing update: ' + err)
+        console.log('[updater] Error while revealing update: ' + err)
       }
     })
 
