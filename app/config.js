@@ -106,7 +106,7 @@ function watch () {
     searchDictionary = getConfFile('search-dictionary.json')
     // Update accross all windows
     BrowserWindow.getAllWindows().forEach((win) => {
-      try { win.rpc.emit('config:search-dictionary-updated') } catch(err) {} 
+      try { win.rpc.emit('config:search-dictionary-updated') } catch (err) {}
     })
 
     notify.send('Ready to go!', {

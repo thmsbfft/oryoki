@@ -12,7 +12,8 @@
     "app": "electron app",
     "dev": "webpack -w",
     "build": "gulp build && electron-packager . Oryoki --overwrite --out=build --app-version=0.1.0 --platform=darwin --arch=x64 --icon=icon.icns --ignore=\"(src/sass)|(src/js/main)|build|gulpfile|doc|stdout.log\"",
-    "test": "standard --fix"
+    "test": "standard --fix",
+    "prepush": "npm test"
   },
   "dependencies": {
     "png-chunk-text": "^1.0.0",
