@@ -1,5 +1,5 @@
 const path = require('path')
-const {BrowserWindow, ipcMain, app} = require('electron')
+const {app, BrowserWindow} = require('electron')
 const createRPC = require('./rpc')
 
 let win
@@ -29,10 +29,6 @@ function init () {
     hide()
   })
 
-  ipcMain.on('hide-about', function () {
-    hide()
-  })
-
   app.on('before-quit', () => {
     close()
   })
@@ -42,6 +38,7 @@ function init () {
 
 function show () {
   win.webContents.send('show-about')
+  win.webContents.openDevTools()
   win.show()
   win.focus()
 }
