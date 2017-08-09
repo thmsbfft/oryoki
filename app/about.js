@@ -38,7 +38,6 @@ function init () {
 
 function show () {
   win.webContents.send('show-about')
-  win.webContents.openDevTools()
   win.show()
   win.focus()
 }
