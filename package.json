@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "css-loader": "^0.28.4",
-    "electron": "latest",
+    "electron": "^1.7.6",
     "electron-packager": "latest",
     "node-sass": "^4.5.3",
     "postcss-loader": "^2.0.6",
