@@ -10,6 +10,14 @@
   "bugs": {
     "url": "https://github.com/thmsbfft/oryoki/issues"
   },
+  "dependencies": {
+    "png-chunk-text": "^1.0.0",
+    "png-chunks-encode": "^1.0.0",
+    "png-chunks-extract": "^1.0.0",
+    "uuid": "^3.1.0",
+    "request": "^2.75.0",
+    "valid-url": "^1.0.9"
+  },
   "homepage": "http://oryoki.io",
   "license": "MIT",
   "author": "Thomas Buffet"

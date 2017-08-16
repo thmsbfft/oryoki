@@ -11,14 +11,17 @@
   "scripts": {
     "app": "electron app",
     "dev": "webpack -w",
-    "build": "gulp build && electron-packager . Oryoki --overwrite --out=build --app-version=0.1.0 --platform=darwin --arch=x64 --icon=icon.icns --ignore=\"(src/sass)|(src/js/main)|build|gulpfile|doc|stdout.log\"",
+    "build": "webpack && cd app && npm i",
+    "package": "npm run build && electron-packager app --overwrite --prune --out=build --platform=darwin --arch=x64 --icon=icon.icns && npm run clean",
     "test": "standard --fix",
+    "clean": "rm -rf app/node_modules",
     "prepush": "npm test"
   },
   "dependencies": {
     "png-chunk-text": "^1.0.0",
     "png-chunks-encode": "^1.0.0",
     "png-chunks-extract": "^1.0.0",
+    "uuid": "^3.1.0",
     "request": "^2.75.0",
     "valid-url": "^1.0.9"
   },
@@ -30,7 +33,6 @@
     "postcss-loader": "^2.0.6",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
-    "uuid": "^3.1.0",
     "webpack": "^3.0.0"
   },
   "bugs": {
