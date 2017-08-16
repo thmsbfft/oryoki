@@ -84,7 +84,6 @@ function create (url, target) {
   })
 
   win.on('close', () => {
-    console.log('[windows] Closing window')
     windows.delete(win)
     rpc.destroy()
     rpc = null
