@@ -29,6 +29,7 @@ function saveScreenshot (data) {
       let url = data[0]
       let title = data[1]
       let hostname = URL.parse(url).hostname
+      hostname = hostname.replace('www.', '')  // strip www. to only get domain in filename
       let stamp = timestamp()
 
       // check path
