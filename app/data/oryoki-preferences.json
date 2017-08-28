@@ -14,6 +14,10 @@
 	// Set to false to hide the title bar by default
 	"show_title_bar" : true,
 
+	// Automatically adapt color theme (light/dark)
+	// when a webpage finished loading 
+	"use_color_extraction" : true,
+
 	// Set to false to disable alt+drag to drag windows
 	"use_alt_drag" : true,
 
