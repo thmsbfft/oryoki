@@ -60,7 +60,7 @@ function handleFile (input, target) {
 
   // oryoki also stores a 'title' keyword in PNGs
   // we don't use it yet, but this is how to read it:
-  // var title = textChunks.filter(function (chunk) {
+  // let title = textChunks.filter(function (chunk) {
   //   return chunk.keyword === 'title'
   // })
   // if (title[0] && title[0].text) {

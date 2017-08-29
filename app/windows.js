@@ -25,6 +25,9 @@ function create (url, target) {
     // or target has been set (to '_self'),
     // load url here instead of creating a new window
     focused.rpc.emit('view:load', url)
+    focused.rpc.emit('status:log', {
+      body: 'Loading ' + url,
+    })
     return
   }
 
@@ -109,7 +112,12 @@ function create (url, target) {
 
   win.once('ready-to-show', () => {
     win.show()
-    if (url) win.rpc.emit('view:load', url)
+    if (url) {
+      win.rpc.emit('view:load', url)
+      win.rpc.emit('status:log', {
+        body: 'Loading ' + url,
+      })
+    }
   })
 
   win.webContents.openDevTools()
