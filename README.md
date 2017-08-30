@@ -42,14 +42,14 @@ Use it to quietly browse the Internet, archive and capture visuals. Use it to tu
 
 ---
 
-| •                                  | •                                                |
-| -----------------------------------|--------------------------------------------------|
-| **navigation**                     |                                                  |
+| what                               | how                                              |
+| :----------------------------------| :------------------------------------------------|
+| *• navigation*                       |                                                  |
 | toggle omnibox                     | <kbd>cmd</kbd> <kbd>L</kbd>                      |
 | direct search                      | <kbd>ctrl</kbd> <kbd>return</kbd>                |
-| **window management**              |                                                  |
+| *• window management*                |                                                  |
 | toggle window helper               | <kbd>cmd</kbd> <kbd>alt</kbd> <kbd>M</kbd>       |
-| **utils**                          |                                                  |
+| *• utilities*                        |                                                  |
 | open preferences                   | <kbd>cmd</kbd> <kbd>,</kbd>                      |
 
 #### status
