@@ -42,7 +42,7 @@ Use it to quietly browse the Internet, archive and capture visuals. Use it to tu
 
 ---
 
-| -----------------------------------|--------------------------------------------------|
+|------------------------------------|--------------------------------------------------|
 | **navigation**                     |                                                  |
 | toggle omnibox                     | <kbd>cmd</kbd> <kbd>L</kbd>                      |
 | direct search                      | <kbd>ctrl</kbd> <kbd>return</kbd>                |
