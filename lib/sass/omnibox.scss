@@ -46,20 +46,18 @@ omnibox {
 				background-color: rgba(255, 255, 255, 0.1);
 			}
 			&.hintShown {
-				border-bottom-left-radius: 0;
-				border-bottom-right-radius: 0;
+				// border-bottom-left-radius: 0;
+				// border-bottom-right-radius: 0;
 			}
 		}
 	}
 	.hints {
-		z-index: 98;
 		display: block;
 		max-width: 485px;
 		margin: auto;
 		font-size: 14px;
 		letter-spacing: -0.5px;
 		background: #141414;
-		// background: #1A1A1A;
 		position: relative;
 		border-radius: 0px 0px 2px 2px;
 		color: rgba(255, 255, 255, 0.4);
