@@ -16,8 +16,11 @@ Use it to quietly browse the Internet, archive and capture visuals. Use it to tu
 
 <p align='center'>
 	<img src='./oryoki-1.png'/>
+	<br />
 	<img src='./oryoki-2.png'/>
+	<br />
 	<img src='./oryoki-3.png'/>
+	<br />
 </p>
 
 #### features
@@ -26,7 +29,6 @@ Use it to quietly browse the Internet, archive and capture visuals. Use it to tu
 
 → See [user manual](https://github.com/thmsbfft/oryoki/blob/master/USER-MANUAL.md) for a more complete run through.
 
-```
 * Frameless browsing
 * Picture in picture
 * Magic screenshots
@@ -35,7 +37,19 @@ Use it to quietly browse the Internet, archive and capture visuals. Use it to tu
 * Night mode
 * Devtools
 * Search dictionary
-```
+
+#### shortcuts
+
+---
+
+| -----------------------------------|--------------------------------------------------|
+| **navigation**                     |                                                  |
+| toggle omnibox                     | <kbd>cmd</kbd> <kbd>L</kbd>                      |
+| direct search                      | <kbd>ctrl</kbd> <kbd>return</kbd>                |
+| **window management**              |                                                  |
+| toggle window helper               | <kbd>cmd</kbd> <kbd>alt</kbd> <kbd>M</kbd>       |
+| **utils**                          |                                                  |
+| open preferences                   | <kbd>cmd</kbd> <kbd>,</kbd>                      |
 
 #### status
 
