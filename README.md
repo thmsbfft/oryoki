@@ -8,12 +8,16 @@ Use it to quietly browse the Internet, archive and capture visuals. Use it to tu
 
 Ōryōki is an [Electron](https://electron.atom.io/) app, meaning that it more or less renders like Chrome, and that all websites are safely sandboxed in a `webview`. Only for MacOS (for now).
 
+<br />
+
 <h3 align='center'>⚆⚆</h3>
 
+<br />
+
 <p align='center'>
-	<img src=‘./oryoki-1.png’/>
-	<img src=‘./oryoki-2.png’/>
-	<img src=‘./oryoki-3.png’/>
+	<img src='./oryoki-1.png'/>
+	<img src='./oryoki-2.png'/>
+	<img src='./oryoki-3.png'/>
 </p>
 
 #### features
