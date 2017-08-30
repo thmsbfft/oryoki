@@ -15,11 +15,11 @@ Use it to quietly browse the Internet, archive and capture visuals. Use it to tu
 <br />
 
 <p align='center'>
-	<img src='./oryoki-1.png'/>
+	<img src='./oryoki-1.png' width='800'/>
 	<br />
-	<img src='./oryoki-2.png'/>
+	<img src='./oryoki-2.png' width='800'/>
 	<br />
-	<img src='./oryoki-3.png'/>
+	<img src='./oryoki-3.png' width='800'/>
 	<br />
 </p>
 
