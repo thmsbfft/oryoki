@@ -2,8 +2,6 @@
   <img src='./icon.png' width='150'/>
 </p>
 
-<br /><br />
-
 #### ōryōki
 
 ---
