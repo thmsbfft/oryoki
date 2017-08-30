@@ -46,15 +46,27 @@ Use it to quietly browse the Internet, archive and capture visuals. Use it to tu
 
 ---
 
-| what                               | how                                              |
-| :----------------------------------| :------------------------------------------------|
-| *• navigation*                       |                                                  |
-| toggle omnibox                     | <kbd>cmd</kbd> <kbd>L</kbd>                      |
-| direct search                      | <kbd>ctrl</kbd> <kbd>return</kbd>                |
-| *• window management*                |                                                  |
-| toggle window helper               | <kbd>cmd</kbd> <kbd>alt</kbd> <kbd>M</kbd>       |
-| *• utilities*                        |                                                  |
-| open preferences                   | <kbd>cmd</kbd> <kbd>,</kbd>                      |
+| what                               | how                                                             |
+| :--------------------------------- | :-------------------------------------------------------------- |
+| *• navigation*                     |                                                                 |
+| toggle omnibox                     | <kbd>cmd</kbd> <kbd>L</kbd>                                     |
+| direct search                      | <kbd>ctrl</kbd> <kbd>return</kbd>                               |
+| *• window management*              |                                                                 |
+| toggle title bar                   | <kbd>cmd</kbd> <kbd>/</kbd>                                     |
+| toggle window helper               | <kbd>cmd</kbd> <kbd>alt</kbd> <kbd>M</kbd>                      |
+| cycle thru windows                 | <kbd>ctrl</kbd> <kbd>tab</kbd>                                  |
+| apply preset size                  | <kbd>cmd</kbd> <kbd>1, 2, 3, etc.</kbd>                         |
+| *• image*                          |                                                                 |
+| save screenshot                    | <kbd>cmd</kbd> <kbd>shift</kbd> <kbd>~</kbd>                    |
+| copy screenshot                    | <kbd>cmd</kbd> <kbd>shift</kbd> <kbd>C</kbd>                    |
+| start recording                    | <kbd>cmd</kbd> <kbd>shift</kbd> <kbd>P</kbd>                    |
+| stop recording                     | <kbd>cmd</kbd> <kbd>alt</kbd> <kbd>shift</kbd> <kbd>P</kbd>     |
+| *• utilities*                      |                                                                 |
+| open preferences                   | <kbd>cmd</kbd> <kbd>,</kbd>                                     |
+| toggle night mode                  | <kbd>cmd</kbd> <kbd>ctrl</kbd> <kbd>N</kbd>                     |
+| toggle mini console                | <kbd>cmd</kbd> <kbd>alt</kbd> <kbd>C</kbd>                      |
+| filter: invert                     | <kbd>cmd</kbd> <kbd>I</kbd>                                     |
+| filter: grayscale                  | <kbd>cmd</kbd> <kbd>G</kbd>                                     |
 
 #### status
 
