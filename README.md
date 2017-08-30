@@ -8,15 +8,19 @@ Use it to quietly browse the Internet, archive and capture visuals. Use it to tu
 
 Ōryōki is an [Electron](https://electron.atom.io/) app, meaning that it more or less renders like Chrome, and that all websites are safely sandboxed in a `webview`. Only for MacOS (for now).
 
-# ⚆⚆
+<h3 align='center'>⚆⚆</h3>
 
-![Oryoki](https://github.com/thmsbfft/oryoki/blob/dev/oryoki-1.png?raw=true "Oryoki")
+<p align='center'>
 
-![Oryoki](https://github.com/thmsbfft/oryoki/blob/dev/oryoki-2.png?raw=true "Oryoki")
+![](https://github.com/thmsbfft/oryoki/blob/dev/oryoki-1.png?raw=true "Oryoki")
 
-⤷ [magnetriver.com/contents/the-room-of-fulfilled-dreams](http://magnetriver.com/contents/the-room-of-fulfilled-dreams)
+![](https://github.com/thmsbfft/oryoki/blob/dev/oryoki-2.png?raw=true "Oryoki")
 
-![Oryoki](https://github.com/thmsbfft/oryoki/blob/dev/oryoki-3.png?raw=true "Oryoki")
+<p align='center'>[magnetriver.com/contents/the-room-of-fulfilled-dreams](http://magnetriver.com/contents/the-room-of-fulfilled-dreams)</p>
+
+![](https://github.com/thmsbfft/oryoki/blob/dev/oryoki-3.png?raw=true "Oryoki")
+
+</p>
 
 #### features
 
