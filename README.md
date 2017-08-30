@@ -11,15 +11,9 @@ Use it to quietly browse the Internet, archive and capture visuals. Use it to tu
 <h3 align='center'>⚆⚆</h3>
 
 <p align='center'>
-
-![](https://github.com/thmsbfft/oryoki/blob/dev/oryoki-1.png?raw=true "Oryoki")
-
-![](https://github.com/thmsbfft/oryoki/blob/dev/oryoki-2.png?raw=true "Oryoki")
-
-<p align='center'>[magnetriver.com/contents/the-room-of-fulfilled-dreams](http://magnetriver.com/contents/the-room-of-fulfilled-dreams)</p>
-
-![](https://github.com/thmsbfft/oryoki/blob/dev/oryoki-3.png?raw=true "Oryoki")
-
+	<img src=‘./oryoki-1.png’/>
+	<img src=‘./oryoki-2.png’/>
+	<img src=‘./oryoki-3.png’/>
 </p>
 
 #### features
