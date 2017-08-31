@@ -2,7 +2,7 @@
 Toggle with `CMD+/` for a frameless window.
 
 #### night mode
-The interface color theme can be toggled between light & dark (`CMD+CTRL+N`). This happens automatically when visiting a website, and based on the page’s luminance. This option can be changed in preferences.
+The interface color theme can be toggled between light & dark (`CMD+CTRL+N`). This happens automatically when visiting a website, based on the page’s luminance. This option can be changed in preferences.
 
 #### windows
 Windows can float on top of all others. `CMD+ALT+M` allows to enter window dimensions. Holding `ALT` allows to drag windows around.
