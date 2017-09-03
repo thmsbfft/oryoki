@@ -65,21 +65,33 @@ function init () {
   })
 }
 
-function getConfFile (fileName, callback) {
+function getConfFile (fileName) {
   console.log('[config] Getting conf file: ' + fileName)
+
+  let raw
+  let re
+  let stripped
+
   try {
     // Erase comments to validate JSON
-    var raw = fs.readFileSync(path.join(paths.conf, fileName), 'utf8')
-    var re = /(^\/\/|^\t\/\/).*/gm // Any line that starts with `//` or with a tab followed by `//`
-    var stripped = raw.replace(re, '')
+    raw = fs.readFileSync(path.join(paths.conf, fileName), 'utf8')
+    re = /(^\/\/|^\t\/\/).*/gm // Any line that starts with `//` or with a tab followed by `//`
+    stripped = raw.replace(re, '')
 
     return JSON.parse(stripped)
   } catch (e) {
-    console.log('[config] Error getting ' + fileName + ' : ' + e)
+    console.log('[config] Error getting ' + fileName)
 
     if (e.code === 'ENOENT') {
       console.log('[config] Creating file: ' + fileName)
-      fs.writeFileSync(path.join(paths.conf, fileName), fs.readFileSync(path.join(__dirname, 'data', 'oryoki-preferences.json'), 'utf8'))
+      fs.writeFileSync(path.join(paths.conf, fileName), fs.readFileSync(path.join(__dirname, 'data', fileName), 'utf8'))
+
+      // Erase comments to validate JSON
+      raw = fs.readFileSync(path.join(paths.conf, fileName), 'utf8')
+      re = /(^\/\/|^\t\/\/).*/gm // Any line that starts with `//` or with a tab followed by `//`
+      stripped = raw.replace(re, '')
+
+      return JSON.parse(stripped)
     } else {
       throw e
     }

@@ -26,7 +26,7 @@ function create (url, target) {
     // load url here instead of creating a new window
     focused.rpc.emit('view:load', url)
     focused.rpc.emit('status:log', {
-      body: 'Loading ' + url,
+      body: 'Loading ' + url
     })
     return
   }
@@ -115,7 +115,7 @@ function create (url, target) {
     if (url) {
       win.rpc.emit('view:load', url)
       win.rpc.emit('status:log', {
-        body: 'Loading ' + url,
+        body: 'Loading ' + url
       })
     }
   })
