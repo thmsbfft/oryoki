@@ -24,7 +24,7 @@
 	// Set to use a URL as homepage
 	"homepage_url" : "",
 
-	// Set to true to enable links to open in new windows
+	// Set to false to enable links to open in new windows
 	"follow_all_links" : false,
 
 	// Set to false to enable videos to play directly in fullscreen
