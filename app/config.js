@@ -5,7 +5,6 @@ const {app, dialog, ipcMain, BrowserWindow, shell} = require('electron')
 
 const notify = require('./notify')
 const menus = require('./menus')
-// const windows = require('./windows')
 
 var paths = {}
 var preferences = null

@@ -9,7 +9,7 @@ const menus = require('./menus')
 const config = require('./config')
 const {broadcast} = require('./windows')
 
-const feed = 'http://oryoki.io/latest.json'
+const feed = 'http://oryoki.io/latest-test.json'
 var latest = null
 
 var tmp = null
