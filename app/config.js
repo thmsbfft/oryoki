@@ -132,24 +132,38 @@ function watch () {
 function verify () {
   console.log('[config] Preference model v. ' + preferences['model_version'])
 
-  let modelVersion = parseInt(preferences['model_version'].split('.').join(''))
-  let appVersion = parseInt(app.getVersion().split('.').join(''))
-
-  if (modelVersion < appVersion) {
-    console.log('[config] Using an outdated model. Latest is ' + app.getVersion())
-
+  if (preferences['model_version'] === undefined || isNaN(Number(preferences['model_version'].split('.').join('')))) {
     dialog.showMessageBox(
       {
         type: 'info',
-        message: 'Preference model outdated.',
-        detail: 'Reset the preferences to use new features.',
-        buttons: ['Reset', 'Continue Anyway'],
+        message: 'Preference model corrupted.',
+        detail: 'Ōryōki will reset the preferences to continue.',
+        buttons: ['Continue'],
         defaultId: 0
-      },
-      function (buttonId) {
-        if (buttonId === 0) reset('Preferences', 'oryoki-preferences.json')
       }
     )
+    reset('Preferences', 'oryoki-preferences.json')
+  }
+  else {
+    let modelVersion = parseInt(preferences['model_version'].split('.').join(''))
+    let appVersion = parseInt(app.getVersion().split('.').join(''))
+
+    if (modelVersion < appVersion) {
+      console.log('[config] Using an outdated model. Latest is ' + app.getVersion())
+
+      dialog.showMessageBox(
+        {
+          type: 'info',
+          message: 'Preference model outdated.',
+          detail: 'Reset the preferences to use new features.',
+          buttons: ['Reset', 'Continue Anyway'],
+          defaultId: 0
+        },
+        function (buttonId) {
+          if (buttonId === 0) reset('Preferences', 'oryoki-preferences.json')
+        }
+      )
+    }
   }
 }
 
