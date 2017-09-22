@@ -36,7 +36,7 @@ function handleFile (input, target) {
   if (path.search('.png') === -1) {
     win.rpc.emit('status:log', {
       body: 'Can\'t open file',
-      icon: '⭕️'
+      icon: '⚡️'
     })
     return
   }
@@ -73,7 +73,7 @@ function handleFile (input, target) {
     if (win !== null) {
       win.rpc.emit('status:log', {
         body: 'Can\'t open file',
-        icon: '⭕️'
+        icon: '⚡️'
       })
     }
     return
@@ -88,7 +88,7 @@ function handleFile (input, target) {
     if (win !== null) {
       win.rpc.emit('status:log', {
         body: 'Can\'t open file',
-        icon: '⭕️'
+        icon: '⚡️'
       })
     }
   }

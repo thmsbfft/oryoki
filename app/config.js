@@ -143,8 +143,7 @@ function verify () {
       }
     )
     reset('Preferences', 'oryoki-preferences.json')
-  }
-  else {
+  } else {
     let modelVersion = parseInt(preferences['model_version'].split('.').join(''))
     let appVersion = parseInt(app.getVersion().split('.').join(''))
 
