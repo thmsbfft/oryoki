@@ -43,6 +43,11 @@ function init () {
 
   console.log('[config] Paths okay')
 
+  // Load factory settings
+  let raw = fs.readFileSync(path.join(__dirname, 'data', 'oryoki-preferences.json'), 'utf8')
+  let re = /(^\/\/|^\t\/\/).*/gm // Any line that starts with `//` or with a tab followed by `//`
+  factory = JSON.parse(raw.replace(re, ''))
+
   // Load files or create them from factory if they don't exist
   preferences = getConfFile('oryoki-preferences.json')
   searchDictionary = getConfFile('search-dictionary.json')
@@ -145,10 +150,10 @@ function verify () {
     reset('Preferences', 'oryoki-preferences.json')
   } else {
     let modelVersion = parseInt(preferences['model_version'].split('.').join(''))
-    let appVersion = parseInt(app.getVersion().split('.').join(''))
+    let factoryVersion = parseInt(factory['model_version'].split('.').join(''))
 
-    if (modelVersion < appVersion) {
-      console.log('[config] Using an outdated model. Latest is ' + app.getVersion())
+    if (modelVersion < factoryVersion) {
+      console.log('[config] Using an outdated model. Latest is ' + factory['model_version'])
 
       dialog.showMessageBox(
         {
