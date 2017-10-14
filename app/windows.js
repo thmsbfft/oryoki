@@ -120,7 +120,7 @@ function create (url, target) {
     }
   })
 
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
 }
 
 function broadcast (data) {
