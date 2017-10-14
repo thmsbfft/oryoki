@@ -60,8 +60,6 @@ function create (url, target) {
     minHeight: 200,
     darkTheme: true,
     webPreferences: {
-      'experimentalFeatures': true,
-      'experimentalCanvasFeatures': true
     },
     fullscreenable: !config.getPreference('picture_in_picture')
   }

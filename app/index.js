@@ -29,3 +29,13 @@ app.on('ready', function () {
   camera.init()
   windows.init()
 })
+
+app.on('web-contents-created', (event, contents) => {
+  contents.on('will-attach-webview', (event, webPreferences, params) => {
+    // disable node integration for remote content
+    webPreferences.nodeIntegration = false
+
+    // don't load if preload url isn't local to the app
+    if (!webPreferences.preloadURL.startsWith('file://')) event.preventDefault()
+  })
+})
