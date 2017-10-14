@@ -14,7 +14,7 @@
 	// Set to false to hide the title bar by default
 	"show_title_bar" : true,
 
-	// Automatically adapt color theme (light/dark)
+	// Automatically adapt color theme
 	// when a webpage finished loading 
 	"use_color_extraction" : true,
 
