@@ -6,7 +6,7 @@
 //
 {
 	// Do not touch!
-	"model_version" : "0.2.0",
+	"model_version" : "0.2.1",
 
 	// Allows Oryoki to download updates in background
 	"download_updates_in_background" : false,
@@ -53,7 +53,9 @@
 
 	// Hide the status bar
 	"hide_status_while_recording" : true,
-	"hide_status_on_hover" : false,
+
+	// Show the URL in the status bar on hover
+	"show_url_preview" : true,
 
 	// h264 | prores
 	// mp4 is light and lossy
