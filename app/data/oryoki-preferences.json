@@ -53,7 +53,7 @@
 
 	// Hide the status bar
 	"hide_status_while_recording" : true,
-  "hide_status_on_hover" : false,
+	"hide_status_on_hover" : false,
 
 	// h264 | prores
 	// mp4 is light and lossy
