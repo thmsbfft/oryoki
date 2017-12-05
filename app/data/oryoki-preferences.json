@@ -50,9 +50,10 @@
 	// Set a custom download path (absolute) here
 	// If left blank, will use the user's Downloads folder
 	"download_path" : "",
-	
-	// Hide the status bar when recording
+
+	// Hide the status bar
 	"hide_status_while_recording" : true,
+  "hide_status_on_hover" : false,
 
 	// h264 | prores
 	// mp4 is light and lossy
