@@ -6,7 +6,7 @@
 //
 {
 	// Do not touch!
-	"model_version" : "0.2.0",
+	"model_version" : "0.2.1",
 
 	// Allows Oryoki to download updates in background
 	"download_updates_in_background" : false,
@@ -50,9 +50,12 @@
 	// Set a custom download path (absolute) here
 	// If left blank, will use the user's Downloads folder
 	"download_path" : "",
-	
-	// Hide the status bar when recording
+
+	// Hide the status bar
 	"hide_status_while_recording" : true,
+
+	// Show the URL in the status bar on hover
+	"show_url_preview" : true,
 
 	// h264 | prores
 	// mp4 is light and lossy
