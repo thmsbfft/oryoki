@@ -6,6 +6,9 @@ const {app, dialog, ipcMain, BrowserWindow, shell} = require('electron')
 const notify = require('./notify')
 const menus = require('./menus')
 
+// Any line that starts with `//`, with a tab followed by `//`, or with whitespace followed by `//`
+const strip_json_comments = /(^\/\/|^\t\/\/|^\s+\/\/).*/gm
+
 var paths = {}
 var preferences = null
 var searchDictionary = null
@@ -45,8 +48,7 @@ function init () {
 
   // Load factory settings
   let raw = fs.readFileSync(path.join(__dirname, 'data', 'oryoki-preferences.json'), 'utf8')
-  let re = /(^\/\/|^\t\/\/).*/gm // Any line that starts with `//` or with a tab followed by `//`
-  factory = JSON.parse(raw.replace(re, ''))
+  factory = JSON.parse(raw.replace(strip_json_comments, ''))
 
   // Load files or create them from factory if they don't exist
   preferences = getConfFile('oryoki-preferences.json')
@@ -77,10 +79,9 @@ function getConfFile (fileName) {
   let stripped
 
   try {
-    // Erase comments to validate JSON
+    // Strip comments to validate JSON
     raw = fs.readFileSync(path.join(paths.conf, fileName), 'utf8')
-    re = /(^\/\/|^\t\/\/).*/gm // Any line that starts with `//` or with a tab followed by `//`
-    stripped = raw.replace(re, '')
+    stripped = raw.replace(strip_json_comments, '')
 
     return JSON.parse(stripped)
   } catch (e) {
@@ -90,10 +91,9 @@ function getConfFile (fileName) {
       console.log('[config] Creating file: ' + fileName)
       fs.writeFileSync(path.join(paths.conf, fileName), fs.readFileSync(path.join(__dirname, 'data', fileName), 'utf8'))
 
-      // Erase comments to validate JSON
+      // Strip comments to validate JSON
       raw = fs.readFileSync(path.join(paths.conf, fileName), 'utf8')
-      re = /(^\/\/|^\t\/\/).*/gm // Any line that starts with `//` or with a tab followed by `//`
-      stripped = raw.replace(re, '')
+      stripped = raw.replace(strip_json_comments, '')
 
       return JSON.parse(stripped)
     } else {
