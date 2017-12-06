@@ -7,7 +7,7 @@ const notify = require('./notify')
 const menus = require('./menus')
 
 // Any line that starts with `//`, with a tab followed by `//`, or with whitespace followed by `//`
-const strip_json_comments = /(^\/\/|^\t\/\/|^\s+\/\/).*/gm
+const stripJSONComments = /(^\/\/|^\t\/\/|^\s+\/\/).*/gm
 
 var paths = {}
 var preferences = null
@@ -48,7 +48,7 @@ function init () {
 
   // Load factory settings
   let raw = fs.readFileSync(path.join(__dirname, 'data', 'oryoki-preferences.json'), 'utf8')
-  factory = JSON.parse(raw.replace(strip_json_comments, ''))
+  factory = JSON.parse(raw.replace(stripJSONComments, ''))
 
   // Load files or create them from factory if they don't exist
   preferences = getConfFile('oryoki-preferences.json')
@@ -75,13 +75,12 @@ function getConfFile (fileName) {
   console.log('[config] Getting conf file: ' + fileName)
 
   let raw
-  let re
   let stripped
 
   try {
     // Strip comments to validate JSON
     raw = fs.readFileSync(path.join(paths.conf, fileName), 'utf8')
-    stripped = raw.replace(strip_json_comments, '')
+    stripped = raw.replace(stripJSONComments, '')
 
     return JSON.parse(stripped)
   } catch (e) {
@@ -93,7 +92,7 @@ function getConfFile (fileName) {
 
       // Strip comments to validate JSON
       raw = fs.readFileSync(path.join(paths.conf, fileName), 'utf8')
-      stripped = raw.replace(strip_json_comments, '')
+      stripped = raw.replace(stripJSONComments, '')
 
       return JSON.parse(stripped)
     } else {
