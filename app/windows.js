@@ -61,7 +61,7 @@ function create (url, target) {
     darkTheme: true,
     webPreferences: {
     },
-    fullscreenable: !config.getPreference('picture_in_picture')
+    fullscreenable: !config.getPreference('picture_in_picture'),
   }
 
   const win = new BrowserWindow(browserOptions)
@@ -76,6 +76,7 @@ function create (url, target) {
   win.darkTheme = true
   win.hasTitleBar = config.getPreference('show_title_bar')
   win.hasConsole = false
+  win.isRequestMobile = config.getPreference('request_mobile_site')
 
   win.loadURL(path.join('file://', __dirname, '/window.html'))
 
@@ -108,6 +109,11 @@ function create (url, target) {
     win.setTitle(e)
   })
 
+  rpc.on('view:toggle-mobile-updated', (e) => {
+    win.isRequestMobile = e
+    menus.refresh()
+  })
+
   win.once('ready-to-show', () => {
     win.show()
     if (url) {
@@ -117,6 +123,10 @@ function create (url, target) {
       })
     }
   })
+
+  if (process.env.NODE_ENV !== 'production') {
+    win.webContents.openDevTools()
+  }
 }
 
 function broadcast (data) {

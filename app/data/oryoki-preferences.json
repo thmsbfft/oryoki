@@ -57,6 +57,9 @@
 	// Show the URL in the status bar on hover
 	"show_url_preview" : true,
 
+	// Request mobile sites
+	"request_mobile_site": false,
+
 	// h264 | prores
 	// mp4 is light and lossy
 	// prores is big and lossless

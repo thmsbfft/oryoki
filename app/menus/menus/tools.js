@@ -12,6 +12,9 @@ module.exports = function () {
   let hasConsole = false
   if (win !== null) hasConsole = win.hasConsole
 
+  let isRequestMobile = false
+  if (win !== null) isRequestMobile = win.isRequestMobile
+
   const submenu = [
     {
       label: 'Save Screenshot',
@@ -72,6 +75,16 @@ module.exports = function () {
       click (i, win) {
         if (win == null) win = windows.getFocused()
         win.rpc.emit('view:toggle-devtools')
+      }
+    },
+    {
+      label: 'Request Mobile Site',
+      accelerator: 'CmdOrCtrl+Alt+U',
+      type: 'checkbox',
+      checked: isRequestMobile,
+      click (i, win) {
+        if (win == null) win = windows.getFocused()
+        win.rpc.emit('view:toggle-mobile')
       }
     }
   ]
