@@ -124,7 +124,7 @@ function create (url, target) {
     }
   })
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (isDev()) {
     win.webContents.openDevTools()
   }
 }
@@ -201,6 +201,10 @@ function resize (width, height) {
 
 function getFocused () {
   return focused
+}
+
+function isDev () {
+  return process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath)
 }
 
 module.exports = {
