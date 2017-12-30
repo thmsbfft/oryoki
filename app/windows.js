@@ -61,7 +61,7 @@ function create (url, target) {
     darkTheme: true,
     webPreferences: {
     },
-    fullscreenable: !config.getPreference('picture_in_picture'),
+    fullscreenable: !config.getPreference('picture_in_picture')
   }
 
   const win = new BrowserWindow(browserOptions)
