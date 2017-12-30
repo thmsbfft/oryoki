@@ -76,7 +76,7 @@ function create (url, target) {
   win.darkTheme = true
   win.hasTitleBar = config.getPreference('show_title_bar')
   win.hasConsole = false
-  win.isRequestMobile = config.getPreference('request_mobile_site')
+  win.isRequestMobile = config.getPreference('request_mobile_site') || menus.getCheckbox('Tools', 'Request Mobile Site')
 
   win.loadURL(path.join('file://', __dirname, '/window.html'))
 
@@ -110,7 +110,10 @@ function create (url, target) {
   })
 
   rpc.on('view:toggle-mobile-updated', (e) => {
-    win.isRequestMobile = e
+    // win.isRequestMobile = e
+    for (let win of windows) {
+      win.isRequestMobile = e
+    }
     menus.refresh()
   })
 

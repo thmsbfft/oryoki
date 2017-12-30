@@ -1,3 +1,4 @@
+const {BrowserWindow} = require('electron')
 const windows = require('./../../windows')
 const camera = require('./../../camera')
 const recorder = require('./../../recorder')
@@ -82,9 +83,12 @@ module.exports = function () {
       accelerator: 'CmdOrCtrl+Alt+U',
       type: 'checkbox',
       checked: isRequestMobile,
+      enabled: !isFirstLoad,
       click (i, win) {
-        if (win == null) win = windows.getFocused()
-        win.rpc.emit('view:toggle-mobile')
+        BrowserWindow.getAllWindows().forEach((win) => {
+          // broadcast change accross all windows
+          try { win.rpc.emit('view:toggle-mobile') } catch (err) {}
+        })
       }
     }
   ]
