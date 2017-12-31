@@ -28,6 +28,12 @@ function getSubMenuByLabel (menu, subMenuLabel) {
   return menu[0].submenu.items.filter(item => item.label === subMenuLabel)
 }
 
+function getCheckbox (menuLabel, subMenuLabel) {
+  var menu = getMenuByLabel(menuLabel)
+  var submenu = getSubMenuByLabel(menu, subMenuLabel)
+  return submenu[0].checked
+}
+
 function setCheckbox (menuLabel, subMenuLabel, value) {
   var menu = getMenuByLabel(menuLabel)
   var submenu = getSubMenuByLabel(menu, subMenuLabel)
@@ -37,5 +43,6 @@ function setCheckbox (menuLabel, subMenuLabel, value) {
 module.exports = {
   init,
   refresh,
+  getCheckbox,
   setCheckbox
 }

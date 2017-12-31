@@ -76,6 +76,7 @@ function create (url, target) {
   win.darkTheme = true
   win.hasTitleBar = config.getPreference('show_title_bar')
   win.hasConsole = false
+  win.isRequestMobile = config.getPreference('request_mobile_site') || menus.getCheckbox('Tools', 'Request Mobile Site')
 
   win.loadURL(path.join('file://', __dirname, '/window.html'))
 
@@ -108,6 +109,14 @@ function create (url, target) {
     win.setTitle(e)
   })
 
+  rpc.on('view:toggle-mobile-updated', (e) => {
+    // win.isRequestMobile = e
+    for (let win of windows) {
+      win.isRequestMobile = e
+    }
+    menus.refresh()
+  })
+
   win.once('ready-to-show', () => {
     win.show()
     if (url) {
@@ -117,6 +126,10 @@ function create (url, target) {
       })
     }
   })
+
+  if (isDev()) {
+    win.webContents.openDevTools()
+  }
 }
 
 function broadcast (data) {
@@ -191,6 +204,10 @@ function resize (width, height) {
 
 function getFocused () {
   return focused
+}
+
+function isDev () {
+  return process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath)
 }
 
 module.exports = {
