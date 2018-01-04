@@ -74,6 +74,23 @@ Use it to quietly browse the Internet, archive and capture visuals. Use it to tu
 
 Beta. Developed by [@thmsbfft](https://twitter.com/thmsbfft).
 
+#### build from source
+
+----
+
+```
+# clone the project
+git clone https://github.com/thmsbfft/oryoki.git
+
+# install dependencies
+npm install
+
+# package the app
+npm run package
+```
+
+→ `/build/Oryoki-darwin-x64/Oryoki.app`
+
 #### contributing
 
 ---
