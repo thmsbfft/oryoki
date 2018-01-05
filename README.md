@@ -78,9 +78,15 @@ Beta. Developed by [@thmsbfft](https://twitter.com/thmsbfft).
 
 ----
 
+Latest updates and work-in-progress features are on the [dev](https://github.com/thmsbfft/oryoki/tree/dev) branch.
+
 ```
 # clone the project
 git clone https://github.com/thmsbfft/oryoki.git
+
+# checkout /dev
+git branch -a
+git checkout dev
 
 # install dependencies
 npm install
