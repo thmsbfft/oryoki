@@ -79,6 +79,9 @@ module.exports = function () {
       }
     },
     {
+      type:'separator'
+    },
+    {
       label: 'Request Mobile Site',
       accelerator: 'CmdOrCtrl+Alt+U',
       type: 'checkbox',
