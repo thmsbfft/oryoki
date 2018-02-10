@@ -1,6 +1,6 @@
 {
   "name": "oryoki",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "productName": "Oryoki",
   "description": "A web browser with a thin interface.",
   "repository": {
@@ -21,23 +21,23 @@
     "png-chunk-text": "^1.0.0",
     "png-chunks-encode": "^1.0.0",
     "png-chunks-extract": "^1.0.0",
-    "uuid": "^3.1.0",
-    "request": "^2.75.0",
+    "request": "^2.83.0",
+    "uuid": "^3.2.1",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.1",
+    "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
-    "css-loader": "^0.28.4",
-    "electron": "^1.7.6",
+    "css-loader": "^0.28.9",
+    "electron": "^1.8.2",
     "electron-packager": "latest",
-    "node-sass": "^4.5.3",
-    "postcss-loader": "^2.0.6",
+    "node-sass": "^4.7.2",
+    "postcss-loader": "^2.1.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
-    "webpack": "^3.0.0"
+    "webpack": "^3.11.0"
   },
   "bugs": {
     "url": "https://github.com/thmsbfft/oryoki/issues"
