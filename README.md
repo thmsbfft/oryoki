@@ -8,7 +8,7 @@
 
 Ōryōki [応量器] is an **experimental** web browser with a thin interface.
 
-Use it to quietly browse the Internet, archive and capture visuals. Use it to tune down the noise—so maybe don’t use it too often.
+Use it to quietly browse the Internet, archive and capture visuals. Use it to tune down the noise — so maybe don’t use it too often.
 
 Ōryōki is an [Electron](https://electron.atom.io/) app, meaning that it more or less renders like Chrome, and that all websites are safely sandboxed in a `webview`. Only for MacOS (for now).
 
@@ -31,10 +31,10 @@ Use it to quietly browse the Internet, archive and capture visuals. Use it to tu
 
 ---
 
-→ See [user manual](https://github.com/thmsbfft/oryoki/blob/master/USER-MANUAL.md) for a more complete run through.
+→ See [user manual](https://github.com/thmsbfft/oryoki/blob/master/USER-MANUAL.md) for a more complete run-through.
 
 * Frameless browsing
-* Picture in picture
+* Picture-in-picture
 * Magic screenshots
 * Video recording
 * Visual filters (invert, grayscale)
