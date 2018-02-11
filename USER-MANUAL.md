@@ -28,6 +28,9 @@ Shows loading status and some useful action feedback. Recording mutes notificati
 #### preferences
 For default interface state, behavior and paths options. Preferences are stored in a json file and can be reset to factory settings.
 
+#### request mobile site
+Switch User Agent with `CMD+ALT+U` to request the mobile version of a website.
+
 #### screen grab
 Save to downloads with `CMD+~`. `CMD+SHIFT+C` to copy to clipboard.
 
